@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="3839f282-d45c-4ed4-b373-38a637624502" Name="SpringMagazineCtrl" Comment="Basic Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="Template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="CDAD2FB22D752A68" Name="INIT" Comment="Initialization Request">
+        <With Var="magazineEmpty" />
+        <With Var="cylinderRetracted" />
+        <With Var="springReady" />
+      </Event>
+      <Event ID="7BF26D6B1970FB2D" Name="REQ" Comment="Normal Execution Request">
+        <With Var="magazineEmpty" />
+        <With Var="cylinderRetracted" />
+        <With Var="springReady" />
+      </Event>
+      <Event ID="52522B62641B3E3C" Name="TIMEOUT_EXCEED">
+        <With Var="springReady" />
+      </Event>
+      <Event ID="2B6F356DDD3CF0E4" Name="RESET">
+        <With Var="magazineEmpty" />
+        <With Var="cylinderRetracted" />
+        <With Var="springReady" />
+      </Event>
+      <Event ID="ADD1E59681503937" Name="START" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="486408EFD7CC71D1" Name="INITO" Comment="Initialization Confirm" />
+      <Event ID="DEB7D7BF92B7AAD0" Name="INFORM" />
+      <Event ID="675C3258AA05CD38" Name="ERROR" />
+      <Event ID="585C777882F4E9FC" Name="TIMEOUT" />
+      <Event ID="C8206227D4BF420B" Name="CNF">
+        <With Var="retractCylinder" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="1596495530AB2526" Name="magazineEmpty" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="2F62A7EE60447EDC" Name="cylinderRetracted" Type="BOOL" />
+      <VarDeclaration ID="22F96763526C816E" Name="springReady" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="2F71F27F8797C259" Name="retractCylinder" Type="BOOL" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="INIT,REQ,Extend,Retract" />
+    <ECC>
+      <ECState Name="START" Comment="Initial State" x="552.9412" y="429.4117" />
+      <ECState Name="INIT" Comment="Initialization" x="1255.53" y="505.1765">
+        <ECAction Algorithm="INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="READY" x="1292" y="739.9999" />
+      <ECState Name="RETRACT" x="2364" y="1288">
+        <ECAction Algorithm="Retract" Output="CNF" />
+      </ECState>
+      <ECState Name="EXTEND" x="1260.444" y="1698.222">
+        <ECAction Algorithm="Extend" Output="CNF" />
+        <ECAction Output="TIMEOUT" />
+      </ECState>
+      <ECState Name="INFORM_READY" x="939.9999" y="1212">
+        <ECAction Output="INFORM" />
+      </ECState>
+      <ECState Name="ERROR" x="72" y="1204">
+        <ECAction Output="ERROR" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="930.7986" y="384.5076">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="213.3358,90.30661,253.4037,94.6274" />
+      </ECTransition>
+      <ECTransition Source="INIT" Destination="READY" Condition="1" x="1362.041" y="611.0779">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="342.3008,146.3745,343.9893,157.2461" />
+      </ECTransition>
+      <ECTransition Source="READY" Destination="RETRACT" Condition="NOT springReady" x="1871.069" y="944.9495">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="432.2192,212.7551,504.5393,249.7247" />
+      </ECTransition>
+      <ECTransition Source="RETRACT" Destination="EXTEND" Condition="cylinderRetracted&#xD;&#xA;" x="1845.717" y="1562.1">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="495.1587,382.4266,427.7173,407.7238" />
+      </ECTransition>
+      <ECTransition Source="EXTEND" Destination="INFORM_READY" Condition="TIMEOUT_EXCEED AND springReady" x="1133.851" y="1579.159">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="299.7331,422.0763,275.3245,388.1779" />
+      </ECTransition>
+      <ECTransition Source="INFORM_READY" Destination="READY" Condition="1" x="1107.72" y="901">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="267.5763,234.3181,290.4237,203.6818" />
+      </ECTransition>
+      <ECTransition Source="EXTEND" Destination="ERROR" Condition="TIMEOUT_EXCEED AND NOT springReady" x="634.5092" y="1519.462">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="197.7025,400.963,120.132,368.4166" />
+      </ECTransition>
+      <ECTransition Source="ERROR" Destination="READY" Condition="RESET" x="677.37" y="892.6498">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="131.3776,232.8793,210.4544,202.8042" />
+      </ECTransition>
+    </ECC>
+    <Algorithm Name="INIT" Comment="Initialization algorithm">
+      <ST><![CDATA[retractCylinder := FALSE;]]></ST>
+    </Algorithm>
+    <Algorithm Name="REQ" Comment="Normally executed algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+    <Algorithm Name="Extend">
+      <ST><![CDATA[retractCylinder := FALSE;]]></ST>
+    </Algorithm>
+    <Algorithm Name="Retract">
+      <ST><![CDATA[retractCylinder := TRUE;]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

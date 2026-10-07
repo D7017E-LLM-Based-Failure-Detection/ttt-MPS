@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="e88335ee-544d-4a8a-b6e2-e36acd941c38" Name="TransportGeneral1_HMI" Comment="Service Interface Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/10/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="B9C901985D8B16F0" Name="INIT">
+        <With Var="QI" />
+      </Event>
+      <Event ID="51FDB3287CD5536B" Name="REQ" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="F320FBBF1E566E45" Name="INITO">
+        <With Var="QO" />
+        <With Var="STATUS" />
+      </Event>
+      <Event ID="682B84A578002845" Name="CNF">
+        <With Var="Enabled" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="621D38225FE0C4B1" Name="QI" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="2476B581B1231146" Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+      <VarDeclaration ID="4F4E711461EA3672" Name="STATUS" Type="STRING" Comment="Service Status" />
+      <VarDeclaration ID="CFE754AE8EB920DD" Name="Enabled" Type="BOOL" />
+    </OutputVars>
+  </InterfaceList>
+  <Service RightInterface="" LeftInterface="">
+    <ServiceSequence Name="" />
+  </Service>
+</FBType>

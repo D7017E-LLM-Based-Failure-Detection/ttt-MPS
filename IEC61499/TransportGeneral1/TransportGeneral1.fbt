@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="9bfa8c2c-9a47-4f4e-8cf0-f918c2e47bbf" Name="TransportGeneral1" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/10/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="62E1BA46694B81A7" Name="INIT" Comment="Initialization Request" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="D8843CC7A5B75494" Name="INITO" Comment="Initialization Confirm" />
+    </EventOutputs>
+    <Sockets>
+      <AdapterDeclaration ID="898CCF337DAF8974" Name="ADP4" Type="ConveyorReq" Namespace="Main" x="560" y="1480" />
+      <AdapterDeclaration ID="D21C0433245314C3" Name="ADP5" Type="ConveyorReq" Namespace="Main" x="560" y="1880" />
+      <AdapterDeclaration ID="64BF5537CA04CC7F" Name="ADP6" Type="ConveyorReq" Namespace="Main" x="580" y="2260" />
+      <AdapterDeclaration ID="C30F5862E83BFD5F" Name="ADP3" Type="ConveyorReq" Namespace="Main" x="560" y="1080" />
+      <AdapterDeclaration ID="DC4A9CA3278BB557" Name="ADP2" Type="ConveyorReq" Namespace="Main" x="560" y="680" />
+      <AdapterDeclaration ID="4D4FE9F8A61F9CEC" Name="ADP1" Type="ConveyorReq" Namespace="Main" x="560" y="260" />
+    </Sockets>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="F7F502716AE2700E" UID="1B338A2C02FC0B61" Name="FB7" Type="OR_65BD917F4F2EC165" x="1460" y="460" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=6;OUT:BOOL" />
+    </FB>
+    <FB ID="97A80E40CC515E96" Name="IThis" Type="TransportGeneral1_HMI" x="1340" y="1440" Namespace="Main" />
+    <FB ID="CFCD8164DF7392CE" Name="CHECK_CONVEYOR_ENABLED" Type="AND_88A3DD8EC65DD11C" x="2080" y="1100" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=2;OUT:BOOL" />
+    </FB>
+    <FB ID="2AF30E1CED313A5B" UID="61D88D1A580E8250" Name="FB55" Type="SYMLINKMULTIVARSRC_1559B0FF8170C9BA0" x="3000" y="700" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:BOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'$${PATH}CONVEYOR'" />
+    </FB>
+    <Input ID="62E1BA46694B81A7" Name="INIT" x="639.9999" y="72" Type="Event" />
+    <Output ID="D8843CC7A5B75494" Name="INITO" x="2500" y="252" Type="Event" />
+    <EventConnections>
+      <Connection Source="$F7F502716AE2700E.CNF" Destination="$CFCD8164DF7392CE.REQ" dx1="67.47913" />
+      <Connection Source="$62E1BA46694B81A7" Destination="$2AF30E1CED313A5B.INIT" dx1="941.4167" />
+      <Connection Source="$CFCD8164DF7392CE.CNF" Destination="$2AF30E1CED313A5B.REQ" dx1="130" />
+      <Connection Source="$64BF5537CA04CC7F.210167FBAD83B2B9" Destination="$F7F502716AE2700E.REQ" dx1="50" />
+      <Connection Source="$D21C0433245314C3.210167FBAD83B2B9" Destination="$F7F502716AE2700E.REQ" dx1="50" />
+      <Connection Source="$898CCF337DAF8974.210167FBAD83B2B9" Destination="$F7F502716AE2700E.REQ" dx1="50" />
+      <Connection Source="$2AF30E1CED313A5B.INITO" Destination="$97A80E40CC515E96.B9C901985D8B16F0">
+        <Points>
+          <Points>
+            <X>888.28125</X>
+            <Y>185</Y>
+          </Points>
+          <Points>
+            <X>898.28125</X>
+            <Y>185</Y>
+          </Points>
+          <Points>
+            <X>898.28125</X>
+            <Y>157.5</Y>
+          </Points>
+          <Points>
+            <X>507.5</X>
+            <Y>157.5</Y>
+          </Points>
+          <Points>
+            <X>507.5</X>
+            <Y>272.5</Y>
+          </Points>
+          <Points>
+            <X>322.5</X>
+            <Y>272.5</Y>
+          </Points>
+          <Points>
+            <X>322.5</X>
+            <Y>370</Y>
+          </Points>
+          <Points>
+            <X>330</X>
+            <Y>370</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$97A80E40CC515E96.F320FBBF1E566E45" Destination="$D8843CC7A5B75494" dx1="139.8959">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$97A80E40CC515E96.682B84A578002845" Destination="$CFCD8164DF7392CE.REQ" dx1="70" />
+      <Connection Source="$C30F5862E83BFD5F.210167FBAD83B2B9" Destination="$F7F502716AE2700E.REQ" dx1="50" />
+      <Connection Source="$DC4A9CA3278BB557.210167FBAD83B2B9" Destination="$F7F502716AE2700E.REQ" dx1="50" />
+      <Connection Source="$4D4FE9F8A61F9CEC.210167FBAD83B2B9" Destination="$F7F502716AE2700E.REQ" dx1="65.10425" />
+      <Connection Source="$CFCD8164DF7392CE.CNF" Destination="$4D4FE9F8A61F9CEC.F511818D72E4FD68">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$CFCD8164DF7392CE.CNF" Destination="$DC4A9CA3278BB557.F511818D72E4FD68">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CFCD8164DF7392CE.CNF" Destination="$C30F5862E83BFD5F.F511818D72E4FD68">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CFCD8164DF7392CE.CNF" Destination="$898CCF337DAF8974.F511818D72E4FD68">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CFCD8164DF7392CE.CNF" Destination="$D21C0433245314C3.F511818D72E4FD68">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CFCD8164DF7392CE.CNF" Destination="$64BF5537CA04CC7F.F511818D72E4FD68">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$CFCD8164DF7392CE.OUT" Destination="$2AF30E1CED313A5B.VALUE1" dx1="150" />
+      <Connection Source="$F7F502716AE2700E.OUT" Destination="$CFCD8164DF7392CE.IN1" dx1="47.47913" />
+      <Connection Source="$64BF5537CA04CC7F.8847AF2BD39930EF" Destination="$F7F502716AE2700E.IN6" dx1="45.10425" />
+      <Connection Source="$D21C0433245314C3.8847AF2BD39930EF" Destination="$F7F502716AE2700E.IN5" dx1="45.10425" />
+      <Connection Source="$898CCF337DAF8974.8847AF2BD39930EF" Destination="$F7F502716AE2700E.IN4" dx1="45.10425" />
+      <Connection Source="$97A80E40CC515E96.CFE754AE8EB920DD" Destination="$CFCD8164DF7392CE.IN2" dx1="90" />
+      <Connection Source="$C30F5862E83BFD5F.8847AF2BD39930EF" Destination="$F7F502716AE2700E.IN3" dx1="45.10425" />
+      <Connection Source="$DC4A9CA3278BB557.8847AF2BD39930EF" Destination="$F7F502716AE2700E.IN2" dx1="45.10425" />
+      <Connection Source="$4D4FE9F8A61F9CEC.8847AF2BD39930EF" Destination="$F7F502716AE2700E.IN1" dx1="45.10425" />
+      <Connection Source="$CFCD8164DF7392CE.OUT" Destination="$4D4FE9F8A61F9CEC.B44949AC545C1846">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$CFCD8164DF7392CE.OUT" Destination="$DC4A9CA3278BB557.B44949AC545C1846">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CFCD8164DF7392CE.OUT" Destination="$C30F5862E83BFD5F.B44949AC545C1846">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CFCD8164DF7392CE.OUT" Destination="$898CCF337DAF8974.B44949AC545C1846">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CFCD8164DF7392CE.OUT" Destination="$D21C0433245314C3.B44949AC545C1846">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CFCD8164DF7392CE.OUT" Destination="$64BF5537CA04CC7F.B44949AC545C1846">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </DataConnections>
+  </FBNetwork>
+</FBType>

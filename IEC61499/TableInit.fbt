@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="30c2eb64-3946-4a18-896d-ef233e5c7316" Name="TableInit" Comment="Basic Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="Template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="F3347BF36BA07E5E" Name="REQ" Comment="Normal Execution Request">
+        <With Var="inPosition" />
+      </Event>
+      <Event ID="70EADC52CA42FB7A" Name="INIT" Comment="Initialization Request" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="8E65DD4139C0EC8C" Name="INITO" Comment="Initialization Confirm" />
+      <Event ID="65DD5814DB5BEE7C" Name="DRIVE_ON" Comment="Execution Confirmation" />
+      <Event ID="B72D535CCE5D8132" Name="DRIVE_OFF" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="107685817A88BAAB" Name="inPosition" Type="BOOL" Comment="Input event qualifier" />
+    </InputVars>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="INIT,REQ" />
+    <ECC>
+      <ECState Name="START" Comment="Initial State" x="552.9412" y="429.4117" />
+      <ECState Name="ROTATE_STEP" x="1524" y="580">
+        <ECAction Output="DRIVE_ON" />
+      </ECState>
+      <ECState Name="ACTUATOR_OFF" x="1300" y="1124">
+        <ECAction Output="DRIVE_OFF" />
+      </ECState>
+      <ECState Name="DONE" x="240" y="935.9999">
+        <ECAction Output="INITO" />
+      </ECState>
+      <ECTransition Source="START" Destination="DONE" Condition="INIT AND inPosition" x="469.2226" y="722.1222">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="130.7396,167.0559,110.0338,200.5746" />
+      </ECTransition>
+      <ECTransition Source="DONE" Destination="START" Condition="1" x="390.3916" y="607.7058">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="88.76471,162.4358,109.4706,128.9171" />
+      </ECTransition>
+      <ECTransition Source="ROTATE_STEP" Destination="ACTUATOR_OFF" Condition="NOT inPosition" x="1488.72" y="880.5563">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="383.6597,204.2006,368.5741,240.8369" />
+      </ECTransition>
+      <ECTransition Source="START" Destination="ROTATE_STEP" Condition="INIT AND NOT inPosition" x="1010.218" y="415.7494">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="225.0134,95.51134,275.6081,103.3574" />
+      </ECTransition>
+      <ECTransition Source="ACTUATOR_OFF" Destination="DONE" Condition="inPosition&#xD;&#xA;" x="700.3058" y="1103.295">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="203.8036,284.5048,146.7823,274.3916" />
+      </ECTransition>
+    </ECC>
+    <Algorithm Name="INIT" Comment="Initialization algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+    <Algorithm Name="REQ" Comment="Normally executed algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

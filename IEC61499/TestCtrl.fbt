@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="733f5450-572a-476a-9424-9c11cc86f993" Name="TestCtrl" Comment="Basic Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="Template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="7683C40870C6884C" Name="REQ" Comment="Normal Execution Request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="4603A1F5EB19F729" Name="TRIGGER" />
+      <Event ID="0DEC8E0492F9DD90" Name="TIMEOUT_EXCEED" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="320318303E383298" Name="DONE">
+        <With Var="QO" />
+      </Event>
+      <Event ID="6108304B86C10CD8" Name="EXTEND" />
+      <Event ID="AABE76B5D0E846A0" Name="RETRACT" />
+      <Event ID="84217F1AEAF82CEE" Name="TIMEOUT" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="3F1315B71B952EC5" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="72DD7F290704D09F" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="INIT,REQ,Check" />
+    <ECC>
+      <ECState Name="START" Comment="Initial State" x="552.9412" y="429.4117" />
+      <ECState Name="EXTEND" x="1260" y="404">
+        <ECAction Output="EXTEND" />
+        <ECAction Output="TIMEOUT" />
+      </ECState>
+      <ECState Name="CHECK" x="1660" y="888">
+        <ECAction Algorithm="Check" />
+      </ECState>
+      <ECState Name="RETRACT" x="932" y="1468">
+        <ECAction Output="RETRACT" />
+        <ECAction Output="TIMEOUT" />
+      </ECState>
+      <ECState Name="DONE" x="280" y="932">
+        <ECAction Output="DONE" />
+      </ECState>
+      <ECTransition Source="DONE" Destination="START" Condition="1" x="411.0561" y="605.7058">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="95.10665,161.7691,113.1286,128.5838" />
+      </ECTransition>
+      <ECTransition Source="START" Destination="EXTEND" Condition="TRIGGER" x="872.2721" y="328.1921">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="200.5659,79.5023,232.6139,77.65863" />
+      </ECTransition>
+      <ECTransition Source="EXTEND" Destination="CHECK" Condition="TIMEOUT_EXCEED" x="1499.518" y="586.804">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="361.1104,126.0126,389.2771,157.5234" />
+      </ECTransition>
+      <ECTransition Source="RETRACT" Destination="DONE" Condition="TIMEOUT_EXCEED" x="623.3046" y="1286.307">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="180.3239,344.3644,140.1177,313.1736" />
+      </ECTransition>
+      <ECTransition Source="CHECK" Destination="RETRACT" Condition="1" x="1330.541" y="1239.213">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="355.331,297.1945,309.6753,332.6145" />
+      </ECTransition>
+    </ECC>
+    <Algorithm Name="INIT" Comment="Initialization algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+    <Algorithm Name="REQ" Comment="Normally executed algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+    <Algorithm Name="Check">
+      <ST><![CDATA[QO:=QI;]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

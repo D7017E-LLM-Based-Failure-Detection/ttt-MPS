@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="6f1b2f45-99ce-4e96-af75-1f23ce7112ce" Name="Default" Comment="" IsDefault="true" Format="2.0" xmlns="https://www.se.com/LibraryElements">
+  <SubAppNetwork>
+    <FB ID="19A3F3F6F91C5A9B" Name="ProcessingStat" Type="Processing2CAT" Namespace="Main" x="680" y="2320" />
+    <FB ID="C385A929DE6999FB" Name="ProcHandling" Type="TransportHandlingCAT" Namespace="Main" x="1480" y="2260" />
+    <FB ID="534F9F80B8928F76" Name="Station2" Type="Waypoint" Namespace="Main" x="2460" y="1960">
+      <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+    </FB>
+    <FB ID="C4C4C28C30CE79A5" Name="Station1" Type="Waypoint" Namespace="Main" x="2460" y="1100">
+      <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+    </FB>
+    <FB ID="4D978FD300B52A58" Name="Station3" Type="Waypoint" Namespace="Main" x="2480" y="2820">
+      <Parameter Name="$6C467FA1B7C9CA3B" Value="TRUE" />
+    </FB>
+    <FB ID="3AF145E473DB161B" Name="Station4" Type="Waypoint" Namespace="Main" x="4320" y="2620">
+      <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+    </FB>
+    <FB ID="73B049C6F4526FA9" Name="Station5" Type="Waypoint" Namespace="Main" x="4300" y="1940">
+      <Parameter Name="$6C467FA1B7C9CA3B" Value="TRUE" />
+    </FB>
+    <FB ID="D05AFF587555D105" Name="Station6" Type="Waypoint" Namespace="Main" x="4320" y="1240">
+      <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+    </FB>
+    <FB ID="5407825FBCDB56F4" Name="Distribution" Type="Distribution2CAT" Namespace="Main" x="500" y="1380" />
+    <FB ID="4D59947FF2CF4F7C" Name="FB1" Type="TestingStation" Namespace="Main" x="1540" y="1400" />
+    <FB ID="0EC9633907C4A4C3" Name="TG1" Type="TransportGeneral1" Namespace="Main" x="3420" y="1860" />
+    <FB ID="070C4CE83C51F820" Name="OutputSorting" Type="Sorting" Namespace="Main" x="5620" y="1220" />
+    <FB ID="323FE72D6AEBC3F4" Name="OutputHanding" Type="OutputHanding" Namespace="Main" x="5040" y="1100" />
+    <FB ID="03C6DC7E246501CA" Name="RobotsStation" Type="RoboCat" Namespace="Main" x="5060" y="2660" />
+    <FB ID="3F4EE84892E729CE" Name="SB0" Type="LampControl" Namespace="Main" x="3400" y="3260">
+      <Parameter Name="$E1290E65D103F02C" Value="http://10.135.109.113/do_value/slot_0" />
+    </FB>
+    <FB ID="DEB7B00A5C9F5713" Name="CapDist" Type="CapDistributionCAT" Namespace="Main" x="5660" y="2680" />
+    <EventConnections>
+      <Connection Source="$0EC9633907C4A4C3.D8843CC7A5B75494" Destination="$3F4EE84892E729CE.392A47A15328CAF8" dx1="40" dx2="30" dy="920">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$C385A929DE6999FB.188659C343A79824" Destination="$3F4EE84892E729CE.8038AD690A2EBB6D" dx1="140">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$C385A929DE6999FB.8A009C673F50EDC2" Destination="$3F4EE84892E729CE.65194209493D291A" dx1="140">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$4D59947FF2CF4F7C.84F904613E536B04" Destination="$3F4EE84892E729CE.7AA27EB4D48AA0EF" dx1="140">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$4D59947FF2CF4F7C.2A10A5926A92C41B" Destination="$3F4EE84892E729CE.37D71EDEC4A1963A" dx1="140">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$323FE72D6AEBC3F4.B5C8731F109F88CC" Destination="$3F4EE84892E729CE.FAC1B651F864C1B0" dx1="127.4165" dx2="230" dy="490">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$323FE72D6AEBC3F4.D930A57251D24EB8" Destination="$3F4EE84892E729CE.7D58E289E5580604" dx1="127.4165" dx2="250" dy="430">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$03C6DC7E246501CA.A39BFC97654CAFF3" Destination="$DEB7B00A5C9F5713.E4C6FDAF265EC198" dx1="68.125" />
+    </EventConnections>
+    <AdapterConnections>
+      <Connection Source="$19A3F3F6F91C5A9B.51D700913D16FC9C" Destination="$C385A929DE6999FB.43CECDD8B0A4C762" dx1="48.125" />
+      <Connection Source="$5407825FBCDB56F4.1FE7610F8BFD7357" Destination="$4D59947FF2CF4F7C.37BEEDB51F13C1BE" dx1="49.021" />
+      <Connection Source="$4D59947FF2CF4F7C.E98DD27C7D9BB7CB" Destination="$C4C4C28C30CE79A5.95F185C12A487DCF" dx1="90.04175" />
+      <Connection Source="$C385A929DE6999FB.FFB46226821095B6" Destination="$534F9F80B8928F76.95F185C12A487DCF" dx1="93.16675" />
+      <Connection Source="$4D978FD300B52A58.54FF2A728F5BD4E9" Destination="$0EC9633907C4A4C3.64BF5537CA04CC7F" dx1="40" />
+      <Connection Source="$534F9F80B8928F76.54FF2A728F5BD4E9" Destination="$0EC9633907C4A4C3.D21C0433245314C3" dx1="40" />
+      <Connection Source="$C4C4C28C30CE79A5.54FF2A728F5BD4E9" Destination="$0EC9633907C4A4C3.898CCF337DAF8974" dx1="40" />
+      <Connection Source="$D05AFF587555D105.54FF2A728F5BD4E9" Destination="$0EC9633907C4A4C3.C30F5862E83BFD5F" dx1="40" dx2="110" dy="150" />
+      <Connection Source="$73B049C6F4526FA9.54FF2A728F5BD4E9" Destination="$0EC9633907C4A4C3.DC4A9CA3278BB557" dx1="40" dx2="130" dy="250" />
+      <Connection Source="$3AF145E473DB161B.54FF2A728F5BD4E9" Destination="$0EC9633907C4A4C3.4D4FE9F8A61F9CEC" dx1="40" dx2="30" dy="-370" />
+      <Connection Source="$070C4CE83C51F820.628B8F7074D40D3F" Destination="$323FE72D6AEBC3F4.0A5D8ECE28FE65D8" dx1="48.12549" dx2="30" dy="90" />
+      <Connection Source="$323FE72D6AEBC3F4.08D8FD6E7A0C852A" Destination="$D05AFF587555D105.95F185C12A487DCF" dx1="47.4165" dx2="30" dy="-540">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$03C6DC7E246501CA.1ED8A73DA6B21594" Destination="$3AF145E473DB161B.95F185C12A487DCF" dx1="48.125" dx2="70" dy="170.0002" />
+    </AdapterConnections>
+  </SubAppNetwork>
+</Layer>

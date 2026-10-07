@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="6F3E7DE0442E3EAE" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management" Format="2.0" xmlns="https://www.se.com/LibraryElements">
+  <FBNetwork>
+    <FB ID="EE3962B272887FD5" Name="FB1" Type="EVENTCHAINHEAD" Namespace="Runtime.Standard" x="980" y="120" Loaded="true" />
+    <FB ID="BB41103CF593DBE2" Name="ProcHandling" Type="TransportHandlingCAT" Namespace="Main" Mapping="C385A929DE6999FB" x="1200" y="1040" />
+    <EventConnections>
+      <Connection Source="$START.COLD" Destination="$EE3962B272887FD5.INIT" dx1="68.60419" />
+      <Connection Source="$START.WARM" Destination="$EE3962B272887FD5.INIT" dx1="70" />
+      <Connection Source="$EE3962B272887FD5.INITO" Destination="$EE3962B272887FD5.TRIGGER" dx1="41.875" dx2="70" dy="-110" />
+      <Connection Source="$START.COLD" Destination="$BB41103CF593DBE2.E06617D73A5059FD" dx1="178.6041">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$START.WARM" Destination="$BB41103CF593DBE2.E06617D73A5059FD" dx1="178.6041">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+    </EventConnections>
+  </FBNetwork>
+</Resource>

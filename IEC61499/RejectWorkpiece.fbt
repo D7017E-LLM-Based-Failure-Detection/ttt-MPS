@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="e38b8fc7-59e0-460c-aa41-42b1e25ea43c" Name="RejectWorkpiece" Format="2.0" Comment="Composite Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="FEE6D230E5275B5D" Name="REQ" Comment="Normal Execution Request">
+        <With Var="ejectorRetracted" />
+        <With Var="liftLowered" />
+      </Event>
+      <Event ID="D9933CDE1EAE677D" Name="TRIGGER" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="B091ED842C61436E" Name="DONE" Comment="Initialization Confirm" />
+      <Event ID="42D13BEE6A33726C" Name="EJECTOR_RETRACT" Comment="Execution Confirmation" />
+      <Event ID="6441F73D2CB340E3" Name="EJECTOR_EXTEND" />
+      <Event ID="630879D5372159D7" Name="LOWER_LIFT" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="2BA6F67001C0E67E" Name="ejectorRetracted" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="808FEB50CB441A9A" Name="liftLowered" Type="BOOL" />
+    </InputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="9933A4FE5C0B6CAB" Name="FB1" Type="SimpleMove" x="820" y="500" Namespace="Main" />
+    <FB ID="B83F1488E3FC7CD2" Name="FB2" Type="Eject" x="1900" y="640" Namespace="Main" />
+    <Input ID="FEE6D230E5275B5D" Name="REQ" x="340" y="332" Type="Event" />
+    <Input ID="2BA6F67001C0E67E" Name="ejectorRetracted" x="500" y="1352" Type="Data" />
+    <Input ID="D9933CDE1EAE677D" Name="TRIGGER" x="220" y="472" Type="Event" />
+    <Input ID="808FEB50CB441A9A" Name="liftLowered" x="100" y="852" Type="Data" />
+    <Output ID="B091ED842C61436E" Name="DONE" x="2560" y="432" Type="Event" />
+    <Output ID="42D13BEE6A33726C" Name="EJECTOR_RETRACT" x="2620" y="832" Type="Event" />
+    <Output ID="6441F73D2CB340E3" Name="EJECTOR_EXTEND" x="2620" y="732" Type="Event" />
+    <Output ID="630879D5372159D7" Name="LOWER_LIFT" x="1620" y="272" Type="Event" />
+    <EventConnections>
+      <Connection Source="$B83F1488E3FC7CD2.F0BF4B807CF216AA" Destination="$6441F73D2CB340E3" dx1="40" />
+      <Connection Source="$B83F1488E3FC7CD2.B470992DE14D4045" Destination="$42D13BEE6A33726C" dx1="40" />
+      <Connection Source="$B83F1488E3FC7CD2.A5930E3EF385B3BE" Destination="$B091ED842C61436E" dx1="54.146" />
+      <Connection Source="$9933A4FE5C0B6CAB.19B414802953B8F9" Destination="$B83F1488E3FC7CD2.BB0611C579002D0A" dx1="48.9585" />
+      <Connection Source="$9933A4FE5C0B6CAB.4A40729E5CEB7782" Destination="$630879D5372159D7" dx1="70" />
+      <Connection Source="$FEE6D230E5275B5D" Destination="$B83F1488E3FC7CD2.302ACA6F6519ACD7" dx1="889.5417" />
+      <Connection Source="$FEE6D230E5275B5D" Destination="$9933A4FE5C0B6CAB.08A6921781769002" dx1="49.54169" />
+      <Connection Source="$D9933CDE1EAE677D" Destination="$9933A4FE5C0B6CAB.BEEA5224F96B4EAA" dx1="47.625" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$808FEB50CB441A9A" Destination="$9933A4FE5C0B6CAB.D7113296D1A5E867" dx1="40" />
+      <Connection Source="$2BA6F67001C0E67E" Destination="$B83F1488E3FC7CD2.255C3ABC531670E9" dx1="46.95837" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

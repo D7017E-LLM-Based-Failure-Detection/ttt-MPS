@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd" >
+<FBType Name="ConveyorWaypoint" Namespace="Main" Format="2.0" GUID="c95739e0-a0c6-4af1-a0b5-80e30017745f" Comment="Composite Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="" Version="0.0" Author=" " Date="7/2/2026" Remarks="template" />
+  <CompilerInfo />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="E0BD36686C4D43F1" Name="INIT" Comment="Initialization Request" >
+        <With Var="QI" />
+      </Event>
+      <Event ID="65131FFC0AD672CB" Name="REQ" Comment="Normal Execution Request" >
+        <With Var="QI" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="A2BC810A6D899928" Name="INITO" Comment="Initialization Confirm" >
+        <With Var="QO" />
+      </Event>
+      <Event ID="CBC10235BCE8A138" Name="CNF" Comment="Execution Confirmation" >
+        <With Var="QO" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="45A5E73EDD1299C4" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="D19FCE8906AAD80F" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+  </FBNetwork>
+</FBType>

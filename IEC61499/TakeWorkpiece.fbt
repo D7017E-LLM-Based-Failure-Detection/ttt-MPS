@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="0094e4fd-a34e-437b-a159-6c0324d3c7d2" Name="TakeWorkpiece" Comment="Basic Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="Template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="C3081875F896075C" Name="REQ" Comment="Normal Execution Request">
+        <With Var="VerticalCylinderUp" />
+        <With Var="VerticalCylinderDown" />
+        <With Var="WorkpieceGripper" />
+      </Event>
+      <Event ID="27AC0087A3E44EB5" Name="TRIGGER" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="FC6231BE52DA904A" Name="DONE" Comment="Initialization Confirm" />
+      <Event ID="EC89A7863A07517A" Name="V_EXTEND" Comment="Execution Confirmation" />
+      <Event ID="302C937FA2A2CBA5" Name="V_RETRACT" />
+      <Event ID="AE93A195D0B53835" Name="OPEN_GRIPPER" />
+      <Event ID="27C1A225CCC78132" Name="CLOSE_GRIPPER" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="0D0F7C49C5E17892" Name="VerticalCylinderUp" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="4269EE41E21DC301" Name="VerticalCylinderDown" Type="BOOL" />
+      <VarDeclaration ID="4F3635B602518027" Name="WorkpieceGripper" Type="BOOL" />
+    </InputVars>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="INIT,REQ" />
+    <ECC>
+      <ECState Name="START" Comment="Initial State" x="552.9412" y="429.4117" />
+      <ECState Name="OPERATE" x="1148" y="532" />
+      <ECState Name="OPEN_GRIPPER" x="1632" y="939.9999">
+        <ECAction Output="OPEN_GRIPPER" />
+      </ECState>
+      <ECState Name="LOWER_GRIPPER" x="1852" y="1208">
+        <ECAction Output="V_EXTEND" />
+      </ECState>
+      <ECState Name="GRIP" x="824" y="1468">
+        <ECAction Output="CLOSE_GRIPPER" />
+      </ECState>
+      <ECState Name="GET_BACK" x="252" y="1268">
+        <ECAction Output="V_RETRACT" />
+      </ECState>
+      <ECState Name="DONE" x="40" y="776">
+        <ECAction Output="DONE" />
+      </ECState>
+      <ECTransition Source="OPERATE" Destination="OPEN_GRIPPER" Condition="1" x="1455.897" y="678.6562">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="348.605,152.2339,378.6212,177.5369" />
+      </ECTransition>
+      <ECTransition Source="OPEN_GRIPPER" Destination="LOWER_GRIPPER" Condition="1" x="1813.556" y="1026.413">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="449.2262,245.8195,460.4202,259.4558" />
+      </ECTransition>
+      <ECTransition Source="LOWER_GRIPPER" Destination="GRIP" Condition="VerticalCylinderDown" x="1319.533" y="1426.983">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="358.0093,354.3413,298.4691,369.4001" />
+      </ECTransition>
+      <ECTransition Source="GRIP" Destination="GET_BACK" Condition="1" x="549.1507" y="1456.66">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="152.9043,373.435,126.6073,364.2403" />
+      </ECTransition>
+      <ECTransition Source="GET_BACK" Destination="DONE" Condition="VerticalCylinderUp" x="141.5481" y="1097">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="43.45958,296.6515,29.54042,264.3485" />
+      </ECTransition>
+      <ECTransition Source="DONE" Destination="START" Condition="1" x="285.8036" y="523.8903">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="59.18081,135.7691,89.05451,115.5838" />
+      </ECTransition>
+      <ECTransition Source="START" Destination="OPERATE" Condition="TRIGGER&#xD;&#xA;" x="853.0624" y="393.7784">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="199.5195,92.54955,224.204,96.80518" />
+      </ECTransition>
+    </ECC>
+    <Algorithm Name="INIT" Comment="Initialization algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+    <Algorithm Name="REQ" Comment="Normally executed algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

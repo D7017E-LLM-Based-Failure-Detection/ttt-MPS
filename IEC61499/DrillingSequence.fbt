@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="833c46a6-3967-4029-a9bb-9e7351c109bb" Name="DrillingSequence" Format="2.0" Comment="Composite Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="8DE042E421EA6805" Name="REQ" Comment="Normal Execution Request">
+        <With Var="atTop" />
+        <With Var="atBottom" />
+      </Event>
+      <Event ID="5145E1C2CDC53A64" Name="TRIGGER">
+        <With Var="DrillingTime" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="A6034046515E95A6" Name="RAISE" Comment="Initialization Confirm" />
+      <Event ID="A0A8CCB5D424E196" Name="LOWER" Comment="Execution Confirmation" />
+      <Event ID="0B3CFE7BF15C449B" Name="TURN_ON" />
+      <Event ID="1EA02BB48CEF04A2" Name="TURN_OFF" />
+      <Event ID="68607708FA3128AC" Name="DONE" />
+      <Event ID="510ACF34648B49C8" Name="CLAMP_ON" />
+      <Event ID="6079A15A836314A1" Name="CLAMP_OFF" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="5F4B03F152267E7D" Name="atTop" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="B05166F8331E2271" Name="atBottom" Type="BOOL" />
+      <VarDeclaration ID="99A527E5BE699A62" Name="DrillingTime" Type="TIME" />
+    </InputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="5ACCBF2D6449F389" Name="FB1" Type="E_DELAY" x="1320" y="160" Namespace="IEC61499.Standard" />
+    <FB ID="1C69763EC09E4DE4" Name="FB2" Type="DrillCtrl" x="1300" y="840" Namespace="Main" />
+    <Input ID="8DE042E421EA6805" Name="REQ" x="460" y="652" Type="Event" />
+    <Input ID="5F4B03F152267E7D" Name="atTop" x="400" y="1372" Type="Data" />
+    <Input ID="5145E1C2CDC53A64" Name="TRIGGER" x="460" y="752" Type="Event" />
+    <Input ID="B05166F8331E2271" Name="atBottom" x="400" y="1432" Type="Data" />
+    <Input ID="99A527E5BE699A62" Name="DrillingTime" x="360" y="152" Type="Data" />
+    <Output ID="A6034046515E95A6" Name="RAISE" x="2680" y="912" Type="Event" />
+    <Output ID="A0A8CCB5D424E196" Name="LOWER" x="2680" y="832" Type="Event" />
+    <Output ID="0B3CFE7BF15C449B" Name="TURN_ON" x="2660" y="992" Type="Event" />
+    <Output ID="1EA02BB48CEF04A2" Name="TURN_OFF" x="2640" y="1052" Type="Event" />
+    <Output ID="68607708FA3128AC" Name="DONE" x="2680" y="392" Type="Event" />
+    <Output ID="510ACF34648B49C8" Name="CLAMP_ON" x="2620" y="1212" Type="Event" />
+    <Output ID="6079A15A836314A1" Name="CLAMP_OFF" x="2600" y="1272" Type="Event" />
+    <EventConnections>
+      <Connection Source="$8DE042E421EA6805" Destination="$1C69763EC09E4DE4.34676272DEFFB362" dx1="89.54169" />
+      <Connection Source="$5145E1C2CDC53A64" Destination="$1C69763EC09E4DE4.73CDA22AFCF9D14A" dx1="47.625" />
+      <Connection Source="$5ACCBF2D6449F389.EO" Destination="$1C69763EC09E4DE4.53011D8F36316029" dx1="48.5" dx2="90" dy="350" />
+      <Connection Source="$1C69763EC09E4DE4.D24C577C4D4278A3" Destination="$5ACCBF2D6449F389.START" dx1="43.16675" dx2="50" dy="-410" />
+      <Connection Source="$1C69763EC09E4DE4.ED7E27FC070B1FDA" Destination="$6079A15A836314A1" />
+      <Connection Source="$1C69763EC09E4DE4.251FAC944EF1C49C" Destination="$510ACF34648B49C8" />
+      <Connection Source="$1C69763EC09E4DE4.F3190AF94B5130BD" Destination="$68607708FA3128AC" dx1="50" />
+      <Connection Source="$1C69763EC09E4DE4.59A75CE3DF71CE41" Destination="$A0A8CCB5D424E196" dx1="70" />
+      <Connection Source="$1C69763EC09E4DE4.1DF318C037F9E73D" Destination="$A6034046515E95A6" dx1="90" />
+      <Connection Source="$1C69763EC09E4DE4.6CC1F3EB9D4CB24F" Destination="$0B3CFE7BF15C449B" dx1="110" />
+      <Connection Source="$1C69763EC09E4DE4.22EE61FB11F8ADA9" Destination="$1EA02BB48CEF04A2" dx1="130" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$99A527E5BE699A62" Destination="$5ACCBF2D6449F389.DT" dx1="40" />
+      <Connection Source="$5F4B03F152267E7D" Destination="$1C69763EC09E4DE4.30CF748D8CF096C0" dx1="51.14587" />
+      <Connection Source="$B05166F8331E2271" Destination="$1C69763EC09E4DE4.B47EBD8273B78436" dx1="49.5" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

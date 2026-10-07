@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DeviceHwConfigurationItems xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="1.0.0.0">
+  <DeviceHwConfigurationItem ResourceId="623B7B3E5E108194">
+    <ConfigurationBaseItem>
+      <Name>BMTM3</Name>
+      <ID>6273A05BE29EF67A</ID>
+      <Type>
+        <Name>BMTM3</Name>
+        <Namespace>SE.IoTMx</Namespace>
+      </Type>
+      <ItemProperties>
+        <ItemProperty>
+          <Name>busid</Name>
+          <Value xsi:type="xsd:string">TM3Config</Value>
+          <HWParameters>
+            <string>BUS_ID</string>
+          </HWParameters>
+        </ItemProperty>
+        <ItemProperty>
+          <Name>powerConsumption</Name>
+          <Value xsi:type="xsd:unsignedByte">0</Value>
+        </ItemProperty>
+        <ItemProperty>
+          <Name>buscycletime</Name>
+          <Value xsi:type="xsd:string">T#80ms</Value>
+          <HWParameters>
+            <string>busCycleTime</string>
+          </HWParameters>
+        </ItemProperty>
+        <ItemProperty>
+          <Name>buscycletolerance</Name>
+          <Value xsi:type="xsd:unsignedInt">30</Value>
+          <HWParameters>
+            <string>busCycleTolerance</string>
+          </HWParameters>
+        </ItemProperty>
+        <ItemProperty>
+          <Name>buscycleactionwhenmissed</Name>
+          <Value xsi:type="xsd:unsignedInt">1</Value>
+          <HWParameters>
+            <string>busCycleActionWhenMissed</string>
+          </HWParameters>
+        </ItemProperty>
+        <ItemProperty>
+          <Name>enableSymlinkOC</Name>
+          <Value xsi:type="xsd:boolean">true</Value>
+          <HWParameters>
+            <string>enableSymlinkOC</string>
+          </HWParameters>
+        </ItemProperty>
+      </ItemProperties>
+      <ParameterValues>
+        <ParameterValue Name="busId" Value="'BMTM3'" Comment="Uniquely identifies a bus in a device" />
+        <ParameterValue Name="enableSymlinkOC" Value="TRUE" Comment="If TRUE, Symlink variables are relearnt during OnlineChange" />
+        <ParameterValue Name="phase" Value="T#0ms" Comment="Delay before starting the bus events at application start to avoid same phase. Please apply a different phase for each bus master to avoid having all events processed in the same time phase." />
+        <ParameterValue Name="busCycleTime" Value="T#80ms" Comment="Period at which the bus is scheduled (RX/TX)" />
+        <ParameterValue Name="busCycleTolerance" Value="30" Comment="Tolerance expressed as percentage of the bus cycle time. We consider a missed cycle if elapsed time since previous cycle &gt; (bus cycle time + tolerance) or &lt; (bus cycle time - tolerance)." />
+        <ParameterValue Name="busCycleActionWhenMissed" Value="1" Comment="Action to trigger on missed bus cycle. INFO to log warning with lower impact on performances (indicates how many bus cycle(s) were missed) ; DEBUG to log detailed warning with higher impact on performance (indicates exact drift for each missed cycle) ; ERROR_HALT to log an error and move to Error Halt state" />
+        <ParameterValue Name="busStatusSymlink" Value="" Comment="Get bus Status via Symlink" IsSymlink="true" />
+      </ParameterValues>
+      <MasterConfigFileName>${ProjectDir}\${SystemName}\RuntimeData\${DeviceName}\boot\${busid}.xml</MasterConfigFileName>
+      <Items>
+        <ConfigurationBaseItem>
+          <Name>TM3DI16_G</Name>
+          <ID>FD95E22FF227CBBF</ID>
+          <Type>
+            <Name>TM3DI16_G</Name>
+            <Namespace>SE.IoTMx</Namespace>
+          </Type>
+          <ItemProperties>
+            <ItemProperty>
+              <Name>OptionalModule</Name>
+              <Value xsi:type="xsd:unsignedByte">0</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_0.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_0.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_1.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_1.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_2.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_2.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_3.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_3.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_4.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_4.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_5.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_5.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_6.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_6.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_7.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_7.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_8.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_8.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_9.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_9.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_10.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_10.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_11.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_11.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_12.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_12.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_13.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_13.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_14.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_14.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_15.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_15.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+          </ItemProperties>
+          <ParameterValues>
+            <ParameterValue Name="DI00" Value="'RES0.FB1.WP_AVA'" IsSymlink="true" />
+            <ParameterValue Name="DI01" Value="'RES0.FB1.WP_NOT_BLK'" IsSymlink="true" />
+            <ParameterValue Name="DI02" Value="'RES0.FB1.LIGHT_CURTAIN'" IsSymlink="true" />
+            <ParameterValue Name="DI03" Value="'RES0.FB1.HEIGHT_OK'" IsSymlink="true" />
+            <ParameterValue Name="DI04" Value="'RES0.FB1.LIFT_AT_TOP'" IsSymlink="true" />
+            <ParameterValue Name="DI05" Value="'RES0.FB1.LIFT_AT_BOTTOM'" IsSymlink="true" />
+            <ParameterValue Name="DI06" Value="'RES0.FB1.EJECTOR_RET'" IsSymlink="true" />
+            <ParameterValue Name="DI07" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI08" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI09" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI10" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI11" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI12" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI13" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI14" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI15" Value="" IsSymlink="true" />
+          </ParameterValues>
+          <PreviousItem>
+            <Name>BMTM3</Name>
+            <PortName>BusOut</PortName>
+          </PreviousItem>
+          <Items />
+        </ConfigurationBaseItem>
+        <ConfigurationBaseItem>
+          <Name>TM3DQ16R_G</Name>
+          <ID>24B14F1D1072AFAF</ID>
+          <Type>
+            <Name>TM3DQ16R_G</Name>
+            <Namespace>SE.IoTMx</Namespace>
+          </Type>
+          <ItemProperties>
+            <ItemProperty>
+              <Name>OptionalModule</Name>
+              <Value xsi:type="xsd:unsignedByte">0</Value>
+            </ItemProperty>
+          </ItemProperties>
+          <ParameterValues>
+            <ParameterValue Name="DO00" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO01" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO02" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO03" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO04" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO05" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO06" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO07" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO08" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO09" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO10" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO11" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO12" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO13" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO14" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO15" Value="" IsSymlink="true" />
+          </ParameterValues>
+          <PreviousItem>
+            <Name>TM3DI16_G</Name>
+            <PortName>BusOut</PortName>
+          </PreviousItem>
+          <Items />
+        </ConfigurationBaseItem>
+        <ConfigurationBaseItem>
+          <Name>TM3DI16_G_1</Name>
+          <ID>338003FBD3D36552</ID>
+          <Type>
+            <Name>TM3DI16_G</Name>
+            <Namespace>SE.IoTMx</Namespace>
+          </Type>
+          <ItemProperties>
+            <ItemProperty>
+              <Name>OptionalModule</Name>
+              <Value xsi:type="xsd:unsignedByte">0</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_0.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_0.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_1.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_1.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_2.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_2.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_3.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_3.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_4.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_4.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_5.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_5.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_6.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_6.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_7.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_7.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_8.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_8.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_9.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_9.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_10.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_10.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_11.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_11.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_12.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_12.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_13.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_13.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_14.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_14.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_15.Latch</Name>
+              <Value xsi:type="xsd:unsignedByte">32</Value>
+            </ItemProperty>
+            <ItemProperty>
+              <Name>Channel_15.Filter</Name>
+              <Value xsi:type="xsd:unsignedByte">4</Value>
+            </ItemProperty>
+          </ItemProperties>
+          <ParameterValues>
+            <ParameterValue Name="DI00" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI01" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI02" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI03" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI04" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI05" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI06" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI07" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI08" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI09" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI10" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI11" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI12" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI13" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI14" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI15" Value="" IsSymlink="true" />
+          </ParameterValues>
+          <PreviousItem>
+            <Name>TM3DQ16R_G</Name>
+            <PortName>BusOut</PortName>
+          </PreviousItem>
+          <Items />
+        </ConfigurationBaseItem>
+        <ConfigurationBaseItem>
+          <Name>TM3DQ16R_G_1</Name>
+          <ID>B8258D623CCF98F0</ID>
+          <Type>
+            <Name>TM3DQ16R_G</Name>
+            <Namespace>SE.IoTMx</Namespace>
+          </Type>
+          <ItemProperties>
+            <ItemProperty>
+              <Name>OptionalModule</Name>
+              <Value xsi:type="xsd:unsignedByte">0</Value>
+            </ItemProperty>
+          </ItemProperties>
+          <ParameterValues>
+            <ParameterValue Name="DO00" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO01" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO02" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO03" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO04" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO05" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO06" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO07" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO08" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO09" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO10" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO11" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO12" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO13" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO14" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO15" Value="" IsSymlink="true" />
+          </ParameterValues>
+          <PreviousItem>
+            <Name>TM3DI16_G_1</Name>
+            <PortName>BusOut</PortName>
+          </PreviousItem>
+          <Items />
+        </ConfigurationBaseItem>
+      </Items>
+    </ConfigurationBaseItem>
+  </DeviceHwConfigurationItem>
+</DeviceHwConfigurationItems>

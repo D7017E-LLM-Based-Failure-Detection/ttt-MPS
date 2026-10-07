@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="c258db73-ff19-4f59-99af-b21ae4a6acd4" Name="ControlPanelOut" Format="2.0" Comment="Composite Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="CCD65B7F67E00C87" Name="INIT" Comment="Initialization Request">
+        <With Var="q1" />
+        <With Var="q2" />
+        <With Var="q4" />
+        <With Var="q5" />
+        <With Var="q6" />
+        <With Var="q7" />
+      </Event>
+      <Event ID="4778653D8DBF7248" Name="REQ" Comment="Normal Execution Request">
+        <With Var="q1" />
+        <With Var="q2" />
+        <With Var="q4" />
+        <With Var="q5" />
+        <With Var="q6" />
+        <With Var="q7" />
+      </Event>
+      <Event ID="DC4AC429D7DC72F4" Name="START_OK" />
+      <Event ID="ADC8D44EE6F5CFC7" Name="RESET_OK" />
+      <Event ID="D1714045071F7593" Name="REQ_RESET" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="F7D5ED5A0E4491B7" Name="INITO" Comment="Initialization Confirm" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="C26EC91ADA4C3749" Name="q1" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="8B5737DEFF5224B0" Name="q2" Type="BOOL" />
+      <VarDeclaration ID="E98BCB8EC09F669C" Name="q4" Type="BOOL" />
+      <VarDeclaration ID="972C67A1D7FE12B3" Name="q5" Type="BOOL" />
+      <VarDeclaration ID="15CA038062847536" Name="q6" Type="BOOL" />
+      <VarDeclaration ID="BCF57BAEFF0C3E81" Name="q7" Type="BOOL" />
+    </InputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="8EC45FEF93BEC165" Name="FB1" Type="E_SR" x="1200" y="940" Namespace="IEC61499.Standard" />
+    <FB ID="B6AE000E77DFF13B" Name="FB2" Type="E_SR" x="1200" y="1420" Namespace="IEC61499.Standard" />
+    <FB ID="8ED325CC6EE57F82" UID="23CA15F6D3F8A3E7" Name="TSM_OUT" Type="SYMLINKMULTIVARSRC_91EC7219ED37E472" x="2600" y="380" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=8;VALUE${I}:BOOL,BOOL,BOOL,BOOL,BOOL,BOOL,BOOL,BOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'$${PATH}CP_START'" />
+      <Parameter Name="$NAME2" Value="'$${PATH}CP_RESET'" />
+      <Parameter Name="$NAME3" Value="'$${PATH}CP_Q1'" />
+      <Parameter Name="$NAME4" Value="'$${PATH}CP_Q2'" />
+      <Parameter Name="$NAME5" Value="'$${PATH}CP_Q4'" />
+      <Parameter Name="$NAME6" Value="'$${PATH}CP_Q5'" />
+      <Parameter Name="$NAME7" Value="'$${PATH}CP_Q6'" />
+      <Parameter Name="$NAME8" Value="'$${PATH}CP_Q7'" />
+    </FB>
+    <Input ID="CCD65B7F67E00C87" Name="INIT" x="520" y="652" Type="Event" />
+    <Input ID="4778653D8DBF7248" Name="REQ" x="340" y="292" Type="Event" />
+    <Input ID="C26EC91ADA4C3749" Name="q1" x="1720" y="1212" Type="Data" />
+    <Input ID="DC4AC429D7DC72F4" Name="START_OK" x="260" y="1372" Type="Event" />
+    <Input ID="ADC8D44EE6F5CFC7" Name="RESET_OK" x="200" y="892" Type="Event" />
+    <Input ID="D1714045071F7593" Name="REQ_RESET" x="240" y="1032" Type="Event" />
+    <Input ID="8B5737DEFF5224B0" Name="q2" x="1720" y="1312" Type="Data" />
+    <Input ID="E98BCB8EC09F669C" Name="q4" x="1720" y="1412" Type="Data" />
+    <Input ID="972C67A1D7FE12B3" Name="q5" x="1720" y="1472" Type="Data" />
+    <Input ID="15CA038062847536" Name="q6" x="1720" y="1532" Type="Data" />
+    <Input ID="BCF57BAEFF0C3E81" Name="q7" x="1720" y="1592" Type="Data" />
+    <Output ID="F7D5ED5A0E4491B7" Name="INITO" x="3200" y="152" Type="Event" />
+    <EventConnections>
+      <Connection Source="$DC4AC429D7DC72F4" Destination="$B6AE000E77DFF13B.R" dx1="40" />
+      <Connection Source="$D1714045071F7593" Destination="$8EC45FEF93BEC165.R" dx1="43.75" />
+      <Connection Source="$D1714045071F7593" Destination="$B6AE000E77DFF13B.S" dx1="43.75" />
+      <Connection Source="$ADC8D44EE6F5CFC7" Destination="$8EC45FEF93BEC165.S" dx1="40" />
+      <Connection Source="$CCD65B7F67E00C87" Destination="$8EC45FEF93BEC165.S" dx1="41.41669" />
+      <Connection Source="$CCD65B7F67E00C87" Destination="$8ED325CC6EE57F82.INIT" dx1="41.41669" />
+      <Connection Source="$4778653D8DBF7248" Destination="$8ED325CC6EE57F82.REQ" dx1="49.54169" />
+      <Connection Source="$8EC45FEF93BEC165.EO" Destination="$8ED325CC6EE57F82.REQ" dx1="50" />
+      <Connection Source="$B6AE000E77DFF13B.EO" Destination="$8ED325CC6EE57F82.REQ" dx1="50" />
+      <Connection Source="$8ED325CC6EE57F82.INITO" Destination="$F7D5ED5A0E4491B7" dx1="40" dx2="30" dy="-110" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$B6AE000E77DFF13B.Q" Destination="$8ED325CC6EE57F82.VALUE1" dx1="70" />
+      <Connection Source="$8EC45FEF93BEC165.Q" Destination="$8ED325CC6EE57F82.VALUE2" dx1="70" />
+      <Connection Source="$C26EC91ADA4C3749" Destination="$8ED325CC6EE57F82.VALUE3" dx1="40" />
+      <Connection Source="$8B5737DEFF5224B0" Destination="$8ED325CC6EE57F82.VALUE4" dx1="40" />
+      <Connection Source="$E98BCB8EC09F669C" Destination="$8ED325CC6EE57F82.VALUE5" dx1="40" />
+      <Connection Source="$972C67A1D7FE12B3" Destination="$8ED325CC6EE57F82.VALUE6" dx1="40" />
+      <Connection Source="$15CA038062847536" Destination="$8ED325CC6EE57F82.VALUE7" dx1="40" />
+      <Connection Source="$BCF57BAEFF0C3E81" Destination="$8ED325CC6EE57F82.VALUE8" dx1="40" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

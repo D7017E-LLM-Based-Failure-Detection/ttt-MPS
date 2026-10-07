@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE FBType SYSTEM "../LibraryElement.dtd" >
+  <FBType Name="Waypoint_HMI" Namespace="Main" GUID="5a8b1f68-f35d-4c53-80e4-2bb63b38bc3f" Comment="Service Interface Function Block Type" >
+    <Identification Standard="61499-2" />
+    <VersionInfo Organization="" Version="0.0" Author=" " Date="7/9/2026" Remarks="template" />
+    <InterfaceList>
+      <EventInputs>
+        <Event ID="63A0C6B97B4B6308" Name="INIT">
+          <With Var="QI" />
+        </Event>
+      </EventInputs>
+      <EventOutputs>
+        <Event ID="53481AFBD49DE37A" Name="INITO">
+          <With Var="QO" />
+          <With Var="STATUS" />
+        </Event>
+      </EventOutputs>
+      <InputVars>
+        <VarDeclaration ID="46040E981FCB8FDA" Name="QI" Type="BOOL" />
+      </InputVars>
+      <OutputVars>
+        <VarDeclaration ID="3F1914084554827A" Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+        <VarDeclaration ID="4F20EEAF912FAFB8" Name="STATUS" Type="STRING" Comment="Service Status" />
+      </OutputVars>
+    </InterfaceList>
+    <Service RightInterface="" LeftInterface="">
+      <ServiceSequence Name= "" />
+    </Service>
+  </FBType>
+  

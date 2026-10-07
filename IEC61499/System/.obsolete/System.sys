@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE System SYSTEM "../LibraryElement.dtd">
+<System ID="f7699740-e2e0-46ef-a69d-528119195833" Name="System" Comment="System Configuration">
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" />
+  <Application ID="dc75b497-8b80-4fe9-b847-3ff0b617596d" Name="APP1">
+    <SubAppNetwork>
+      <FB ID="19A3F3F6F91C5A9B" Name="ProcessingStat" Type="Processing2CAT" x="680" y="2320" Namespace="Main" />
+      <FB ID="C385A929DE6999FB" Name="ProcHandling" Type="TransportHandlingCAT" x="1480" y="2260" Namespace="Main" />
+      <FB ID="534F9F80B8928F76" Name="Station2" Type="Waypoint" x="2460" y="1960" Namespace="Main">
+        <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+      </FB>
+      <FB ID="C4C4C28C30CE79A5" Name="Station1" Type="Waypoint" x="2460" y="1100" Namespace="Main">
+        <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+      </FB>
+      <FB ID="4D978FD300B52A58" Name="Station3" Type="Waypoint" x="2480" y="2820" Namespace="Main">
+        <Parameter Name="$6C467FA1B7C9CA3B" Value="TRUE" />
+      </FB>
+      <FB ID="3AF145E473DB161B" Name="Station4" Type="Waypoint" x="4320" y="2620" Namespace="Main">
+        <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+      </FB>
+      <FB ID="73B049C6F4526FA9" Name="Station5" Type="Waypoint" x="4300" y="1940" Namespace="Main">
+        <Parameter Name="$6C467FA1B7C9CA3B" Value="TRUE" />
+      </FB>
+      <FB ID="D05AFF587555D105" Name="Station6" Type="Waypoint" x="4320" y="1240" Namespace="Main">
+        <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+      </FB>
+      <FB ID="5407825FBCDB56F4" Name="Distribution" Type="Distribution2CAT" x="500" y="1380" Namespace="Main" />
+      <FB ID="4D59947FF2CF4F7C" Name="FB1" Type="TestingStation" x="1540" y="1400" Namespace="Main" />
+      <FB ID="0EC9633907C4A4C3" Name="TG1" Type="TransportGeneral1" x="3420" y="1860" Namespace="Main" />
+      <FB ID="070C4CE83C51F820" Name="OutputSorting" Type="Sorting" x="5620" y="1220" Namespace="Main" />
+      <FB ID="323FE72D6AEBC3F4" Name="OutputHanding" Type="OutputHanding" x="5040" y="1100" Namespace="Main" />
+      <FB ID="03C6DC7E246501CA" Name="RobotsStation" Type="RoboCat" x="5060" y="2660" Namespace="Main" />
+      <FB ID="3F4EE84892E729CE" Name="SB0" Type="LampControl" x="3400" y="3260" Namespace="Main">
+        <Parameter Name="$E1290E65D103F02C" Value="http://10.135.109.113/do_value/slot_0" />
+      </FB>
+      <FB ID="DEB7B00A5C9F5713" Name="CapDist" Type="CapDistributionCAT" x="5660" y="2680" Namespace="Main" />
+      <EventConnections>
+        <Connection Source="$0EC9633907C4A4C3.D8843CC7A5B75494" Destination="$3F4EE84892E729CE.392A47A15328CAF8" dx1="40" dx2="30" dy="920">
+          <AvoidsNodes>false</AvoidsNodes>
+        </Connection>
+        <Connection Source="$C385A929DE6999FB.188659C343A79824" Destination="$3F4EE84892E729CE.8038AD690A2EBB6D" dx1="140">
+          <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+          <AvoidsNodes>false</AvoidsNodes>
+        </Connection>
+        <Connection Source="$C385A929DE6999FB.8A009C673F50EDC2" Destination="$3F4EE84892E729CE.65194209493D291A" dx1="140">
+          <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+          <AvoidsNodes>false</AvoidsNodes>
+        </Connection>
+        <Connection Source="$4D59947FF2CF4F7C.84F904613E536B04" Destination="$3F4EE84892E729CE.7AA27EB4D48AA0EF" dx1="140">
+          <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+          <AvoidsNodes>false</AvoidsNodes>
+        </Connection>
+        <Connection Source="$4D59947FF2CF4F7C.2A10A5926A92C41B" Destination="$3F4EE84892E729CE.37D71EDEC4A1963A" dx1="140">
+          <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+          <AvoidsNodes>false</AvoidsNodes>
+        </Connection>
+        <Connection Source="$323FE72D6AEBC3F4.B5C8731F109F88CC" Destination="$3F4EE84892E729CE.FAC1B651F864C1B0" dx1="127.4165" dx2="230" dy="490">
+          <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+          <AvoidsNodes>false</AvoidsNodes>
+        </Connection>
+        <Connection Source="$323FE72D6AEBC3F4.D930A57251D24EB8" Destination="$3F4EE84892E729CE.7D58E289E5580604" dx1="127.4165" dx2="250" dy="430">
+          <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+          <AvoidsNodes>false</AvoidsNodes>
+        </Connection>
+        <Connection Source="$03C6DC7E246501CA.A39BFC97654CAFF3" Destination="$DEB7B00A5C9F5713.E4C6FDAF265EC198" dx1="68.125" />
+      </EventConnections>
+      <AdapterConnections>
+        <Connection Source="$19A3F3F6F91C5A9B.51D700913D16FC9C" Destination="$C385A929DE6999FB.43CECDD8B0A4C762" dx1="48.125" />
+        <Connection Source="$5407825FBCDB56F4.1FE7610F8BFD7357" Destination="$4D59947FF2CF4F7C.37BEEDB51F13C1BE" dx1="49.021" />
+        <Connection Source="$4D59947FF2CF4F7C.E98DD27C7D9BB7CB" Destination="$C4C4C28C30CE79A5.95F185C12A487DCF" dx1="90.04175" />
+        <Connection Source="$C385A929DE6999FB.FFB46226821095B6" Destination="$534F9F80B8928F76.95F185C12A487DCF" dx1="93.16675" />
+        <Connection Source="$4D978FD300B52A58.54FF2A728F5BD4E9" Destination="$0EC9633907C4A4C3.64BF5537CA04CC7F" dx1="40" />
+        <Connection Source="$534F9F80B8928F76.54FF2A728F5BD4E9" Destination="$0EC9633907C4A4C3.D21C0433245314C3" dx1="40" />
+        <Connection Source="$C4C4C28C30CE79A5.54FF2A728F5BD4E9" Destination="$0EC9633907C4A4C3.898CCF337DAF8974" dx1="40" />
+        <Connection Source="$D05AFF587555D105.54FF2A728F5BD4E9" Destination="$0EC9633907C4A4C3.C30F5862E83BFD5F" dx1="40" dx2="110" dy="150" />
+        <Connection Source="$73B049C6F4526FA9.54FF2A728F5BD4E9" Destination="$0EC9633907C4A4C3.DC4A9CA3278BB557" dx1="40" dx2="130" dy="250" />
+        <Connection Source="$3AF145E473DB161B.54FF2A728F5BD4E9" Destination="$0EC9633907C4A4C3.4D4FE9F8A61F9CEC" dx1="40" dx2="30" dy="-370" />
+        <Connection Source="$070C4CE83C51F820.628B8F7074D40D3F" Destination="$323FE72D6AEBC3F4.0A5D8ECE28FE65D8" dx1="48.12549" dx2="30" dy="90" />
+        <Connection Source="$323FE72D6AEBC3F4.08D8FD6E7A0C852A" Destination="$D05AFF587555D105.95F185C12A487DCF" dx1="47.4165" dx2="30" dy="-540">
+          <AvoidsNodes>false</AvoidsNodes>
+        </Connection>
+        <Connection Source="$03C6DC7E246501CA.1ED8A73DA6B21594" Destination="$3AF145E473DB161B.95F185C12A487DCF" dx1="48.125" dx2="70" dy="170.0002" />
+      </AdapterConnections>
+      <DefaultLayer ID="6f1b2f45-99ce-4e96-af75-1f23ce7112ce" Name="Default" Comment="" />
+    </SubAppNetwork>
+  </Application>
+  <Device ID="867d325e-d87b-4033-ba42-b680ed5f7074" Name="Siemens" Type="M251_dPAC" Namespace="SE.DPAC">
+    <Resource ID="F5C85C593C72F0E8" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management">
+      <FBNetwork>
+        <FB ID="45FEB910A07088FC" Name="Station4" Type="Waypoint" x="1160" y="120" Namespace="Main">
+          <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+        </FB>
+        <EventConnections>
+          <Connection Source="$START.COLD" Destination="$45FEB910A07088FC.32552DD3B5C8D126" dx1="48.60425" />
+          <Connection Source="$START.WARM" Destination="$45FEB910A07088FC.32552DD3B5C8D126" dx1="70" />
+        </EventConnections>
+      </FBNetwork>
+    </Resource>
+    <FBNetwork />
+  </Device>
+  <Device ID="5e1e18e6-2a98-4f29-8843-d2ca517955fb" Name="Testing" Type="M251_dPAC" Namespace="SE.DPAC">
+    <Resource ID="623B7B3E5E108194" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management">
+      <FBNetwork>
+        <FB ID="9D635283BFBAC959" Name="FB1" Type="TestingStation" x="1080" y="1180" Namespace="Main" />
+        <FB ID="F3FC2A7B1A12C4B6" Name="APP_INIT" Type="EVENTCHAINHEAD" x="1080" y="240" Namespace="Runtime.Standard" Loaded="true">
+          <Parameter Name="$NAME" Value="'APP_INIT'" />
+        </FB>
+        <EventConnections>
+          <Connection Source="$F3FC2A7B1A12C4B6.INITO" Destination="$F3FC2A7B1A12C4B6.TRIGGER" dx1="41.875" dx2="50" dy="-110" />
+          <Connection Source="$START.COLD" Destination="$F3FC2A7B1A12C4B6.INIT" dx1="48.60425" />
+          <Connection Source="$START.WARM" Destination="$F3FC2A7B1A12C4B6.INIT" dx1="48.60425" />
+          <Connection Source="$START.COLD" Destination="$9D635283BFBAC959.73176BD6A17EA479" dx1="68.60425" />
+          <Connection Source="$START.WARM" Destination="$9D635283BFBAC959.73176BD6A17EA479" dx1="48.60425" />
+        </EventConnections>
+      </FBNetwork>
+    </Resource>
+    <FBNetwork />
+  </Device>
+  <Device ID="27d29dba-b622-4a9a-a99d-fcb41e25d590" Name="Handling1" Type="M251_dPAC" Namespace="SE.DPAC">
+    <Resource ID="6F3E7DE0442E3EAE" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management">
+      <FBNetwork>
+        <FB ID="EE3962B272887FD5" Name="FB1" Type="EVENTCHAINHEAD" x="980" y="120" Namespace="Runtime.Standard" Loaded="true" />
+        <FB ID="BB41103CF593DBE2" Name="ProcHandling" Type="TransportHandlingCAT" x="1200" y="1040" Namespace="Main" />
+        <EventConnections>
+          <Connection Source="$START.COLD" Destination="$EE3962B272887FD5.INIT" dx1="68.60419" />
+          <Connection Source="$START.WARM" Destination="$EE3962B272887FD5.INIT" dx1="70" />
+          <Connection Source="$EE3962B272887FD5.INITO" Destination="$EE3962B272887FD5.TRIGGER" dx1="41.875" dx2="70" dy="-110" />
+          <Connection Source="$START.COLD" Destination="$BB41103CF593DBE2.E06617D73A5059FD" dx1="178.6041">
+            <AvoidsNodes>false</AvoidsNodes>
+          </Connection>
+          <Connection Source="$START.WARM" Destination="$BB41103CF593DBE2.E06617D73A5059FD" dx1="178.6041">
+            <AvoidsNodes>false</AvoidsNodes>
+          </Connection>
+        </EventConnections>
+      </FBNetwork>
+    </Resource>
+    <FBNetwork />
+  </Device>
+  <Device ID="b038fc34-a573-4343-8505-3e4f21c7e6d9" Name="ConSys" Type="M251_dPAC" Namespace="SE.DPAC">
+    <Resource ID="F37B3BA361F25E53" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management">
+      <FBNetwork>
+        <FB ID="1504550E025C1A82" Name="Station1" Type="Waypoint" x="2460" y="1100" Namespace="Main">
+          <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+        </FB>
+        <FB ID="B82272AF559BF1E0" Name="Station2" Type="Waypoint" x="2460" y="1960" Namespace="Main">
+          <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+        </FB>
+        <FB ID="3E8BD68179FF714" Name="Station3" Type="Waypoint" x="2480" y="2820" Namespace="Main">
+          <Parameter Name="$6C467FA1B7C9CA3B" Value="TRUE" />
+        </FB>
+        <FB ID="3FC2E9E8A57433A0" Name="TG1" Type="TransportGeneral1" x="3420" y="1860" Namespace="Main" />
+        <FB ID="174B617636C0DD9" Name="SB0" Type="LampControl" x="3400" y="3260" Namespace="Main">
+          <Parameter Name="$E1290E65D103F02C" Value="http://10.135.109.113/do_value/slot_0" />
+        </FB>
+        <FB ID="3280265232EAAC87" Name="Station5" Type="Waypoint" x="4300" y="1940" Namespace="Main">
+          <Parameter Name="$6C467FA1B7C9CA3B" Value="TRUE" />
+        </FB>
+        <FB ID="6E9AA1704F247E7E" Name="Station6" Type="Waypoint" x="4320" y="1240" Namespace="Main">
+          <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+        </FB>
+        <EventConnections>
+          <Connection Source="$START.COLD" Destination="$B82272AF559BF1E0.32552DD3B5C8D126" dx1="148.6042">
+            <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+            <AvoidsNodes>false</AvoidsNodes>
+          </Connection>
+          <Connection Source="$START.COLD" Destination="$3E8BD68179FF714.32552DD3B5C8D126" dx1="974.3021">
+            <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+          </Connection>
+          <Connection Source="$START.COLD" Destination="$3280265232EAAC87.32552DD3B5C8D126" dx1="1884.302">
+            <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+          </Connection>
+          <Connection Source="$START.COLD" Destination="$6E9AA1704F247E7E.32552DD3B5C8D126" dx1="1894.302">
+            <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+          </Connection>
+          <Connection Source="$START.WARM" Destination="$B82272AF559BF1E0.32552DD3B5C8D126" dx1="964.3021">
+            <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+          </Connection>
+          <Connection Source="$START.WARM" Destination="$3E8BD68179FF714.32552DD3B5C8D126" dx1="934.3021">
+            <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+          </Connection>
+          <Connection Source="$START.WARM" Destination="$3280265232EAAC87.32552DD3B5C8D126" dx1="1844.302">
+            <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+          </Connection>
+          <Connection Source="$START.WARM" Destination="$6E9AA1704F247E7E.32552DD3B5C8D126" dx1="1854.302">
+            <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+          </Connection>
+          <Connection Source="$3FC2E9E8A57433A0.D8843CC7A5B75494" Destination="$174B617636C0DD9.392A47A15328CAF8" dx1="43.29224" dx2="30" dy="840">
+            <AvoidsNodes>false</AvoidsNodes>
+          </Connection>
+          <Connection Source="$START.COLD" Destination="$1504550E025C1A82.32552DD3B5C8D126" dx1="148.6042" />
+          <Connection Source="$START.WARM" Destination="$1504550E025C1A82.32552DD3B5C8D126" dx1="128.6042" />
+        </EventConnections>
+        <AdapterConnections>
+          <Connection Source="$3E8BD68179FF714.54FF2A728F5BD4E9" Destination="$3FC2E9E8A57433A0.64BF5537CA04CC7F" dx1="40" />
+          <Connection Source="$B82272AF559BF1E0.54FF2A728F5BD4E9" Destination="$3FC2E9E8A57433A0.D21C0433245314C3" dx1="40" />
+          <Connection Source="$1504550E025C1A82.54FF2A728F5BD4E9" Destination="$3FC2E9E8A57433A0.898CCF337DAF8974" dx1="40" />
+          <Connection Source="$3280265232EAAC87.54FF2A728F5BD4E9" Destination="$3FC2E9E8A57433A0.DC4A9CA3278BB557" dx1="40" dx2="130" dy="250" />
+          <Connection Source="$6E9AA1704F247E7E.54FF2A728F5BD4E9" Destination="$3FC2E9E8A57433A0.C30F5862E83BFD5F" dx1="40" dx2="110" dy="150" />
+        </AdapterConnections>
+      </FBNetwork>
+    </Resource>
+    <FBNetwork />
+  </Device>
+  <Device ID="6a92a71c-f540-4be7-a1b3-349421687307" Name="Handling2" Type="M251_dPAC" Namespace="SE.DPAC">
+    <Resource ID="FE0EAB3DC7979FEB" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management">
+      <FBNetwork>
+        <FB ID="82C1F9D169D3A4E6" Name="OutputHanding" Type="OutputHanding" x="1200" y="1140" Namespace="Main" />
+        <FB ID="DF151D6F9EA6DF46" Name="APP_INIT" Type="EVENTCHAINHEAD" x="1200" y="220" Namespace="Runtime.Standard" Loaded="true">
+          <Parameter Name="$NAME" Value="'APP_INIT'" />
+        </FB>
+        <EventConnections>
+          <Connection Source="$DF151D6F9EA6DF46.INITO" Destination="$DF151D6F9EA6DF46.TRIGGER" dx1="41.875" dx2="30" dy="-110" />
+          <Connection Source="$START.COLD" Destination="$DF151D6F9EA6DF46.INIT" dx1="48.60419" />
+          <Connection Source="$START.WARM" Destination="$DF151D6F9EA6DF46.INIT" dx1="48.60419" />
+          <Connection Source="$START.COLD" Destination="$82C1F9D169D3A4E6.C5D3003E510FB6DF" dx1="68.60419" />
+          <Connection Source="$START.WARM" Destination="$82C1F9D169D3A4E6.C5D3003E510FB6DF" dx1="48.60419" />
+        </EventConnections>
+      </FBNetwork>
+    </Resource>
+    <FBNetwork />
+  </Device>
+  <Device ID="52c06738-a698-436b-927a-278f3650c3ee" Name="Processing" Type="M251_dPAC" Namespace="SE.DPAC">
+    <Resource ID="F0F4FCAB76EBBF3C" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management">
+      <FBNetwork>
+        <FB ID="E3D09928361EFF61" Name="APP_INIT" Type="EVENTCHAINHEAD" x="1100" y="120" Namespace="Runtime.Standard" Loaded="true">
+          <Parameter Name="$NAME" Value="'APP_INIT'" />
+        </FB>
+        <FB ID="988D9788C0D100B" Name="ProcessingStat" Type="Processing2CAT" x="1200" y="980" Namespace="Main" />
+        <EventConnections>
+          <Connection Source="$START.COLD" Destination="$E3D09928361EFF61.INIT" dx1="68.60419" />
+          <Connection Source="$START.WARM" Destination="$E3D09928361EFF61.INIT" dx1="70" />
+          <Connection Source="$E3D09928361EFF61.INITO" Destination="$E3D09928361EFF61.TRIGGER" dx1="41.875" dx2="70" dy="-110" />
+          <Connection Source="$START.COLD" Destination="$988D9788C0D100B.F2E7021B338B15A4" dx1="68.60419" />
+          <Connection Source="$START.WARM" Destination="$988D9788C0D100B.F2E7021B338B15A4" dx1="48.60419" />
+        </EventConnections>
+      </FBNetwork>
+    </Resource>
+    <FBNetwork />
+  </Device>
+  <Device ID="96a87630-bf8d-4736-8408-0a31bd523794" Name="Distribution" Type="M251_dPAC" Namespace="SE.DPAC">
+    <Resource ID="5C1335FCE1185211" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management">
+      <FBNetwork>
+        <FB ID="D72861723E4CB0D0" Name="Distribution" Type="Distribution2CAT" x="980" y="1100" Namespace="Main" />
+        <FB ID="5CD53CC36D55AEEC" Name="APP_INIT" Type="EVENTCHAINHEAD" x="980" y="300" Namespace="Runtime.Standard" Loaded="true">
+          <Parameter Name="$NAME" Value="'APP_INIT'" />
+        </FB>
+        <EventConnections>
+          <Connection Source="$5CD53CC36D55AEEC.INITO" Destination="$5CD53CC36D55AEEC.TRIGGER" dx1="41.875" dx2="70" dy="-110" />
+          <Connection Source="$START.COLD" Destination="$D72861723E4CB0D0.461F22269552CD75" dx1="68.60419" />
+          <Connection Source="$START.WARM" Destination="$D72861723E4CB0D0.461F22269552CD75" dx1="48.60419" />
+          <Connection Source="$START.COLD" Destination="$5CD53CC36D55AEEC.INIT" dx1="198.6041">
+            <AvoidsNodes>false</AvoidsNodes>
+          </Connection>
+          <Connection Source="$START.WARM" Destination="$5CD53CC36D55AEEC.INIT" dx1="138.6041">
+            <AvoidsNodes>false</AvoidsNodes>
+          </Connection>
+        </EventConnections>
+      </FBNetwork>
+    </Resource>
+    <FBNetwork />
+  </Device>
+  <Device ID="7e2a84c7-ea74-430e-8574-d77d2695353f" Name="Sorting" Type="M251_dPAC" Namespace="SE.DPAC">
+    <Resource ID="4D2F0EFB17F98C29" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management">
+      <FBNetwork>
+        <FB ID="A0A5AFDBFCA73233" Name="OutputSorting" Type="Sorting" x="1280" y="1340" Namespace="Main" />
+        <FB ID="EE603C6EFF90F72F" Name="APP_INIT" Type="EVENTCHAINHEAD" x="980" y="200" Namespace="Runtime.Standard" Loaded="true">
+          <Parameter Name="$NAME" Value="'APP_INIT'" />
+        </FB>
+        <EventConnections>
+          <Connection Source="$EE603C6EFF90F72F.INITO" Destination="$EE603C6EFF90F72F.TRIGGER" dx1="41.875" dx2="50" dy="-110" />
+          <Connection Source="$START.COLD" Destination="$EE603C6EFF90F72F.INIT" dx1="48.60425" />
+          <Connection Source="$START.WARM" Destination="$EE603C6EFF90F72F.INIT" dx1="48.60425" />
+          <Connection Source="$START.COLD" Destination="$A0A5AFDBFCA73233.5BEE7AA1F4A12FB4" dx1="68.60425" />
+          <Connection Source="$START.WARM" Destination="$A0A5AFDBFCA73233.5BEE7AA1F4A12FB4" dx1="48.60425" />
+        </EventConnections>
+      </FBNetwork>
+    </Resource>
+    <FBNetwork />
+  </Device>
+  <Device ID="35e158df-a93e-4c2d-a87a-3be59ece44a4" Name="RS" Type="M251_dPAC" Namespace="SE.DPAC">
+    <Resource ID="3D18AA352D0D9366" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management">
+      <FBNetwork>
+        <FB ID="3A426156A4087EF4" Name="RobotsStation" Type="RoboCat" x="1700" y="1280" Namespace="Main" />
+        <FB ID="FF07A51B5BE8B788" Name="CapDist" Type="CapDistributionCAT" x="2300" y="1300" Namespace="Main" />
+        <FB ID="A8C703E6EEC1D11E" Name="APP_INIT" Type="EVENTCHAINHEAD" x="1180" y="160" Namespace="Runtime.Standard" Loaded="true">
+          <Parameter Name="$NAME" Value="'APP_INIT'" />
+        </FB>
+        <EventConnections>
+          <Connection Source="$3A426156A4087EF4.A39BFC97654CAFF3" Destination="$FF07A51B5BE8B788.E4C6FDAF265EC198" dx1="48.125" />
+          <Connection Source="$START.COLD" Destination="$A8C703E6EEC1D11E.INIT" dx1="48.60425" />
+          <Connection Source="$START.WARM" Destination="$A8C703E6EEC1D11E.INIT" />
+          <Connection Source="$A8C703E6EEC1D11E.INITO" Destination="$A8C703E6EEC1D11E.TRIGGER" dx1="41.875" dx2="70" dy="-110" />
+          <Connection Source="$START.COLD" Destination="$3A426156A4087EF4.AEFC9DC06D949578" dx1="68.60425" />
+          <Connection Source="$START.WARM" Destination="$3A426156A4087EF4.AEFC9DC06D949578" dx1="48.60425" />
+        </EventConnections>
+      </FBNetwork>
+    </Resource>
+    <FBNetwork />
+  </Device>
+  <Mapping From="APP1.Distribution" To="Distribution.RES0" />
+  <Mapping From="APP1.FB1" To="Testing.RES0" />
+  <Mapping From="APP1.RobotsStation" To="RS.RES0" />
+  <Mapping From="APP1.CapDist" To="RS.RES0" />
+  <Mapping From="APP1.ProcHandling" To="Handling1.RES0" />
+  <Mapping From="APP1.OutputHanding" To="Handling2.RES0" />
+  <Mapping From="APP1.ProcessingStat" To="Processing.RES0" />
+  <Mapping From="APP1.OutputSorting" To="Sorting.RES0" />
+  <Mapping From="APP1.Station4" To="Siemens.RES0" />
+  <Mapping From="APP1.Station1" To="ConSys.RES0" />
+  <Mapping From="APP1.Station2" To="ConSys.RES0" />
+  <Mapping From="APP1.Station3" To="ConSys.RES0" />
+  <Mapping From="APP1.TG1" To="ConSys.RES0" />
+  <Mapping From="APP1.SB0" To="ConSys.RES0" />
+  <Mapping From="APP1.Station5" To="ConSys.RES0" />
+  <Mapping From="APP1.Station6" To="ConSys.RES0" />
+</System>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="3d6233e4-36de-427e-b0cb-31de6f112119" Name="DoubleActingCylinder" Comment="Basic Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="Template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="4B04F4C5D032C2A8" Name="INIT" Comment="Initialization Request">
+        <With Var="atHome" />
+        <With Var="atEnd" />
+      </Event>
+      <Event ID="44B9DC051FB254D8" Name="REQ" Comment="Normal Execution Request">
+        <With Var="atHome" />
+        <With Var="atEnd" />
+      </Event>
+      <Event ID="2C9063DCCC5748CC" Name="EXTEND" />
+      <Event ID="F28860E2E70057FF" Name="RETRACT" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="69300A033F268DE4" Name="INITO" Comment="Initialization Confirm">
+        <With Var="extend" />
+        <With Var="retract" />
+      </Event>
+      <Event ID="7CBECB76650BB35A" Name="CNF" Comment="Execution Confirmation">
+        <With Var="extend" />
+        <With Var="retract" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="76168906C4FDC8B2" Name="atHome" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="FB4D01C1FFB07FDE" Name="atEnd" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="E4F375286B0DD7E6" Name="extend" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration ID="55FD8199CF755643" Name="retract" Type="BOOL" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="INIT,REQ,RETRACT,EXTEND,HOME" />
+    <ECC>
+      <ECState Name="START" Comment="Initial State" x="552.9412" y="429.4117" />
+      <ECState Name="INIT" Comment="Initialization" x="923.5294" y="141.1765">
+        <ECAction Algorithm="INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="HOME" x="1908" y="504">
+        <ECAction Algorithm="HOME" Output="CNF" />
+      </ECState>
+      <ECState Name="Extended" x="1928" y="1460" />
+      <ECState Name="Extend" x="2692" y="1016">
+        <ECAction Algorithm="EXTEND" Output="CNF" />
+      </ECState>
+      <ECState Name="STATE4" x="828" y="1012">
+        <ECAction Algorithm="RETRACT" Output="CNF" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="731.1476" y="204.8375" />
+      <ECTransition Source="INIT" Destination="HOME" Condition="atHome&#xD;&#xA;" x="1432.516" y="242.6446">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="326.7943,43.99834,390.9698,67.65002" />
+      </ECTransition>
+      <ECTransition Source="HOME" Destination="Extend" Condition="EXTEND" x="2350.66" y="695.3254">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="562.6617,152.0834,614.6777,186.053" />
+      </ECTransition>
+      <ECTransition Source="Extend" Destination="Extended" Condition="REQ AND atEnd&#xD;&#xA;" x="2360.95" y="1304.81">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="614.4124,316.9635,565.7108,345.2665" />
+      </ECTransition>
+      <ECTransition Source="Extended" Destination="STATE4" Condition="RETRACT" x="1368.676" y="1314.371">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="379.6561,348.3181,309.3438,319.6819" />
+      </ECTransition>
+      <ECTransition Source="STATE4" Destination="HOME" Condition="REQ AND atHome&#xD;&#xA;" x="1361.781" y="679.8088">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="306.2449,181.3181,377.7551,147.6819" />
+      </ECTransition>
+    </ECC>
+    <Algorithm Name="INIT" Comment="Initialization algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+    <Algorithm Name="REQ" Comment="Normally executed algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+    <Algorithm Name="RETRACT">
+      <ST><![CDATA[extend := FALSE;
+retract := TRUE;]]></ST>
+    </Algorithm>
+    <Algorithm Name="EXTEND">
+      <ST><![CDATA[extend := TRUE;
+retract := FALSE;]]></ST>
+    </Algorithm>
+    <Algorithm Name="HOME">
+      <ST><![CDATA[extend := FALSE;
+retract := FALSE;]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

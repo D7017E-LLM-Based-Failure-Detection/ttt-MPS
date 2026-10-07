@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="f7056e64-619a-4777-b9f7-347984c61902" Name="TableRotateQI" Format="2.0" Comment="Composite Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="097EF619BCD4AF25" Name="TRIGGER" Comment="Initialization Request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="42226F34C2436990" Name="REQ" Comment="Normal Execution Request">
+        <With Var="QI" />
+        <With Var="inPosition" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="B686B008A8C1F671" Name="DONE" Comment="Initialization Confirm" />
+      <Event ID="4BD89B238FD4DE41" Name="DRIVE_ON" Comment="Execution Confirmation" />
+      <Event ID="05A1597460A025FF" Name="DRIVE_OFF" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="4C06D0DCEE3E0158" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="FE652D14DD5EAF59" Name="inPosition" Type="BOOL" />
+    </InputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="7551C87E4A4C0518" Name="FB1" Type="TableRotate" x="720" y="240" Namespace="Main" />
+    <FB ID="6C0AB6C124970A63" Name="FB2" Type="E_DELAY" x="1420" y="600" Namespace="IEC61499.Standard">
+      <Parameter Name="$DT" Value="T#500ms" />
+    </FB>
+    <FB ID="DFC7FD0E63643BBC" Name="FB3" Type="E_SWITCH" x="1900" y="760" Namespace="IEC61499.Standard" />
+    <Input ID="097EF619BCD4AF25" Name="TRIGGER" x="12" y="12" Type="Event" />
+    <Input ID="42226F34C2436990" Name="REQ" x="12" y="72" Type="Event" />
+    <Input ID="4C06D0DCEE3E0158" Name="QI" x="12" y="132" Type="Data" />
+    <Input ID="FE652D14DD5EAF59" Name="inPosition" x="12" y="192" Type="Data" />
+    <Output ID="B686B008A8C1F671" Name="DONE" x="2118.229" y="12" Type="Event" />
+    <Output ID="4BD89B238FD4DE41" Name="DRIVE_ON" x="2040" y="352" Type="Event" />
+    <Output ID="05A1597460A025FF" Name="DRIVE_OFF" x="2020" y="472" Type="Event" />
+    <EventConnections>
+      <Connection Source="$7551C87E4A4C0518.54922CD39726F432" Destination="$4BD89B238FD4DE41" dx1="45" />
+      <Connection Source="$7551C87E4A4C0518.20E8908D046FFBAB" Destination="$05A1597460A025FF" dx1="45" />
+      <Connection Source="$7551C87E4A4C0518.B42838BDBF746833" Destination="$6C0AB6C124970A63.START" dx1="85" />
+      <Connection Source="$DFC7FD0E63643BBC.EO0" Destination="$7551C87E4A4C0518.3EB595A19E7C967B" dx1="179.7292" dx2="50" dy="720">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$DFC7FD0E63643BBC.EO1" Destination="$B686B008A8C1F671" dx1="70" dx2="68.22949" dy="-170" />
+      <Connection Source="$42226F34C2436990" Destination="$7551C87E4A4C0518.55C5B35594136179" dx1="217.5417" />
+      <Connection Source="$097EF619BCD4AF25" Destination="$7551C87E4A4C0518.3EB595A19E7C967B" dx1="115.625" />
+      <Connection Source="$6C0AB6C124970A63.EO" Destination="$DFC7FD0E63643BBC.EI" dx1="48.5" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$4C06D0DCEE3E0158" Destination="$DFC7FD0E63643BBC.G" dx1="123.2084" />
+      <Connection Source="$FE652D14DD5EAF59" Destination="$7551C87E4A4C0518.3EAF9B6241519430" dx1="42.50003" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

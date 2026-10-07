@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="5C1335FCE1185211" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management" Format="2.0" xmlns="https://www.se.com/LibraryElements">
+  <FBNetwork>
+    <FB ID="D72861723E4CB0D0" Name="Distribution" Type="Distribution2CAT" Namespace="Main" Mapping="5407825FBCDB56F4" x="980" y="1100" />
+    <FB ID="5CD53CC36D55AEEC" Name="APP_INIT" Type="EVENTCHAINHEAD" Namespace="Runtime.Standard" x="980" y="300" Loaded="true">
+      <Parameter Name="$NAME" Value="'APP_INIT'" />
+    </FB>
+    <EventConnections>
+      <Connection Source="$5CD53CC36D55AEEC.INITO" Destination="$5CD53CC36D55AEEC.TRIGGER" dx1="41.875" dx2="70" dy="-110" />
+      <Connection Source="$START.COLD" Destination="$D72861723E4CB0D0.461F22269552CD75" dx1="68.60419" />
+      <Connection Source="$START.WARM" Destination="$D72861723E4CB0D0.461F22269552CD75" dx1="48.60419" />
+      <Connection Source="$START.COLD" Destination="$5CD53CC36D55AEEC.INIT" dx1="198.6041">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$START.WARM" Destination="$5CD53CC36D55AEEC.INIT" dx1="138.6041">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+    </EventConnections>
+  </FBNetwork>
+</Resource>

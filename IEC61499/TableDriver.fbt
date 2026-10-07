@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="f5493929-b090-4df0-8ad0-0e147c22c2f9" Name="TableDriver" Format="2.0" Comment="Composite Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="C2FC305C6C7872B8" Name="INIT" Comment="Initialization Request" />
+      <Event ID="1CCD0C1482531427" Name="REQ" Comment="Normal Execution Request">
+        <With Var="inPosition" />
+      </Event>
+      <Event ID="6DA377513BB052A8" Name="TURN_ON" />
+      <Event ID="BE47842DE556BB00" Name="TURN_OFF" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="2F1CB770CB922D4B" Name="CNF" Comment="Execution Confirmation">
+        <With Var="actuator" />
+      </Event>
+      <Event ID="8572D453C5657165" Name="INITO" Comment="Initialization Confirm" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="B3C88798EBFDA44D" Name="inPosition" Type="BOOL" Comment="Input event qualifier" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="E31FA5EA69A50141" Name="actuator" Type="BOOL" Comment="Output event qualifier" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="C730C765C8E7290D" Name="TableActuator" Type="SingleActingActuator" x="1100" y="220" Namespace="Main" />
+    <FB ID="F3B93C0D128EC035" Name="FB2" Type="TableInit" x="2000" y="240" Namespace="Main" />
+    <Input ID="C2FC305C6C7872B8" Name="INIT" x="480" y="192" Type="Event" />
+    <Input ID="1CCD0C1482531427" Name="REQ" x="480" y="92" Type="Event" />
+    <Input ID="B3C88798EBFDA44D" Name="inPosition" x="939.9999" y="1112" Type="Data" />
+    <Input ID="6DA377513BB052A8" Name="TURN_ON" x="480" y="372" Type="Event" />
+    <Input ID="BE47842DE556BB00" Name="TURN_OFF" x="480" y="432" Type="Event" />
+    <Output ID="8572D453C5657165" Name="INITO" x="2760" y="892" Type="Event" />
+    <Output ID="2F1CB770CB922D4B" Name="CNF" x="2340" y="971.9999" Type="Event" />
+    <Output ID="E31FA5EA69A50141" Name="actuator" x="2120" y="1232" Type="Data" />
+    <EventConnections>
+      <Connection Source="$1CCD0C1482531427" Destination="$F3B93C0D128EC035.F3347BF36BA07E5E" dx1="929.5417" />
+      <Connection Source="$C2FC305C6C7872B8" Destination="$C730C765C8E7290D.A4B796CDD9024B67" dx1="41.41675" />
+      <Connection Source="$6DA377513BB052A8" Destination="$C730C765C8E7290D.1BF27B5DCFCCFAF4" dx1="40" />
+      <Connection Source="$BE47842DE556BB00" Destination="$C730C765C8E7290D.CCF810354971381B" dx1="40" />
+      <Connection Source="$F3B93C0D128EC035.B72D535CCE5D8132" Destination="$C730C765C8E7290D.CCF810354971381B" dx1="45" dx2="30" dy="-250" />
+      <Connection Source="$F3B93C0D128EC035.65DD5814DB5BEE7C" Destination="$C730C765C8E7290D.1BF27B5DCFCCFAF4" dx1="50" dx2="50" dy="-240">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$C730C765C8E7290D.8E0B04FD8BAE9DBA" Destination="$F3B93C0D128EC035.70EADC52CA42FB7A" dx1="48.47925" />
+      <Connection Source="$C730C765C8E7290D.BC8FA2DBFA3F03EE" Destination="$2F1CB770CB922D4B" dx1="48.47925" />
+      <Connection Source="$F3B93C0D128EC035.8E65DD4139C0EC8C" Destination="$8572D453C5657165" dx1="85" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$B3C88798EBFDA44D" Destination="$F3B93C0D128EC035.107685817A88BAAB" dx1="234.5" />
+      <Connection Source="$C730C765C8E7290D.74B9BF94DC489173" Destination="$E31FA5EA69A50141" dx1="48.47925" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="446eee63-dfa8-4dc5-a289-17c7b7a463e3" Name="MagazineCtrl" Comment="Basic Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="Template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="33F9C2BB97BD10F8" Name="INIT" Comment="Initialization Request">
+        <With Var="magazineEmpty" />
+        <With Var="cylinderExtended" />
+        <With Var="cylinderRetracted" />
+      </Event>
+      <Event ID="E2E1D69CA7511D60" Name="REQ" Comment="Normal Execution Request">
+        <With Var="magazineEmpty" />
+        <With Var="cylinderExtended" />
+        <With Var="cylinderRetracted" />
+      </Event>
+      <Event ID="062958FFB0F08231" Name="WORKPIECE_PICKED" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="174C31FE218A6386" Name="INITO" Comment="Initialization Confirm" />
+      <Event ID="5376E0B2F561175D" Name="EXTEND" Comment="Execution Confirmation" />
+      <Event ID="FD01A52C8D7AE43C" Name="RETRACT" />
+      <Event ID="F85950780421145C" Name="INFORM" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="FC26CCD3F05AFEE4" Name="magazineEmpty" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="E9A2BA54C7961DA5" Name="cylinderExtended" Type="BOOL" />
+      <VarDeclaration ID="34119763A109DAB6" Name="cylinderRetracted" Type="BOOL" />
+    </InputVars>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="INIT,REQ" />
+    <ECC>
+      <ECState Name="START" Comment="Initial State" x="552.9412" y="429.4117" />
+      <ECState Name="INIT" Comment="Initialization" x="1295.53" y="389.1765">
+        <ECAction Algorithm="INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="READY" x="1248" y="704" />
+      <ECState Name="PUSH" x="1988" y="1184">
+        <ECAction Output="EXTEND" />
+      </ECState>
+      <ECState Name="RETRACT" x="1132" y="1595.111">
+        <ECAction Output="RETRACT" />
+      </ECState>
+      <ECState Name="INFORM_READY" x="332" y="1028">
+        <ECAction Output="INFORM" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="942.7574" y="323.6111">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="213.9888,78.24842,257.39,75.89684" />
+      </ECTransition>
+      <ECTransition Source="INIT" Destination="READY" Condition="cylinderRetracted" x="1356.872" y="557.7842">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="343.985,131.6099,341.3372,149.1482" />
+      </ECTransition>
+      <ECTransition Source="READY" Destination="PUSH" Condition="NOT magazineEmpty" x="1670.08" y="879.3267">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="393.9754,199.3745,442.2341,230.6774" />
+      </ECTransition>
+      <ECTransition Source="PUSH" Destination="RETRACT" Condition="cylinderExtended" x="1638.463" y="1438.291">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="437.7023,350.1473,385.4587,376.03" />
+      </ECTransition>
+      <ECTransition Source="RETRACT" Destination="INFORM_READY" Condition="cylinderRetracted" x="762.2453" y="1401.032">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="223.0999,375.8005,169.3464,339.628" />
+      </ECTransition>
+      <ECTransition Source="INFORM_READY" Destination="READY" Condition="WORKPIECE_PICKED" x="788.7028" y="783.7406">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="172.7651,200.249,225.6482,181.5437" />
+      </ECTransition>
+    </ECC>
+    <Algorithm Name="INIT" Comment="Initialization algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+    <Algorithm Name="REQ" Comment="Normally executed algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

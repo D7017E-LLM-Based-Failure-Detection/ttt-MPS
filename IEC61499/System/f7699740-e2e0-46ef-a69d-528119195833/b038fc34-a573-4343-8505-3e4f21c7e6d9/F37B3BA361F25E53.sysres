@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="F37B3BA361F25E53" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management" Format="2.0" xmlns="https://www.se.com/LibraryElements">
+  <FBNetwork>
+    <FB ID="1504550E025C1A82" Name="Station1" Type="Waypoint" Namespace="Main" Mapping="C4C4C28C30CE79A5" x="2460" y="1100">
+      <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+    </FB>
+    <FB ID="B82272AF559BF1E0" Name="Station2" Type="Waypoint" Namespace="Main" Mapping="534F9F80B8928F76" x="2460" y="1960">
+      <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+    </FB>
+    <FB ID="3E8BD68179FF714" Name="Station3" Type="Waypoint" Namespace="Main" Mapping="4D978FD300B52A58" x="2480" y="2820">
+      <Parameter Name="$6C467FA1B7C9CA3B" Value="TRUE" />
+    </FB>
+    <FB ID="3FC2E9E8A57433A0" Name="TG1" Type="TransportGeneral1" Namespace="Main" Mapping="0EC9633907C4A4C3" x="3420" y="1860" />
+    <FB ID="174B617636C0DD9" Name="SB0" Type="LampControl" Namespace="Main" Mapping="3F4EE84892E729CE" x="3400" y="3260">
+      <Parameter Name="$E1290E65D103F02C" Value="http://10.135.109.113/do_value/slot_0" />
+    </FB>
+    <FB ID="3280265232EAAC87" Name="Station5" Type="Waypoint" Namespace="Main" Mapping="73B049C6F4526FA9" x="4300" y="1940">
+      <Parameter Name="$6C467FA1B7C9CA3B" Value="TRUE" />
+    </FB>
+    <FB ID="6E9AA1704F247E7E" Name="Station6" Type="Waypoint" Namespace="Main" Mapping="D05AFF587555D105" x="4320" y="1240">
+      <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+    </FB>
+    <EventConnections>
+      <Connection Source="$START.COLD" Destination="$B82272AF559BF1E0.32552DD3B5C8D126" dx1="148.6042">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$START.COLD" Destination="$3E8BD68179FF714.32552DD3B5C8D126" dx1="974.3021">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$START.COLD" Destination="$3280265232EAAC87.32552DD3B5C8D126" dx1="1884.302">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$START.COLD" Destination="$6E9AA1704F247E7E.32552DD3B5C8D126" dx1="1894.302">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$START.WARM" Destination="$B82272AF559BF1E0.32552DD3B5C8D126" dx1="964.3021">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$START.WARM" Destination="$3E8BD68179FF714.32552DD3B5C8D126" dx1="934.3021">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$START.WARM" Destination="$3280265232EAAC87.32552DD3B5C8D126" dx1="1844.302">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$START.WARM" Destination="$6E9AA1704F247E7E.32552DD3B5C8D126" dx1="1854.302">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$3FC2E9E8A57433A0.D8843CC7A5B75494" Destination="$174B617636C0DD9.392A47A15328CAF8" dx1="43.29224" dx2="30" dy="840">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$START.COLD" Destination="$1504550E025C1A82.32552DD3B5C8D126" dx1="148.6042" />
+      <Connection Source="$START.WARM" Destination="$1504550E025C1A82.32552DD3B5C8D126" dx1="128.6042" />
+    </EventConnections>
+    <AdapterConnections>
+      <Connection Source="$3E8BD68179FF714.54FF2A728F5BD4E9" Destination="$3FC2E9E8A57433A0.64BF5537CA04CC7F" dx1="40" />
+      <Connection Source="$B82272AF559BF1E0.54FF2A728F5BD4E9" Destination="$3FC2E9E8A57433A0.D21C0433245314C3" dx1="40" />
+      <Connection Source="$1504550E025C1A82.54FF2A728F5BD4E9" Destination="$3FC2E9E8A57433A0.898CCF337DAF8974" dx1="40" />
+      <Connection Source="$3280265232EAAC87.54FF2A728F5BD4E9" Destination="$3FC2E9E8A57433A0.DC4A9CA3278BB557" dx1="40" dx2="130" dy="250" />
+      <Connection Source="$6E9AA1704F247E7E.54FF2A728F5BD4E9" Destination="$3FC2E9E8A57433A0.C30F5862E83BFD5F" dx1="40" dx2="110" dy="150" />
+    </AdapterConnections>
+  </FBNetwork>
+</Resource>

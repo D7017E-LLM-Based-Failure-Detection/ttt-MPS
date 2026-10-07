@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="3b952ac2-2ff7-45db-b7d2-c00075a24e30" Name="ToSlide" Format="2.0" Comment="Composite Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="F927538FE6EF4EC7" Name="TRIGGER" Comment="Initialization Request">
+        <With Var="DT1" />
+      </Event>
+      <Event ID="439FEFE6D2A3F591" Name="REQ">
+        <With Var="BranchExtended" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="71D2C348FD87CAFF" Name="DONE" Comment="Delayed Event" />
+      <Event ID="4544D908B55FAE1F" Name="TO_POSITION" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="C1D5296452C384EE" Name="BranchExtended" Type="BOOL" />
+      <VarDeclaration ID="C073C2AF9C488DA6" Name="DT1" Type="TIME" Comment="Delay Time" />
+    </InputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="8841A7D74C0AA99E" Name="Branch1Extend" Type="SimpleMove" x="1400" y="320" Namespace="Main" />
+    <FB ID="88B6D82EBCC9002E" Name="DriveTimeoutSlide1" Type="E_DELAY" x="2380" y="320" Namespace="IEC61499.Standard" />
+    <Input ID="F927538FE6EF4EC7" Name="TRIGGER" x="680" y="332" Type="Event" />
+    <Input ID="439FEFE6D2A3F591" Name="REQ" x="680" y="392" Type="Event" />
+    <Input ID="C1D5296452C384EE" Name="BranchExtended" x="640" y="1012" Type="Data" />
+    <Input ID="C073C2AF9C488DA6" Name="DT1" x="640" y="1072" Type="Data" />
+    <Output ID="71D2C348FD87CAFF" Name="DONE" x="2780" y="332" Type="Event" />
+    <Output ID="4544D908B55FAE1F" Name="TO_POSITION" x="2240" y="932" Type="Event" />
+    <EventConnections>
+      <Connection Source="$F927538FE6EF4EC7" Destination="$8841A7D74C0AA99E.BEEA5224F96B4EAA" />
+      <Connection Source="$439FEFE6D2A3F591" Destination="$8841A7D74C0AA99E.08A6921781769002" />
+      <Connection Source="$8841A7D74C0AA99E.4A40729E5CEB7782" Destination="$4544D908B55FAE1F" dx1="48.9585" />
+      <Connection Source="$88B6D82EBCC9002E.EO" Destination="$71D2C348FD87CAFF" />
+      <Connection Source="$8841A7D74C0AA99E.19B414802953B8F9" Destination="$88B6D82EBCC9002E.START" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$C073C2AF9C488DA6" Destination="$88B6D82EBCC9002E.DT" dx1="1056.292" />
+      <Connection Source="$C1D5296452C384EE" Destination="$8841A7D74C0AA99E.D7113296D1A5E867" dx1="44.77087" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

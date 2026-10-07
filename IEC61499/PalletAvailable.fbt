@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="138a6fd9-bc8d-43bb-b6de-e2dc531b85fa" Name="PalletAvailable" Format="2.0" Comment="Composite Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="7DCE26AC607265ED" Name="INIT" Comment="Initialization Request">
+        <With Var="URL" />
+      </Event>
+      <Event ID="5856DE30A2879E29" Name="REQ" Comment="Normal Execution Request" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="80EADA07109E3FA8" Name="INITO" Comment="Initialization Confirm" />
+      <Event ID="95F73FB5F5026F2D" Name="CNF" Comment="Execution Confirmation">
+        <With Var="barcode" />
+        <With Var="available" />
+        <With Var="loaded" />
+        <With Var="m_cnt" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="95513D6C4A3F01C3" Name="URL" Type="BOOL" Comment="Input event qualifier" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="F6AAAD586776C61D" Name="barcode" Type="UINT" Comment="Output event qualifier" />
+      <VarDeclaration ID="032A365F45B0ECD9" Name="available" Type="BOOL" />
+      <VarDeclaration ID="FAE074E2C3CE09A5" Name="loaded" Type="BOOL" />
+      <VarDeclaration ID="DFBB8F3690C5C44E" Name="m_cnt" Type="UINT" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <Input ID="7DCE26AC607265ED" Name="INIT" x="12" y="12" Type="Event" />
+    <Input ID="5856DE30A2879E29" Name="REQ" x="12" y="72" Type="Event" />
+    <Input ID="95513D6C4A3F01C3" Name="URL" x="12" y="132" Type="Data" />
+    <Output ID="80EADA07109E3FA8" Name="INITO" x="2118.229" y="12" Type="Event" />
+    <Output ID="95F73FB5F5026F2D" Name="CNF" x="2144.313" y="72" Type="Event" />
+    <Output ID="F6AAAD586776C61D" Name="barcode" x="2023.875" y="132" Type="Data" />
+    <Output ID="032A365F45B0ECD9" Name="available" x="2058.729" y="192" Type="Data" />
+    <Output ID="FAE074E2C3CE09A5" Name="loaded" x="2099.521" y="252" Type="Data" />
+    <Output ID="DFBB8F3690C5C44E" Name="m_cnt" x="2111.896" y="312" Type="Data" />
+  </FBNetwork>
+</FBType>

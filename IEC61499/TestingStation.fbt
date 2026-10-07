@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="da1793d4-558d-490f-a3eb-6ae0055735fa" Name="TestingStation" Format="2.0" Comment="Composite Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="73176BD6A17EA479" Name="INIT" Comment="Initialization Request" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="4BC29CD9B1E5409E" Name="INITO" Comment="Initialization Confirm" />
+      <Event ID="84F904613E536B04" Name="REQ" Comment="Execution Confirmation" />
+      <Event ID="2A10A5926A92C41B" Name="READY" />
+    </EventOutputs>
+    <Sockets>
+      <AdapterDeclaration ID="37BEEDB51F13C1BE" Name="Supply" Type="EVENT_HS" Namespace="Main" x="760" y="260" />
+    </Sockets>
+    <Plugs>
+      <AdapterDeclaration ID="E98DD27C7D9BB7CB" Name="Client" Type="CONVEYOR_HS" Namespace="Main" x="3180" y="2420" />
+    </Plugs>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="829A4C6B7021C1CA" Name="FB2" Type="TestingSequence1" x="1440" y="700" Namespace="Main" />
+    <FB ID="399D588E7309FB21" UID="EE80B6A2E60DA643" Name="FB5" Type="SYMLINKMULTIVARDST_238520AAD20108C65" x="600" y="880" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=7;VALUE${I}:BOOL,BOOL,BOOL,BOOL,BOOL,BOOL,BOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'$${PATH}WP_AVA'" />
+      <Parameter Name="$NAME2" Value="'$${PATH}WP_NOT_BLK'" />
+      <Parameter Name="$NAME3" Value="'$${PATH}LIGHT_CURTAIN'" />
+      <Parameter Name="$NAME4" Value="'$${PATH}HEIGHT_OK'" />
+      <Parameter Name="$NAME5" Value="'$${PATH}LIFT_AT_TOP'" />
+      <Parameter Name="$NAME6" Value="'$${PATH}LIFT_AT_BOTTOM'" />
+      <Parameter Name="$NAME7" Value="'$${PATH}EJECTOR_RET'" />
+    </FB>
+    <FB ID="43E9CECFD3A796FD" UID="7CE5E09E3DE16251" Name="FB7" Type="SYMLINKMULTIVARSRC_65D63179E2618F5E" x="3380" y="959.9999" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=5;VALUE${I}:BOOL,BOOL,BOOL,BOOL,BOOL" />
+      <Parameter Name="$NAME1" Value="'$${PATH}LOWER_LIFT'" />
+      <Parameter Name="$NAME2" Value="'$${PATH}RAISE_LIFT'" />
+      <Parameter Name="$NAME3" Value="'$${PATH}EXTEND_EJECTOR'" />
+      <Parameter Name="$NAME4" Value="'$${PATH}AIR_SLIDE'" />
+    </FB>
+    <FB ID="B84BB5102C5417D8" Name="Lift" Type="DoubleActingCylinder" x="2680" y="400" Namespace="Main" />
+    <FB ID="32F440F34C1C6DB9" Name="Ejector" Type="E_SR" x="2780" y="1200" Namespace="IEC61499.Standard" />
+    <FB ID="3F5C41394F47E36E" Name="AirSlide" Type="E_SR" x="2780" y="1740" Namespace="IEC61499.Standard" />
+    <FB ID="0D336E34959DEEDB" Name="FB4" Type="E_CYCLE" x="2520" y="2420" Namespace="IEC61499.Standard">
+      <Parameter Name="$DT" Value="T#1000ms" />
+    </FB>
+    <FB ID="D8B607353DF31F79" Name="TRAY_TRIGGER" Type="E_R_TRIG" x="3960" y="2440" Namespace="IEC61499.Standard" />
+    <FB ID="C5BC7D0ECBCA8B37" Name="CHECK_WP" Type="E_SWITCH" x="4360" y="2440" Namespace="IEC61499.Standard" />
+    <FB ID="612384167F833B7E" Name="FB1" Type="ControlPanel" x="1460" y="2240" Namespace="Main" />
+    <FB ID="6FD9817B9B9FCB60" Name="Reset" Type="RejectWorkpiece" x="300" y="2200" Namespace="Main" />
+    <Input ID="73176BD6A17EA479" Name="INIT" x="260" y="892" Type="Event" />
+    <Output ID="4BC29CD9B1E5409E" Name="INITO" x="3860" y="2092" Type="Event" />
+    <Output ID="84F904613E536B04" Name="REQ" x="3680" y="512" Type="Event" />
+    <Output ID="2A10A5926A92C41B" Name="READY" x="3740" y="632" Type="Event" />
+    <EventConnections>
+      <Connection Source="$73176BD6A17EA479" Destination="$399D588E7309FB21.INIT" />
+      <Connection Source="$399D588E7309FB21.CNF" Destination="$829A4C6B7021C1CA.262D9A17583A225B" dx1="121.625" />
+      <Connection Source="$37BEEDB51F13C1BE.17D55D3741201415" Destination="$829A4C6B7021C1CA.F9CF335BDF11622D" dx1="49.85425" />
+      <Connection Source="$829A4C6B7021C1CA.7447DCB2A3C420E0" Destination="$37BEEDB51F13C1BE.06D0DEC05BDF54B5" dx1="192.5625" dx2="30" dy="-530" />
+      <Connection Source="$C5BC7D0ECBCA8B37.EO0" Destination="$37BEEDB51F13C1BE.06D0DEC05BDF54B5" dx1="49.729" dx2="140" dy="-2320">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$829A4C6B7021C1CA.8416514EF3B7CE8E" Destination="$2A10A5926A92C41B" dx1="162.5625">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$829A4C6B7021C1CA.8416514EF3B7CE8E" Destination="$E98DD27C7D9BB7CB.B4C20C06D382BE8A">
+        <Points>
+          <Points>
+            <X>579.3594</X>
+            <Y>185</Y>
+          </Points>
+          <Points>
+            <X>620</X>
+            <Y>185</Y>
+          </Points>
+          <Points>
+            <X>620</X>
+            <Y>532.5</Y>
+          </Points>
+          <Points>
+            <X>727.5</X>
+            <Y>532.5</Y>
+          </Points>
+          <Points>
+            <X>727.5</X>
+            <Y>630</Y>
+          </Points>
+          <Points>
+            <X>790</X>
+            <Y>630</Y>
+          </Points>
+        </Points>
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$829A4C6B7021C1CA.C43CB3E757260140" Destination="$B84BB5102C5417D8.F28860E2E70057FF" dx1="72.5625" />
+      <Connection Source="$829A4C6B7021C1CA.CF58D96D7009DADC" Destination="$32F440F34C1C6DB9.S" dx1="140" />
+      <Connection Source="$829A4C6B7021C1CA.92FBC4FE024218A1" Destination="$32F440F34C1C6DB9.R" dx1="120" />
+      <Connection Source="$829A4C6B7021C1CA.75F8FAF416241312" Destination="$3F5C41394F47E36E.R" dx1="100" />
+      <Connection Source="$829A4C6B7021C1CA.8CD5214D6271A2D2" Destination="$3F5C41394F47E36E.S" dx1="80" />
+      <Connection Source="$829A4C6B7021C1CA.7E944169DD6E6392" Destination="$B84BB5102C5417D8.2C9063DCCC5748CC" dx1="172.5625" />
+      <Connection Source="$B84BB5102C5417D8.69300A033F268DE4" Destination="$43E9CECFD3A796FD.REQ" dx1="58.7085" />
+      <Connection Source="$B84BB5102C5417D8.7CBECB76650BB35A" Destination="$43E9CECFD3A796FD.REQ">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$32F440F34C1C6DB9.EO" Destination="$43E9CECFD3A796FD.REQ">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$3F5C41394F47E36E.EO" Destination="$43E9CECFD3A796FD.REQ">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$43E9CECFD3A796FD.INITO" Destination="$B84BB5102C5417D8.4B04F4C5D032C2A8">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$43E9CECFD3A796FD.INITO" Destination="$612384167F833B7E.186CDF42F02DAAF9">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$399D588E7309FB21.CNF" Destination="$B84BB5102C5417D8.44B9DC051FB254D8">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$399D588E7309FB21.CNF" Destination="$6FD9817B9B9FCB60.FEE6D230E5275B5D">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$399D588E7309FB21.INITO" Destination="$43E9CECFD3A796FD.INIT" dx1="1751.625">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$C5BC7D0ECBCA8B37.EO0" Destination="$84F904613E536B04" dx1="49.729" dx2="40" dy="-1590">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$C5BC7D0ECBCA8B37.EO1" Destination="$E98DD27C7D9BB7CB.B4C20C06D382BE8A" dx1="70" dx2="30" dy="380">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$D8B607353DF31F79.EO" Destination="$C5BC7D0ECBCA8B37.EI" />
+      <Connection Source="$E98DD27C7D9BB7CB.B4B09F4C73496EAE" Destination="$D8B607353DF31F79.EI" dx1="81.2085" />
+      <Connection Source="$0D336E34959DEEDB.EO" Destination="$E98DD27C7D9BB7CB.940328B7C92671F4" />
+      <Connection Source="$612384167F833B7E.C8A63D8D44F6FBE8" Destination="$0D336E34959DEEDB.START" dx1="80" />
+      <Connection Source="$612384167F833B7E.6BF153ECFD1CC9BC" Destination="$0D336E34959DEEDB.STOP" dx1="60" />
+      <Connection Source="$612384167F833B7E.C8A63D8D44F6FBE8" Destination="$612384167F833B7E.94642CF72AED9EF3" dx1="40" dx2="30" dy="-230" />
+      <Connection Source="$6FD9817B9B9FCB60.B091ED842C61436E" Destination="$612384167F833B7E.B4AF51BF682610CF" dx1="100" />
+      <Connection Source="$612384167F833B7E.F94BA7FEBB0FD165" Destination="$6FD9817B9B9FCB60.D9933CDE1EAE677D" dx1="114.875" dx2="70" dy="-390" />
+      <Connection Source="$612384167F833B7E.A24AEFFB6D68A233" Destination="$4BC29CD9B1E5409E" dx1="984.875">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$6FD9817B9B9FCB60.42D13BEE6A33726C" Destination="$32F440F34C1C6DB9.R">
+        <Points>
+          <Points>
+            <X>294.359344</X>
+            <Y>575</Y>
+          </Points>
+          <Points>
+            <X>312.5</X>
+            <Y>575</Y>
+          </Points>
+          <Points>
+            <X>312.5</X>
+            <Y>542.5</Y>
+          </Points>
+          <Points>
+            <X>670</X>
+            <Y>542.5</Y>
+          </Points>
+          <Points>
+            <X>670</X>
+            <Y>325</Y>
+          </Points>
+          <Points>
+            <X>690</X>
+            <Y>325</Y>
+          </Points>
+        </Points>
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$6FD9817B9B9FCB60.6441F73D2CB340E3" Destination="$32F440F34C1C6DB9.S">
+        <Points>
+          <Points>
+            <X>294.359344</X>
+            <Y>590</Y>
+          </Points>
+          <Points>
+            <X>317.5</X>
+            <Y>590</Y>
+          </Points>
+          <Points>
+            <X>317.5</X>
+            <Y>542.5</Y>
+          </Points>
+          <Points>
+            <X>680</X>
+            <Y>542.5</Y>
+          </Points>
+          <Points>
+            <X>680</X>
+            <Y>310</Y>
+          </Points>
+          <Points>
+            <X>690</X>
+            <Y>310</Y>
+          </Points>
+        </Points>
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$6FD9817B9B9FCB60.630879D5372159D7" Destination="$B84BB5102C5417D8.F28860E2E70057FF" dx1="742.5626">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$399D588E7309FB21.VALUE7" Destination="$829A4C6B7021C1CA.87D28B6665E8A9AC" dx1="141.625" />
+      <Connection Source="$399D588E7309FB21.VALUE6" Destination="$829A4C6B7021C1CA.4AC253F95521F0E4" dx1="150" />
+      <Connection Source="$399D588E7309FB21.VALUE5" Destination="$829A4C6B7021C1CA.F17FC2B4EC085398" />
+      <Connection Source="$399D588E7309FB21.VALUE4" Destination="$829A4C6B7021C1CA.170209A6E44FB0DA" dx1="81.625" />
+      <Connection Source="$399D588E7309FB21.VALUE2" Destination="$829A4C6B7021C1CA.D9E96210FD94E0FF" dx1="121.625" />
+      <Connection Source="$E98DD27C7D9BB7CB.9965CC9B778B20E2" Destination="$829A4C6B7021C1CA.446861FA00CAB283" dx1="90" dx2="70" dy="-610" />
+      <Connection Source="$399D588E7309FB21.VALUE6" Destination="$B84BB5102C5417D8.76168906C4FDC8B2">
+        <Points>
+          <Points>
+            <X>287.09375</X>
+            <Y>415</Y>
+          </Points>
+          <Points>
+            <X>324.59375</X>
+            <Y>415</Y>
+          </Points>
+          <Points>
+            <X>324.59375</X>
+            <Y>437.5</Y>
+          </Points>
+          <Points>
+            <X>645</X>
+            <Y>437.5</Y>
+          </Points>
+          <Points>
+            <X>645</X>
+            <Y>205</Y>
+          </Points>
+          <Points>
+            <X>665</X>
+            <Y>205</Y>
+          </Points>
+        </Points>
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$399D588E7309FB21.VALUE5" Destination="$B84BB5102C5417D8.FB4D01C1FFB07FDE">
+        <Points>
+          <Points>
+            <X>287.09375</X>
+            <Y>400</Y>
+          </Points>
+          <Points>
+            <X>319.59375</X>
+            <Y>400</Y>
+          </Points>
+          <Points>
+            <X>319.59375</X>
+            <Y>437.5</Y>
+          </Points>
+          <Points>
+            <X>660</X>
+            <Y>437.5</Y>
+          </Points>
+          <Points>
+            <X>660</X>
+            <Y>220</Y>
+          </Points>
+          <Points>
+            <X>665</X>
+            <Y>220</Y>
+          </Points>
+        </Points>
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$B84BB5102C5417D8.E4F375286B0DD7E6" Destination="$43E9CECFD3A796FD.VALUE2" dx1="60" />
+      <Connection Source="$B84BB5102C5417D8.55FD8199CF755643" Destination="$43E9CECFD3A796FD.VALUE1" dx1="40" />
+      <Connection Source="$32F440F34C1C6DB9.Q" Destination="$43E9CECFD3A796FD.VALUE3" dx1="48.35425" />
+      <Connection Source="$3F5C41394F47E36E.Q" Destination="$43E9CECFD3A796FD.VALUE4" dx1="70" />
+      <Connection Source="$E98DD27C7D9BB7CB.9965CC9B778B20E2" Destination="$C5BC7D0ECBCA8B37.G" dx1="601.2085" />
+      <Connection Source="$E98DD27C7D9BB7CB.3526B3C3390397AC" Destination="$D8B607353DF31F79.QI" dx1="70" />
+      <Connection Source="$399D588E7309FB21.VALUE6" Destination="$6FD9817B9B9FCB60.808FEB50CB441A9A" dx1="61.625" dx2="110" dy="150" />
+      <Connection Source="$399D588E7309FB21.VALUE7" Destination="$6FD9817B9B9FCB60.2BA6F67001C0E67E" dx1="41.625" dx2="90" dy="90" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

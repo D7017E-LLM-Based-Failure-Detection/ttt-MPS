@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="7a33e566-4339-49af-90a4-6305176dea97" Name="CapDistributionCAT" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/10/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="E4C6FDAF265EC198" Name="INIT" Comment="Initialization Request" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="74C53EC7AC450BDE" Name="INITO" Comment="Initialization Confirm" />
+    </EventOutputs>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="5DC7C1308F5178D5" Name="FB1" Type="ControlPanel" x="1360" y="2820" Namespace="Main" />
+    <FB ID="BBC7C6DA63E3CB2A" Name="FB2" Type="NOT_42C76073DCEB1A7A" x="1860" y="2240" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=1;OUT${CNT}:BOOL" />
+    </FB>
+    <FB ID="C76DF070D4122BF6" Name="CapMagazine" Type="Magazine1" x="1440" y="440" Namespace="Main" />
+    <FB ID="FCA57063FEC341E4" Name="FB4" Type="SpringMagazine" x="2440" y="900" Namespace="Main" />
+    <FB ID="EC86503F82A04FD6" Name="FB5" Type="E_R_TRIG" x="520" y="959.9999" Namespace="IEC61499.Standard" />
+    <FB ID="CC882EA268F297E9" UID="906C07C1E9149490" Name="FB6" Type="SYMLINKMULTIVARSRC_91EC7219ED37E472" x="3120" y="1500" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=8;VALUE${I}:BOOL,BOOL,BOOL,BOOL,BOOL,BOOL,BOOL,BOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'$${PATH}CAPMAGAZINE_EXTEND'" />
+      <Parameter Name="$NAME2" Value="'$${PATH}SPRINGMAGAZINE_RETRACT'" />
+      <Parameter Name="$NAME3" Value="'$${PATH}SPRING_READY'" />
+      <Parameter Name="$NAME4" Value="'$${PATH}CAP_READY'" />
+    </FB>
+    <FB ID="95F3CEAA7542A411" UID="260FF5B6EAA93ED7" Name="FB3" Type="SYMLINKMULTIVARDST_91EC7219ED37E472" x="560" y="1500" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=8;VALUE${I}:BOOL,BOOL,BOOL,BOOL,BOOL,BOOL,BOOL,BOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME2" Value="'$${PATH}CAPMAGAZINE_EXTENDED'" />
+      <Parameter Name="$NAME1" Value="'$${PATH}CAPMAGAZINE_EMPTY'" />
+      <Parameter Name="$NAME3" Value="'$${PATH}CAPMAGAZINE_RETRACTED'" />
+      <Parameter Name="$NAME4" Value="'$${PATH}SPRINGMAGAZINE_EMPTY'" />
+      <Parameter Name="$NAME5" Value="'$${PATH}SPRINGMAGAZINE_RETRACTED'" />
+      <Parameter Name="$NAME6" Value="'$${PATH}NOTHING'" />
+      <Parameter Name="$NAME7" Value="'$${PATH}CAP_SENSOR'" />
+      <Parameter Name="$NAME8" Value="'$${PATH}SPRING_SENSOR'" />
+    </FB>
+    <Input ID="E4C6FDAF265EC198" Name="INIT" x="12" y="812" Type="Event" />
+    <Output ID="74C53EC7AC450BDE" Name="INITO" x="2540" y="2952" Type="Event" />
+    <EventConnections>
+      <Connection Source="$EC86503F82A04FD6.EO" Destination="$C76DF070D4122BF6.3B40921DF2F7E755" dx1="41.72919" />
+      <Connection Source="$C76DF070D4122BF6.6BA2161DBD33E065" Destination="$FCA57063FEC341E4.1087D29334298014" dx1="61.72925" />
+      <Connection Source="$E4C6FDAF265EC198" Destination="$95F3CEAA7542A411.INIT" dx1="49.41669" />
+      <Connection Source="$95F3CEAA7542A411.CNF" Destination="$EC86503F82A04FD6.EI" dx1="70" dx2="30" dy="-170" />
+      <Connection Source="$95F3CEAA7542A411.CNF" Destination="$C76DF070D4122BF6.9A469FBCC8E12448" dx1="70" />
+      <Connection Source="$95F3CEAA7542A411.CNF" Destination="$FCA57063FEC341E4.799C29574C30BD5B" dx1="70" />
+      <Connection Source="$95F3CEAA7542A411.CNF" Destination="$BBC7C6DA63E3CB2A.REQ" dx1="71.625">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$95F3CEAA7542A411.INITO" Destination="$CC882EA268F297E9.INIT" />
+      <Connection Source="$C76DF070D4122BF6.3DBA2757EAD9EAC4" Destination="$CC882EA268F297E9.REQ" dx1="41.72925" />
+      <Connection Source="$FCA57063FEC341E4.3339D0B531D98833" Destination="$CC882EA268F297E9.REQ" dx1="40" dx2="30" dy="410" />
+      <Connection Source="$BBC7C6DA63E3CB2A.CNF" Destination="$CC882EA268F297E9.REQ" dx1="43.75" />
+      <Connection Source="$95F3CEAA7542A411.CNF" Destination="$CC882EA268F297E9.REQ" />
+      <Connection Source="$CC882EA268F297E9.INITO" Destination="$C76DF070D4122BF6.56A017A9C5754766" dx1="40" dx2="50" dy="-110" />
+      <Connection Source="$FCA57063FEC341E4.61ED1E4DEB3DC0B2" Destination="$5DC7C1308F5178D5.186CDF42F02DAAF9" dx1="80" dx2="30" dy="1700">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$5DC7C1308F5178D5.F94BA7FEBB0FD165" Destination="$FCA57063FEC341E4.500D449F233113A9" dx1="40" />
+      <Connection Source="$5DC7C1308F5178D5.A24AEFFB6D68A233" Destination="$74C53EC7AC450BDE" dx1="60" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$95F3CEAA7542A411.VALUE1" Destination="$C76DF070D4122BF6.B8793ABA67EE36C7" dx1="90" />
+      <Connection Source="$95F3CEAA7542A411.VALUE2" Destination="$C76DF070D4122BF6.F3B8D8E3FAD89866" dx1="110" />
+      <Connection Source="$95F3CEAA7542A411.VALUE3" Destination="$C76DF070D4122BF6.9FE8657A620BF02C" dx1="130" />
+      <Connection Source="$95F3CEAA7542A411.VALUE5" Destination="$FCA57063FEC341E4.32277478C13C6537" dx1="150" />
+      <Connection Source="$95F3CEAA7542A411.VALUE7" Destination="$BBC7C6DA63E3CB2A.IN1" dx1="41.625" />
+      <Connection Source="$95F3CEAA7542A411.VALUE7" Destination="$EC86503F82A04FD6.QI" dx1="170" dx2="30" dy="-910" />
+      <Connection Source="$95F3CEAA7542A411.VALUE8" Destination="$CC882EA268F297E9.VALUE3">
+        <Points>
+          <Points>
+            <X>277.09375</X>
+            <Y>600</Y>
+          </Points>
+          <Points>
+            <X>324.59375</X>
+            <Y>600</Y>
+          </Points>
+          <Points>
+            <X>324.59375</X>
+            <Y>542.5</Y>
+          </Points>
+          <Points>
+            <X>562.5</X>
+            <Y>542.5</Y>
+          </Points>
+          <Points>
+            <X>562.5</X>
+            <Y>555</Y>
+          </Points>
+          <Points>
+            <X>775</X>
+            <Y>555</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$95F3CEAA7542A411.VALUE8" Destination="$FCA57063FEC341E4.6ED7486E19C2E360" dx1="190" />
+      <Connection Source="$BBC7C6DA63E3CB2A.OUT1" Destination="$CC882EA268F297E9.VALUE4" dx1="70" />
+      <Connection Source="$C76DF070D4122BF6.5D3A895688F4506A" Destination="$CC882EA268F297E9.VALUE1" dx1="41.72925" />
+      <Connection Source="$FCA57063FEC341E4.FB23D4FA64ED4CCF" Destination="$CC882EA268F297E9.VALUE2" dx1="40" dx2="110" dy="150" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

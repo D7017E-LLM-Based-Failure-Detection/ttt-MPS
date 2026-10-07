@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="7d1af27c-3065-4b5b-9af8-e56f046edff6" Name="Test" Format="2.0" Comment="Composite Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="3B06A0256ED9E1AE" Name="REQ" Comment="Normal Execution Request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="D690A8A598A9D34F" Name="TRIGGER" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="B6968DF9101EC405" Name="DONE">
+        <With Var="QO" />
+      </Event>
+      <Event ID="9747A3505F096D6C" Name="EXTEND" />
+      <Event ID="7FA33437F3740AAD" Name="RETRACT" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="A971227978BAF628" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="F00E7E2918DAFF87" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="27808257A26FC3E8" Name="FB1" Type="TestCtrl" x="980" y="780" Namespace="Main" />
+    <FB ID="ED4973432307D740" Name="FB2" Type="E_DELAY" x="1080" y="160" Namespace="IEC61499.Standard">
+      <Parameter Name="$DT" Value="T#500ms" />
+    </FB>
+    <Input ID="3B06A0256ED9E1AE" Name="REQ" x="280" y="172" Type="Event" />
+    <Input ID="A971227978BAF628" Name="QI" x="240" y="1172" Type="Data" />
+    <Input ID="D690A8A598A9D34F" Name="TRIGGER" x="200" y="552" Type="Event" />
+    <Output ID="F00E7E2918DAFF87" Name="QO" x="2000" y="1112" Type="Data" />
+    <Output ID="B6968DF9101EC405" Name="DONE" x="1980" y="432" Type="Event" />
+    <Output ID="9747A3505F096D6C" Name="EXTEND" x="2000" y="672" Type="Event" />
+    <Output ID="7FA33437F3740AAD" Name="RETRACT" x="2020" y="772" Type="Event" />
+    <EventConnections>
+      <Connection Source="$3B06A0256ED9E1AE" Destination="$27808257A26FC3E8.7683C40870C6884C" dx1="169.5417" />
+      <Connection Source="$D690A8A598A9D34F" Destination="$27808257A26FC3E8.4603A1F5EB19F729" dx1="47.625" />
+      <Connection Source="$ED4973432307D740.EO" Destination="$27808257A26FC3E8.0DEC8E0492F9DD90" dx1="48.5" dx2="90" dy="350" />
+      <Connection Source="$27808257A26FC3E8.84217F1AEAF82CEE" Destination="$ED4973432307D740.START" dx1="40" dx2="50" dy="-290" />
+      <Connection Source="$27808257A26FC3E8.320318303E383298" Destination="$B6968DF9101EC405" dx1="57.54175" />
+      <Connection Source="$27808257A26FC3E8.6108304B86C10CD8" Destination="$9747A3505F096D6C" dx1="77.54175" />
+      <Connection Source="$27808257A26FC3E8.AABE76B5D0E846A0" Destination="$7FA33437F3740AAD" dx1="97.54175" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$A971227978BAF628" Destination="$27808257A26FC3E8.3F1315B71B952EC5" />
+      <Connection Source="$27808257A26FC3E8.72DD7F290704D09F" Destination="$F00E7E2918DAFF87" dx1="137.5417" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

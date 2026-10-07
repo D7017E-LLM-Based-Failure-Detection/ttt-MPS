@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="29b2322b-0c3d-41fb-8fc5-6a6153011e2b" Name="SingleActingActuator" Comment="Basic Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="Template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="A4B796CDD9024B67" Name="INIT" Comment="Initialization Request" />
+      <Event ID="1BF27B5DCFCCFAF4" Name="TURN_ON" Comment="Normal Execution Request" />
+      <Event ID="CCF810354971381B" Name="TURN_OFF" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="8E0B04FD8BAE9DBA" Name="INITO" Comment="Initialization Confirm">
+        <With Var="actuator" />
+      </Event>
+      <Event ID="BC8FA2DBFA3F03EE" Name="CNF" Comment="Execution Confirmation">
+        <With Var="actuator" />
+      </Event>
+    </EventOutputs>
+    <OutputVars>
+      <VarDeclaration ID="74B9BF94DC489173" Name="actuator" Type="BOOL" Comment="Output event qualifier" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="INIT,REQ,ConveyorOn,ConveyorOff" />
+    <ECC>
+      <ECState Name="START" Comment="Initial State" x="552.9412" y="429.4117" />
+      <ECState Name="INIT" Comment="Initialization" x="923.5294" y="141.1765">
+        <ECAction Algorithm="INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="ConveyorOff" x="1452" y="735.9999">
+        <ECAction Algorithm="ConveyorOff" Output="CNF" />
+      </ECState>
+      <ECState Name="ConveyorOn" x="676" y="1040">
+        <ECAction Algorithm="ConveyorOn" Output="CNF" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="731.1476" y="204.8375" />
+      <ECTransition Source="INIT" Destination="START" Condition="1" x="797.5924" y="348.3231" />
+      <ECTransition Source="START" Destination="ConveyorOn" Condition="TURN_ON" x="694.0646" y="719.8882">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="173.8738,157.6446,182.3759,199.8299" />
+      </ECTransition>
+      <ECTransition Source="ConveyorOff" Destination="START" Condition="1" x="979.8534" y="659.7205">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="273.3587,178.4314,221.9731,160.9084" />
+      </ECTransition>
+      <ECTransition Source="ConveyorOn" Destination="ConveyorOff" Condition="TURN_OFF" x="1049.077" y="807.9578">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="244.7669,205.3181,287.2332,188.6818" />
+      </ECTransition>
+    </ECC>
+    <Algorithm Name="INIT" Comment="Initialization algorithm">
+      <ST><![CDATA[actuator := FALSE;]]></ST>
+    </Algorithm>
+    <Algorithm Name="REQ" Comment="Normally executed algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+    <Algorithm Name="ConveyorOn">
+      <ST><![CDATA[actuator := TRUE;]]></ST>
+    </Algorithm>
+    <Algorithm Name="ConveyorOff">
+      <ST><![CDATA[actuator := FALSE;]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

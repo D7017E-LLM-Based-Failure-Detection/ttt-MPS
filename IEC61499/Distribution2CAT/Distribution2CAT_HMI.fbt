@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="00d7958f-5feb-4ce0-8086-abd74a63519b" Name="Distribution2CAT_HMI" Comment="Service Interface Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/7/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="C5B418C94F3C4AC0" Name="INIT">
+        <With Var="QI" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="45ED3776C0F5F301" Name="INITO">
+        <With Var="QO" />
+        <With Var="STATUS" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="07504DD3F0804AAD" Name="QI" Type="BOOL" />
+      <VarDeclaration ID="145C564468DB80C4" Name="TEST" Type="INT" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="F566E86E8E683888" Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+      <VarDeclaration ID="82997833F21C6C8B" Name="STATUS" Type="STRING" Comment="Service Status" />
+    </OutputVars>
+  </InterfaceList>
+  <Service RightInterface="" LeftInterface="">
+    <ServiceSequence Name="" />
+  </Service>
+</FBType>

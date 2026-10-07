@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="FE0EAB3DC7979FEB" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management" Format="2.0" xmlns="https://www.se.com/LibraryElements">
+  <FBNetwork>
+    <FB ID="82C1F9D169D3A4E6" Name="OutputHanding" Type="OutputHanding" Namespace="Main" Mapping="323FE72D6AEBC3F4" x="1200" y="1140" />
+    <FB ID="DF151D6F9EA6DF46" Name="APP_INIT" Type="EVENTCHAINHEAD" Namespace="Runtime.Standard" x="1200" y="220" Loaded="true">
+      <Parameter Name="$NAME" Value="'APP_INIT'" />
+    </FB>
+    <EventConnections>
+      <Connection Source="$DF151D6F9EA6DF46.INITO" Destination="$DF151D6F9EA6DF46.TRIGGER" dx1="41.875" dx2="30" dy="-110" />
+      <Connection Source="$START.COLD" Destination="$DF151D6F9EA6DF46.INIT" dx1="48.60419" />
+      <Connection Source="$START.WARM" Destination="$DF151D6F9EA6DF46.INIT" dx1="48.60419" />
+      <Connection Source="$START.COLD" Destination="$82C1F9D169D3A4E6.C5D3003E510FB6DF" dx1="68.60419" />
+      <Connection Source="$START.WARM" Destination="$82C1F9D169D3A4E6.C5D3003E510FB6DF" dx1="48.60419" />
+    </EventConnections>
+  </FBNetwork>
+</Resource>

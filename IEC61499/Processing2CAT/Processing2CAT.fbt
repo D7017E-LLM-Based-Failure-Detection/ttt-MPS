@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="fc798724-960a-4edf-8dcc-7dbf44ca9d8c" Name="Processing2CAT" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/7/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="F2E7021B338B15A4" Name="INIT" Comment="Initialization Request" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="8382E9BC3FE24EF8" Name="INITO" Comment="Initialization Confirm" />
+    </EventOutputs>
+    <Plugs>
+      <AdapterDeclaration ID="51D700913D16FC9C" Name="ADP1" Type="EVENT_HS" Namespace="Main" x="680" y="380" />
+    </Plugs>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="2AA6C3DE64612323" Name="FB1" Type="ProcessingSequence1" x="1460" y="460" Namespace="Main" />
+    <FB ID="59EB5684DC3AB01F" Name="FB2" Type="TableDriver" x="2660" y="480" Namespace="Main" />
+    <FB ID="E6CC11ABA79574E3" Name="Tester" Type="SingleActingActuator" x="2660" y="1100" Namespace="Main" />
+    <FB ID="CECFD4FE133CA24E" Name="Drill" Type="DrillDriver" x="2660" y="1780" Namespace="Main" />
+    <FB ID="A97201A57A3396E5" UID="29A294A076AB1624" Name="FB5" Type="SYMLINKMULTIVARDST_238520AAD20108C65" x="480" y="1520" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=7;VALUE${I}:BOOL,BOOL,BOOL,BOOL,BOOL,BOOL,BOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'$${PATH}WP_AVAIL'" />
+      <Parameter Name="$NAME2" Value="'$${PATH}WP_DRILL'" />
+      <Parameter Name="$NAME3" Value="'$${PATH}WP_TEST'" />
+      <Parameter Name="$NAME4" Value="'$${PATH}DRILL_RAISED'" />
+      <Parameter Name="$NAME5" Value="'$${PATH}DRILL_LOWERED'" />
+      <Parameter Name="$NAME6" Value="'$${PATH}IN_POSITION'" />
+      <Parameter Name="$NAME7" Value="'$${PATH}HOLE_DETECTED'" />
+    </FB>
+    <FB ID="7883F06FB445F095" UID="115A4757A218F14C" Name="FB7" Type="SYMLINKMULTIVARSRC_5495E501E675F500" x="3580" y="1660" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=6;VALUE${I}:BOOL,BOOL,BOOL,BOOL,BOOL,BOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'$${PATH}START_DRILL'" />
+      <Parameter Name="$NAME2" Value="'$${PATH}ROTATE'" />
+      <Parameter Name="$NAME3" Value="'$${PATH}LOWER_DRILL'" />
+      <Parameter Name="$NAME4" Value="'$${PATH}RAISE_DRILL'" />
+      <Parameter Name="$NAME5" Value="'$${PATH}CLAMP'" />
+      <Parameter Name="$NAME6" Value="'$${PATH}TEST'" />
+    </FB>
+    <FB ID="421F3A4719FC9450" Name="Clamp" Type="SingleActingActuator" x="2700" y="2700" Namespace="Main" />
+    <Input ID="F2E7021B338B15A4" Name="INIT" x="180" y="1532" Type="Event" />
+    <Output ID="8382E9BC3FE24EF8" Name="INITO" x="4260" y="1432" Type="Event" />
+    <EventConnections>
+      <Connection Source="$51D700913D16FC9C.06D0DEC05BDF54B5" Destination="$2AA6C3DE64612323.C97AC495352E3E1E" dx1="49.85419" />
+      <Connection Source="$2AA6C3DE64612323.B088E5234850CB03" Destination="$51D700913D16FC9C.17D55D3741201415" dx1="50" dx2="30" dy="-190" />
+      <Connection Source="$F2E7021B338B15A4" Destination="$A97201A57A3396E5.INIT" />
+      <Connection Source="$2AA6C3DE64612323.D3B5A8B772FCEA74" Destination="$59EB5684DC3AB01F.6DA377513BB052A8" dx1="227.146" />
+      <Connection Source="$2AA6C3DE64612323.0CDBBA126F3EB67D" Destination="$59EB5684DC3AB01F.BE47842DE556BB00" dx1="207.146" />
+      <Connection Source="$2AA6C3DE64612323.C353476483DC6313" Destination="$E6CC11ABA79574E3.CCF810354971381B" dx1="187.146" />
+      <Connection Source="$2AA6C3DE64612323.146D4250297CC697" Destination="$E6CC11ABA79574E3.1BF27B5DCFCCFAF4" dx1="167.146" />
+      <Connection Source="$2AA6C3DE64612323.A987DB2144D107B9" Destination="$CECFD4FE133CA24E.1D30737806201FD6" dx1="147.146" />
+      <Connection Source="$2AA6C3DE64612323.1FE929CFCAA94308" Destination="$CECFD4FE133CA24E.0BFE808CC7BF5304" dx1="127.146" />
+      <Connection Source="$2AA6C3DE64612323.F82CF39030B50881" Destination="$CECFD4FE133CA24E.894E27CD5DAB3D2C" dx1="107.146" />
+      <Connection Source="$2AA6C3DE64612323.0FC9D8B2B29AA22D" Destination="$CECFD4FE133CA24E.CDBB9A3D25440EBE" dx1="87.146" />
+      <Connection Source="$2AA6C3DE64612323.97F5D70C41BD3D18" Destination="$421F3A4719FC9450.1BF27B5DCFCCFAF4" dx1="67.146" />
+      <Connection Source="$2AA6C3DE64612323.A8BDF88CF1CF6D8D" Destination="$421F3A4719FC9450.CCF810354971381B" dx1="47.146" />
+      <Connection Source="$A97201A57A3396E5.CNF" Destination="$2AA6C3DE64612323.C1A7677E5176E42B">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$A97201A57A3396E5.CNF" Destination="$59EB5684DC3AB01F.1CCD0C1482531427">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$A97201A57A3396E5.CNF" Destination="$CECFD4FE133CA24E.07A841519EEF7D29">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$A97201A57A3396E5.INITO" Destination="$7883F06FB445F095.INIT" dx1="181.625" />
+      <Connection Source="$CECFD4FE133CA24E.B515F055283B6D1D" Destination="$7883F06FB445F095.REQ" dx1="74.3335" dx2="970" dy="-169.9999" />
+      <Connection Source="$421F3A4719FC9450.BC8FA2DBFA3F03EE" Destination="$7883F06FB445F095.REQ">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$CECFD4FE133CA24E.2184ADB07913F188" Destination="$7883F06FB445F095.REQ">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$E6CC11ABA79574E3.BC8FA2DBFA3F03EE" Destination="$7883F06FB445F095.REQ">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$59EB5684DC3AB01F.2F1CB770CB922D4B" Destination="$7883F06FB445F095.REQ">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$7883F06FB445F095.INITO" Destination="$8382E9BC3FE24EF8" dx1="96.875" />
+      <Connection Source="$7883F06FB445F095.INITO" Destination="$59EB5684DC3AB01F.C2FC305C6C7872B8">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$7883F06FB445F095.INITO" Destination="$E6CC11ABA79574E3.A4B796CDD9024B67">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$7883F06FB445F095.INITO" Destination="$CECFD4FE133CA24E.82E100EB26E04504">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$7883F06FB445F095.INITO" Destination="$421F3A4719FC9450.A4B796CDD9024B67">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$A97201A57A3396E5.VALUE2" Destination="$2AA6C3DE64612323.E1F7FAE400B6E48F" dx1="331.625">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$A97201A57A3396E5.VALUE3" Destination="$2AA6C3DE64612323.77895791E5012799" dx1="110" />
+      <Connection Source="$A97201A57A3396E5.VALUE4" Destination="$2AA6C3DE64612323.909F52C6313386F9" dx1="130" />
+      <Connection Source="$A97201A57A3396E5.VALUE4" Destination="$CECFD4FE133CA24E.113F4B319C5D4EEB" dx1="101.625" />
+      <Connection Source="$A97201A57A3396E5.VALUE5" Destination="$2AA6C3DE64612323.93B5E068BF203B9B" dx1="150" />
+      <Connection Source="$A97201A57A3396E5.VALUE5" Destination="$CECFD4FE133CA24E.FC5030D73ADCE20B" dx1="81.625" />
+      <Connection Source="$A97201A57A3396E5.VALUE6" Destination="$2AA6C3DE64612323.D00EBC763795CCDE" dx1="170" />
+      <Connection Source="$A97201A57A3396E5.VALUE6" Destination="$59EB5684DC3AB01F.B3C88798EBFDA44D" dx1="1221.625" />
+      <Connection Source="$A97201A57A3396E5.VALUE7" Destination="$2AA6C3DE64612323.91161A4E26D35ED7" dx1="190" />
+      <Connection Source="$CECFD4FE133CA24E.137A4746C9FE30DB" Destination="$7883F06FB445F095.VALUE1" dx1="114.3335" />
+      <Connection Source="$59EB5684DC3AB01F.E31FA5EA69A50141" Destination="$7883F06FB445F095.VALUE2" dx1="68.47949" />
+      <Connection Source="$CECFD4FE133CA24E.1A5F06F8AAA23A4B" Destination="$7883F06FB445F095.VALUE3" dx1="80" />
+      <Connection Source="$CECFD4FE133CA24E.349DADD9FC043770" Destination="$7883F06FB445F095.VALUE4" dx1="60" />
+      <Connection Source="$421F3A4719FC9450.74B9BF94DC489173" Destination="$7883F06FB445F095.VALUE5" dx1="70" />
+      <Connection Source="$E6CC11ABA79574E3.74B9BF94DC489173" Destination="$7883F06FB445F095.VALUE6" dx1="68.47949" dx2="910" dy="1070" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

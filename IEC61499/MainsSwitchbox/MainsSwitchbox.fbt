@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="13eb405c-12a0-4db2-b59c-2437d0a24f93" Name="MainsSwitchbox" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="8/3/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="93412F6833E6AF31" Name="INIT" Comment="Initialization Request" />
+      <Event ID="6BE80A07144B0761" Name="REQ" Comment="Normal Execution Request">
+        <With Var="Socket0" />
+        <With Var="Socket1" />
+        <With Var="Socket2" />
+        <With Var="enabled" />
+        <With Var="address" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="118D260C5B64AB4A" Name="INITO" Comment="Initialization Confirm" />
+      <Event ID="A9B64D0073B7757A" Name="CNF" Comment="Execution Confirmation" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="0593FC5CCEEAB346" Name="Socket0" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="2F616901D365FB65" Name="Socket1" Type="BOOL" />
+      <VarDeclaration ID="0F31AF8B27F910BA" Name="Socket2" Type="BOOL" />
+      <VarDeclaration ID="0BD73BFDD964B184" Name="enabled" Type="BOOL" />
+      <VarDeclaration ID="9359C47D9D8F33D8" Name="address" Type="STRING" />
+    </InputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="51E00A7F2F490437" Name="FB1" Type="MainsSwitchbox_HMI" x="1320" y="100" Namespace="Main" />
+    <Input ID="93412F6833E6AF31" Name="INIT" x="12" y="12" Type="Event" />
+    <Input ID="6BE80A07144B0761" Name="REQ" x="12" y="72" Type="Event" />
+    <Input ID="0593FC5CCEEAB346" Name="Socket0" x="12" y="132" Type="Data" />
+    <Input ID="2F616901D365FB65" Name="Socket1" x="12" y="192" Type="Data" />
+    <Input ID="0F31AF8B27F910BA" Name="Socket2" x="12" y="252" Type="Data" />
+    <Input ID="0BD73BFDD964B184" Name="enabled" x="12" y="312" Type="Data" />
+    <Input ID="9359C47D9D8F33D8" Name="address" x="12" y="372" Type="Data" />
+    <Output ID="118D260C5B64AB4A" Name="INITO" x="2118.229" y="12" Type="Event" />
+    <Output ID="A9B64D0073B7757A" Name="CNF" x="2144.313" y="72" Type="Event" />
+    <EventConnections>
+      <Connection Source="$93412F6833E6AF31" Destination="$51E00A7F2F490437.6A2A8EC735263E5C" dx1="189.4167" />
+      <Connection Source="$6BE80A07144B0761" Destination="$51E00A7F2F490437.EA7703AA94860217" dx1="177.5417" />
+      <Connection Source="$51E00A7F2F490437.CEC2D803204C8339" Destination="$118D260C5B64AB4A" dx1="40" />
+      <Connection Source="$51E00A7F2F490437.5553D8E2D8CF04CD" Destination="$A9B64D0073B7757A" dx1="79.47925" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$9359C47D9D8F33D8" Destination="$51E00A7F2F490437.C0D0DD463828D246" dx1="40" />
+      <Connection Source="$0BD73BFDD964B184" Destination="$51E00A7F2F490437.7EECA5DAA1FC327A" dx1="40" />
+      <Connection Source="$0593FC5CCEEAB346" Destination="$51E00A7F2F490437.F030660B35C7CF91" dx1="40" />
+      <Connection Source="$2F616901D365FB65" Destination="$51E00A7F2F490437.39AAC3666EDDB65F" dx1="40" />
+      <Connection Source="$0F31AF8B27F910BA" Destination="$51E00A7F2F490437.B2BAAA08286AFEA6" dx1="40" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

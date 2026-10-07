@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="8643b6a5-8687-46bb-abb9-a8f614f01508" Name="ConveyorPointHMI" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/9/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="B9A2EF329D47057E" Name="INIT" Comment="Initialization Request">
+        <With Var="Tray" />
+      </Event>
+      <Event ID="499B944F7019ADA9" Name="REQ" Comment="Normal Execution Request">
+        <With Var="Tray" />
+        <With Var="Workpiece" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="8516139E8E842C51" Name="INITO" Comment="Initialization Confirm" />
+      <Event ID="D259B2CFA0D60893" Name="CNF" Comment="Execution Confirmation" />
+      <Event ID="734A5A2B334ACBB8" Name="RELEASE" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="0960FABFD7C30F9A" Name="Tray" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="62F58FBF0912ED43" Name="Workpiece" Type="BOOL" />
+    </InputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="27D5D2E56EA615FD" Name="FB1" Type="ConveyorPointHMI_HMI" x="1100" y="100" Namespace="Main" />
+    <Input ID="B9A2EF329D47057E" Name="INIT" x="12" y="12" Type="Event" />
+    <Input ID="499B944F7019ADA9" Name="REQ" x="12" y="72" Type="Event" />
+    <Input ID="0960FABFD7C30F9A" Name="Tray" x="12" y="132" Type="Data" />
+    <Input ID="62F58FBF0912ED43" Name="Workpiece" x="12" y="192" Type="Data" />
+    <Output ID="8516139E8E842C51" Name="INITO" x="2118.229" y="12" Type="Event" />
+    <Output ID="D259B2CFA0D60893" Name="CNF" x="2144.313" y="72" Type="Event" />
+    <Output ID="734A5A2B334ACBB8" Name="RELEASE" x="2035.167" y="192" Type="Event" />
+    <EventConnections>
+      <Connection Source="$B9A2EF329D47057E" Destination="$27D5D2E56EA615FD.4FF57A23A0456E05" dx1="129.4167" />
+      <Connection Source="$499B944F7019ADA9" Destination="$27D5D2E56EA615FD.5EBE9F50BF54D91E" dx1="237.5417" />
+      <Connection Source="$27D5D2E56EA615FD.1FD472FD5D2CBC6F" Destination="$8516139E8E842C51" dx1="51.37512" />
+      <Connection Source="$27D5D2E56EA615FD.1F2BD9BBA20E2EFB" Destination="$D259B2CFA0D60893" dx1="71.37512" />
+      <Connection Source="$27D5D2E56EA615FD.C525AA8B1DE5CAA1" Destination="$734A5A2B334ACBB8" dx1="91.37512" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$0960FABFD7C30F9A" Destination="$27D5D2E56EA615FD.4D188466B1CBA7B4" dx1="102.9167" />
+      <Connection Source="$62F58FBF0912ED43" Destination="$27D5D2E56EA615FD.758BFBEDB24198E2" dx1="46.45837" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

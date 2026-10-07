@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OPCUAObject xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <OPCUAVariable UID="4D188466B1CBA7B4" Enabled="false">
+    <OPCUAAttribute Name="AccessLevel" Value="1" Locked="true" AttributeMask="CurrentRead;True" />
+    <Extensions />
+  </OPCUAVariable>
+  <OPCUAVariable UID="758BFBEDB24198E2" Enabled="false">
+    <OPCUAAttribute Name="AccessLevel" Value="1" Locked="true" AttributeMask="CurrentRead;True" />
+    <Extensions />
+  </OPCUAVariable>
+</OPCUAObject>

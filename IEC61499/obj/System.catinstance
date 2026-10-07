@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SystemDatabase xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="1.7.0.0" xmlns="http://www.nxtcontrol.com/IEC61499.xsd">
+  <System Name="System" Dir="System">
+    <CATType Name="CapDistributionCAT" Namespace="Main">
+      <Inst ID="DEB7B00A5C9F5713" Name="CapDist" App="dc75b497-8b80-4fe9-b847-3ff0b617596d" Map="35e158df-a93e-4c2d-a87a-3be59ece44a4.3D18AA352D0D9366;" />
+    </CATType>
+    <CATType Name="Distribution2CAT" Namespace="Main">
+      <Inst ID="5407825FBCDB56F4" Name="Distribution" App="dc75b497-8b80-4fe9-b847-3ff0b617596d" Map="96a87630-bf8d-4736-8408-0a31bd523794.5C1335FCE1185211;" />
+    </CATType>
+    <CATType Name="LampControl" Namespace="Main">
+      <Inst ID="3F4EE84892E729CE" Name="SB0" App="dc75b497-8b80-4fe9-b847-3ff0b617596d" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+    </CATType>
+    <CATType Name="Processing2CAT" Namespace="Main">
+      <Inst ID="19A3F3F6F91C5A9B" Name="ProcessingStat" App="dc75b497-8b80-4fe9-b847-3ff0b617596d" Map="52c06738-a698-436b-927a-278f3650c3ee.F0F4FCAB76EBBF3C;" />
+    </CATType>
+    <CATType Name="RoboCat" Namespace="Main">
+      <Inst ID="03C6DC7E246501CA" Name="RobotsStation" App="dc75b497-8b80-4fe9-b847-3ff0b617596d" Map="35e158df-a93e-4c2d-a87a-3be59ece44a4.3D18AA352D0D9366;" />
+    </CATType>
+    <CATType Name="TransportGeneral1" Namespace="Main">
+      <Inst ID="0EC9633907C4A4C3" Name="TG1" App="dc75b497-8b80-4fe9-b847-3ff0b617596d" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+    </CATType>
+    <CATType Name="TransportHandlingCAT" Namespace="Main">
+      <Inst ID="C385A929DE6999FB" Name="ProcHandling" App="dc75b497-8b80-4fe9-b847-3ff0b617596d" Map="27d29dba-b622-4a9a-a99d-fcb41e25d590.6F3E7DE0442E3EAE;" />
+    </CATType>
+    <CATType Name="Waypoint" Namespace="Main">
+      <Inst ID="3AF145E473DB161B" Name="Station4" App="dc75b497-8b80-4fe9-b847-3ff0b617596d" Map="867d325e-d87b-4033-ba42-b680ed5f7074.F5C85C593C72F0E8;" />
+      <Inst ID="D05AFF587555D105" Name="Station6" App="dc75b497-8b80-4fe9-b847-3ff0b617596d" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+      <Inst ID="73B049C6F4526FA9" Name="Station5" App="dc75b497-8b80-4fe9-b847-3ff0b617596d" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+      <Inst ID="4D978FD300B52A58" Name="Station3" App="dc75b497-8b80-4fe9-b847-3ff0b617596d" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+      <Inst ID="534F9F80B8928F76" Name="Station2" App="dc75b497-8b80-4fe9-b847-3ff0b617596d" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+      <Inst ID="C4C4C28C30CE79A5" Name="Station1" App="dc75b497-8b80-4fe9-b847-3ff0b617596d" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+    </CATType>
+    <CATType Name="BMTM3" Namespace="SE.IoTMx">
+      <ResInst ID="6E89CDF59C037496" Name="Res-Distribution-RES0-BMTM3" Map="96a87630-bf8d-4736-8408-0a31bd523794.5C1335FCE1185211;" />
+      <ResInst ID="F9859FD5AF932EA5" Name="Res-Siemens-RES0-BMTM3" Map="867d325e-d87b-4033-ba42-b680ed5f7074.F5C85C593C72F0E8;" />
+      <ResInst ID="6273A05BE29EF67A" Name="Res-Testing-RES0-BMTM3" Map="5e1e18e6-2a98-4f29-8843-d2ca517955fb.623B7B3E5E108194;" />
+      <ResInst ID="356AC34257E5D839" Name="Res-Processing-RES0-BMTM3" Map="52c06738-a698-436b-927a-278f3650c3ee.F0F4FCAB76EBBF3C;" />
+      <ResInst ID="4305788F6ACBE7B" Name="Res-Sorting-RES0-BMTM3" Map="7e2a84c7-ea74-430e-8574-d77d2695353f.4D2F0EFB17F98C29;" />
+      <ResInst ID="D22C1C8C092A56B8" Name="Res-RS-RES0-BMTM3" Map="35e158df-a93e-4c2d-a87a-3be59ece44a4.3D18AA352D0D9366;" />
+      <ResInst ID="1F9C1C863481EF72" Name="Res-Handling2-RES0-BMTM3" Map="6a92a71c-f540-4be7-a1b3-349421687307.FE0EAB3DC7979FEB;" />
+      <ResInst ID="A5AA1D72BC0B3330" Name="Res-Handling1-RES0-BMTM3" Map="27d29dba-b622-4a9a-a99d-fcb41e25d590.6F3E7DE0442E3EAE;" />
+      <ResInst ID="C1CCF53D07927F29" Name="Res-ConSys-RES0-BMTM3" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+    </CATType>
+    <CATType Name="TM3DI16_G" Namespace="SE.IoTMx">
+      <ResInst ID="E5B7595444C7E76" Name="Res-Handling1-RES0-TM3DI16_G" Map="27d29dba-b622-4a9a-a99d-fcb41e25d590.6F3E7DE0442E3EAE;" />
+      <ResInst ID="B235D5A03048CB01" Name="Res-RS-RES0-TM3DI16_G" Map="35e158df-a93e-4c2d-a87a-3be59ece44a4.3D18AA352D0D9366;" />
+      <ResInst ID="22DF3F4EC52CAC93" Name="Res-Distribution-RES0-TM3DI16_G_1" Map="96a87630-bf8d-4736-8408-0a31bd523794.5C1335FCE1185211;" />
+      <ResInst ID="6E0663D308140E06" Name="Res-RS-RES0-TM3DI16_G_2" Map="35e158df-a93e-4c2d-a87a-3be59ece44a4.3D18AA352D0D9366;" />
+      <ResInst ID="338003FBD3D36552" Name="Res-Testing-RES0-TM3DI16_G_1" Map="5e1e18e6-2a98-4f29-8843-d2ca517955fb.623B7B3E5E108194;" />
+      <ResInst ID="8B0C053AAE140CE" Name="Res-Distribution-RES0-TM3DI16_G" Map="96a87630-bf8d-4736-8408-0a31bd523794.5C1335FCE1185211;" />
+      <ResInst ID="5BDCDDB0D603F2F" Name="Res-ConSys-RES0-TM3DI16_G" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+      <ResInst ID="DA69A2EFA9965276" Name="Res-ConSys-RES0-TM3DI16_G_2" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+      <ResInst ID="F314DBB90C20EA1F" Name="Res-Sorting-RES0-TM3DI16_G" Map="7e2a84c7-ea74-430e-8574-d77d2695353f.4D2F0EFB17F98C29;" />
+      <ResInst ID="6553376ED5EFCD6A" Name="Res-Siemens-RES0-TM3DI16_G" Map="867d325e-d87b-4033-ba42-b680ed5f7074.F5C85C593C72F0E8;" />
+      <ResInst ID="3BC8F67066D24EE5" Name="Res-Handling2-RES0-TM3DI16_G" Map="6a92a71c-f540-4be7-a1b3-349421687307.FE0EAB3DC7979FEB;" />
+      <ResInst ID="B46FA7B4D6C8A711" Name="Res-RS-RES0-TM3DI16_G_1" Map="35e158df-a93e-4c2d-a87a-3be59ece44a4.3D18AA352D0D9366;" />
+      <ResInst ID="FD95E22FF227CBBF" Name="Res-Testing-RES0-TM3DI16_G" Map="5e1e18e6-2a98-4f29-8843-d2ca517955fb.623B7B3E5E108194;" />
+      <ResInst ID="8B5ADAD961BAA18B" Name="Res-ConSys-RES0-TM3DI16_G_1" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+      <ResInst ID="848D74E0EC49681A" Name="Res-Processing-RES0-TM3DI16_G" Map="52c06738-a698-436b-927a-278f3650c3ee.F0F4FCAB76EBBF3C;" />
+    </CATType>
+    <CATType Name="TM3DQ16R_G" Namespace="SE.IoTMx">
+      <ResInst ID="95CEDCDCF6817743" Name="Res-RS-RES0-TM3DQ16R_G_1" Map="35e158df-a93e-4c2d-a87a-3be59ece44a4.3D18AA352D0D9366;" />
+      <ResInst ID="DD93ED665C4B1E31" Name="Res-Handling1-RES0-TM3DQ16R_G" Map="27d29dba-b622-4a9a-a99d-fcb41e25d590.6F3E7DE0442E3EAE;" />
+      <ResInst ID="80AD0EF6C20B90C0" Name="Res-RS-RES0-TM3DQ16R_G_2" Map="35e158df-a93e-4c2d-a87a-3be59ece44a4.3D18AA352D0D9366;" />
+      <ResInst ID="B8258D623CCF98F0" Name="Res-Testing-RES0-TM3DQ16R_G_1" Map="5e1e18e6-2a98-4f29-8843-d2ca517955fb.623B7B3E5E108194;" />
+      <ResInst ID="FD5DCF97F27197F0" Name="Res-ConSys-RES0-TM3DQ16R_G_2" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+      <ResInst ID="FF898B040B9A6427" Name="Res-Sorting-RES0-TM3DQ16R_G" Map="7e2a84c7-ea74-430e-8574-d77d2695353f.4D2F0EFB17F98C29;" />
+      <ResInst ID="1701A6EE4E54CF32" Name="Res-Distribution-RES0-TM3DQ16R_G_1" Map="96a87630-bf8d-4736-8408-0a31bd523794.5C1335FCE1185211;" />
+      <ResInst ID="893394BE00C397B0" Name="Res-ConSys-RES0-TM3DQ16R_G" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+      <ResInst ID="24B14F1D1072AFAF" Name="Res-Testing-RES0-TM3DQ16R_G" Map="5e1e18e6-2a98-4f29-8843-d2ca517955fb.623B7B3E5E108194;" />
+      <ResInst ID="953E16FE7FDAF9B7" Name="Res-Distribution-RES0-TM3DQ16R_G" Map="96a87630-bf8d-4736-8408-0a31bd523794.5C1335FCE1185211;" />
+      <ResInst ID="D006A402C6D0F25F" Name="Res-ConSys-RES0-TM3DQ16R_G_1" Map="b038fc34-a573-4343-8505-3e4f21c7e6d9.F37B3BA361F25E53;" />
+      <ResInst ID="D4B3C1E578019590" Name="Res-RS-RES0-TM3DQ16R_G" Map="35e158df-a93e-4c2d-a87a-3be59ece44a4.3D18AA352D0D9366;" />
+      <ResInst ID="CAF618E1DF205DA9" Name="Res-Processing-RES0-TM3DQ16R_G" Map="52c06738-a698-436b-927a-278f3650c3ee.F0F4FCAB76EBBF3C;" />
+      <ResInst ID="FDC96995B3A721CA" Name="Res-Handling2-RES0-TM3DQ16R_G" Map="6a92a71c-f540-4be7-a1b3-349421687307.FE0EAB3DC7979FEB;" />
+      <ResInst ID="C61344ADA3104311" Name="Res-Siemens-RES0-TM3DQ16R_G" Map="867d325e-d87b-4033-ba42-b680ed5f7074.F5C85C593C72F0E8;" />
+    </CATType>
+  </System>
+</SystemDatabase>

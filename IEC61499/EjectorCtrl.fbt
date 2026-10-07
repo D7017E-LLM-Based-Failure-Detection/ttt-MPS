@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="cd1e0a9f-2671-40e4-9143-0e870516f758" Name="EjectorCtrl" Comment="Basic Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Version="0.0" Author=" " Date="7/2/2026" Remarks="Template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="5075B7C883F6DB8E" Name="TRIGGER" Comment="Initialization Request" />
+      <Event ID="72D68373CB8F998D" Name="TIMEOUT_EXCEED" />
+      <Event ID="361BCBBF00573228" Name="REQ" Comment="Normal Execution Request">
+        <With Var="retracted" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="042E79BFB7FA2F39" Name="DONE" Comment="Initialization Confirm" />
+      <Event ID="078143C00FF3B376" Name="EXTEND" Comment="Execution Confirmation" />
+      <Event ID="F0F5EB2DE7331E9D" Name="RETRACT" />
+      <Event ID="3B7AC1DAC98FD523" Name="TIMEOUT" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="3BAA4F63EAF88AE2" Name="retracted" Type="BOOL" Comment="Input event qualifier" />
+    </InputVars>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="INIT,REQ" />
+    <ECC>
+      <ECState Name="START" Comment="Initial State" x="552.9412" y="429.4117" />
+      <ECState Name="OPERATE" x="1337.778" y="475.5556" />
+      <ECState Name="EXTEND" x="1684.444" y="888.8889">
+        <ECAction Output="EXTEND" />
+        <ECAction Output="TIMEOUT" />
+      </ECState>
+      <ECState Name="RETRACT" x="973.3334" y="1346.667">
+        <ECAction Output="RETRACT" />
+      </ECState>
+      <ECState Name="DONE" x="151.1111" y="977.7778">
+        <ECAction Output="DONE" />
+      </ECState>
+      <ECTransition Source="START" Destination="OPERATE" Condition="TRIGGER" x="933.1295" y="365.7079">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="212.5543,86.67915,253.0536,89.06055" />
+      </ECTransition>
+      <ECTransition Source="OPERATE" Destination="EXTEND" Condition="1" x="1581.819" y="634.0264">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="386.1353,141.6166,407.7298,167.364" />
+      </ECTransition>
+      <ECTransition Source="EXTEND" Destination="RETRACT" Condition="TIMEOUT_EXCEED" x="1385.086" y="1181.697">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="368.629,285.7398,322.8798,315.1909" />
+      </ECTransition>
+      <ECTransition Source="RETRACT" Destination="DONE" Condition="retracted" x="549.7216" y="1241.037">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="165.1223,326.5775,115.9888,304.5338" />
+      </ECTransition>
+      <ECTransition Source="DONE" Destination="START" Condition="1" x="345.6628" y="628.5947">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="74.45012,169.3987,101.563,132.3986" />
+      </ECTransition>
+    </ECC>
+    <Algorithm Name="INIT" Comment="Initialization algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+    <Algorithm Name="REQ" Comment="Normally executed algorithm">
+      <ST><![CDATA[;]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

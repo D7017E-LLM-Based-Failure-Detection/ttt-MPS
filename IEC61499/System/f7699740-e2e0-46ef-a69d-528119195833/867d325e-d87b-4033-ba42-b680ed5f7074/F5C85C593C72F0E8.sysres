@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="F5C85C593C72F0E8" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management" Format="2.0" xmlns="https://www.se.com/LibraryElements">
+  <FBNetwork>
+    <FB ID="45FEB910A07088FC" Name="Station4" Type="Waypoint" Namespace="Main" Mapping="3AF145E473DB161B" x="1160" y="120">
+      <Parameter Name="$6C467FA1B7C9CA3B" Value="FALSE" />
+    </FB>
+    <EventConnections>
+      <Connection Source="$START.COLD" Destination="$45FEB910A07088FC.32552DD3B5C8D126" dx1="48.60425" />
+      <Connection Source="$START.WARM" Destination="$45FEB910A07088FC.32552DD3B5C8D126" dx1="70" />
+    </EventConnections>
+  </FBNetwork>
+</Resource>
