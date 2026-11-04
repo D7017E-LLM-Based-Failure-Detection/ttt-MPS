@@ -99,7 +99,25 @@ Each command is a `SYMLINKMULTIVARSRC` block, fired when its step starts, that w
 
 ### Automatic cycle
 
-The automatic cycle, `AutoCycle`, follows the same pattern in its own CAT (Figure 2). After the same take-over step, it waits until Testing is free, swings the arm downstream, checks the magazine, pushes a workpiece out, swings to the magazine and picks the workpiece up. It then retracts the ejector, waits until Testing is free, swings downstream, drops the workpiece off with a blow-off pulse and parks the arm at the magazine. To repeat until the magazine is empty, it adds two library blocks the reset does not use: `seqTransJumpBackCmd`, which marks the step the loop jumps back to, and `SeqTransition`, which gives the loop step a second exit when the magazine is empty.
+The automatic cycle, `AutoCycle`, follows the same pattern in its own CAT (Figure 2). After the same take-over step, it waits until Testing is free, swings the arm downstream, checks the magazine, pushes a workpiece out, swings to the magazine and picks the workpiece up. It then retracts the ejector, waits until Testing is free, swings downstream, drops the workpiece off with a blow-off pulse and parks the arm at the magazine. 
+
+| Step | Command | Done when |
+| --- | --- | --- |
+| AC1 Take over | Switch the Vacuum, the Ejector, the Swivel and BlowOff to Program Local | The Vacuum, the Ejector and BlowOff report Program Local |
+| AC2 Wait for Testing | None, it only waits | Testing is free (`DownstreamFree`) |
+| AC3 Arm downstream | Swivel to Open | The Swivel reports open |
+| AC4 Check magazine | None, it only waits | The magazine is not empty |
+| AC5 Eject | Ejector to Open | The Ejector reports open |
+| AC6 Arm to magazine | Swivel to Close | The Swivel reports closed |
+| AC7 Pick up | Vacuum to Open | The Vacuum reports open |
+| AC8 Ejector back | Ejector to Close | The Ejector reports closed and Testing is still free |
+| AC9 Carry | Swivel to Open | The Swivel reports open |
+| AC10 Drop off | Vacuum to Close and BlowOff on, then BlowOff off when the step ends | The Vacuum reports closed |
+| AC11 Park | Swivel to Close | The Swivel reports closed |
+
+Three small logic blocks sit between the sensors and the steps where a condition combines or inverts signals: an AND of the take-over answers for AC1, a NOT that turns the magazine-empty sensor into "workpieces left" for AC4, and an AND of the ejector's back position and Testing's free signal for AC8. BlowOff has no feedback, so AC10 switches it on as the step starts and off as it ends, which gives the blow-off pulse.
+
+Every step ends on real feedback, the device's confirmed end position or a sensor, never on a timer. A slow or stuck cylinder therefore holds the cycle in the right step while its valve block raises an alarm. An IEC 61499 block reads its inputs only when an event arrives, so each step checks its condition twice: once when its command is confirmed, which catches a device that is already in place, and again whenever the device reports new feedback.
 
 ## Testing
 
@@ -118,8 +136,13 @@ All tests run on EAE's simulated controller, with each device's Simulation setti
 | 5 | **Reset from home.** Switch the three device owners to Program. Open the `ResetSeq` faceplate, switch its Owner to Operator, and press Start. | The three owners change to Program Local, steps whose device is already home pass at once, and Status ends on Completed. | Passed |
 | 6 | **Reset with moves.** Switch the three devices to Operator. With Override on and Override Value True on `DownstreamFree`, open the Swivel, the Ejector and the Vacuum. Switch all three back to Program, then press Start on `ResetSeq`. | The Vacuum closes, the Ejector retracts and the Swivel swings to the magazine, one after the other. Status ends on Completed. | Passed |
 | 7 | **Reset waits for a device on Operator.** Switch the Ejector to Operator and press Start. Then press Stop, switch the Ejector back to Program, and press Start again. | The sequence stays in the take-over step until Stop, and Status reads Stopped. The second Start runs to Completed. | Passed |
+| 8 | **Step through the cycle.** On the `CycleSeq` faceplate, switch Owner to Operator, set Mode to Semi-Auto and press Start. Press SEMI-START each time it appears. | The four devices change to Program Local, each step moves its device in the order of the step table, and Status ends on Completed. | Passed |
+| 9 | **Run the cycle whole.** Set Mode to Auto and press Start. | The cycle runs without stopping and Status ends on Completed. | Passed |
+| 10 | **Wait for Testing.** Set the Override Value of `DownstreamFree` to False and press Start, then set it back to True. | The cycle stays in AC2 until the value is True, then carries on to Completed. | Passed |
+| 11 | **Stop mid-cycle, then reset.** In Semi-Auto, press Stop once AC9 is done, with the arm downstream and the suction on. Then press Start on the `ResetSeq` faceplate. | The Vacuum switches off, the Swivel swings to the magazine and Status ends on Completed, so both sequences can command the same devices. | Passed |
 
-Tests for the automatic cycle will be added once it is built.
+
+In simulation each valve confirms a move the moment it is commanded, so in Auto (test 9) the whole cycle finishes in well under a second and the faceplates show no visible change. Semi-Auto (test 8) shows it step by step.
 
 ## Problems and solutions
 
@@ -131,7 +154,6 @@ Tests for the automatic cycle will be added once it is built.
 
 ## Remaining work
 
-- **Automatic cycle.** Build `AutoCycle` as described under Implementation, test it in simulation, and add its tests to the table.
 - **Station states and console.** Add the library's state manager and wire the console's buttons and lamps to it, so that Start, Stop and Reset run the right sequence. The station also needs to hand the devices back to the operator when it stops; today they stay in Program Local after a sequence ends.
 - **Real I/O.** Bind the device blocks to the controller's I/O channels and test on the station. This waits on the choice of controller: the nxtStudio project runs Distribution on an nxtControl DCSmini, while the EAE version of that project is set up for a Modicon M251 dPAC.
 - **Handover to Testing.** The design reads the IP\_FI optical signal, which works whatever program Testing runs. The nxtStudio project instead joins the two station programs with an adapter, `WORKPIECE_REQUEST`, and none of Distribution's wired inputs there is IP\_FI, so it is not yet known whether IP\_FI is connected in the lab.
