@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Device xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="5e1e18e6-2a98-4f29-8843-d2ca517955fb" Name="Testing" Type="M251_dPAC" Namespace="SE.DPAC" Locked="false" xmlns="https://www.se.com/LibraryElements">
-  <FBNetwork />
-</Device>
