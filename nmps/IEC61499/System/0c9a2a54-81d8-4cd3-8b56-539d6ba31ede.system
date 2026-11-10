@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<System xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="0c9a2a54-81d8-4cd3-8b56-539d6ba31ede" Name="System" Comment="System Configuration" xmlns="https://www.se.com/LibraryElements">
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="10/18/2026" />
+</System>

@@ -1,0 +1,63 @@
+{
+  "catalogReference": "Workstation_V01.00_01.00",
+  "uuid": "6435cb2b-ba60-4c37-bdfa-8a390a382aa8",
+  "identifier": "Workstation_1",
+  "path": "Topology",
+  "properties": [
+    {
+      "propertyName": "IsUnderConstruction",
+      "propertyValue": "False"
+    },
+    {
+      "propertyName": "CommCardReference",
+      "propertyValue": ""
+    },
+    {
+      "propertyName": "DomainTag",
+      "propertyValue": "1bf87c9c-2a73-4176-9028-707d6be5c30d"
+    }
+  ],
+  "references": [
+    {
+      "diagramPath": "Physical Views",
+      "x": 14.40625,
+      "y": -261
+    }
+  ],
+  "equipments": [
+    {
+      "catalogReference": "NIC_EAE_V01.00_01.00",
+      "uuid": "643827fc-4e31-4644-a3e2-aeff8fec1a2e",
+      "identifier": "NIC_1",
+      "path": "Workstation_1\\NIC_1",
+      "components": [
+        {
+          "interfaces": [
+            {
+              "identifier": "eth0",
+              "disabled": false,
+              "internal": false,
+              "physicalAddress": "",
+              "endpoints": [
+                {
+                  "identifier": "IP Address",
+                  "isReadOnly": false,
+                  "domainReadOnly": false,
+                  "ipAddress": "0.0.0.0",
+                  "domain": "00000000-0000-0000-0000-000000000000"
+                }
+              ]
+            }
+          ],
+          "ports": [
+            {
+              "identifier": "Port1",
+              "side": "Default"
+            }
+          ],
+          "componentType": "EthernetDEO"
+        }
+      ]
+    }
+  ]
+}

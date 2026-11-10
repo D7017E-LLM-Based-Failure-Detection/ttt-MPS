@@ -1,0 +1,7 @@
+{
+  "uuid": "5912661e-15fd-4ae7-9b84-a1c832432ff1",
+  "identifier": "Default Network",
+  "ipV4Address": "192.168.0.0",
+  "ipV4Mask": "255.255.255.0",
+  "ipV4Gateway": "192.168.0.254"
+}

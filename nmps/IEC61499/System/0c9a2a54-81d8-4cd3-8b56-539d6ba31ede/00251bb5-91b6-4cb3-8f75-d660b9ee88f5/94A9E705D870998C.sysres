@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="94A9E705D870998C" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management" x="800" y="800" Format="2.0" xmlns="https://www.se.com/LibraryElements">
+  <FBNetwork>
+    <FB ID="E12DF09F0C141FEA" Name="FB1" Type="DPAC_FULLINIT" Namespace="SE.DPAC" x="1500" y="100" Loaded="true" />
+  </FBNetwork>
+</Resource>

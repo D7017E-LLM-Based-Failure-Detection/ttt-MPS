@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="6176bcc6-dc42-44e0-920e-ad204ed015ce" Name="Default" Comment="" IsDefault="true" Format="2.0" xmlns="https://www.se.com/LibraryElements">
+  <SubAppNetwork>
+    <FB ID="33A16FB4708913B3" Name="Distribution" Type="Distribution" Namespace="Main" x="839.9999" y="200" />
+  </SubAppNetwork>
+</Layer>

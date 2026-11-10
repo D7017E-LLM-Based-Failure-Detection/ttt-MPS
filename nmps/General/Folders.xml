@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Folders xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="nmps" Version="1.6.0.0" xmlns="http://www.nxtcontrol.com/IEC61499.xsd">
+  <Folder Type="SystemDevice" Name="Root">
+    <Items>
+      <item>00251bb5-91b6-4cb3-8f75-d660b9ee88f5</item>
+      <item>0d5eb44a-26f1-468d-8caa-7f6bfe966b18</item>
+    </Items>
+  </Folder>
+</Folders>

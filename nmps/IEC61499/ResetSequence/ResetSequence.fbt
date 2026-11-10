@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="6f617181-db4d-4cd6-ad1d-2e481f66fd63" Name="ResetSequence" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="10/23/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="9D471DE3BB9549E0" Name="INIT" Comment="Initialization Request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="3A6478CB8C29DBDE" Name="REQ" Comment="Normal Execution Request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="FECC89DB3D2A57FF" Name="VacuumFb">
+        <With Var="VacuumClosed" />
+      </Event>
+      <Event ID="43498683653FD650" Name="EjectorFb">
+        <With Var="EjectorClosed" />
+      </Event>
+      <Event ID="A5069DC6B641011A" Name="SwivelFb">
+        <With Var="SwivelClosed" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="2DBC3D4AFEE24AE1" Name="INITO" Comment="Initialization Confirm">
+        <With Var="QO" />
+      </Event>
+      <Event ID="620F99A55700D018" Name="CNF" Comment="Execution Confirmation">
+        <With Var="QO" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="62AE8B6350789422" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="60387A5202353395" Name="VacuumClosed" Type="BOOL" />
+      <VarDeclaration ID="22FAB5CD31E08CC4" Name="EjectorClosed" Type="BOOL" />
+      <VarDeclaration ID="DDDAB227DF90F2E9" Name="SwivelClosed" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="B133354228B36B47" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="F2EAB24A46F354C2" Name="ResetSeq" Type="SeqHead" x="800" y="1940" Namespace="SE.AppSequence">
+      <Parameter Name="$PermStart" Value="TRUE" />
+    </FB>
+    <FB ID="B5E0BF5347962E31" Name="RS1_TakeOver" Type="SeqStep" x="1800" y="1980" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="2" />
+    </FB>
+    <FB ID="102A8A1E000FD7EE" Name="RS_End" Type="SeqTerminate" x="6220" y="2300" Namespace="SE.AppSequence" />
+    <FB ID="E8B060603293B56D" UID="6FECAA455D74CBBA" Name="Consts" Type="ANY2ANY_56AF98AE16FC030" x="1120" y="280" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=2;IN${CNT}:BOOL,INT;OUT${CNT}:VTQBOOL,VTQINT" />
+      <Parameter Name="$IN1" Value="TRUE" />
+      <Parameter Name="$IN2" Value="2" />
+    </FB>
+    <FB ID="EB8752CCEFA7B77F" Name="RS3_EjectorBack" Type="SeqStep" x="4140" y="1900" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="4" />
+    </FB>
+    <FB ID="4814D7CDF90C0A7F" Name="RS2_VacuumOff" Type="SeqStep" x="3080" y="1940" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="3" />
+    </FB>
+    <FB ID="989FC97A4AA4EE54" Name="RS4_SwivelHome" Type="SeqStep" x="5200" y="1980" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="5" />
+    </FB>
+    <FB ID="1AADE139AB34F90D" UID="A3CDBE3CCD72128D" Name="OwnerFb" Type="SYMLINKMULTIVARDST_105A0442B8CC61A96" x="860" y="860" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=3;VALUE${I}:VTQBOOL,VTQBOOL,VTQBOOL" />
+      <Parameter Name="$NAME1" Value="'RES0.Distribution.Vacuum.sc.progLocal'" />
+      <Parameter Name="$NAME2" Value="'RES0.Distribution.Ejector.sc.progLocal'" />
+      <Parameter Name="$NAME3" Value="'RES0.Distribution.Swivel.sc.progLocal'" />
+      <Parameter Name="$QI" Value="TRUE" />
+    </FB>
+    <FB ID="C6DD4B24A40F4F6C" UID="8184B9FDFA4207C1" Name="TakeOverCmd" Type="SYMLINKMULTIVARSRC_105A0442B8CC61A96" x="2720" y="920" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=3;VALUE${I}:VTQBOOL,VTQBOOL,VTQBOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'RES0.Distribution.Vacuum.sc.progLocalSel'" />
+      <Parameter Name="$NAME2" Value="'RES0.Distribution.Ejector.sc.progLocalSel'" />
+      <Parameter Name="$NAME3" Value="'RES0.Distribution.Swivel.sc.progLocalSel'" />
+    </FB>
+    <FB ID="B5B188A17E40EADB" UID="EF0809D4AD357524" Name="EjectorBackCmd" Type="SYMLINKMULTIVARSRC_18556BCA74EA878F1" x="4940" y="920" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQINT" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'RES0.Distribution.Ejector.sc.lsp'" />
+    </FB>
+    <FB ID="0D0C14E146EC6205" UID="D609AC79B438C8C2" Name="VacuumOffCmd" Type="SYMLINKMULTIVARSRC_18556BCA74EA878F1" x="3980" y="900" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQINT" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'RES0.Distribution.Vacuum.sc.lsp'" />
+    </FB>
+    <FB ID="2FDF516B8BF47FFE" UID="5DBABFA760DEDB8C" Name="SwivelHomeCmd" Type="SYMLINKMULTIVARSRC_18556BCA74EA878F1" x="6100" y="880" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQINT" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'RES0.Distribution.Swivel.sc.lsp'" />
+    </FB>
+    <FB ID="CF546D7D34777455" UID="1980B8FD984E8F9C" Name="AllLocal" Type="AND_550FE6D62F509EB3" x="1640" y="1260" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=3;OUT:BOOL" />
+      <Parameter Name="$IN3" Value="TRUE" />
+    </FB>
+    <Input ID="9D471DE3BB9549E0" Name="INIT" x="12" y="12" Type="Event" />
+    <Input ID="3A6478CB8C29DBDE" Name="REQ" x="12" y="72" Type="Event" />
+    <Input ID="62AE8B6350789422" Name="QI" x="12" y="132" Type="Data" />
+    <Input ID="FECC89DB3D2A57FF" Name="VacuumFb" x="40" y="1672" Type="Event" />
+    <Input ID="43498683653FD650" Name="EjectorFb" x="40" y="1732" Type="Event" />
+    <Input ID="A5069DC6B641011A" Name="SwivelFb" x="40" y="1792" Type="Event" />
+    <Input ID="60387A5202353395" Name="VacuumClosed" x="60" y="3212" Type="Data" />
+    <Input ID="22FAB5CD31E08CC4" Name="EjectorClosed" x="60" y="3272" Type="Data" />
+    <Input ID="DDDAB227DF90F2E9" Name="SwivelClosed" x="60" y="3332" Type="Data" />
+    <Output ID="2DBC3D4AFEE24AE1" Name="INITO" x="5940" y="91.99999" Type="Event" />
+    <Output ID="620F99A55700D018" Name="CNF" x="5960" y="152" Type="Event" />
+    <Output ID="B133354228B36B47" Name="QO" x="5840" y="212" Type="Data" />
+    <EventConnections>
+      <Connection Source="$9D471DE3BB9549E0" Destination="$E8B060603293B56D.REQ" dx1="499.4167">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$E8B060603293B56D.CNF" Destination="$F2EAB24A46F354C2.REQ_PERM" dx1="83.75" dx2="80" dy="460">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$E8B060603293B56D.CNF" Destination="$C6DD4B24A40F4F6C.INIT" dx1="83.75" />
+      <Connection Source="$E8B060603293B56D.CNF" Destination="$0D0C14E146EC6205.INIT" dx1="1843.75" />
+      <Connection Source="$E8B060603293B56D.CNF" Destination="$B5B188A17E40EADB.INIT" dx1="3103.75" />
+      <Connection Source="$E8B060603293B56D.CNF" Destination="$2FDF516B8BF47FFE.INIT" dx1="4063.75" />
+      <Connection Source="$E8B060603293B56D.CNF" Destination="$1AADE139AB34F90D.INIT" dx1="83.75" dx2="70.00012" dy="460">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$1AADE139AB34F90D.CNF" Destination="$CF546D7D34777455.REQ" dx1="81.62512" />
+      <Connection Source="$CF546D7D34777455.CNF" Destination="$B5E0BF5347962E31.TRANS_REQ" dx1="67.479" dx2="50" dy="500">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$B5E0BF5347962E31.STEP_ENTER" Destination="$C6DD4B24A40F4F6C.REQ" dx1="105.146" dx2="220" dy="-169.9998">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$C6DD4B24A40F4F6C.CNF" Destination="$CF546D7D34777455.REQ" dx1="40" dx2="99.99988" dy="-170">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$4814D7CDF90C0A7F.STEP_ENTER" Destination="$0D0C14E146EC6205.REQ" dx1="50" />
+      <Connection Source="$EB8752CCEFA7B77F.STEP_ENTER" Destination="$B5B188A17E40EADB.REQ" dx1="55.146" dx2="90" dy="-170" />
+      <Connection Source="$989FC97A4AA4EE54.STEP_ENTER" Destination="$2FDF516B8BF47FFE.REQ" dx1="55.146" dx2="90" dy="-169.9998" />
+      <Connection Source="$B5B188A17E40EADB.CNF" Destination="$EB8752CCEFA7B77F.TRANS_REQ" dx1="40" dx2="50" dy="470" />
+      <Connection Source="$0D0C14E146EC6205.CNF" Destination="$4814D7CDF90C0A7F.TRANS_REQ" dx1="86.875" dx2="270" dy="730.0001">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$2FDF516B8BF47FFE.CNF" Destination="$989FC97A4AA4EE54.TRANS_REQ" dx1="40" dx2="50" dy="540">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$FECC89DB3D2A57FF" Destination="$4814D7CDF90C0A7F.TRANS_REQ">
+        <Points>
+          <Points>
+            <X>103.578125</X>
+            <Y>424.999939</Y>
+          </Points>
+          <Points>
+            <X>113.578125</X>
+            <Y>424.999939</Y>
+          </Points>
+          <Points>
+            <X>113.578125</X>
+            <Y>427.5</Y>
+          </Points>
+          <Points>
+            <X>657.5</X>
+            <Y>427.5</Y>
+          </Points>
+          <Points>
+            <X>657.5</X>
+            <Y>495</Y>
+          </Points>
+          <Points>
+            <X>764.999939</X>
+            <Y>495</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$43498683653FD650" Destination="$EB8752CCEFA7B77F.TRANS_REQ" dx1="3519.167" />
+      <Connection Source="$A5069DC6B641011A" Destination="$989FC97A4AA4EE54.TRANS_REQ" dx1="4618.417">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$E8B060603293B56D.OUT1" Destination="$C6DD4B24A40F4F6C.VALUE1">
+        <Points>
+          <Points>
+            <X>366.5625</X>
+            <Y>130</Y>
+          </Points>
+          <Points>
+            <X>585</X>
+            <Y>130</Y>
+          </Points>
+          <Points>
+            <X>585</X>
+            <Y>210</Y>
+          </Points>
+          <Points>
+            <X>630</X>
+            <Y>210</Y>
+          </Points>
+          <Points>
+            <X>630</X>
+            <Y>350</Y>
+          </Points>
+          <Points>
+            <X>675</X>
+            <Y>350</Y>
+          </Points>
+        </Points>
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$E8B060603293B56D.OUT1" Destination="$C6DD4B24A40F4F6C.VALUE2" dx1="733.75" dx2="640" dy="320">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$E8B060603293B56D.OUT1" Destination="$C6DD4B24A40F4F6C.VALUE3" dx1="733.75">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$E8B060603293B56D.OUT2" Destination="$0D0C14E146EC6205.VALUE1" dx1="1843.75" />
+      <Connection Source="$E8B060603293B56D.OUT2" Destination="$B5B188A17E40EADB.VALUE1" dx1="3213.75">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$E8B060603293B56D.OUT2" Destination="$2FDF516B8BF47FFE.VALUE1" dx1="4063.75" />
+      <Connection Source="$1AADE139AB34F90D.VALUE1" Destination="$CF546D7D34777455.IN1" dx1="61.62512" />
+      <Connection Source="$1AADE139AB34F90D.VALUE2" Destination="$CF546D7D34777455.IN2" dx1="41.62512" />
+      <Connection Source="$CF546D7D34777455.OUT" Destination="$B5E0BF5347962E31.Exceeded" dx1="47.479" dx2="260" dy="210">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$60387A5202353395" Destination="$4814D7CDF90C0A7F.Exceeded" dx1="2100.667">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$22FAB5CD31E08CC4" Destination="$EB8752CCEFA7B77F.Exceeded" dx1="3274.146" />
+      <Connection Source="$DDDAB227DF90F2E9" Destination="$989FC97A4AA4EE54.Exceeded" dx1="4333.396">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+    </DataConnections>
+    <AdapterConnections>
+      <Connection Source="$F2EAB24A46F354C2.ISeqChain" Destination="$B5E0BF5347962E31.ISeqChainIn" dx1="40" />
+      <Connection Source="$B5E0BF5347962E31.ISeqChainOut" Destination="$4814D7CDF90C0A7F.ISeqChainIn" dx1="75.146" />
+      <Connection Source="$4814D7CDF90C0A7F.ISeqChainOut" Destination="$EB8752CCEFA7B77F.ISeqChainIn" dx1="75.146" />
+      <Connection Source="$EB8752CCEFA7B77F.ISeqChainOut" Destination="$989FC97A4AA4EE54.ISeqChainIn" dx1="75.146" />
+      <Connection Source="$989FC97A4AA4EE54.ISeqChainOut" Destination="$102A8A1E000FD7EE.ISeqChainIn" dx1="75.146" />
+    </AdapterConnections>
+  </FBNetwork>
+</FBType>

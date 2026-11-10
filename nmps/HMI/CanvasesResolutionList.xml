@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CanvasesResolutionList xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="nmps" Version="1.6.0.0" xmlns="http://www.nxtcontrol.com/IEC61499.xsd">
+  <CanvasResolution Name="800x480" StartCanvasClass="HMI.Main.Canvases.StartCanvas_2" Width="800" Height="480" WorkAreaWidth="800" WorkAreaHeight="480" Template="Default" Logger="true" Login="true" NavigationControl="1" CurrentUser="true" LanguageButton="true" RuntimeConnection="true" SideNavigationBar="true" NewVersionDeployed="true" IsCanvasTopologyPanel="true" ResizeBehaviour="Standard" CanvasButtonHeight="30">
+    <Topology Name="Default">
+      <Canvases>
+        <Canvas Name="Distribution" Title="" Tooltip="" Instance="HMI.Main.Canvases.Distribution">
+          <Children />
+        </Canvas>
+      </Canvases>
+    </Topology>
+  </CanvasResolution>
+  <CanvasResolution Name="Without resolution" StartCanvasClass="" Width="-1" Height="-1" WorkAreaWidth="-1" WorkAreaHeight="-1" Template="" Login="true" CurrentUser="true" LanguageButton="true" RuntimeConnection="true" NavigationBar="true" SideNavigationBar="true" NewVersionDeployed="true" WarningText="" SiblingButtonCount="5" ChildButtonCount="5" IsCanvasTopologyPanel="true" ResizeBehaviour="None" CanvasButtonHeight="30">
+    <Topology Name="Default">
+      <Canvases />
+    </Topology>
+  </CanvasResolution>
+</CanvasesResolutionList>

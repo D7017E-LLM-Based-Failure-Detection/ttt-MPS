@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{1BF87C9C-2A73-4176-9028-707D6BE5C30D}</ProjectGuid>
+    <ProjectTypeGuids>{EAD1E85F-CEF5-4861-AFF8-597F2DDE70FC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Windows</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Main</RootNamespace>
+    <AssemblyName>IEC61499</AssemblyName>
+    <NxtVersion>25.0.1.0</NxtVersion>
+    <CheckConnectionsStrictly>TRUE</CheckConnectionsStrictly>
+    <HardwareConfigurationMigrationVersion>1</HardwareConfigurationMigrationVersion>
+    <HMIProject>HMI</HMIProject>
+    <CATInstancesHaveIds>true</CATInstancesHaveIds>
+    <MultiUserSupport>true</MultiUserSupport>
+    <IsConnectionIdModified>true</IsConnectionIdModified>
+    <ProjectType>IEC61499</ProjectType>
+    <CheckGenericInstances>False</CheckGenericInstances>
+    <ConvertStringValues>False</ConvertStringValues>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'Windows' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Default\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <IntermediateOutputPath>obj\Default\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Default\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <IntermediateOutputPath>obj\Default\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Windows' ">
+    <Version>1.0</Version>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Verify' ">
+    <OutputPath>bin\Verify</OutputPath>
+    <IntermediateOutputPath>obj\Verify\</IntermediateOutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Runtime.Base">
+      <Version>25.0.1.2</Version>
+    </Reference>
+    <Reference Include="SE.App2Base">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2CommonProcess">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2Conveying">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2LiquidFood">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2MMM">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2SingleLinePowerMonitoring">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2StateManagement">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2WWW">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.AppSequence">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.DPAC">
+      <Version>25.0.1.10</Version>
+    </Reference>
+    <Reference Include="SE.FieldDevice">
+      <Version>25.0.1.10</Version>
+    </Reference>
+    <Reference Include="SE.HwCommon">
+      <Version>25.0.1.4</Version>
+    </Reference>
+    <Reference Include="SE.IoATV">
+      <Version>25.0.1.9</Version>
+    </Reference>
+    <Reference Include="SE.IoNet">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.IoTMx">
+      <Version>25.0.1.4</Version>
+    </Reference>
+    <Reference Include="SE.IoX80">
+      <Version>25.0.1.4</Version>
+    </Reference>
+    <Reference Include="SE.ModbusGateway">
+      <Version>25.0.1.6</Version>
+    </Reference>
+    <Reference Include="SE.ModEdgeIONTS">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.Standard">
+      <Version>25.0.1.1</Version>
+    </Reference>
+    <Reference Include="Standard.IoEtherNetIP">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="Standard.IoModbus">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="Standard.IoModbusSlave">
+      <Version>25.0.1.2</Version>
+    </Reference>
+    <Reference Include="Standard.OPCUAClient">
+      <Version>25.0.1.2</Version>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\General\Archive.xml" />
+    <None Include="..\General\Certificates\Certificates.xml" />
+    <None Include="..\General\ConnectableAdapterList.xml" />
+    <None Include="..\General\Folders.xml" />
+    <None Include="..\General\ProjectInfo.xml" />
+    <None Include="..\HMI\AutoCycle\AutoCycle_sDefault.doc.xml">
+      <DependentUpon>AutoCycle.fbt</DependentUpon>
+    </None>
+    <None Include="..\HMI\Distribution\Distribution_sDefault.doc.xml">
+      <DependentUpon>Distribution.fbt</DependentUpon>
+    </None>
+    <None Include="..\HMI\ResetSequence\ResetSequence_sDefault.doc.xml">
+      <DependentUpon>ResetSequence.fbt</DependentUpon>
+    </None>
+    <None Include="AutoCycle\AutoCycle.cfg">
+      <DependentUpon>AutoCycle.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="AutoCycle\AutoCycle.doc.xml">
+      <DependentUpon>AutoCycle.fbt</DependentUpon>
+    </None>
+    <None Include="AutoCycle\AutoCycle.meta.xml">
+      <DependentUpon>AutoCycle.fbt</DependentUpon>
+    </None>
+    <None Include="AutoCycle\AutoCycle_CAT.offline.xml">
+      <DependentUpon>AutoCycle.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="AutoCycle\AutoCycle_CAT.opcua.xml">
+      <DependentUpon>AutoCycle.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="AutoCycle\AutoCycle_HMI.doc.xml">
+      <DependentUpon>AutoCycle.fbt</DependentUpon>
+    </None>
+    <None Include="AutoCycle\AutoCycle_HMI.meta.xml">
+      <DependentUpon>AutoCycle.fbt</DependentUpon>
+    </None>
+    <None Include="AutoCycle\AutoCycle_HMI.offline.xml">
+      <DependentUpon>AutoCycle.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="AutoCycle\AutoCycle_HMI.opcua.xml">
+      <DependentUpon>AutoCycle.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="Distribution\Distribution.cfg">
+      <DependentUpon>Distribution.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="Distribution\Distribution.doc.xml">
+      <DependentUpon>Distribution.fbt</DependentUpon>
+    </None>
+    <None Include="Distribution\Distribution.meta.xml">
+      <DependentUpon>Distribution.fbt</DependentUpon>
+    </None>
+    <None Include="Distribution\Distribution_CAT.offline.xml">
+      <DependentUpon>Distribution.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="Distribution\Distribution_CAT.opcua.xml">
+      <DependentUpon>Distribution.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="Distribution\Distribution_HMI.doc.xml">
+      <DependentUpon>Distribution.fbt</DependentUpon>
+    </None>
+    <None Include="Distribution\Distribution_HMI.meta.xml">
+      <DependentUpon>Distribution.fbt</DependentUpon>
+    </None>
+    <None Include="Distribution\Distribution_HMI.offline.xml">
+      <DependentUpon>Distribution.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="Distribution\Distribution_HMI.opcua.xml">
+      <DependentUpon>Distribution.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <none Include="Languages\neutral\Dictionary.Resources.xml" />
+    <None Include="Project.doc.xml" />
+    <None Include="ResetSequence\ResetSequence.cfg">
+      <DependentUpon>ResetSequence.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="ResetSequence\ResetSequence.doc.xml">
+      <DependentUpon>ResetSequence.fbt</DependentUpon>
+    </None>
+    <None Include="ResetSequence\ResetSequence.meta.xml">
+      <DependentUpon>ResetSequence.fbt</DependentUpon>
+    </None>
+    <None Include="ResetSequence\ResetSequence_CAT.offline.xml">
+      <DependentUpon>ResetSequence.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="ResetSequence\ResetSequence_CAT.opcua.xml">
+      <DependentUpon>ResetSequence.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="ResetSequence\ResetSequence_HMI.doc.xml">
+      <DependentUpon>ResetSequence.fbt</DependentUpon>
+    </None>
+    <None Include="ResetSequence\ResetSequence_HMI.meta.xml">
+      <DependentUpon>ResetSequence.fbt</DependentUpon>
+    </None>
+    <None Include="ResetSequence\ResetSequence_HMI.offline.xml">
+      <DependentUpon>ResetSequence.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="ResetSequence\ResetSequence_HMI.opcua.xml">
+      <DependentUpon>ResetSequence.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.cfg">
+      <DependentUpon>0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.doc.xml">
+      <DependentUpon>0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\00251bb5-91b6-4cb3-8f75-d660b9ee88f5.hcf">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\00251bb5-91b6-4cb3-8f75-d660b9ee88f5.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\00251bb5-91b6-4cb3-8f75-d660b9ee88f5.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\E0601B81-4A3A-4A96-B6C2-007BDC680D59.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\F513CAE3-7194-4086-936C-02912EA0B352.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18\0d5eb44a-26f1-468d-8caa-7f6bfe966b18.hcf">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>0d5eb44a-26f1-468d-8caa-7f6bfe966b18.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18\0d5eb44a-26f1-468d-8caa-7f6bfe966b18.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>0d5eb44a-26f1-468d-8caa-7f6bfe966b18.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18\0d5eb44a-26f1-468d-8caa-7f6bfe966b18.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>0d5eb44a-26f1-468d-8caa-7f6bfe966b18.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18\E0601B81-4A3A-4A96-B6C2-007BDC680D59.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>0d5eb44a-26f1-468d-8caa-7f6bfe966b18.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18\F513CAE3-7194-4086-936C-02912EA0B352.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>0d5eb44a-26f1-468d-8caa-7f6bfe966b18.sysdev</DependentUpon>
+    </None>
+    <None Include="System\OpenAdapter\OpenAdapter.Connections.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoCycle\AutoCycle.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+    </Compile>
+    <Compile Include="AutoCycle\AutoCycle_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>AutoCycle.fbt</DependentUpon>
+      <HMI>..\HMI\AutoCycle\AutoCycle_sDefault.cnv.cs</HMI>
+    </Compile>
+    <Compile Include="Distribution\Distribution.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+    </Compile>
+    <Compile Include="Distribution\Distribution_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>Distribution.fbt</DependentUpon>
+      <HMI>..\HMI\Distribution\Distribution_sDefault.cnv.cs</HMI>
+    </Compile>
+    <Compile Include="ResetSequence\ResetSequence.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+    </Compile>
+    <Compile Include="ResetSequence\ResetSequence_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>ResetSequence.fbt</DependentUpon>
+      <HMI>..\HMI\ResetSequence\ResetSequence_sDefault.cnv.cs</HMI>
+    </Compile>
+    <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system">
+      <IEC61499Type>System</IEC61499Type>
+    </Compile>
+    <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev">
+      <DependentUpon>0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system</DependentUpon>
+      <IEC61499Type>SystemDevice</IEC61499Type>
+    </Compile>
+    <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\94A9E705D870998C.sysres">
+      <DependentUpon>00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev</DependentUpon>
+      <IEC61499Type>SystemResource</IEC61499Type>
+    </Compile>
+    <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18.sysdev">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system</DependentUpon>
+    </Compile>
+    <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18\32BAD17BD48389.sysres">
+      <IEC61499Type>SystemResource</IEC61499Type>
+      <DependentUpon>0d5eb44a-26f1-468d-8caa-7f6bfe966b18.sysdev</DependentUpon>
+    </Compile>
+    <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9bf3b433-92e3-4d31-8cff-c20036297fe9.sysapp">
+      <DependentUpon>0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system</DependentUpon>
+      <IEC61499Type>SystemApplication</IEC61499Type>
+    </Compile>
+    <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9bf3b433-92e3-4d31-8cff-c20036297fe9\6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay">
+      <DependentUpon>9bf3b433-92e3-4d31-8cff-c20036297fe9.sysapp</DependentUpon>
+      <IEC61499Type>SystemLayer</IEC61499Type>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="..\General\Certificates" />
+    <Folder Include="Configuration" />
+    <Folder Include="License" />
+    <Folder Include="Log" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\94A9E705D870998C\offline.xml">
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <DependentUpon>94A9E705D870998C.sysres</DependentUpon>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\94A9E705D870998C\opcua.xml">
+      <DependentUpon>94A9E705D870998C.sysres</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\94A9E705D870998C\opcuaclient.xml">
+      <IEC61499Type>CAT_OPCUACLIENT</IEC61499Type>
+      <Plugin>OPCUAClientConfigurator</Plugin>
+      <DependentUpon>94A9E705D870998C.sysres</DependentUpon>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\94A9E705D870998C\symlink.xml">
+      <DependentUpon>94A9E705D870998C.sysres</DependentUpon>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18\32BAD17BD48389\offline.xml">
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+      <DependentUpon>32BAD17BD48389.sysres</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18\32BAD17BD48389\opcua.xml">
+      <DependentUpon>32BAD17BD48389.sysres</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18\32BAD17BD48389\opcuaclient.xml">
+      <DependentUpon>32BAD17BD48389.sysres</DependentUpon>
+      <Plugin>OPCUAClientConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUACLIENT</IEC61499Type>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18\32BAD17BD48389\symlink.xml">
+      <DependentUpon>32BAD17BD48389.sysres</DependentUpon>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9bf3b433-92e3-4d31-8cff-c20036297fe9\6176bcc6-dc42-44e0-920e-ad204ed015ce\offline.xml">
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <DependentUpon>6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay</DependentUpon>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9bf3b433-92e3-4d31-8cff-c20036297fe9\6176bcc6-dc42-44e0-920e-ad204ed015ce\opcua.xml">
+      <DependentUpon>6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9bf3b433-92e3-4d31-8cff-c20036297fe9\6176bcc6-dc42-44e0-920e-ad204ed015ce\opcuaclient.xml">
+      <IEC61499Type>CAT_OPCUACLIENT</IEC61499Type>
+      <Plugin>OPCUAClientConfigurator</Plugin>
+      <DependentUpon>6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(SharpDevelopBinPath)\NxtControl.Build.61499.Targets" />
+</Project>
