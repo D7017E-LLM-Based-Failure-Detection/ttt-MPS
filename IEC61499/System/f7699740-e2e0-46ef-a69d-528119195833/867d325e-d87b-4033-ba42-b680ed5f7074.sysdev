@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Device xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="867d325e-d87b-4033-ba42-b680ed5f7074" Name="Siemens" Type="M251_dPAC" Namespace="SE.DPAC" Locked="false" xmlns="https://www.se.com/LibraryElements">
-  <FBNetwork />
-</Device>
