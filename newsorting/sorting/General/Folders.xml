@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Folders xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="sorting2n" Version="1.6.0.0" xmlns="http://www.nxtcontrol.com/IEC61499.xsd">
+  <Folder Type="Basic" Name=".Sorting.Helpers">
+    <Items />
+  </Folder>
+  <Folder Type="CAT" Name=".Sorting">
+    <Items />
+  </Folder>
+  <Folder Type="FB" Name=".Sorting">
+    <Items />
+  </Folder>
+  <Folder Type="SystemDevice" Name="Root">
+    <Items>
+      <item>18AD9F22-EA08-4788-BCFB-294DBA6A7418</item>
+    </Items>
+  </Folder>
+</Folders>

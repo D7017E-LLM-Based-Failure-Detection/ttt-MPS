@@ -1,0 +1,266 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{ED98971D-395C-432A-AC18-283C29E2F825}</ProjectGuid>
+    <ProjectTypeGuids>{EAD1E85F-CEF5-4861-AFF8-597F2DDE70FC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Windows</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Main</RootNamespace>
+    <AssemblyName>IEC61499</AssemblyName>
+    <NxtVersion>25.0.1.0</NxtVersion>
+    <CheckConnectionsStrictly>TRUE</CheckConnectionsStrictly>
+    <CreateHMI>false</CreateHMI>
+    <HMIProject>HMI</HMIProject>
+    <CATInstancesHaveIds>true</CATInstancesHaveIds>
+    <ProjectType>IEC61499</ProjectType>
+    <CheckGenericInstances>False</CheckGenericInstances>
+    <ConvertStringValues>False</ConvertStringValues>
+    <HardwareConfigurationMigrationVersion>1</HardwareConfigurationMigrationVersion>
+    <ProceduralAutomationConfigurationMigrationVersion>1</ProceduralAutomationConfigurationMigrationVersion>
+    <MultiUserSupport>true</MultiUserSupport>
+    <IsConnectionIdModified>true</IsConnectionIdModified>
+    <NonStdGuardExpr>True</NonStdGuardExpr>
+    <EventVariables>True</EventVariables>
+    <NxtTypeECC>True</NxtTypeECC>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'Windows' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Default\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <IntermediateOutputPath>obj\Default\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Default\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <IntermediateOutputPath>obj\Default\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Windows' ">
+    <Version>1.0</Version>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Verify' ">
+    <OutputPath>bin\Verify</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <Import Project="$(SharpDevelopBinPath)\NxtControl.Build.61499.Targets" />
+  <ItemGroup>
+    <None Include="..\General\Certificates\Certificates.xml" />
+    <None Include="..\General\ProjectInfo.xml" />
+    <None Include="..\General\Archive.xml" />
+    <None Include="..\General\ConnectableAdapterList.xml" />
+    <None Include="..\General\Folders.xml" />
+    <None Include="Project.doc.xml" />
+    <Compile Include="System\4547DCFB-C438-4737-826A-40138203833D.system">
+      <IEC61499Type>System</IEC61499Type>
+    </Compile>
+    <None Include="Sorting\Sorting_HMI.meta.xml">
+      <DependentUpon>Sorting_HMI.fbt</DependentUpon>
+    </None>
+    <None Include="System\4547DCFB-C438-4737-826A-40138203833D.doc.xml">
+      <DependentUpon>4547DCFB-C438-4737-826A-40138203833D.system</DependentUpon>
+    </None>
+    <Compile Include="System\4547DCFB-C438-4737-826A-40138203833D\F75EAEDC96884C36.sysapp">
+      <DependentUpon>4547DCFB-C438-4737-826A-40138203833D.system</DependentUpon>
+      <IEC61499Type>SystemApplication</IEC61499Type>
+    </Compile>
+    <Compile Include="System\4547DCFB-C438-4737-826A-40138203833D\18AD9F22-EA08-4788-BCFB-294DBA6A7418.sysdev">
+      <DependentUpon>4547DCFB-C438-4737-826A-40138203833D.system</DependentUpon>
+      <IEC61499Type>SystemDevice</IEC61499Type>
+    </Compile>
+    <Compile Include="System\4547DCFB-C438-4737-826A-40138203833D\F75EAEDC96884C36\DC3AEC94-C5FF-4FF0-B930-F1F9D0887658.syslay">
+      <DependentUpon>F75EAEDC96884C36.sysapp</DependentUpon>
+      <IEC61499Type>SystemLayer</IEC61499Type>
+    </Compile>
+    <Compile Include="System\4547DCFB-C438-4737-826A-40138203833D\18AD9F22-EA08-4788-BCFB-294DBA6A7418\5DEB766C094F4530.sysres">
+      <DependentUpon>18AD9F22-EA08-4788-BCFB-294DBA6A7418.sysdev</DependentUpon>
+      <IEC61499Type>SystemResource</IEC61499Type>
+    </Compile>
+    <None Include="Languages\neutral\Dictionary.Resources.xml" />
+    <None Include="System\4547DCFB-C438-4737-826A-40138203833D.cfg">
+      <DependentUpon>4547DCFB-C438-4737-826A-40138203833D.system</DependentUpon>
+    </None>
+    <None Include="..\General\NodeWaterMark.xml" />
+    <None Include="..\General\se-rbac-roles.json" />
+    <None Include="..\General\se-rbac-users.json" />
+    <Compile Include="System\4547DCFB-C438-4737-826A-40138203833D\357347E7-1E95-4F74-B603-905FDBDDC533.sysdev">
+      <DependentUpon>4547DCFB-C438-4737-826A-40138203833D.system</DependentUpon>
+      <IEC61499Type>SystemDevice</IEC61499Type>
+    </Compile>
+    <Compile Include="System\4547DCFB-C438-4737-826A-40138203833D\357347E7-1E95-4F74-B603-905FDBDDC533\BDCAF085C0E04594.sysres">
+      <DependentUpon>357347E7-1E95-4F74-B603-905FDBDDC533.sysdev</DependentUpon>
+      <IEC61499Type>SystemResource</IEC61499Type>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Runtime.Base">
+      <Version>25.0.1.2</Version>
+    </Reference>
+    <Reference Include="SE.App2Base">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2CommonProcess">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.DPAC">
+      <Version>25.0.1.10</Version>
+    </Reference>
+    <Reference Include="SE.HwCommon">
+      <Version>25.0.1.4</Version>
+    </Reference>
+    <Reference Include="SE.FieldDevice">
+      <Version>25.0.1.10</Version>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="..\General\Certificates" />
+    <Folder Include="Configuration" />
+    <Folder Include="License" />
+    <Folder Include="Log" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sorting\Sorting.cfg">
+      <DependentUpon>Sorting.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="Sorting\Sorting.doc.xml">
+      <DependentUpon>Sorting.fbt</DependentUpon>
+    </None>
+    <Compile Include="Sorting\Sorting.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Sorting</Parent>
+    </Compile>
+    <Compile Include="Sorting\Sorting_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>Sorting.fbt</DependentUpon>
+    </Compile>
+    <Compile Include="SortingCommandFrame.fbt">
+      <IEC61499Type>Basic</IEC61499Type>
+      <Parent>.Sorting.Helpers</Parent>
+    </Compile>
+    <Compile Include="SortingHomeConditions.fbt">
+      <IEC61499Type>Basic</IEC61499Type>
+      <Parent>.Sorting.Helpers</Parent>
+    </Compile>
+    <Compile Include="SortingOwnership.fbt">
+      <IEC61499Type>Basic</IEC61499Type>
+      <Parent>.Sorting.Helpers</Parent>
+    </Compile>
+    <Compile Include="SortingPermissives.fbt">
+      <IEC61499Type>Basic</IEC61499Type>
+      <Parent>.Sorting.Helpers</Parent>
+    </Compile>
+    <None Include="SortingResetSequence\SortingResetSequence.cfg">
+      <DependentUpon>SortingResetSequence.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="SortingResetSequence\SortingResetSequence.doc.xml">
+      <DependentUpon>SortingResetSequence.fbt</DependentUpon>
+    </None>
+    <Compile Include="SortingResetSequence\SortingResetSequence.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Sorting</Parent>
+    </Compile>
+    <Compile Include="SortingResetSequence\SortingResetSequence_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>SortingResetSequence.fbt</DependentUpon>
+    </Compile>
+    <Compile Include="SortingRouteConditions.fbt">
+      <IEC61499Type>Basic</IEC61499Type>
+      <Parent>.Sorting.Helpers</Parent>
+    </Compile>
+    <None Include="SortingSafeSequence\SortingSafeSequence.cfg">
+      <DependentUpon>SortingSafeSequence.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="SortingSafeSequence\SortingSafeSequence.doc.xml">
+      <DependentUpon>SortingSafeSequence.fbt</DependentUpon>
+    </None>
+    <Compile Include="SortingSafeSequence\SortingSafeSequence.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Sorting</Parent>
+    </Compile>
+    <Compile Include="SortingSafeSequence\SortingSafeSequence_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>SortingSafeSequence.fbt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="SE.AppSequence">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2StateManagement">
+      <Version>25.0.1.5</Version>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SortingCycle\SortingCycle.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Sorting</Parent>
+    </Compile>
+    <Compile Include="SortingCycle\SortingCycle_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>SortingCycle.fbt</DependentUpon>
+    </Compile>
+    <None Include="SortingCycle\SortingCycle.cfg">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>SortingCycle.fbt</DependentUpon>
+    </None>
+    <None Include="SortingCycle\SortingCycle.doc.xml">
+      <DependentUpon>SortingCycle.fbt</DependentUpon>
+    </None>
+    <Compile Include="SortingSafeServices\SortingSafeServices.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Sorting</Parent>
+    </Compile>
+    <Compile Include="SortingSafeServices\SortingSafeServices_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>SortingSafeServices.fbt</DependentUpon>
+    </Compile>
+    <None Include="SortingSafeServices\SortingSafeServices.cfg">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>SortingSafeServices.fbt</DependentUpon>
+    </None>
+    <None Include="SortingSafeServices\SortingSafeServices.doc.xml">
+      <DependentUpon>SortingSafeServices.fbt</DependentUpon>
+    </None>
+    <Compile Include="SortingSafeSteps\SortingSafeSteps.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Sorting</Parent>
+    </Compile>
+    <Compile Include="SortingSafeSteps\SortingSafeSteps_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>SortingSafeSteps.fbt</DependentUpon>
+    </Compile>
+    <None Include="SortingSafeSteps\SortingSafeSteps.cfg">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>SortingSafeSteps.fbt</DependentUpon>
+    </None>
+    <None Include="SortingSafeSteps\SortingSafeSteps.doc.xml">
+      <DependentUpon>SortingSafeSteps.fbt</DependentUpon>
+    </None>
+    <Compile Include="Interfaces\LinkSafeSequenceSequenceServices.adp">
+      <IEC61499Type>Adapter</IEC61499Type>
+      <Parent>.Sorting</Parent>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SortingCycleCoordinator.fbt">
+      <IEC61499Type>FB</IEC61499Type>
+      <Parent>.Sorting</Parent>
+    </Compile>
+  </ItemGroup>
+</Project>

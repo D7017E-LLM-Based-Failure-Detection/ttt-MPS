@@ -1,0 +1,254 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{F3FE39BF-A4EB-4AC7-91CD-FF01D04CA0F4}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>HMI</RootNamespace>
+    <AssemblyName>HMI</AssemblyName>
+    <ProjectType>HMI</ProjectType>
+    <HMILibraries>HMIBaseSymbols:</HMILibraries>
+    <Theme>DefaultLight:Default|DefaultLight</Theme>
+    <NxtVersion>25.0.0.0</NxtVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <CanvasLookAndFeel>Theme</CanvasLookAndFeel>
+    <CanvasSize>1280,900,1280,980,Default,True,140,30</CanvasSize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'Windows' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\$(Platform)\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\$(Platform)\Release</OutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Windows' ">
+    <DefineConstants>DEBUG%3bTRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Windows' ">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Verify' ">
+    <OutputPath>bin\Windows\Verify\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Alarms.cnv.cs">
+      <Canvas>true</Canvas>
+    </Compile>
+    <Compile Include="Alarms.cnv.Designer.cs">
+      <DependentUpon>Alarms.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Colors\ProjectColors.cs" />
+    <Compile Include="Colors\ProjectDrawingObjects.cs" />
+    <Compile Include="StartCanvas.cnv.cs" />
+    <Compile Include="StartCanvas.cnv.Designer.cs">
+      <DependentUpon>StartCanvas.cnv.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Alarms\AlarmClasses.xml" />
+    <None Include="CanvasesResolutionList.xml" />
+    <None Include="Colors\Default.color.theme" />
+    <None Include="Colors\Default.do.theme" />
+    <None Include="Colors\DefaultLight.color.theme" />
+    <None Include="Colors\DefaultLight.do.theme" />
+    <None Include="Colors\ProjectColors.xml" />
+    <None Include="Colors\ProjectDrawingObjects.xml" />
+    <None Include="ImageStorage\ImageStorage.xml" />
+    <none Include="Languages\neutral\Dictionary.Resources.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Alarms.cnv.resx">
+      <DependentUpon>Alarms.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Alarms\AlarmClasses.xml" />
+    <EmbeddedResource Include="Alarms\SystemAlarmClasses.xml" />
+    <EmbeddedResource Include="Configurations\HistoryTrend.xml" />
+    <EmbeddedResource Include="Configurations\Journalling.xml" />
+    <EmbeddedResource Include="Configurations\TagValueEditor.xml" />
+    <EmbeddedResource Include="StartCanvas.cnv.resx">
+      <DependentUpon>StartCanvas.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CommunicationProfile">
+      <HintPath>CommunicationProfile</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="HMIBaseSymbols">
+      <HintPath>HMIBaseSymbols</HintPath>
+    </Reference>
+    <Reference Include="NxtControl.ComponentModel">
+      <HintPath>NxtControl.ComponentModel</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NxtControl.GuiFramework">
+      <HintPath>NxtControl.GuiFramework</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SE.App2Base.HMI">
+      <Version>25.0.1.5</Version>
+      <HintPath>SE.App2Base.HMI</HintPath>
+    </Reference>
+    <Reference Include="SE.App2CommonProcess.HMI">
+      <Version>25.0.1.5</Version>
+      <HintPath>SE.App2CommonProcess.HMI</HintPath>
+    </Reference>
+    <Reference Include="SE.App2StateManagement.HMI">
+      <Version>25.0.1.5</Version>
+      <HintPath>SE.App2StateManagement.HMI</HintPath>
+    </Reference>
+    <Reference Include="SE.AppSequence.HMI">
+      <Version>25.0.1.5</Version>
+      <HintPath>SE.AppSequence.HMI</HintPath>
+    </Reference>
+    <Reference Include="SE.DPAC.HMI">
+      <Version>25.0.1.10</Version>
+      <HintPath>SE.DPAC.HMI</HintPath>
+    </Reference>
+    <Reference Include="SE.FieldDevice.HMI">
+      <Version>25.0.1.10</Version>
+      <HintPath>SE.FieldDevice.HMI</HintPath>
+    </Reference>
+    <Reference Include="SE.HwCommon.HMI">
+      <Version>25.0.1.4</Version>
+      <HintPath>SE.HwCommon.HMI</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="Sorting\Sorting.def.cs" />
+    <Compile Include="Sorting\Sorting.event.cs" />
+    <Compile Include="Sorting\Sorting_sDefault.cnv.cs" />
+    <Compile Include="Sorting\Sorting_sDefault.cnv.Designer.cs">
+      <DependentUpon>Sorting_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Sorting\Sorting.Design.resx" />
+    <EmbeddedResource Include="Sorting\Sorting_sDefault.cnv.resx">
+      <DependentUpon>Sorting_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sorting\Sorting_sDefault.cnv.xml">
+      <DependentUpon>Sorting_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="SortingResetSequence\SortingResetSequence.def.cs" />
+    <Compile Include="SortingResetSequence\SortingResetSequence.event.cs" />
+    <Compile Include="SortingResetSequence\SortingResetSequence_sDefault.cnv.cs" />
+    <Compile Include="SortingResetSequence\SortingResetSequence_sDefault.cnv.Designer.cs">
+      <DependentUpon>SortingResetSequence_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="SortingResetSequence\SortingResetSequence.Design.resx" />
+    <EmbeddedResource Include="SortingResetSequence\SortingResetSequence_sDefault.cnv.resx">
+      <DependentUpon>SortingResetSequence_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortingResetSequence\SortingResetSequence_sDefault.cnv.xml">
+      <DependentUpon>SortingResetSequence_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="SortingSafeSequence\SortingSafeSequence.def.cs" />
+    <Compile Include="SortingSafeSequence\SortingSafeSequence.event.cs" />
+    <Compile Include="SortingSafeSequence\SortingSafeSequence_sDefault.cnv.cs" />
+    <Compile Include="SortingSafeSequence\SortingSafeSequence_sDefault.cnv.Designer.cs">
+      <DependentUpon>SortingSafeSequence_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="SortingSafeSequence\SortingSafeSequence.Design.resx" />
+    <EmbeddedResource Include="SortingSafeSequence\SortingSafeSequence_sDefault.cnv.resx">
+      <DependentUpon>SortingSafeSequence_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortingSafeSequence\SortingSafeSequence_sDefault.cnv.xml">
+      <DependentUpon>SortingSafeSequence_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SortingOverview.cnv.cs" />
+    <Compile Include="SortingOverview.cnv.Designer.cs">
+      <DependentUpon>SortingOverview.cnv.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="SortingOverview.cnv.resx">
+      <DependentUpon>SortingOverview.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    </ItemGroup>
+  <ItemGroup>
+    </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SortingCycle\SortingCycle.def.cs" />
+    <EmbeddedResource Include="SortingCycle\SortingCycle.Design.resx" />
+    <Compile Include="SortingCycle\SortingCycle.event.cs" />
+    <Compile Include="SortingCycle\SortingCycle_sDefault.cnv.cs" />
+    <Compile Include="SortingCycle\SortingCycle_sDefault.cnv.Designer.cs">
+      <DependentUpon>SortingCycle_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="SortingCycle\SortingCycle_sDefault.cnv.resx">
+      <DependentUpon>SortingCycle_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortingCycle\SortingCycle_sDefault.cnv.xml">
+      <DependentUpon>SortingCycle_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortingCycle\SortingCycle_sDefault.doc.xml" />
+    <Compile Include="SortingSafeServices\SortingSafeServices.def.cs" />
+    <EmbeddedResource Include="SortingSafeServices\SortingSafeServices.Design.resx" />
+    <Compile Include="SortingSafeServices\SortingSafeServices.event.cs" />
+    <Compile Include="SortingSafeServices\SortingSafeServices_sDefault.cnv.cs" />
+    <Compile Include="SortingSafeServices\SortingSafeServices_sDefault.cnv.Designer.cs">
+      <DependentUpon>SortingSafeServices_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="SortingSafeServices\SortingSafeServices_sDefault.cnv.resx">
+      <DependentUpon>SortingSafeServices_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortingSafeServices\SortingSafeServices_sDefault.cnv.xml">
+      <DependentUpon>SortingSafeServices_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortingSafeServices\SortingSafeServices_sDefault.doc.xml" />
+    <Compile Include="SortingSafeSteps\SortingSafeSteps.def.cs" />
+    <EmbeddedResource Include="SortingSafeSteps\SortingSafeSteps.Design.resx" />
+    <Compile Include="SortingSafeSteps\SortingSafeSteps.event.cs" />
+    <Compile Include="SortingSafeSteps\SortingSafeSteps_sDefault.cnv.cs" />
+    <Compile Include="SortingSafeSteps\SortingSafeSteps_sDefault.cnv.Designer.cs">
+      <DependentUpon>SortingSafeSteps_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="SortingSafeSteps\SortingSafeSteps_sDefault.cnv.resx">
+      <DependentUpon>SortingSafeSteps_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortingSafeSteps\SortingSafeSteps_sDefault.cnv.xml">
+      <DependentUpon>SortingSafeSteps_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortingSafeSteps\SortingSafeSteps_sDefault.doc.xml" />
+  </ItemGroup>
+</Project>

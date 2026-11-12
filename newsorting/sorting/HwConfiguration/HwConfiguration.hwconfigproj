@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{978E84C3-48AE-4AE2-80DB-B3E5E31116BC}</ProjectGuid>
+    <ProjectTypeGuids>{72AEB29F-A91B-8B3D-40ED-1C96841A14A3}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>HwConfiguration</RootNamespace>
+    <AssemblyName>HwConfiguration</AssemblyName>
+    <CreateTemplate>true</CreateTemplate>
+    <NxtVersion>25.0.0.0</NxtVersion>
+    <ProjectType>HwConfiguration</ProjectType>
+    <TemplateName>HwConfiguration</TemplateName>
+    <TemplateCategory>HwConfigurationLibrary</TemplateCategory>
+    <ProjectFileExtension>.hwconfigproj</ProjectFileExtension>
+    <CompileBeforeSystem>True</CompileBeforeSystem>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <LibraryName>Main</LibraryName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'Windows' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\$(Platform)\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\$(Platform)\Release</OutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DefineConstants>DEBUG%3bTRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Windows' ">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Verify' ">
+    <OutputPath>bin\Windows\Verify\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ImageStorage\ImageStorage.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CommunicationProfile">
+      <HintPath>CommunicationProfile</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NxtControl.ComponentModel">
+      <HintPath>NxtControl.ComponentModel</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NxtControl.GuiFramework">
+      <HintPath>NxtControl.GuiFramework</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Runtime.Base.HwConfiguration">
+      <Version>25.0.1.2</Version>
+      <HintPath>Runtime.Base.HwConfiguration</HintPath>
+    </Reference>
+    <Reference Include="SE.App2Base.HwConfiguration">
+      <Version>25.0.1.5</Version>
+      <HintPath>SE.App2Base.HwConfiguration</HintPath>
+    </Reference>
+    <Reference Include="SE.App2CommonProcess.HwConfiguration">
+      <Version>25.0.1.5</Version>
+      <HintPath>SE.App2CommonProcess.HwConfiguration</HintPath>
+    </Reference>
+    <Reference Include="SE.App2StateManagement.HwConfiguration">
+      <Version>25.0.1.5</Version>
+      <HintPath>SE.App2StateManagement.HwConfiguration</HintPath>
+    </Reference>
+    <Reference Include="SE.AppSequence.HwConfiguration">
+      <Version>25.0.1.5</Version>
+      <HintPath>SE.AppSequence.HwConfiguration</HintPath>
+    </Reference>
+    <Reference Include="SE.DPAC.HwConfiguration">
+      <Version>25.0.1.10</Version>
+      <HintPath>SE.DPAC.HwConfiguration</HintPath>
+    </Reference>
+    <Reference Include="SE.FieldDevice.HwConfiguration">
+      <Version>25.0.1.10</Version>
+      <HintPath>SE.FieldDevice.HwConfiguration</HintPath>
+    </Reference>
+    <Reference Include="SE.HwCommon.HwConfiguration">
+      <Version>25.0.1.4</Version>
+      <HintPath>SE.HwCommon.HwConfiguration</HintPath>
+    </Reference>
+    <Reference Include="SE.Standard.HwConfiguration">
+      <Version>25.0.1.1</Version>
+      <HintPath>$(ProgramData)\Schneider Electric\Libraries\SE.Standard-25.0.1.1\HwConfiguration\SE.Standard.HwConfiguration.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
+</Project>
