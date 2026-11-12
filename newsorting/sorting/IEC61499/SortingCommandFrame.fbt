@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='utf-8'?>
+<FBType Name="SortingCommandFrame" Namespace="Main" GUID="8ee816f7-fa15-42b5-ae0d-f514fc6c8955" Format="2.0" Comment="Sorting-only architecture following Distribution and tutorial modules 1-4">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="sorting2n" Version="2.0" Author="sorting2n" Date="2026-11-09" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" ID="3E51AF3DA95F41C9">
+        <With Var="Route" />
+      </Event>
+      <Event Name="SAFE" ID="B00E6A8BE1EB4052">
+        <With Var="Route" />
+      </Event>
+      <Event Name="FEED" ID="96C739008DF04C33">
+        <With Var="Route" />
+      </Event>
+      <Event Name="POSITION" ID="514FDC69D5434AB3">
+        <With Var="Route" />
+      </Event>
+      <Event Name="RELEASE" ID="AB84D3FD59DD4F0A">
+        <With Var="Route" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INIT_FRAME" ID="91A08A19905E4AC8">
+        <With Var="ConveyorCmd" />
+        <With Var="Branch1Cmd" />
+        <With Var="Branch2Cmd" />
+        <With Var="StopperCmd" />
+      </Event>
+      <Event Name="FRAME" ID="FEDD90899323480E">
+        <With Var="ConveyorCmd" />
+        <With Var="Branch1Cmd" />
+        <With Var="Branch2Cmd" />
+        <With Var="StopperCmd" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="Route" Type="UINT" ID="D4490BCEF80A492A" InitialValue="0" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="ConveyorCmd" Type="VTQINT" ID="1BE4F90CA0DE4A12" />
+      <VarDeclaration Name="Branch1Cmd" Type="VTQINT" ID="E7BCFB58D0E944F4" />
+      <VarDeclaration Name="Branch2Cmd" Type="VTQINT" ID="FD5B17DC6BEA4636" />
+      <VarDeclaration Name="StopperCmd" Type="VTQINT" ID="9F87DE883B874F73" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <ECC>
+      <ECState Name="IDLE" x="300" y="300" />
+      <ECState Name="ON_INIT" x="800" y="700">
+        <ECAction Algorithm="ON_INIT" Output="INIT_FRAME" />
+      </ECState>
+      <ECState Name="ON_SAFE" x="1300" y="700">
+        <ECAction Algorithm="ON_SAFE" Output="FRAME" />
+      </ECState>
+      <ECState Name="ON_FEED" x="1800" y="700">
+        <ECAction Algorithm="ON_FEED" Output="FRAME" />
+      </ECState>
+      <ECState Name="ON_POSITION" x="2300" y="700">
+        <ECAction Algorithm="ON_POSITION" Output="FRAME" />
+      </ECState>
+      <ECState Name="ON_RELEASE" x="2800" y="700">
+        <ECAction Algorithm="ON_RELEASE" Output="FRAME" />
+      </ECState>
+      <ECTransition Source="IDLE" Destination="ON_INIT" Condition="INIT" />
+      <ECTransition Source="ON_INIT" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_SAFE" Condition="SAFE" />
+      <ECTransition Source="ON_SAFE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_FEED" Condition="FEED" />
+      <ECTransition Source="ON_FEED" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_POSITION" Condition="POSITION" />
+      <ECTransition Source="ON_POSITION" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_RELEASE" Condition="RELEASE" />
+      <ECTransition Source="ON_RELEASE" Destination="IDLE" Condition="1" />
+    </ECC>
+    <Algorithm Name="ON_INIT">
+      <ST>
+ConveyorCmd.value := 2; ConveyorCmd.quality := 0;
+Branch1Cmd.value := 2; Branch1Cmd.quality := 0;
+Branch2Cmd.value := 2; Branch2Cmd.quality := 0;
+StopperCmd.value := 0; StopperCmd.quality := 0;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_SAFE">
+      <ST>
+ConveyorCmd.value := 2; ConveyorCmd.quality := 0;
+Branch1Cmd.value := 2; Branch1Cmd.quality := 0;
+Branch2Cmd.value := 2; Branch2Cmd.quality := 0;
+StopperCmd.value := 0; StopperCmd.quality := 0;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_FEED">
+      <ST>
+ConveyorCmd.value := 1; ConveyorCmd.quality := 0;
+Branch1Cmd.value := 2; Branch1Cmd.quality := 0;
+Branch2Cmd.value := 2; Branch2Cmd.quality := 0;
+StopperCmd.value := 0; StopperCmd.quality := 0;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_POSITION">
+      <ST>
+ConveyorCmd.value := 1; ConveyorCmd.quality := 0;
+Branch1Cmd.value := 2; Branch1Cmd.quality := 0;
+Branch2Cmd.value := 2; Branch2Cmd.quality := 0;
+StopperCmd.value := 0; StopperCmd.quality := 0;
+IF Route = 1 THEN Branch1Cmd.value := 1; ELSIF Route = 2 THEN Branch2Cmd.value := 1; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_RELEASE">
+      <ST>
+ConveyorCmd.value := 1; ConveyorCmd.quality := 0;
+Branch1Cmd.value := 2; Branch1Cmd.quality := 0;
+Branch2Cmd.value := 2; Branch2Cmd.quality := 0;
+StopperCmd.value := 1; StopperCmd.quality := 0;
+IF Route = 1 THEN Branch1Cmd.value := 1; ELSIF Route = 2 THEN Branch2Cmd.value := 1; END_IF;
+</ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

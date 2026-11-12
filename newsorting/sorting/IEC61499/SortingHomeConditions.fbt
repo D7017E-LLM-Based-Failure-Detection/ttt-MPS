@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='utf-8'?>
+<FBType Name="SortingHomeConditions" Namespace="Main" GUID="6703e238-5e80-4be3-9027-b0b17f07f86c" Format="2.0" Comment="Sorting-only architecture following Distribution and tutorial modules 1-4">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="sorting2n" Version="2.0" Author="sorting2n" Date="2026-11-09" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" ID="CE64267AAD124F8D">
+        <With Var="B1Closed" />
+        <With Var="B2Closed" />
+      </Event>
+      <Event Name="START_SETTLE" ID="C8FE616D2B744827">
+        <With Var="B1Closed" />
+        <With Var="B2Closed" />
+      </Event>
+      <Event Name="DONE" ID="858AFA5821D243F1">
+        <With Var="B1Closed" />
+        <With Var="B2Closed" />
+      </Event>
+      <Event Name="REQ" ID="F4871D28B0594017">
+        <With Var="B1Closed" />
+        <With Var="B2Closed" />
+      </Event>
+      <Event Name="FAULT" ID="BEAD4F12C24545AC">
+        <With Var="B1Closed" />
+        <With Var="B2Closed" />
+      </Event>
+      <Event Name="CLEAR" ID="27094514BA434C7A">
+        <With Var="B1Closed" />
+        <With Var="B2Closed" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" ID="C188F07096974982">
+        <With Var="HomeReady" />
+        <With Var="Fault" />
+      </Event>
+      <Event Name="CNF" ID="199DF02180EA4007">
+        <With Var="HomeReady" />
+        <With Var="Fault" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="B1Closed" Type="BOOL" ID="6DF2726E50AE4D83" />
+      <VarDeclaration Name="B2Closed" Type="BOOL" ID="305FF7EA37BC4E0C" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="HomeReady" Type="BOOL" ID="097D9CE53785454A" />
+      <VarDeclaration Name="Fault" Type="BOOL" ID="74C9C2C856054ACB" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <InternalVars>
+      <VarDeclaration Name="Elapsed" Type="BOOL" ID="CCE61ED4E5294574" />
+    </InternalVars>
+    <ECC>
+      <ECState Name="IDLE" x="300" y="300" />
+      <ECState Name="ON_INIT" x="800" y="700">
+        <ECAction Algorithm="ON_INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="ON_START_SETTLE" x="1300" y="700">
+        <ECAction Algorithm="ON_START_SETTLE" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_DONE" x="1800" y="700">
+        <ECAction Algorithm="ON_DONE" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_REQ" x="2300" y="700">
+        <ECAction Algorithm="ON_REQ" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_FAULT" x="2800" y="700">
+        <ECAction Algorithm="ON_FAULT" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_CLEAR" x="3300" y="700">
+        <ECAction Algorithm="ON_CLEAR" Output="CNF" />
+      </ECState>
+      <ECTransition Source="IDLE" Destination="ON_INIT" Condition="INIT" />
+      <ECTransition Source="ON_INIT" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_START_SETTLE" Condition="START_SETTLE" />
+      <ECTransition Source="ON_START_SETTLE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_DONE" Condition="DONE" />
+      <ECTransition Source="ON_DONE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_REQ" Condition="REQ" />
+      <ECTransition Source="ON_REQ" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_FAULT" Condition="FAULT" />
+      <ECTransition Source="ON_FAULT" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_CLEAR" Condition="CLEAR" />
+      <ECTransition Source="ON_CLEAR" Destination="IDLE" Condition="1" />
+    </ECC>
+    <Algorithm Name="ON_INIT">
+      <ST>
+Elapsed := FALSE; HomeReady := FALSE; Fault := FALSE;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_START_SETTLE">
+      <ST>
+Elapsed := FALSE; HomeReady := FALSE;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_DONE">
+      <ST>
+Elapsed := TRUE; HomeReady := B1Closed AND B2Closed;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_REQ">
+      <ST>
+HomeReady := Elapsed AND B1Closed AND B2Closed AND NOT Fault;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_FAULT">
+      <ST>
+Fault := TRUE; HomeReady := FALSE;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_CLEAR">
+      <ST>
+Fault := FALSE; Elapsed := FALSE; HomeReady := FALSE;
+</ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

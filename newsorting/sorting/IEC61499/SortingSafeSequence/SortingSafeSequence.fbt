@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='utf-8'?>
+<FBType Name="SortingSafeSequence" Namespace="Main" GUID="b51ef89c-96ad-4326-9171-5cd1ad619c8e" Format="2.0" Comment="The shared complete Stop procedure used for Stop commands and operating faults.">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="sorting2n" Version="2.0" Author="sorting2n" Date="2026-11-09" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" ID="5EC773ECC31544E8" />
+      <Event Name="UPDATE" ID="4BA908A2675A4FFE">
+        <With Var="Permit" />
+        <With Var="B1Closed" />
+        <With Var="B2Closed" />
+      </Event>
+      <Event Name="CLEAR" ID="039C95F07E2B48A2" />
+      <Event Name="START" ID="3726452E197A4871" />
+      <Event Name="RESET_SEQ" ID="7931116EB20B4D69" />
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" ID="9EA746427ED44380" />
+      <Event Name="CNF" ID="C4F4D7D6C50948CE">
+        <With Var="Complete" />
+        <With Var="Fault" />
+        <With Var="RouteReady" />
+        <With Var="Route" />
+      </Event>
+      <Event Name="CYCLE_DONE" ID="0DCF3B978FE04475" />
+      <Event Name="SEQUENCE_STATE" ID="46A1DE14737A491B">
+        <With Var="SequenceComplete" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="Permit" Type="BOOL" ID="57EDD4BF22DA44FE" InitialValue="FALSE" />
+      <VarDeclaration Name="B1Closed" Type="BOOL" ID="EC30F70F9DA94954" />
+      <VarDeclaration Name="B2Closed" Type="BOOL" ID="C95153446BDB46E7" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="Complete" Type="BOOL" ID="F3A74AFEDD584267" />
+      <VarDeclaration Name="Fault" Type="BOOL" ID="2076448D12254F13" />
+      <VarDeclaration Name="RouteReady" Type="BOOL" ID="9A871CAAB31E4EF9" />
+      <VarDeclaration Name="Route" Type="UINT" ID="32F3DC391D4A4F9C" InitialValue="0" />
+      <VarDeclaration Name="SequenceComplete" ID="C97D0B0907684A4D" Type="BOOL" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB Name="Flow" Type="SortingSafeSteps" Namespace="Main" ID="9AE36DCBDBB449B8" UID="2B1DB7B8E8BF4CCF" x="2700" y="500" Comment="Standard safe-position sequence and its original timing." />
+    <FB Name="Services" Type="SortingSafeServices" Namespace="Main" ID="A4568B5CDC5746A7" UID="10E389E95B7748CE" x="700" y="500" Comment="Existing ownership, command and measured home conditions." />
+    <EventConnections>
+      <Connection Source="$5EC773ECC31544E8" Destination="$A4568B5CDC5746A7.9406177C96964918" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$9AE36DCBDBB449B8.F1C83D723563445B" Destination="$C4F4D7D6C50948CE" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$4BA908A2675A4FFE" Destination="$A4568B5CDC5746A7.B487FBD83E664405" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$A4568B5CDC5746A7.44AB9629DFF24FF7" Destination="$9EA746427ED44380" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$4BA908A2675A4FFE" Destination="$9AE36DCBDBB449B8.92A86B7AE0974DC0" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$A4568B5CDC5746A7.81C67910DE5D4FBE" Destination="$C4F4D7D6C50948CE" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$039C95F07E2B48A2" Destination="$A4568B5CDC5746A7.C03E480D6990400D" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$3726452E197A4871" Destination="$9AE36DCBDBB449B8.378554B1BB2249B1" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$7931116EB20B4D69" Destination="$9AE36DCBDBB449B8.AC1D5F5E28444264" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$9AE36DCBDBB449B8.C7573A889A014538" Destination="$46A1DE14737A491B" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$9AE36DCBDBB449B8.44C30F2646B04FB5" Destination="$F3A74AFEDD584267" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$EC30F70F9DA94954" Destination="$A4568B5CDC5746A7.39B88A85D9E443EC" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$C95153446BDB46E7" Destination="$A4568B5CDC5746A7.819D37304DF54BE0" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$A4568B5CDC5746A7.33BD2F3DC21A43C2" Destination="$2076448D12254F13" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$9AE36DCBDBB449B8.A37666370B934C10" Destination="$C97D0B0907684A4D" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </DataConnections>
+    <AdapterConnections>
+      <Connection Source="$9AE36DCBDBB449B8.132BF54BC9E64B19" Destination="$A4568B5CDC5746A7.59D40A58A22B4030" dx1="30" dx2="30" />
+    </AdapterConnections>
+    <Input ID="5EC773ECC31544E8" Name="INIT" Type="Event" x="0" y="350" />
+    <Input ID="4BA908A2675A4FFE" Name="UPDATE" Type="Event" x="0" y="430" />
+    <Input ID="039C95F07E2B48A2" Name="CLEAR" Type="Event" x="0" y="510" />
+    <Input ID="3726452E197A4871" Name="START" Type="Event" x="0" y="590" />
+    <Input ID="7931116EB20B4D69" Name="RESET_SEQ" Type="Event" x="0" y="670" />
+    <Input ID="57EDD4BF22DA44FE" Name="Permit" Type="Data" x="0" y="900" />
+    <Input ID="EC30F70F9DA94954" Name="B1Closed" Type="Data" x="0" y="980" />
+    <Input ID="C95153446BDB46E7" Name="B2Closed" Type="Data" x="0" y="1060" />
+    <Output ID="9EA746427ED44380" Name="INITO" Type="Event" x="4600" y="350" />
+    <Output ID="C4F4D7D6C50948CE" Name="CNF" Type="Event" x="4600" y="430" />
+    <Output ID="0DCF3B978FE04475" Name="CYCLE_DONE" Type="Event" x="4600" y="510" />
+    <Output ID="46A1DE14737A491B" Name="SEQUENCE_STATE" Type="Event" x="4600" y="590" />
+    <Output ID="F3A74AFEDD584267" Name="Complete" Type="Data" x="4600" y="820" />
+    <Output ID="2076448D12254F13" Name="Fault" Type="Data" x="4600" y="900" />
+    <Output ID="9A871CAAB31E4EF9" Name="RouteReady" Type="Data" x="4600" y="980" />
+    <Output ID="32F3DC391D4A4F9C" Name="Route" Type="Data" x="4600" y="1060" />
+    <Output ID="C97D0B0907684A4D" Name="SequenceComplete" Type="Data" x="4600" y="1140" />
+  </FBNetwork>
+</FBType>

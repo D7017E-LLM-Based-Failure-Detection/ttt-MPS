@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<FBType Name="SortingOwnership" Namespace="Main" GUID="d2e3678f-ca1d-42cc-8fa5-89394cd71861" Format="2.0" Comment="Sorting-only architecture following Distribution and tutorial modules 1-4">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="sorting2n" Version="2.0" Author="sorting2n" Date="2026-11-09" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" ID="D514169649844923">
+        <With Var="Owner1" />
+        <With Var="Owner2" />
+        <With Var="Owner3" />
+        <With Var="Owner4" />
+      </Event>
+      <Event Name="TAKE" ID="8B11DD0F57C44878">
+        <With Var="Owner1" />
+        <With Var="Owner2" />
+        <With Var="Owner3" />
+        <With Var="Owner4" />
+      </Event>
+      <Event Name="REQ" ID="6D56496F53D1499B">
+        <With Var="Owner1" />
+        <With Var="Owner2" />
+        <With Var="Owner3" />
+        <With Var="Owner4" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" ID="4CD8C065E39641C9">
+        <With Var="SelectLocal" />
+        <With Var="AllLocal" />
+      </Event>
+      <Event Name="SELECT" ID="B3E6986DDAA841AB">
+        <With Var="SelectLocal" />
+        <With Var="AllLocal" />
+      </Event>
+      <Event Name="CNF" ID="556ECCED2B7E4FE4">
+        <With Var="SelectLocal" />
+        <With Var="AllLocal" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="Owner1" Type="VTQBOOL" ID="3633AFB15F0E4D29" />
+      <VarDeclaration Name="Owner2" Type="VTQBOOL" ID="AFBF64D6B6724875" />
+      <VarDeclaration Name="Owner3" Type="VTQBOOL" ID="C6BAC61A3B114656" />
+      <VarDeclaration Name="Owner4" Type="VTQBOOL" ID="0CBD0A2278FC4256" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="SelectLocal" Type="VTQBOOL" ID="AB3AFA1E5DB542BD" />
+      <VarDeclaration Name="AllLocal" Type="BOOL" ID="3DD7BBA990934FB9" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <ECC>
+      <ECState Name="IDLE" x="300" y="300" />
+      <ECState Name="ON_INIT" x="800" y="700">
+        <ECAction Algorithm="ON_INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="ON_TAKE" x="1300" y="700">
+        <ECAction Algorithm="ON_TAKE" Output="SELECT" />
+      </ECState>
+      <ECState Name="ON_REQ" x="1800" y="700">
+        <ECAction Algorithm="ON_REQ" Output="CNF" />
+      </ECState>
+      <ECTransition Source="IDLE" Destination="ON_INIT" Condition="INIT" />
+      <ECTransition Source="ON_INIT" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_TAKE" Condition="TAKE" />
+      <ECTransition Source="ON_TAKE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_REQ" Condition="REQ" />
+      <ECTransition Source="ON_REQ" Destination="IDLE" Condition="1" />
+    </ECC>
+    <Algorithm Name="ON_INIT">
+      <ST>
+SelectLocal.value := FALSE; SelectLocal.quality := 0; AllLocal := FALSE;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_TAKE">
+      <ST>
+SelectLocal.value := TRUE; SelectLocal.quality := 0;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_REQ">
+      <ST>
+AllLocal := Owner1.value AND Owner2.value AND Owner3.value AND Owner4.value;
+</ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<FBType Name="SortingCycle_HMI" Namespace="Main" GUID="42036938-b3b5-4bd6-a910-ab5eb090fe19" Comment="Service Interface Function Block Type">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author="sorting2n" Date="10/19/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" ID="2F46ABAD31794FC8">
+        <With Var="QI" />
+      </Event>
+      <Event Name="STATUS_UPD" ID="1A45D0E52EC3407C">
+        <With Var="State" />
+        <With Var="Route" />
+        <With Var="Fault" />
+        <With Var="SlideBlocked" />
+        <With Var="RunPermit" />
+        <With Var="Automatic" />
+        <With Var="ResetLamp" />
+        <With Var="StartLamp" />
+        <With Var="SlideFullLamp" />
+        <With Var="StationOccupied" />
+        <With Var="ResetFinished" />
+        <With Var="CycleEnd" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" ID="64CE10794A634702">
+        <With Var="QO" />
+        <With Var="STATUS" />
+      </Event>
+      <Event Name="COMMAND" ID="3DB4560FA76846DC">
+        <With Var="Command" />
+      </Event>
+      <Event Name="MODE" ID="7D5ED097153244A0">
+        <With Var="AutoMode" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="QI" Type="BOOL" ID="66118A99404141F6" />
+      <VarDeclaration Name="State" Type="DINT" ID="55A0DE56A34D4D68" />
+      <VarDeclaration Name="Route" Type="UINT" ID="C4E3563DBF064588" />
+      <VarDeclaration Name="Fault" Type="BOOL" ID="A538B3B8268946B6" />
+      <VarDeclaration Name="SlideBlocked" Type="BOOL" ID="FEC38E28B7334FE0" />
+      <VarDeclaration Name="RunPermit" Type="BOOL" ID="CB85BCF53DA84867" />
+      <VarDeclaration Name="Automatic" Type="BOOL" ID="870F97F70C804375" />
+      <VarDeclaration Name="ResetLamp" ID="A75AD7FE59B0452A" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="StartLamp" ID="F1E839C2685E4DC1" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="SlideFullLamp" ID="95EBF2A292E14E6B" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="StationOccupied" ID="1A0895132F9F4849" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="ResetFinished" ID="1481F0F934A14D53" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="CycleEnd" ID="9FB8FA92A51C4BB9" Type="BOOL" InitialValue="FALSE" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="QO" Type="BOOL" ID="7452A39941D3487D" />
+      <VarDeclaration Name="STATUS" Type="STRING" ID="540EA9DAF38F496C" />
+      <VarDeclaration Name="Command" Type="DINT" ID="4ABC5588654947BA" />
+      <VarDeclaration Name="AutoMode" Type="BOOL" ID="DC215C807DD942BD" />
+    </OutputVars>
+  </InterfaceList>
+  <Service RightInterface="" LeftInterface="">
+    <ServiceSequence Name="" />
+  </Service>
+</FBType>

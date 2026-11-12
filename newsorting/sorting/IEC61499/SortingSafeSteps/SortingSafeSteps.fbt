@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='utf-8'?>
+<FBType Name="SortingSafeSteps" Namespace="Main" GUID="667c4afb-5900-43df-9c21-9af59ae13895" Format="2.0" Comment="Standard safe-position sequence and its original timing.">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="sorting2n" Version="3.0" Author="sorting2n" Date="2026-11-12" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="Head_REQ_PERM_2" ID="92A86B7AE0974DC0" />
+      <Event Name="START" ID="378554B1BB2249B1" />
+      <Event Name="RESET_SEQ" ID="AC1D5F5E28444264" />
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="Head_STATE_IND" ID="F1C83D723563445B">
+        <With Var="Head_SeqComplete" />
+      </Event>
+      <Event Name="SEQUENCE_STATE" ID="C7573A889A014538">
+        <With Var="SequenceComplete" />
+      </Event>
+    </EventOutputs>
+    <OutputVars>
+      <VarDeclaration Name="Head_SeqComplete" ID="44C30F2646B04FB5" Type="BOOL" />
+      <VarDeclaration Name="SequenceComplete" ID="A37666370B934C10" Type="BOOL" />
+    </OutputVars>
+    <Plugs>
+      <AdapterDeclaration Name="ToServices" Type="LinkSafeSequenceSequenceServices" Namespace="Main" ID="132BF54BC9E64B19" x="8600" y="250" />
+    </Plugs>
+  </InterfaceList>
+  <FBNetwork>
+    <FB Name="Head" Type="SeqHead" Namespace="SE.AppSequence" ID="0488F372F9C94CCD" UID="4C211C53D8E44AC8" x="700" y="500">
+      <Parameter Name="$PermStart" Value="TRUE" />
+    </FB>
+    <FB Name="End" Type="SeqTerminate" Namespace="SE.AppSequence" ID="73FE784078404C11" UID="1C476529101E4362" x="700" y="2150" />
+    <FB Name="TakeOwnership" Type="SeqStep" Namespace="SE.AppSequence" ID="F58394DE5B7E46D6" UID="9C64A7A2681D4E01" x="2700" y="500">
+      <Parameter Name="$TransStepId" Value="2" />
+    </FB>
+    <FB Name="CommandInitialPosition" Type="SeqStep" Namespace="SE.AppSequence" ID="4BBAD01B3B9C4789" UID="57D0212EF59845EB" x="4700" y="500">
+      <Parameter Name="$TransStepId" Value="3" />
+      <Parameter Name="$Exceeded" Value="TRUE" />
+    </FB>
+    <FB Name="WaitInitialPosition" Type="SeqStep" Namespace="SE.AppSequence" ID="D92DF39FD14B45D7" UID="1DEB076221544E15" x="6700" y="500">
+      <Parameter Name="$TransStepId" Value="4" />
+    </FB>
+    <FB Name="InitialSettle" Type="E_DELAY" Namespace="IEC61499.Standard" ID="70D5ADAF1679467A" UID="25715EB587224B41" x="2700" y="2150">
+      <Parameter Name="$DT" Value="T#200ms" />
+    </FB>
+    <FB Name="Ready_CommandInitialPosition" Type="E_SWITCH" Namespace="IEC61499.Standard" ID="CC1B3D01449D4B98" UID="792E0169003D49D0" x="4700" y="2150">
+      <Parameter Name="$G" Value="TRUE" />
+    </FB>
+    <EventConnections>
+      <Connection Source="$0488F372F9C94CCD.STATE_IND" Destination="$F1C83D723563445B" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$132BF54BC9E64B19.199423B8E3EA424D" Destination="$0488F372F9C94CCD.REQ_PERM" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$92A86B7AE0974DC0" Destination="$0488F372F9C94CCD.REQ_PERM" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$F58394DE5B7E46D6.STEP_ENTER" Destination="$132BF54BC9E64B19.011CF67C6620420F" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$132BF54BC9E64B19.8705939D5B1442EC" Destination="$F58394DE5B7E46D6.TRANS_REQ" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$4BBAD01B3B9C4789.STEP_ENTER" Destination="$132BF54BC9E64B19.A7B722B3D101427D" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$4BBAD01B3B9C4789.STEP_ENTER" Destination="$CC1B3D01449D4B98.EI" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CC1B3D01449D4B98.EO1" Destination="$4BBAD01B3B9C4789.TRANS_REQ" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$D92DF39FD14B45D7.STEP_ENTER" Destination="$132BF54BC9E64B19.8F745BA862BE446D" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$D92DF39FD14B45D7.STEP_ENTER" Destination="$70D5ADAF1679467A.START" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$70D5ADAF1679467A.EO" Destination="$132BF54BC9E64B19.DE074F0018CA41B7" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$D92DF39FD14B45D7.STEP_LEAVE" Destination="$70D5ADAF1679467A.STOP" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$D92DF39FD14B45D7.STEP_RESET" Destination="$70D5ADAF1679467A.STOP" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$D92DF39FD14B45D7.STEP_HOLD" Destination="$70D5ADAF1679467A.STOP" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$132BF54BC9E64B19.F3737632F0674E5B" Destination="$D92DF39FD14B45D7.TRANS_REQ" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$378554B1BB2249B1" Destination="$0488F372F9C94CCD.REQ_PERM" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$378554B1BB2249B1" Destination="$0488F372F9C94CCD.START" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$AC1D5F5E28444264" Destination="$0488F372F9C94CCD.RESET" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0488F372F9C94CCD.STATE_IND" Destination="$C7573A889A014538" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$0488F372F9C94CCD.SeqComplete" Destination="$44C30F2646B04FB5" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$132BF54BC9E64B19.B0172C60E5884E40" Destination="$F58394DE5B7E46D6.Exceeded" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$132BF54BC9E64B19.A973A7B0624E4A64" Destination="$D92DF39FD14B45D7.Exceeded" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0488F372F9C94CCD.SeqComplete" Destination="$A37666370B934C10" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </DataConnections>
+    <AdapterConnections>
+      <Connection Source="$0488F372F9C94CCD.ISeqChain" Destination="$F58394DE5B7E46D6.ISeqChainIn" dx1="30" dx2="30" />
+      <Connection Source="$F58394DE5B7E46D6.ISeqChainOut" Destination="$4BBAD01B3B9C4789.ISeqChainIn" dx1="30" dx2="30" />
+      <Connection Source="$4BBAD01B3B9C4789.ISeqChainOut" Destination="$D92DF39FD14B45D7.ISeqChainIn" dx1="30" dx2="30" />
+      <Connection Source="$D92DF39FD14B45D7.ISeqChainOut" Destination="$73FE784078404C11.ISeqChainIn" dx1="30" dx2="30" />
+    </AdapterConnections>
+    <Input ID="92A86B7AE0974DC0" Name="Head_REQ_PERM_2" Type="Event" x="0" y="350" />
+    <Input ID="378554B1BB2249B1" Name="START" Type="Event" x="0" y="430" />
+    <Input ID="AC1D5F5E28444264" Name="RESET_SEQ" Type="Event" x="0" y="510" />
+    <Output ID="F1C83D723563445B" Name="Head_STATE_IND" Type="Event" x="8600" y="350" />
+    <Output ID="C7573A889A014538" Name="SEQUENCE_STATE" Type="Event" x="8600" y="430" />
+    <Output ID="44C30F2646B04FB5" Name="Head_SeqComplete" Type="Data" x="8600" y="660" />
+    <Output ID="A37666370B934C10" Name="SequenceComplete" Type="Data" x="8600" y="740" />
+  </FBNetwork>
+</FBType>

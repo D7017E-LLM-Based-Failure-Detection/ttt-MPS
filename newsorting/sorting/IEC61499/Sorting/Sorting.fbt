@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='utf-8'?>
+<FBType Name="Sorting" Namespace="Main" GUID="4dbcb6c8-6316-4aae-8dcd-4852da82fd8c" Format="2.0" Comment="The equipment overview; the operator interface is internal to Control.">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="sorting2n" Version="3.0" Author="sorting2n" Date="2026-11-12" Remarks="Complete hierarchical architecture with preserved leaf behavior" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" ID="BB7E654A10914CAA">
+        <With Var="QI" />
+      </Event>
+      <Event Name="REQ" ID="AB677D9D99884770">
+        <With Var="QI" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" ID="1EAE7E85EF344E30">
+        <With Var="QO" />
+        <With Var="StationOccupied" />
+      </Event>
+      <Event Name="CNF" ID="2F76C84565244B24">
+        <With Var="QO" />
+        <With Var="StationOccupied" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="QI" ID="9D6C523733D74DBB" Type="BOOL" InitialValue="FALSE" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="QO" ID="E05EB721C15E4039" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="StationOccupied" ID="A5E2FBEBA48B4860" Type="BOOL" InitialValue="FALSE" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB Name="Conveyor" Type="Motor" Namespace="SE.App2CommonProcess" ID="8A542233BBCF44B2" UID="97E097EC12FE4F1E" x="1900" y="420" Comment="Move the part past the sensors" />
+    <FB Name="Branch1" Type="Valve" Namespace="SE.App2CommonProcess" ID="F8E4740F43F4477D" UID="568FE12C69964F2D" x="1900" y="2100" />
+    <FB Name="Branch2" Type="Valve" Namespace="SE.App2CommonProcess" ID="CB53061E5A274173" UID="956CB5E8AAF1487D" x="1900" y="3300" />
+    <FB Name="Stopper" Type="DigitalOutput" Namespace="SE.App2CommonProcess" ID="B59E8FE1D0364237" UID="1230EA5DB88E4D8C" x="1900" y="1260" />
+    <FB Name="PartAvailable" Type="DigitalInput" Namespace="SE.App2CommonProcess" ID="91D420DDB023414E" UID="132FBFB88ECA46B6" x="120" y="420" />
+    <FB Name="NotBlack" Type="DigitalInput" Namespace="SE.App2CommonProcess" ID="A26E8A95DFF34D47" UID="4CED07F326FB48F9" x="120" y="1200" />
+    <FB Name="Metal" Type="DigitalInput" Namespace="SE.App2CommonProcess" ID="8A174F60398F4C87" UID="7A4E62C046344A90" x="120" y="1980" />
+    <FB Name="SlideFull" Type="DigitalInput" Namespace="SE.App2CommonProcess" ID="5F6F3BACC08144BF" UID="6567ED4777794BAA" x="120" y="2760" />
+    <FB Name="Reset" Type="SortingResetSequence" Namespace="Main" ID="D6B8B1EAC5B74035" UID="FD0136B6565A4824" x="4100" y="420" Comment="The complete three step conveyor reset." />
+    <FB Name="Cycle" Type="SortingCycle" Namespace="Main" ID="F2E3FE685DDD4A13" UID="A0F80BBC99814AE5" x="4100" y="2000" Comment="One minimal Reset / Run / Stop coordinator, movement procedures and equipment readiness.">
+      </FB>
+    <EventConnections>
+      <Connection Source="$BB7E654A10914CAA" Destination="$D6B8B1EAC5B74035.CE22AC1D3AB3426F" dx1="40" dx2="40" />
+      <Connection Source="$BB7E654A10914CAA" Destination="$F2E3FE685DDD4A13.716214A33A924C6C" dx1="40" dx2="40" />
+      <Connection Source="$AB677D9D99884770" Destination="$F2E3FE685DDD4A13.7F5F9E57BE9B4B3E" dx1="40" dx2="40" />
+      <Connection Source="$F2E3FE685DDD4A13.E056577EDA2D42D2" Destination="$1EAE7E85EF344E30" dx1="40" dx2="40" />
+      <Connection Source="$F2E3FE685DDD4A13.3BE920798CA74BDF" Destination="$2F76C84565244B24" dx1="40" dx2="40" />
+      <Connection Source="$D6B8B1EAC5B74035.3796A8E946304D89" Destination="$2F76C84565244B24" dx1="40" dx2="40" />
+      <Connection Source="$F2E3FE685DDD4A13.41FB7658547343D1" Destination="$D6B8B1EAC5B74035.9DE610BBAD4A4A78" dx1="40" dx2="40" />
+      <Connection Source="$F2E3FE685DDD4A13.55B4A751137149FF" Destination="$D6B8B1EAC5B74035.70CC4981BDB84796" dx1="40" dx2="40" />
+      <Connection Source="$F2E3FE685DDD4A13.55B4A751137149FF" Destination="$D6B8B1EAC5B74035.CE22AC1D3AB3426F" dx1="40" dx2="40" />
+      <Connection Source="$F2E3FE685DDD4A13.96D79E44BC0B445A" Destination="$D6B8B1EAC5B74035.10FF02D41EE54939" dx1="40" dx2="40" />
+      <Connection Source="$D6B8B1EAC5B74035.155A29A091504655" Destination="$F2E3FE685DDD4A13.5163CE69E0F14F9A" dx1="40" dx2="40" />
+      <Connection Source="$91D420DDB023414E.CNF" Destination="$F2E3FE685DDD4A13.32DA136F2F03459D" dx1="40" dx2="40" />
+      <Connection Source="$A26E8A95DFF34D47.CNF" Destination="$F2E3FE685DDD4A13.32DA136F2F03459D" dx1="40" dx2="40" />
+      <Connection Source="$8A174F60398F4C87.CNF" Destination="$F2E3FE685DDD4A13.32DA136F2F03459D" dx1="40" dx2="40" />
+      <Connection Source="$5F6F3BACC08144BF.CNF" Destination="$F2E3FE685DDD4A13.32DA136F2F03459D" dx1="40" dx2="40" />
+      <Connection Source="$F8E4740F43F4477D.CNF" Destination="$F2E3FE685DDD4A13.32DA136F2F03459D" dx1="40" dx2="40" />
+      <Connection Source="$F8E4740F43F4477D.CNF_ALARM" Destination="$F2E3FE685DDD4A13.32DA136F2F03459D" dx1="40" dx2="40" />
+      <Connection Source="$F8E4740F43F4477D.CNF" Destination="$D6B8B1EAC5B74035.2D987DA7612E4822" dx1="40" dx2="40" />
+      <Connection Source="$CB53061E5A274173.CNF" Destination="$F2E3FE685DDD4A13.32DA136F2F03459D" dx1="40" dx2="40" />
+      <Connection Source="$CB53061E5A274173.CNF_ALARM" Destination="$F2E3FE685DDD4A13.32DA136F2F03459D" dx1="40" dx2="40" />
+      <Connection Source="$CB53061E5A274173.CNF" Destination="$D6B8B1EAC5B74035.2D987DA7612E4822" dx1="40" dx2="40" />
+      <Connection Source="$8A542233BBCF44B2.CNF_ALARM" Destination="$F2E3FE685DDD4A13.32DA136F2F03459D" dx1="40" dx2="40" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$9D6C523733D74DBB" Destination="$D6B8B1EAC5B74035.2371B8C6ADEC42E6" dx1="40" dx2="40" />
+      <Connection Source="$9D6C523733D74DBB" Destination="$F2E3FE685DDD4A13.16726D49203847D3" dx1="40" dx2="40" />
+      <Connection Source="$9D6C523733D74DBB" Destination="$E05EB721C15E4039" dx1="40" dx2="40" />
+      <Connection Source="$F2E3FE685DDD4A13.DDF4BCC1DD3745D7" Destination="$A5E2FBEBA48B4860" dx1="40" dx2="40" />
+      <Connection Source="$D6B8B1EAC5B74035.7761C0649B0A405A" Destination="$F2E3FE685DDD4A13.1E848204F9834A66" dx1="40" dx2="40" />
+      <Connection Source="$D6B8B1EAC5B74035.DFAD853D40BB4CF3" Destination="$F2E3FE685DDD4A13.DACEC7D1D5904283" dx1="40" dx2="40" />
+      <Connection Source="$D6B8B1EAC5B74035.5CA3D9D3A4BD49E4" Destination="$F2E3FE685DDD4A13.C804E16F86F34CD2" dx1="40" dx2="40" />
+      <Connection Source="$91D420DDB023414E.Pv" Destination="$F2E3FE685DDD4A13.46BCE8C7DD294BEF" dx1="40" dx2="40" />
+      <Connection Source="$A26E8A95DFF34D47.Pv" Destination="$F2E3FE685DDD4A13.F60CE3B5D2BF4246" dx1="40" dx2="40" />
+      <Connection Source="$8A174F60398F4C87.Pv" Destination="$F2E3FE685DDD4A13.C4EC986A9DA64CE3" dx1="40" dx2="40" />
+      <Connection Source="$5F6F3BACC08144BF.Pv" Destination="$F2E3FE685DDD4A13.CCC478EB8CD145CA" dx1="40" dx2="40" />
+      <Connection Source="$F8E4740F43F4477D.FbClosed" Destination="$F2E3FE685DDD4A13.3C5D1C7462C1472A" dx1="40" dx2="40" />
+      <Connection Source="$F8E4740F43F4477D.FbOpened" Destination="$F2E3FE685DDD4A13.9157E214D9F04524" dx1="40" dx2="40" />
+      <Connection Source="$F8E4740F43F4477D.FbAlarm" Destination="$F2E3FE685DDD4A13.E71DFD96A03A4CB0" dx1="40" dx2="40" />
+      <Connection Source="$F8E4740F43F4477D.FbClosed" Destination="$D6B8B1EAC5B74035.4E30665125D6433B" dx1="40" dx2="40" />
+      <Connection Source="$CB53061E5A274173.FbClosed" Destination="$F2E3FE685DDD4A13.2BA617C7CF9D4C67" dx1="40" dx2="40" />
+      <Connection Source="$CB53061E5A274173.FbOpened" Destination="$F2E3FE685DDD4A13.725C0BE01510424F" dx1="40" dx2="40" />
+      <Connection Source="$CB53061E5A274173.FbAlarm" Destination="$F2E3FE685DDD4A13.93D5C846B0084200" dx1="40" dx2="40" />
+      <Connection Source="$CB53061E5A274173.FbClosed" Destination="$D6B8B1EAC5B74035.48DFA1D9FA524F22" dx1="40" dx2="40" />
+      <Connection Source="$8A542233BBCF44B2.FbAlarm" Destination="$F2E3FE685DDD4A13.6B149864B667493E" dx1="40" dx2="40" />
+    </DataConnections>
+    <AdapterConnections>
+      <Connection Source="$F2E3FE685DDD4A13.CFCE595C755A4B67" Destination="$8A542233BBCF44B2.IPerm" dx1="40" dx2="40" />
+      <Connection Source="$F2E3FE685DDD4A13.BB6DC255FC484672" Destination="$F8E4740F43F4477D.IPerm" dx1="40" dx2="40" />
+      <Connection Source="$F2E3FE685DDD4A13.42EBFE1D197340D0" Destination="$CB53061E5A274173.IPerm" dx1="40" dx2="40" />
+      <Connection Source="$F2E3FE685DDD4A13.5F76BE37A4A747FE" Destination="$B59E8FE1D0364237.IPerm" dx1="40" dx2="40" />
+    </AdapterConnections>
+    <Input ID="BB7E654A10914CAA" Name="INIT" Type="Event" x="0" y="350" />
+    <Input ID="AB677D9D99884770" Name="REQ" Type="Event" x="0" y="430" />
+    <Input ID="9D6C523733D74DBB" Name="QI" Type="Data" x="0" y="660" />
+    <Output ID="1EAE7E85EF344E30" Name="INITO" Type="Event" x="6300" y="350" />
+    <Output ID="2F76C84565244B24" Name="CNF" Type="Event" x="6300" y="430" />
+    <Output ID="E05EB721C15E4039" Name="QO" Type="Data" x="6300" y="660" />
+    <Output ID="A5E2FBEBA48B4860" Name="StationOccupied" Type="Data" x="6300" y="740" />
+  </FBNetwork>
+</FBType>
