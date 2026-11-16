@@ -133,6 +133,9 @@
     <None Include="..\HMI\AutoCycle\AutoCycle_sDefault.doc.xml">
       <DependentUpon>AutoCycle.fbt</DependentUpon>
     </None>
+    <None Include="..\HMI\ConveyorBelt\ConveyorBelt_sDefault.doc.xml">
+      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    </None>
     <None Include="..\HMI\Distribution\Distribution_sDefault.doc.xml">
       <DependentUpon>Distribution.fbt</DependentUpon>
     </None>
@@ -172,6 +175,42 @@
     </None>
     <None Include="AutoCycle\AutoCycle_HMI.opcua.xml">
       <DependentUpon>AutoCycle.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="ConveyorBelt\ConveyorBelt.cfg">
+      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="ConveyorBelt\ConveyorBelt.doc.xml">
+      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    </None>
+    <None Include="ConveyorBelt\ConveyorBelt.meta.xml">
+      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    </None>
+    <None Include="ConveyorBelt\ConveyorBelt_CAT.offline.xml">
+      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="ConveyorBelt\ConveyorBelt_CAT.opcua.xml">
+      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="ConveyorBelt\ConveyorBelt_HMI.doc.xml">
+      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    </None>
+    <None Include="ConveyorBelt\ConveyorBelt_HMI.meta.xml">
+      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    </None>
+    <None Include="ConveyorBelt\ConveyorBelt_HMI.offline.xml">
+      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="ConveyorBelt\ConveyorBelt_HMI.opcua.xml">
+      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
       <Plugin>OPCUAConfigurator</Plugin>
       <IEC61499Type>CAT_OPCUA</IEC61499Type>
     </None>
@@ -306,6 +345,15 @@
       <Usage>Private</Usage>
       <DependentUpon>AutoCycle.fbt</DependentUpon>
       <HMI>..\HMI\AutoCycle\AutoCycle_sDefault.cnv.cs</HMI>
+    </Compile>
+    <Compile Include="ConveyorBelt\ConveyorBelt.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+    </Compile>
+    <Compile Include="ConveyorBelt\ConveyorBelt_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+      <HMI>..\HMI\ConveyorBelt\ConveyorBelt_sDefault.cnv.cs</HMI>
     </Compile>
     <Compile Include="Distribution\Distribution.fbt">
       <IEC61499Type>CAT</IEC61499Type>

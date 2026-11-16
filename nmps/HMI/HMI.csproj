@@ -181,6 +181,12 @@
     </Compile>
     <Compile Include="Colors\ProjectColors.cs" />
     <Compile Include="Colors\ProjectDrawingObjects.cs" />
+    <Compile Include="ConveyorBelt\ConveyorBelt.def.cs" />
+    <Compile Include="ConveyorBelt\ConveyorBelt.event.cs" />
+    <Compile Include="ConveyorBelt\ConveyorBelt_sDefault.cnv.cs" />
+    <Compile Include="ConveyorBelt\ConveyorBelt_sDefault.cnv.Designer.cs">
+      <DependentUpon>ConveyorBelt_sDefault.cnv.cs</DependentUpon>
+    </Compile>
     <Compile Include="Distribution.cnv.cs">
       <Canvas>true</Canvas>
     </Compile>
@@ -232,6 +238,13 @@
     <EmbeddedResource Include="Configurations\HistoryTrend.xml" />
     <EmbeddedResource Include="Configurations\Journalling.xml" />
     <EmbeddedResource Include="Configurations\TagValueEditor.xml" />
+    <EmbeddedResource Include="ConveyorBelt\ConveyorBelt.Design.resx" />
+    <EmbeddedResource Include="ConveyorBelt\ConveyorBelt_sDefault.cnv.resx">
+      <DependentUpon>ConveyorBelt_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConveyorBelt\ConveyorBelt_sDefault.cnv.xml">
+      <DependentUpon>ConveyorBelt_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Distribution.cnv.resx">
       <DependentUpon>Distribution.cnv.cs</DependentUpon>
     </EmbeddedResource>
