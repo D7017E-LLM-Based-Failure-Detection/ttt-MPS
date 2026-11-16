@@ -1,0 +1,912 @@
+<?xml version='1.0' encoding='utf-8'?>
+<FBType Name="SortingRouteConditions" Namespace="Main" GUID="b9aea0d3-ebee-4009-bba0-445a5d1841a8" Format="2.0" Comment="Sorting-only architecture following Distribution and tutorial modules 1-4">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="sorting2n" Version="2.0" Author="sorting2n" Date="2026-11-09" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" ID="C43D54E7A24B4924">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="CLEAR" ID="E5A759906A6B47D1">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="REQ" ID="96500CD1251D451E">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="CHECK_SLIDE" ID="D4AEFB06431A4E85">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="BEGIN_FULL_WAIT" ID="C70A1691FF6A498B">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="FULL_WAIT_DONE" ID="4F3423A96D884E9F">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="SHOW_FULL" ID="C5078F0904EF4B91">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="ACK" ID="A4C40091AF5D42BC">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="NEW_PIECE" ID="C92DE6CE53124F70">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="BEGIN_FEED" ID="4A240D6BEE51478B">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="FEED_DONE" ID="41FA0FE2E0D245FA">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="BEGIN_SENSE" ID="9007F2C05F564E27">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="SENSE_DONE" ID="BECBD3652CD44E88">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="IDENTIFY" ID="67EB4E112EA34BC3">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="BEGIN_TRAVEL" ID="4AABA023DB1E41BB">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="TRAVEL_DONE" ID="F077ECE710B745AD">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="BEGIN_HOME" ID="1153426937874224">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="HOME_DONE" ID="C5BE73253AEB428C">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+      <Event Name="FAULT" ID="363A81B2E54D40B8">
+        <With Var="QI" />
+        <With Var="PartAvailable" />
+        <With Var="NotBlack" />
+        <With Var="Metal" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="B1Closed" />
+        <With Var="B1Open" />
+        <With Var="B2Closed" />
+        <With Var="B2Open" />
+        <With Var="Automatic" />
+        <With Var="Arrival" />
+        <With Var="UseArrivalSensor" />
+        <With Var="RedTime" />
+        <With Var="SilverTime" />
+        <With Var="BlackTime" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" ID="947B2AEF917146DE">
+        <With Var="CheckReady" />
+        <With Var="FullWaitReady" />
+        <With Var="AckReady" />
+        <With Var="WaitReady" />
+        <With Var="FeedReady" />
+        <With Var="SenseReady" />
+        <With Var="ChooseReady" />
+        <With Var="RouteReady" />
+        <With Var="ArrivalReady" />
+        <With Var="HomeReady" />
+        <With Var="Fault" />
+        <With Var="Blocked" />
+        <With Var="Occupied" />
+        <With Var="FullLamp" />
+        <With Var="WaitingFull" />
+        <With Var="CycleEnd" />
+        <With Var="CheckNext" />
+        <With Var="FullWaitNext" />
+        <With Var="ChooseNext" />
+        <With Var="EndNext" />
+        <With Var="Route" />
+        <With Var="TravelTime" />
+      </Event>
+      <Event Name="CNF" ID="4FB733C332594A72">
+        <With Var="CheckReady" />
+        <With Var="FullWaitReady" />
+        <With Var="AckReady" />
+        <With Var="WaitReady" />
+        <With Var="FeedReady" />
+        <With Var="SenseReady" />
+        <With Var="ChooseReady" />
+        <With Var="RouteReady" />
+        <With Var="ArrivalReady" />
+        <With Var="HomeReady" />
+        <With Var="Fault" />
+        <With Var="Blocked" />
+        <With Var="Occupied" />
+        <With Var="FullLamp" />
+        <With Var="WaitingFull" />
+        <With Var="CycleEnd" />
+        <With Var="CheckNext" />
+        <With Var="FullWaitNext" />
+        <With Var="ChooseNext" />
+        <With Var="EndNext" />
+        <With Var="Route" />
+        <With Var="TravelTime" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="QI" ID="AEF13CCBBBC24890" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="PartAvailable" ID="D5A8FF12D7F743BB" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="NotBlack" ID="CA2052F5832A4A5D" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="Metal" ID="5BE64F486A8545A4" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="SlideSignal" ID="666732348291400A" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="FullActiveHigh" ID="12BB2423EA4C412B" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="B1Closed" ID="3204273C59A9435F" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="B1Open" ID="307968746D764CCE" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="B2Closed" ID="184C285A63C34A12" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="B2Open" ID="6AF0EEE714A94EF3" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="Automatic" ID="9AC0A291941342C4" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="Arrival" ID="52D0D8C9BE38427C" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="UseArrivalSensor" ID="276010F5C38548DC" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="RedTime" ID="A30CB042905C4953" Type="TIME" InitialValue="T#2500ms" />
+      <VarDeclaration Name="SilverTime" ID="F6A1F5F10F414783" Type="TIME" InitialValue="T#3s" />
+      <VarDeclaration Name="BlackTime" ID="060A31E3CC3B4017" Type="TIME" InitialValue="T#5s" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="CheckReady" ID="D6B0FD1F7CB24F8C" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="FullWaitReady" ID="2488EB80118C4E7B" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="AckReady" ID="4D795D9580BF4B01" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="WaitReady" ID="726CF27CB946476B" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="FeedReady" ID="F63B49D9F5C34DBE" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="SenseReady" ID="6B7F3BBDCD794829" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="ChooseReady" ID="5B945D0A57B24E90" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="RouteReady" ID="DF93FA7AB9B9469B" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="ArrivalReady" ID="632FEE0D1AFE4E26" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="HomeReady" ID="FC2FF8234A694823" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="Fault" ID="134174DB83C14FF5" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="Blocked" ID="2499C2D2948543D7" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="Occupied" ID="E11D21C4E3B64C8F" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="FullLamp" ID="4797579A9D4E44D6" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="WaitingFull" ID="98E5AD2ACF1544F4" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="CycleEnd" ID="74A22F3DB22E490F" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="CheckNext" ID="25D00B59DBDB4EDE" Type="UINT" InitialValue="0" />
+      <VarDeclaration Name="FullWaitNext" ID="9882FFF46334428D" Type="UINT" InitialValue="0" />
+      <VarDeclaration Name="ChooseNext" ID="309543610DEE44DF" Type="UINT" InitialValue="0" />
+      <VarDeclaration Name="EndNext" ID="1E3B211074374261" Type="UINT" InitialValue="0" />
+      <VarDeclaration Name="Route" ID="60CA8B318A864F4E" Type="UINT" InitialValue="0" />
+      <VarDeclaration Name="TravelTime" ID="3475033A59A94979" Type="TIME" InitialValue="T#5s" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <InternalVars>
+      <VarDeclaration Name="FeedElapsed" Type="BOOL" ID="FBFE68C38DBB42EE" />
+      <VarDeclaration Name="SenseElapsed" Type="BOOL" ID="C52E93E3F4B940F9" />
+      <VarDeclaration Name="FinishElapsed" Type="BOOL" ID="FFC9DF3C5580438D" />
+      <VarDeclaration Name="TravelElapsed" Type="BOOL" ID="2E4CF082D083440C" />
+      <VarDeclaration Name="HomeElapsed" Type="BOOL" ID="88F022E1ABAF47F9" />
+      <VarDeclaration Name="Acked" Type="BOOL" ID="703639648362429A" />
+    </InternalVars>
+    <ECC>
+      <ECState Name="IDLE" x="200" y="200" />
+      <ECState Name="ON_INIT" x="600" y="600">
+        <ECAction Algorithm="ON_INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="ON_CLEAR" x="850" y="600">
+        <ECAction Algorithm="ON_CLEAR" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_REQ" x="1100" y="600">
+        <ECAction Algorithm="ON_REQ" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_CHECK_SLIDE" x="1350" y="600">
+        <ECAction Algorithm="ON_CHECK_SLIDE" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_BEGIN_FULL_WAIT" x="1600" y="600">
+        <ECAction Algorithm="ON_BEGIN_FULL_WAIT" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_FULL_WAIT_DONE" x="1850" y="600">
+        <ECAction Algorithm="ON_FULL_WAIT_DONE" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_SHOW_FULL" x="2100" y="600">
+        <ECAction Algorithm="ON_SHOW_FULL" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_ACK" x="2350" y="600">
+        <ECAction Algorithm="ON_ACK" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_NEW_PIECE" x="2600" y="600">
+        <ECAction Algorithm="ON_NEW_PIECE" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_BEGIN_FEED" x="2850" y="600">
+        <ECAction Algorithm="ON_BEGIN_FEED" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_FEED_DONE" x="3100" y="600">
+        <ECAction Algorithm="ON_FEED_DONE" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_BEGIN_SENSE" x="3350" y="600">
+        <ECAction Algorithm="ON_BEGIN_SENSE" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_SENSE_DONE" x="3600" y="600">
+        <ECAction Algorithm="ON_SENSE_DONE" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_IDENTIFY" x="3850" y="600">
+        <ECAction Algorithm="ON_IDENTIFY" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_BEGIN_TRAVEL" x="4100" y="600">
+        <ECAction Algorithm="ON_BEGIN_TRAVEL" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_TRAVEL_DONE" x="4350" y="600">
+        <ECAction Algorithm="ON_TRAVEL_DONE" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_BEGIN_HOME" x="4600" y="600">
+        <ECAction Algorithm="ON_BEGIN_HOME" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_HOME_DONE" x="4850" y="600">
+        <ECAction Algorithm="ON_HOME_DONE" Output="CNF" />
+      </ECState>
+      <ECState Name="ON_FAULT" x="5100" y="600">
+        <ECAction Algorithm="ON_FAULT" Output="CNF" />
+      </ECState>
+      <ECTransition Source="IDLE" Destination="ON_INIT" Condition="INIT" />
+      <ECTransition Source="ON_INIT" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_CLEAR" Condition="CLEAR" />
+      <ECTransition Source="ON_CLEAR" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_REQ" Condition="REQ" />
+      <ECTransition Source="ON_REQ" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_CHECK_SLIDE" Condition="CHECK_SLIDE" />
+      <ECTransition Source="ON_CHECK_SLIDE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_BEGIN_FULL_WAIT" Condition="BEGIN_FULL_WAIT" />
+      <ECTransition Source="ON_BEGIN_FULL_WAIT" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_FULL_WAIT_DONE" Condition="FULL_WAIT_DONE" />
+      <ECTransition Source="ON_FULL_WAIT_DONE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_SHOW_FULL" Condition="SHOW_FULL" />
+      <ECTransition Source="ON_SHOW_FULL" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_ACK" Condition="ACK" />
+      <ECTransition Source="ON_ACK" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_NEW_PIECE" Condition="NEW_PIECE" />
+      <ECTransition Source="ON_NEW_PIECE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_BEGIN_FEED" Condition="BEGIN_FEED" />
+      <ECTransition Source="ON_BEGIN_FEED" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_FEED_DONE" Condition="FEED_DONE" />
+      <ECTransition Source="ON_FEED_DONE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_BEGIN_SENSE" Condition="BEGIN_SENSE" />
+      <ECTransition Source="ON_BEGIN_SENSE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_SENSE_DONE" Condition="SENSE_DONE" />
+      <ECTransition Source="ON_SENSE_DONE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_IDENTIFY" Condition="IDENTIFY" />
+      <ECTransition Source="ON_IDENTIFY" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_BEGIN_TRAVEL" Condition="BEGIN_TRAVEL" />
+      <ECTransition Source="ON_BEGIN_TRAVEL" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_TRAVEL_DONE" Condition="TRAVEL_DONE" />
+      <ECTransition Source="ON_TRAVEL_DONE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_BEGIN_HOME" Condition="BEGIN_HOME" />
+      <ECTransition Source="ON_BEGIN_HOME" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_HOME_DONE" Condition="HOME_DONE" />
+      <ECTransition Source="ON_HOME_DONE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_FAULT" Condition="FAULT" />
+      <ECTransition Source="ON_FAULT" Destination="IDLE" Condition="1" />
+    </ECC>
+    <Algorithm Name="ON_INIT">
+      <ST>FeedElapsed := FALSE; SenseElapsed := FALSE; FinishElapsed := FALSE; TravelElapsed := FALSE; HomeElapsed := FALSE; Acked := FALSE; Route := 0; Fault := FALSE; Occupied := FALSE; FullLamp := FALSE; WaitingFull := FALSE; CycleEnd := FALSE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_CLEAR">
+      <ST>FeedElapsed := FALSE; SenseElapsed := FALSE; FinishElapsed := FALSE; TravelElapsed := FALSE; HomeElapsed := FALSE; Acked := FALSE; Route := 0; Fault := FALSE; Occupied := FALSE; FullLamp := FALSE; WaitingFull := FALSE; CycleEnd := FALSE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_REQ">
+      <ST>
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_CHECK_SLIDE">
+      <ST>FullLamp := FALSE; WaitingFull := FALSE; CycleEnd := FALSE; IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF; IF NOT Blocked THEN Occupied := FALSE; END_IF;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_BEGIN_FULL_WAIT">
+      <ST>FinishElapsed := FALSE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_FULL_WAIT_DONE">
+      <ST>FinishElapsed := TRUE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_SHOW_FULL">
+      <ST>Occupied := TRUE; FullLamp := TRUE; WaitingFull := TRUE; Acked := FALSE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_ACK">
+      <ST>Acked := TRUE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_NEW_PIECE">
+      <ST>Route := 0; FeedElapsed := FALSE; SenseElapsed := FALSE; TravelElapsed := FALSE; HomeElapsed := FALSE; Occupied := FALSE; CycleEnd := FALSE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_BEGIN_FEED">
+      <ST>FeedElapsed := FALSE; Occupied := TRUE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_FEED_DONE">
+      <ST>FeedElapsed := TRUE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_BEGIN_SENSE">
+      <ST>SenseElapsed := FALSE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_SENSE_DONE">
+      <ST>SenseElapsed := TRUE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_IDENTIFY">
+      <ST>IF Metal AND NotBlack THEN Route := 2; ELSIF NotBlack AND NOT Metal THEN Route := 1; ELSIF NOT NotBlack AND NOT Metal THEN Route := 3; ELSE Route := 0; Fault := TRUE; END_IF;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_BEGIN_TRAVEL">
+      <ST>TravelElapsed := FALSE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_TRAVEL_DONE">
+      <ST>TravelElapsed := TRUE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_BEGIN_HOME">
+      <ST>HomeElapsed := FALSE; CycleEnd := TRUE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_HOME_DONE">
+      <ST>HomeElapsed := TRUE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_FAULT">
+      <ST>Fault := TRUE;
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+IF (B1Closed AND B1Open) OR (B2Closed AND B2Open) THEN Fault := TRUE; END_IF;
+CheckReady := QI AND NOT Fault; IF Blocked THEN CheckNext := 3; ELSE CheckNext := 5; END_IF;
+FullWaitReady := FinishElapsed AND NOT Fault; IF Blocked THEN FullWaitNext := 4; ELSE FullWaitNext := 2; END_IF;
+AckReady := Acked AND NOT Fault;
+WaitReady := QI AND PartAvailable AND NOT Fault;
+FeedReady := FeedElapsed AND NOT PartAvailable AND NOT Fault;
+SenseReady := SenseElapsed AND NOT Fault;
+ChooseReady := (Route &gt; 0) AND NOT Fault;
+IF Route = 1 THEN ChooseNext := 9; ELSIF Route = 2 THEN ChooseNext := 11; ELSE ChooseNext := 13; END_IF;
+RouteReady := ChooseReady AND ((Route = 1 AND B1Open AND B2Closed) OR (Route = 2 AND B1Closed AND B2Open) OR (Route = 3 AND B1Closed AND B2Closed));
+ArrivalReady := ((UseArrivalSensor AND Arrival) OR (NOT UseArrivalSensor AND TravelElapsed)) AND NOT Fault;
+HomeReady := HomeElapsed AND B1Closed AND B2Closed AND NOT Fault;
+IF Automatic THEN EndNext := 2; ELSE EndNext := 15; END_IF;
+TravelTime := BlackTime; IF Route = 1 THEN TravelTime := RedTime; ELSIF Route = 2 THEN TravelTime := SilverTime; END_IF;
+</ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

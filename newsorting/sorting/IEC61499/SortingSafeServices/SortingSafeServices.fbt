@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='utf-8'?>
+<FBType Name="SortingSafeServices" Namespace="Main" GUID="c72cc691-526d-4520-a02e-f1cc7edbeff5" Format="2.0" Comment="Existing ownership, command and measured home conditions.">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="sorting2n" Version="3.0" Author="sorting2n" Date="2026-11-12" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="Frame_INIT" ID="9406177C96964918" />
+      <Event Name="Home_REQ" ID="B487FBD83E664405">
+        <With Var="Home_B1Closed" />
+        <With Var="Home_B2Closed" />
+      </Event>
+      <Event Name="Home_CLEAR" ID="C03E480D6990400D">
+        <With Var="Home_B1Closed" />
+        <With Var="Home_B2Closed" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="OwnerRead_INITO" ID="44AB9629DFF24FF7" />
+      <Event Name="Home_CNF" ID="81C67910DE5D4FBE">
+        <With Var="Home_Fault" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="Home_B1Closed" ID="39B88A85D9E443EC" Type="BOOL" />
+      <VarDeclaration Name="Home_B2Closed" ID="819D37304DF54BE0" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="Home_Fault" ID="33BD2F3DC21A43C2" Type="BOOL" />
+    </OutputVars>
+    <Sockets>
+      <AdapterDeclaration Name="FromSequence" Type="LinkSafeSequenceSequenceServices" Namespace="Main" ID="59D40A58A22B4030" x="0" y="250" />
+    </Sockets>
+  </InterfaceList>
+  <FBNetwork>
+    <FB Name="Frame" Type="SortingCommandFrame" Namespace="Main" ID="36D6267109B74018" UID="751C0E2EC4F44077" x="700" y="500" />
+    <FB Name="Ownership" Type="SortingOwnership" Namespace="Main" ID="59797C1B453C45E4" UID="A767504887A24B7A" x="2700" y="500" />
+    <FB Name="OwnerRead" Type="SYMLINKMULTIVARDST" Namespace="Runtime.System" ID="FC93AEA28EAA4785" UID="F40C57D92E6F413F" x="4700" y="500">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=4;VALUE${I}:VTQBOOL,VTQBOOL,VTQBOOL,VTQBOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'$${PATH:4}Conveyor.sc.progLocal'" />
+      <Parameter Name="$NAME2" Value="'$${PATH:4}Branch1.sc.progLocal'" />
+      <Parameter Name="$NAME3" Value="'$${PATH:4}Branch2.sc.progLocal'" />
+      <Parameter Name="$NAME4" Value="'$${PATH:4}Stopper.sc.progLocal'" />
+    </FB>
+    <FB Name="OwnerWrite" Type="SYMLINKMULTIVARSRC" Namespace="Runtime.System" ID="24C768E2A8164F89" UID="E0A974A29F0044E8" x="6700" y="500">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=4;VALUE${I}:VTQBOOL,VTQBOOL,VTQBOOL,VTQBOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'$${PATH:4}Conveyor.sc.progLocalSel'" />
+      <Parameter Name="$NAME2" Value="'$${PATH:4}Branch1.sc.progLocalSel'" />
+      <Parameter Name="$NAME3" Value="'$${PATH:4}Branch2.sc.progLocalSel'" />
+      <Parameter Name="$NAME4" Value="'$${PATH:4}Stopper.sc.progLocalSel'" />
+    </FB>
+    <FB Name="WriteCommands" Type="SYMLINKMULTIVARSRC" Namespace="Runtime.System" ID="EB4A312A3EFD4151" UID="D8F968B26BBB44B5" x="700" y="1550">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=4;VALUE${I}:VTQINT,VTQINT,VTQINT,VTQINT" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'$${PATH:4}Conveyor.sc.lsp'" />
+      <Parameter Name="$NAME2" Value="'$${PATH:4}Branch1.sc.lsp'" />
+      <Parameter Name="$NAME3" Value="'$${PATH:4}Branch2.sc.lsp'" />
+      <Parameter Name="$NAME4" Value="'$${PATH:4}Stopper.sc.lsp'" />
+    </FB>
+    <FB Name="Home" Type="SortingHomeConditions" Namespace="Main" ID="0838D3F2301D4003" UID="3381FE2773F9451D" x="2700" y="1550" />
+    <EventConnections>
+      <Connection Source="$9406177C96964918" Destination="$36D6267109B74018.3E51AF3DA95F41C9" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$36D6267109B74018.91A08A19905E4AC8" Destination="$EB4A312A3EFD4151.INIT" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$EB4A312A3EFD4151.INITO" Destination="$59797C1B453C45E4.D514169649844923" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$59797C1B453C45E4.4CD8C065E39641C9" Destination="$24C768E2A8164F89.INIT" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$24C768E2A8164F89.INITO" Destination="$FC93AEA28EAA4785.INIT" dx1="30" dx2="30" />
+      <Connection Source="$59797C1B453C45E4.B3E6986DDAA841AB" Destination="$24C768E2A8164F89.REQ" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$FC93AEA28EAA4785.CNF" Destination="$59797C1B453C45E4.6D56496F53D1499B" dx1="30" dx2="30" />
+      <Connection Source="$FC93AEA28EAA4785.INITO" Destination="$59797C1B453C45E4.6D56496F53D1499B" dx1="30" dx2="30" />
+      <Connection Source="$36D6267109B74018.FEDD90899323480E" Destination="$EB4A312A3EFD4151.REQ" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$B487FBD83E664405" Destination="$0838D3F2301D4003.F4871D28B0594017" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$FC93AEA28EAA4785.INITO" Destination="$0838D3F2301D4003.CE64267AAD124F8D" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0838D3F2301D4003.C188F07096974982" Destination="$59D40A58A22B4030.199423B8E3EA424D" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$FC93AEA28EAA4785.INITO" Destination="$44AB9629DFF24FF7" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0838D3F2301D4003.199DF02180EA4007" Destination="$81C67910DE5D4FBE" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$C03E480D6990400D" Destination="$0838D3F2301D4003.27094514BA434C7A" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$59D40A58A22B4030.011CF67C6620420F" Destination="$59797C1B453C45E4.8B11DD0F57C44878" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$59797C1B453C45E4.556ECCED2B7E4FE4" Destination="$59D40A58A22B4030.8705939D5B1442EC" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$59D40A58A22B4030.A7B722B3D101427D" Destination="$36D6267109B74018.B00E6A8BE1EB4052" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$59D40A58A22B4030.8F745BA862BE446D" Destination="$0838D3F2301D4003.C8FE616D2B744827" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$59D40A58A22B4030.DE074F0018CA41B7" Destination="$0838D3F2301D4003.858AFA5821D243F1" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0838D3F2301D4003.199DF02180EA4007" Destination="$59D40A58A22B4030.F3737632F0674E5B" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$FC93AEA28EAA4785.VALUE1" Destination="$59797C1B453C45E4.3633AFB15F0E4D29" dx1="30" dx2="30" />
+      <Connection Source="$59797C1B453C45E4.AB3AFA1E5DB542BD" Destination="$24C768E2A8164F89.VALUE1" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$FC93AEA28EAA4785.VALUE2" Destination="$59797C1B453C45E4.AFBF64D6B6724875" dx1="30" dx2="30" />
+      <Connection Source="$59797C1B453C45E4.AB3AFA1E5DB542BD" Destination="$24C768E2A8164F89.VALUE2" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$FC93AEA28EAA4785.VALUE3" Destination="$59797C1B453C45E4.C6BAC61A3B114656" dx1="30" dx2="30" />
+      <Connection Source="$59797C1B453C45E4.AB3AFA1E5DB542BD" Destination="$24C768E2A8164F89.VALUE3" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$FC93AEA28EAA4785.VALUE4" Destination="$59797C1B453C45E4.0CBD0A2278FC4256" dx1="30" dx2="30" />
+      <Connection Source="$59797C1B453C45E4.AB3AFA1E5DB542BD" Destination="$24C768E2A8164F89.VALUE4" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$36D6267109B74018.1BE4F90CA0DE4A12" Destination="$EB4A312A3EFD4151.VALUE1" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$36D6267109B74018.E7BCFB58D0E944F4" Destination="$EB4A312A3EFD4151.VALUE2" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$36D6267109B74018.FD5B17DC6BEA4636" Destination="$EB4A312A3EFD4151.VALUE3" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$36D6267109B74018.9F87DE883B874F73" Destination="$EB4A312A3EFD4151.VALUE4" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$39B88A85D9E443EC" Destination="$0838D3F2301D4003.6DF2726E50AE4D83" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$819D37304DF54BE0" Destination="$0838D3F2301D4003.305FF7EA37BC4E0C" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0838D3F2301D4003.74C9C2C856054ACB" Destination="$33BD2F3DC21A43C2" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$59797C1B453C45E4.3DD7BBA990934FB9" Destination="$59D40A58A22B4030.B0172C60E5884E40" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0838D3F2301D4003.097D9CE53785454A" Destination="$59D40A58A22B4030.A973A7B0624E4A64" dx1="30" dx2="30">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </DataConnections>
+    <Input ID="9406177C96964918" Name="Frame_INIT" Type="Event" x="0" y="350" />
+    <Input ID="B487FBD83E664405" Name="Home_REQ" Type="Event" x="0" y="430" />
+    <Input ID="C03E480D6990400D" Name="Home_CLEAR" Type="Event" x="0" y="510" />
+    <Input ID="39B88A85D9E443EC" Name="Home_B1Closed" Type="Data" x="0" y="740" />
+    <Input ID="819D37304DF54BE0" Name="Home_B2Closed" Type="Data" x="0" y="820" />
+    <Output ID="44AB9629DFF24FF7" Name="OwnerRead_INITO" Type="Event" x="8600" y="350" />
+    <Output ID="81C67910DE5D4FBE" Name="Home_CNF" Type="Event" x="8600" y="430" />
+    <Output ID="33BD2F3DC21A43C2" Name="Home_Fault" Type="Data" x="8600" y="660" />
+  </FBNetwork>
+</FBType>
