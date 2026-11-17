@@ -4,7 +4,7 @@
 
 This project rebuilds the control program of the Festo MPS Distribution station in EcoStruxure Automation Expert (EAE) 25, Schneider Electric's IEC 61499 engineering tool. Instead of porting the hand-made function blocks of the existing program, the station is assembled from Schneider Electric's library blocks, which already include faceplates, alarms, owner selection and OPC UA values.
 
-So far the station's six device blocks, two permissives (interlocks) and a reset sequence are built and tested on EAE's simulated controller, and all seven tests pass. The automatic cycle, which takes workpieces from the magazine to the next station, is the part still to be built for the demonstration. Binding the program to the station's real I/O waits on the choice of controller.
+So far the station's six device blocks, two permissives (interlocks), a reset sequence and the automatic cycle are built and tested on EAE's simulated controller, and all eleven tests pass. The automatic cycle takes workpieces from the magazine to the next station. The state manager and console integration remain to be built, and binding the program to the station's real I/O waits on the choice of controller.
 
 Before this rebuild, the project studied the MPS and the EAE program left by an earlier student (a port of the the professor's code), and tried to simulate the station to produce synthetic data for the other subgroups. The simulation grew too complicated and was dropped in favour of data from a smaller system, as described under Project history.
 
@@ -48,17 +48,81 @@ The design was checked against the AHU (air handling unit) example from the work
 
 ## Design
 
-![What is built: the Distribution station's blocks, built and planned](station-blocks.png)
+```mermaid
+%%{init: {"theme": "neutral", "flowchart": {"curve": "linear"}}}%%
+flowchart TB
+    subgraph Distribution["Distribution (station CAT)"]
+        direction TB
+        StationState["StationState: StateManager<br/>Console buttons and lamps (planned)"]
 
-*Figure 1. The station's blocks. Solid boxes are built and run in simulation; dashed boxes are planned.*
+        subgraph Sequences["Sequences"]
+            Reset["ResetSeq (ResetSequence CAT)<br/>SeqHead, 4 SeqSteps, SeqTerminate"]
+            Cycle["CycleSeq (AutoCycle CAT)<br/>SeqHead, 11 SeqSteps, SeqTerminate<br/>3 logic blocks"]
+        end
+
+        subgraph Actuators["Actuators"]
+            Ejector["Ejector: Valve<br/>1M1; 1B1 / 1B2"]
+            Swivel["Swivel: Valve2Op<br/>3M1 / 3M2; 3B1 / 3B2"]
+            Vacuum["Vacuum: Valve<br/>2M1; 2B1"]
+            BlowOff["BlowOff: DigitalOutput<br/>2M2 (no feedback)"]
+        end
+
+        subgraph Sensors["Sensors"]
+            MagazineEmpty["MagazineEmpty: DigitalInput<br/>B4"]
+            DownstreamFree["DownstreamFree: DigitalInput<br/>IP_FI"]
+        end
+
+        subgraph Permissives["Permissives: permCondItem"]
+            EjectorPerm["EjectorPerm<br/>Push only with the arm downstream"]
+            SwivelPerm["SwivelPerm<br/>Swing downstream only if Testing is free"]
+        end
+
+        StationState -.->|Run reset| Reset
+        StationState -.->|Run cycle| Cycle
+        Sequences <-->|Symbolic-link commands / wired feedback| Actuators
+        MagazineEmpty -->|Magazine status| Cycle
+        DownstreamFree -->|Testing free| Cycle
+        Swivel -->|Arm downstream| EjectorPerm
+        EjectorPerm -->|IPerm| Ejector
+        DownstreamFree --> SwivelPerm
+        SwivelPerm -->|IPerm| Swivel
+    end
+
+    Distribution -.-> OPCUA["OPC UA values for UaExpert (planned)"]
+
+    classDef planned fill:#fff,stroke:#666,stroke-dasharray:5 5
+    class StationState,OPCUA planned
+```
+
+*Figure 1. The station's blocks. Solid boxes are built and run on EAE's simulated controller; dashed boxes and arrows are planned. Real I/O binding remains to be done.*
 
 Inside the `Distribution` CAT, each physical device is one library block: three valve blocks for the Ejector, the Swivel and the Vacuum, a digital output for BlowOff, and two digital inputs for the magazine-empty sensor and the IP\_FI signal. Two permissive blocks are connected to the Ejector and the Swivel. The sequences send commands to the devices through symbolic links, and the devices' feedback comes back on wires.
 
-![How the station runs: the station states, the reset sequence and the automatic cycle](auto-cycle.png)
+```mermaid
+%%{init: {"theme": "neutral"}}%%
+stateDiagram-v2
+    direction LR
+    [*] --> Stopped
+    Stopped --> Resetting: Reset
+    Resetting --> Idle: ResetSeq completed
+    Idle --> Execute: Start
+    Execute --> Held: Alarm
+    Held --> Resetting: Cause cleared, then Reset
 
-*Figure 2. How the station runs. Only the reset sequence (left) is built so far.*
+    note left of Stopped
+        Stop from any state returns to Stopped.
+    end note
+    note right of Resetting
+        Runs ResetSeq (Figure 3).
+    end note
+    note right of Execute
+        Runs CycleSeq (Figure 4).
+    end note
+```
 
-Control is split into three layers (Figure 2). A state manager decides whether the station may run (Stopped, Resetting, Idle, Execute, Held). Two sequences decide what happens next: the reset sequence brings the station to its home position, and the automatic cycle moves workpieces from the magazine to Testing, following Festo's GRAFCET step by step. The device blocks decide how each move is made and check that it finished. The state manager and the automatic cycle are still to be built.
+*Figure 2. Planned station states and their transitions.*
+
+Control is split into three layers. A state manager decides whether the station may run (Stopped, Resetting, Idle, Execute, Held; Figure 2). Two sequences decide what happens next: the reset sequence brings the station to its home position (Figure 3), and the automatic cycle moves workpieces from the magazine to Testing, following Festo's GRAFCET step by step (Figure 4). The device blocks decide how each move is made and check that it finished. Both sequences are built and tested in simulation; the state manager is still to be built.
 
 ## Implementation
 
@@ -95,11 +159,30 @@ The reset sequence, `ResetSeq`, is built from SE.AppSequence blocks in its own C
 | R3 Ejector retract | Ejector to Close | The Ejector reports closed |
 | R4 Swivel to magazine | Swivel to Close | The Swivel reports closed |
 
+```mermaid
+%%{init: {"theme": "neutral", "flowchart": {"curve": "linear"}}}%%
+flowchart TD
+    ResetHead(["ResetSeq: SeqHead"])
+    R1["R1 Take over<br/>Vacuum, Ejector and Swivel to Program Local"]
+    R2["R2 Vacuum off<br/>Vacuum to Close"]
+    R3["R3 Ejector retract<br/>Ejector to Close"]
+    R4["R4 Swivel to magazine<br/>Swivel to Close"]
+    ResetDone(["Completed: SeqTerminate"])
+
+    ResetHead --> R1
+    R1 -->|Vacuum and Ejector confirm Program Local| R2
+    R2 -->|Vacuum closed| R3
+    R3 -->|Ejector closed| R4
+    R4 -->|Swivel closed: arm at magazine| ResetDone
+```
+
+*Figure 3. The reset sequence, built and tested in simulation. Each rectangle is a SeqStep; each arrow gives its completion condition. R1 omits the Swivel's owner confirmation because of the library issue described under Problems and solutions.*
+
 Each command is a `SYMLINKMULTIVARSRC` block, fired when its step starts, that writes the device's sequence link, for example `RES0.Distribution.Ejector.sc.lsp`, with 1 for Open or 2 for Close. Each step re-checks its condition right after sending its command, so a device that is already home passes at once.
 
 ### Automatic cycle
 
-The automatic cycle, `AutoCycle`, follows the same pattern in its own CAT (Figure 2). After the same take-over step, it waits until Testing is free, swings the arm downstream, checks the magazine, pushes a workpiece out, swings to the magazine and picks the workpiece up. It then retracts the ejector, waits until Testing is free, swings downstream, drops the workpiece off with a blow-off pulse and parks the arm at the magazine. 
+The automatic cycle, `AutoCycle`, follows the same pattern in its own CAT (Figure 4). After the same take-over step, it waits until Testing is free, swings the arm downstream, checks the magazine, pushes a workpiece out, swings to the magazine and picks the workpiece up. It then retracts the ejector, waits until Testing is free, swings downstream, drops the workpiece off with a blow-off pulse and parks the arm at the magazine.
 
 | Step | Command | Done when |
 | --- | --- | --- |
@@ -114,6 +197,39 @@ The automatic cycle, `AutoCycle`, follows the same pattern in its own CAT (Figur
 | AC9 Carry | Swivel to Open | The Swivel reports open |
 | AC10 Drop off | Vacuum to Close and BlowOff on, then BlowOff off when the step ends | The Vacuum reports closed |
 | AC11 Park | Swivel to Close | The Swivel reports closed |
+
+```mermaid
+%%{init: {"theme": "neutral", "flowchart": {"curve": "linear"}}}%%
+flowchart TD
+    CycleHead(["CycleSeq: SeqHead"])
+    AC1["AC1 Take over<br/>Vacuum, Ejector, Swivel and BlowOff to Program Local"]
+    AC2["AC2 Wait for Testing"]
+    AC3["AC3 Arm downstream<br/>Swivel to Open"]
+    AC4["AC4 Check magazine"]
+    AC5["AC5 Eject<br/>Ejector to Open"]
+    AC6["AC6 Arm to magazine<br/>Swivel to Close"]
+    AC7["AC7 Pick up<br/>Vacuum to Open"]
+    AC8["AC8 Ejector back<br/>Ejector to Close"]
+    AC9["AC9 Carry<br/>Swivel to Open"]
+    AC10["AC10 Drop off<br/>Vacuum to Close; BlowOff on<br/>BlowOff off when the step ends"]
+    AC11["AC11 Park<br/>Swivel to Close"]
+    CycleDone(["Completed: SeqTerminate"])
+
+    CycleHead --> AC1
+    AC1 -->|Vacuum, Ejector and BlowOff confirm Program Local| AC2
+    AC2 -->|DownstreamFree: Testing is free| AC3
+    AC3 -->|Swivel open: arm downstream| AC4
+    AC4 -->|Magazine not empty| AC5
+    AC5 -->|Ejector open| AC6
+    AC6 -->|Swivel closed: arm at magazine| AC7
+    AC7 -->|Vacuum open: workpiece gripped| AC8
+    AC8 -->|Ejector closed AND Testing free| AC9
+    AC9 -->|Swivel open: arm downstream| AC10
+    AC10 -->|Vacuum closed: workpiece released| AC11
+    AC11 -->|Swivel closed: arm at magazine| CycleDone
+```
+
+*Figure 4. The eleven-step automatic cycle, built and tested in simulation. Each rectangle is a SeqStep; each arrow gives its completion condition. AC2 and AC4 wait for their sensor condition, and AC8 also waits for Testing to be free.*
 
 Three small logic blocks sit between the sensors and the steps where a condition combines or inverts signals: an AND of the take-over answers for AC1, a NOT that turns the magazine-empty sensor into "workpieces left" for AC4, and an AND of the ejector's back position and Testing's free signal for AC8. BlowOff has no feedback, so AC10 switches it on as the step starts and off as it ends, which gives the blow-off pulse.
 
