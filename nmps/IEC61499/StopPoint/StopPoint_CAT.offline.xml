@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<OfflineParameterModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" IsDefaultEventSelectionDialogsHidden="0" />
+<OfflineParameterModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" IsDefaultEventSelectionDialogsHidden="0">
+  <OfflineParameterModel ID="ADD36FBA919050D4" IsDefaultEventSelectionDialogsHidden="0">
+    <OfflineParameterModel ID="16" IsDefaultEventSelectionDialogsHidden="0">
+      <OfflineParameterModel ID="13" IsDefaultEventSelectionDialogsHidden="0">
+        <OfflineParameterModel ID="188" IsDefaultEventSelectionDialogsHidden="0">
+          <OfflineParameterModel ID="7801A8D91AA682F9" IsDefaultEventSelectionDialogsHidden="0">
+            <OfflineAttributeModel Name="Default Value" Value="16#1" Locked="false" />
+          </OfflineParameterModel>
+        </OfflineParameterModel>
+      </OfflineParameterModel>
+    </OfflineParameterModel>
+  </OfflineParameterModel>
+</OfflineParameterModel>

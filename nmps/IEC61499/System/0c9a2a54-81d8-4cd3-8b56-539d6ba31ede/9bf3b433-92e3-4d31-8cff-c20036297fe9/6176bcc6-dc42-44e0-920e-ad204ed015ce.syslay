@@ -2,5 +2,8 @@
 <Layer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="6176bcc6-dc42-44e0-920e-ad204ed015ce" Name="Default" Comment="" IsDefault="true" Format="2.0" xmlns="https://www.se.com/LibraryElements">
   <SubAppNetwork>
     <FB ID="33A16FB4708913B3" Name="Distribution" Type="Distribution" Namespace="Main" x="839.9999" y="200" />
+    <FB ID="F8F802AB3B2841F2" Name="Conveyor" Type="Conveyor" Namespace="Main" x="840" y="900">
+      <Parameter Name="$A09CD310C18D520E" Value="TRUE" />
+    </FB>
   </SubAppNetwork>
 </Layer>
