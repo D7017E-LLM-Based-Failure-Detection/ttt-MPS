@@ -1,5 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -53,9 +112,231 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="hdrBackground.Name" xml:space="preserve">
+    <value>hdrBackground</value>
+  </metadata>
+  <metadata name="beltSectionBg.Name" xml:space="preserve">
+    <value>beltSectionBg</value>
+  </metadata>
+  <metadata name="beltTrack.Name" xml:space="preserve">
+    <value>beltTrack</value>
+  </metadata>
+  <metadata name="cardBg1.Name" xml:space="preserve">
+    <value>cardBg1</value>
+  </metadata>
+  <metadata name="cardBg2.Name" xml:space="preserve">
+    <value>cardBg2</value>
+  </metadata>
+  <metadata name="cardBg6.Name" xml:space="preserve">
+    <value>cardBg6</value>
+  </metadata>
+  <metadata name="cardHdr1.Name" xml:space="preserve">
+    <value>cardHdr1</value>
+  </metadata>
+  <metadata name="cardHdr2.Name" xml:space="preserve">
+    <value>cardHdr2</value>
+  </metadata>
+  <metadata name="cardHdr6.Name" xml:space="preserve">
+    <value>cardHdr6</value>
+  </metadata>
+  <metadata name="lineDrop1.Name" xml:space="preserve">
+    <value>lineDrop1</value>
+  </metadata>
+  <metadata name="lineDrop2.Name" xml:space="preserve">
+    <value>lineDrop2</value>
+  </metadata>
+  <metadata name="lineDrop6.Name" xml:space="preserve">
+    <value>lineDrop6</value>
+  </metadata>
+  <metadata name="lineDiv1.Name" xml:space="preserve">
+    <value>lineDiv1</value>
+  </metadata>
+  <metadata name="lineDiv2.Name" xml:space="preserve">
+    <value>lineDiv2</value>
+  </metadata>
+  <metadata name="lineDiv6.Name" xml:space="preserve">
+    <value>lineDiv6</value>
+  </metadata>
+  <metadata name="lblTitle.Name" xml:space="preserve">
+    <value>lblTitle</value>
+  </metadata>
+  <metadata name="lblSubtitle.Name" xml:space="preserve">
+    <value>lblSubtitle</value>
+  </metadata>
+  <metadata name="lblBeltHeader.Name" xml:space="preserve">
+    <value>lblBeltHeader</value>
+  </metadata>
+  <metadata name="lblFlowLeft.Name" xml:space="preserve">
+    <value>lblFlowLeft</value>
+  </metadata>
+  <metadata name="lblBeltOrder.Name" xml:space="preserve">
+    <value>lblBeltOrder</value>
+  </metadata>
+  <metadata name="lblBeltHint1.Name" xml:space="preserve">
+    <value>lblBeltHint1</value>
+  </metadata>
+  <metadata name="lblBeltHint2.Name" xml:space="preserve">
+    <value>lblBeltHint2</value>
+  </metadata>
+  <metadata name="lblStopHdr1.Name" xml:space="preserve">
+    <value>lblStopHdr1</value>
+  </metadata>
+  <metadata name="lblStopHdr2.Name" xml:space="preserve">
+    <value>lblStopHdr2</value>
+  </metadata>
+  <metadata name="lblStopHdr6.Name" xml:space="preserve">
+    <value>lblStopHdr6</value>
+  </metadata>
+  <metadata name="lblStopperCap1.Name" xml:space="preserve">
+    <value>lblStopperCap1</value>
+  </metadata>
+  <metadata name="lblStopperCap2.Name" xml:space="preserve">
+    <value>lblStopperCap2</value>
+  </metadata>
+  <metadata name="lblStopperCap6.Name" xml:space="preserve">
+    <value>lblStopperCap6</value>
+  </metadata>
+  <metadata name="lblSeqCap1.Name" xml:space="preserve">
+    <value>lblSeqCap1</value>
+  </metadata>
+  <metadata name="lblSeqCap2.Name" xml:space="preserve">
+    <value>lblSeqCap2</value>
+  </metadata>
+  <metadata name="lblSeqCap6.Name" xml:space="preserve">
+    <value>lblSeqCap6</value>
+  </metadata>
+  <metadata name="lblSeqHint1.Name" xml:space="preserve">
+    <value>lblSeqHint1</value>
+  </metadata>
+  <metadata name="lblSeqHint2.Name" xml:space="preserve">
+    <value>lblSeqHint2</value>
+  </metadata>
+  <metadata name="lblSeqHint6.Name" xml:space="preserve">
+    <value>lblSeqHint6</value>
+  </metadata>
+  <metadata name="lblPalletTitle1.Name" xml:space="preserve">
+    <value>lblPalletTitle1</value>
+  </metadata>
+  <metadata name="lblPalletSub1.Name" xml:space="preserve">
+    <value>lblPalletSub1</value>
+  </metadata>
+  <metadata name="lblWpTitle1.Name" xml:space="preserve">
+    <value>lblWpTitle1</value>
+  </metadata>
+  <metadata name="lblWpSub1.Name" xml:space="preserve">
+    <value>lblWpSub1</value>
+  </metadata>
+  <metadata name="lblRelTitle1.Name" xml:space="preserve">
+    <value>lblRelTitle1</value>
+  </metadata>
+  <metadata name="lblRelSub1.Name" xml:space="preserve">
+    <value>lblRelSub1</value>
+  </metadata>
+  <metadata name="lblPalletTitle2.Name" xml:space="preserve">
+    <value>lblPalletTitle2</value>
+  </metadata>
+  <metadata name="lblPalletSub2.Name" xml:space="preserve">
+    <value>lblPalletSub2</value>
+  </metadata>
+  <metadata name="lblWpTitle2.Name" xml:space="preserve">
+    <value>lblWpTitle2</value>
+  </metadata>
+  <metadata name="lblWpSub2.Name" xml:space="preserve">
+    <value>lblWpSub2</value>
+  </metadata>
+  <metadata name="lblRelTitle2.Name" xml:space="preserve">
+    <value>lblRelTitle2</value>
+  </metadata>
+  <metadata name="lblRelSub2.Name" xml:space="preserve">
+    <value>lblRelSub2</value>
+  </metadata>
+  <metadata name="lblPalletTitle6.Name" xml:space="preserve">
+    <value>lblPalletTitle6</value>
+  </metadata>
+  <metadata name="lblPalletSub6.Name" xml:space="preserve">
+    <value>lblPalletSub6</value>
+  </metadata>
+  <metadata name="lblWpTitle6.Name" xml:space="preserve">
+    <value>lblWpTitle6</value>
+  </metadata>
+  <metadata name="lblWpSub6.Name" xml:space="preserve">
+    <value>lblWpSub6</value>
+  </metadata>
+  <metadata name="lblRelTitle6.Name" xml:space="preserve">
+    <value>lblRelTitle6</value>
+  </metadata>
+  <metadata name="lblRelSub6.Name" xml:space="preserve">
+    <value>lblRelSub6</value>
+  </metadata>
+  <metadata name="symBelt.Name" xml:space="preserve">
+    <value>symBelt</value>
+  </metadata>
+  <metadata name="symStopper1.Name" xml:space="preserve">
+    <value>symStopper1</value>
+  </metadata>
+  <metadata name="symStopper2.Name" xml:space="preserve">
+    <value>symStopper2</value>
+  </metadata>
+  <metadata name="symStopper6.Name" xml:space="preserve">
+    <value>symStopper6</value>
+  </metadata>
+  <metadata name="symReleaseSeq1.Name" xml:space="preserve">
+    <value>symReleaseSeq1</value>
+  </metadata>
+  <metadata name="symReleaseSeq2.Name" xml:space="preserve">
+    <value>symReleaseSeq2</value>
+  </metadata>
+  <metadata name="symReleaseSeq6.Name" xml:space="preserve">
+    <value>symReleaseSeq6</value>
+  </metadata>
+  <metadata name="symPallet1.Name" xml:space="preserve">
+    <value>symPallet1</value>
+  </metadata>
+  <metadata name="symWorkpiece1.Name" xml:space="preserve">
+    <value>symWorkpiece1</value>
+  </metadata>
+  <metadata name="symReleaseReq1.Name" xml:space="preserve">
+    <value>symReleaseReq1</value>
+  </metadata>
+  <metadata name="symPallet2.Name" xml:space="preserve">
+    <value>symPallet2</value>
+  </metadata>
+  <metadata name="symWorkpiece2.Name" xml:space="preserve">
+    <value>symWorkpiece2</value>
+  </metadata>
+  <metadata name="symReleaseReq2.Name" xml:space="preserve">
+    <value>symReleaseReq2</value>
+  </metadata>
+  <metadata name="symPallet6.Name" xml:space="preserve">
+    <value>symPallet6</value>
+  </metadata>
+  <metadata name="symWorkpiece6.Name" xml:space="preserve">
+    <value>symWorkpiece6</value>
+  </metadata>
+  <metadata name="symReleaseReq6.Name" xml:space="preserve">
+    <value>symReleaseReq6</value>
+  </metadata>
+  <metadata name="$this.ShowGrid" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.SnapToGrid" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.GridSize" type="System.Drawing.Size, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>8, 8</value>
+  </metadata>
+  <metadata name="$this.LayerActive" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>0</value>
+  </metadata>
+  <metadata name="$this.LayerVisible" xml:space="preserve">
+    <value>1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1</value>
+  </metadata>
+  <metadata name="$this.LayerSelectable" xml:space="preserve">
+    <value>1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1</value>
+  </metadata>
 </root>
