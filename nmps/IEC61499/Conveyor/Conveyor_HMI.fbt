@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType Name="Conveyor_HMI" Namespace="Main" GUID="13ef9c78-616d-41af-8511-e3b6e25cc931" Comment="Service Interface Function Block Type">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/17/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="56A3E4DDEEA25221" Name="INIT">
+        <With Var="QI" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="70A3A5EEBEBE585E" Name="INITO">
+        <With Var="QO" />
+        <With Var="STATUS" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="B1A6E97011895A9C" Name="QI" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="ABE1AD7D9A715B61" Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+      <VarDeclaration ID="B3A29292A3BD5368" Name="STATUS" Type="STRING" Comment="Service Status" />
+    </OutputVars>
+  </InterfaceList>
+  <Service RightInterface="" LeftInterface="">
+    <ServiceSequence Name="" />
+  </Service>
+</FBType>

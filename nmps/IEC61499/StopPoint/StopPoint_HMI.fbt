@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType Name="StopPoint_HMI" Namespace="Main" GUID="bf2e4e40-af23-5826-8c86-95e8a0950ec0" Comment="Service Interface Function Block Type">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/17/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="D64ECE1B96185B86" Name="INIT">
+        <With Var="QI" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="622B13EF9DA95B30" Name="INITO">
+        <With Var="QO" />
+        <With Var="STATUS" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="36D46B85AC6F57C1" Name="QI" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="4CC9BD1F3E405C9D" Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+      <VarDeclaration ID="070C370F76DE59CB" Name="STATUS" Type="STRING" Comment="Service Status" />
+    </OutputVars>
+  </InterfaceList>
+  <Service RightInterface="" LeftInterface="">
+    <ServiceSequence Name="" />
+  </Service>
+</FBType>

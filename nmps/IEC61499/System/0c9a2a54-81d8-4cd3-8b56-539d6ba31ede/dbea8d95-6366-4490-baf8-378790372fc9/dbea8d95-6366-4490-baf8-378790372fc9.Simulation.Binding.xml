@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Bindings>
+  <LogicalDeviceBinding LogicalDeviceId="dbea8d95-6366-4490-baf8-378790372fc9">
+    <LogicalDeviceService ServiceId="F7C90C9D-BD8B-4D0B-B8DE-C659AF6EABCC" LogicalPort="51501" />
+    <LogicalDeviceService ServiceId="32B24F96-50F3-429E-9586-58A14DEB5DD5" LogicalPort="51498" />
+  </LogicalDeviceBinding>
+</Bindings>

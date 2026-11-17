@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="0585a102-cc6d-4c0c-b2ff-6911602ac5e3" Name="Conveyor" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/17/2026" Remarks="Conveyor CAT with Belt and active StopPoint stops (Stop1, Stop2, Stop6)" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="DE50B97A3BC75082" Name="INIT" Comment="Initialization Request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="E3F1D76E881358F1" Name="REQ" Comment="Normal Execution Request">
+        <With Var="QI" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="E63B4C4084E55A6F" Name="INITO" Comment="Initialization Confirm">
+        <With Var="QO" />
+      </Event>
+      <Event ID="D7E04F83734D5800" Name="CNF" Comment="Execution Confirmation">
+        <With Var="QO" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="A09CD310C18D520E" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="23CE5F7F20FA5846" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="EB6609F5353B5CB3" Name="Belt" Type="Motor" x="480" y="540" Namespace="SE.App2CommonProcess" />
+    <FB ID="206C6E379F1A5016" Name="Stop1" Type="StopPoint" x="1560" y="540" Namespace="Main">
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$Skip" Value="FALSE" />
+    </FB>
+    <FB ID="ADF2BC02751C52F8" Name="Stop2" Type="StopPoint" x="2600" y="540" Namespace="Main">
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$Skip" Value="FALSE" />
+    </FB>
+    <FB ID="013F5E3110595508" Name="Stop6" Type="StopPoint" x="3640" y="540" Namespace="Main">
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$Skip" Value="FALSE" />
+    </FB>
+    <Input ID="DE50B97A3BC75082" Name="INIT" x="12" y="12" Type="Event" />
+    <Input ID="E3F1D76E881358F1" Name="REQ" x="12" y="72" Type="Event" />
+    <Input ID="A09CD310C18D520E" Name="QI" x="12" y="132" Type="Data" />
+    <Output ID="E63B4C4084E55A6F" Name="INITO" x="4560" y="12" Type="Event" />
+    <Output ID="D7E04F83734D5800" Name="CNF" x="4560" y="72" Type="Event" />
+    <Output ID="23CE5F7F20FA5846" Name="QO" x="4560" y="132" Type="Data" />
+    <EventConnections>
+      <Connection Source="$DE50B97A3BC75082" Destination="$206C6E379F1A5016.INIT" />
+      <Connection Source="$206C6E379F1A5016.INITO" Destination="$ADF2BC02751C52F8.INIT" />
+      <Connection Source="$ADF2BC02751C52F8.INITO" Destination="$013F5E3110595508.INIT" />
+      <Connection Source="$013F5E3110595508.INITO" Destination="$E63B4C4084E55A6F" />
+      <Connection Source="$E3F1D76E881358F1" Destination="$206C6E379F1A5016.REQ" />
+      <Connection Source="$206C6E379F1A5016.CNF" Destination="$ADF2BC02751C52F8.REQ" />
+      <Connection Source="$ADF2BC02751C52F8.CNF" Destination="$013F5E3110595508.REQ" />
+      <Connection Source="$013F5E3110595508.CNF" Destination="$D7E04F83734D5800" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$013F5E3110595508.QO" Destination="$23CE5F7F20FA5846" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

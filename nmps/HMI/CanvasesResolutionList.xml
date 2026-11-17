@@ -6,6 +6,9 @@
         <Canvas Name="Distribution" Title="" Tooltip="" Instance="HMI.Main.Canvases.Distribution">
           <Children />
         </Canvas>
+        <Canvas Name="Conveyor" Title="" Tooltip="" Instance="HMI.Main.Canvases.Conveyor">
+          <Children />
+        </Canvas>
       </Canvases>
     </Topology>
   </CanvasResolution>

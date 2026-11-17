@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="cbdf3581-f25c-512d-aa88-e0e160c0743b" Name="StopPoint" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/17/2026" Remarks="StopPoint CAT for Conveyor" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="47FD3602A24053CA" Name="INIT" Comment="Initialization Request">
+        <With Var="QI" />
+        <With Var="Skip" />
+      </Event>
+      <Event ID="EF3B7BE5D0C85361" Name="REQ" Comment="Normal Execution Request">
+        <With Var="QI" />
+        <With Var="Skip" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="297EBC4C39C355C4" Name="INITO" Comment="Initialization Confirm">
+        <With Var="QO" />
+      </Event>
+      <Event ID="9BADBB80222A591E" Name="CNF" Comment="Execution Confirmation">
+        <With Var="QO" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="280BD35B2FB75CC5" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="BFAA0EB882F85995" Name="Skip" Type="BOOL" Comment="1 = Skip station wait (release immediately at P3)" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="561B1F5B225D5149" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="ADD36FBA919050D4" Name="Stopper" Type="Valve" x="500" y="1380" Namespace="SE.App2CommonProcess" />
+    <FB ID="EBD4AED87B535FFF" Name="Pallet" Type="DigitalInput" x="500" y="340" Namespace="SE.App2CommonProcess" />
+    <FB ID="1809B9DA8DE65EB3" Name="Workpiece" Type="DigitalInput" x="1440" y="340" Namespace="SE.App2CommonProcess" />
+    <FB ID="F471B8BE3B2B5599" Name="ReleaseReq" Type="DigitalInput" x="2380" y="340" Namespace="SE.App2CommonProcess" />
+    <FB ID="43758A2E8FF258FF" UID="1FFB5B573E4C551B" Name="Consts" Type="ANY2ANY_25FC8D56FEEDC9B5" x="3480" y="340" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=4;IN${CNT}:BOOL,INT,INT,INT;OUT${CNT}:VTQBOOL,VTQINT,VTQINT,VTQINT" />
+      <Parameter Name="$IN1" Value="TRUE" />
+      <Parameter Name="$IN2" Value="1" />
+      <Parameter Name="$IN3" Value="2" />
+      <Parameter Name="$IN4" Value="0" />
+    </FB>
+    <FB ID="54AC2DE73D3A5D73" UID="C957F1CA5CBC5D69" Name="OwnerFb" Type="SYMLINKMULTIVARDST_298DC1F529059FB5" x="1800" y="1380" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQBOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'$${PATH}Stopper.sc.progLocal'" />
+    </FB>
+    <FB ID="1F4E5D429CBF541C" UID="F3F24AC1A3555B4A" Name="TakeOverCmd" Type="SYMLINKMULTIVARSRC_298DC1F529059FB5" x="2840" y="1380" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQBOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'$${PATH}Stopper.sc.progLocalSel'" />
+    </FB>
+    <FB ID="752AD8F48BBB50AE" UID="E07BF08107D15740" Name="ReleaseOrSkip" Type="OR_88A3DD8EC65DD11C" x="4540" y="1380" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=2;OUT:BOOL" />
+    </FB>
+    <FB ID="62021F7009955A49" UID="E2C4CE2B6EB457BD" Name="LowerCmd" Type="SYMLINKMULTIVARSRC_18556BCA74EA878F1" x="5640" y="1380" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQINT" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'$${PATH}Stopper.sc.lsp'" />
+    </FB>
+    <FB ID="FB80C1F7228054AA" UID="65281D0E996459B6" Name="PalletGone" Type="NOT_42C76073DCEB1A7A" x="6700" y="1380" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=1;OUT${CNT}:BOOL" />
+    </FB>
+    <FB ID="E48965CE11155C34" UID="DBC2F9E16DFA52BA" Name="RaiseCmd" Type="SYMLINKMULTIVARSRC_18556BCA74EA878F1" x="7740" y="1380" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQINT" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'$${PATH}Stopper.sc.lsp'" />
+    </FB>
+    <FB ID="57EE212DF4B15A6A" Name="ReleaseSeq" Type="SeqHead" x="400" y="2560" Namespace="SE.AppSequence">
+      <Parameter Name="$PermStart" Value="TRUE" />
+    </FB>
+    <FB ID="2459016C124A5479" Name="P1_TakeOver" Type="SeqStep" x="1520" y="2560" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="2" />
+    </FB>
+    <FB ID="E3B0E0F9B610507B" Name="JumpBackP2" Type="seqTransJumpBackCmd" x="2620" y="2940" Namespace="SE.AppSequence" />
+    <FB ID="F99EF9424A1C5CDF" Name="P2_WaitPallet" Type="SeqStep" x="3740" y="2560" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="3" />
+    </FB>
+    <FB ID="320A236A37A452BE" Name="P3_WaitRelease" Type="SeqStep" x="4840" y="2560" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="4" />
+    </FB>
+    <FB ID="CD7AD63F32955EBB" Name="P4_LowerStopper" Type="SeqStep" x="5940" y="2560" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="5" />
+    </FB>
+    <FB ID="F166FEB9D94C5EDB" Name="P5_WaitLeave" Type="SeqStep" x="7040" y="2560" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="6" />
+    </FB>
+    <FB ID="B36B8C608D225116" Name="P6_RaiseStopper" Type="SeqStep" x="8140" y="2560" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="2" />
+    </FB>
+    <FB ID="5ECB7A4DF31658F8" Name="ReleaseEnd" Type="SeqTerminate" x="9280" y="2940" Namespace="SE.AppSequence" />
+    <Input ID="47FD3602A24053CA" Name="INIT" x="12" y="12" Type="Event" />
+    <Input ID="EF3B7BE5D0C85361" Name="REQ" x="12" y="72" Type="Event" />
+    <Input ID="280BD35B2FB75CC5" Name="QI" x="12" y="132" Type="Data" />
+    <Input ID="BFAA0EB882F85995" Name="Skip" x="3800" y="1620" Type="Data" />
+    <Output ID="297EBC4C39C355C4" Name="INITO" x="9200" y="12" Type="Event" />
+    <Output ID="9BADBB80222A591E" Name="CNF" x="9200" y="72" Type="Event" />
+    <Output ID="561B1F5B225D5149" Name="QO" x="9200" y="132" Type="Data" />
+    <EventConnections>
+      <Connection Source="$47FD3602A24053CA" Destination="$43758A2E8FF258FF.REQ" />
+      <Connection Source="$43758A2E8FF258FF.CNF" Destination="$54AC2DE73D3A5D73.INIT" />
+      <Connection Source="$54AC2DE73D3A5D73.INITO" Destination="$1F4E5D429CBF541C.INIT" />
+      <Connection Source="$1F4E5D429CBF541C.INITO" Destination="$62021F7009955A49.INIT" />
+      <Connection Source="$62021F7009955A49.INITO" Destination="$E48965CE11155C34.INIT" />
+      <Connection Source="$E48965CE11155C34.INITO" Destination="$57EE212DF4B15A6A.REQ_PERM" />
+      <Connection Source="$E48965CE11155C34.INITO" Destination="$297EBC4C39C355C4" />
+      <Connection Source="$EF3B7BE5D0C85361" Destination="$752AD8F48BBB50AE.REQ" />
+      <Connection Source="$EF3B7BE5D0C85361" Destination="$9BADBB80222A591E" />
+      <Connection Source="$2459016C124A5479.STEP_ENTER" Destination="$1F4E5D429CBF541C.REQ" />
+      <Connection Source="$1F4E5D429CBF541C.CNF" Destination="$2459016C124A5479.TRANS_REQ" />
+      <Connection Source="$54AC2DE73D3A5D73.CNF" Destination="$2459016C124A5479.TRANS_REQ" />
+      <Connection Source="$F99EF9424A1C5CDF.STEP_ENTER" Destination="$F99EF9424A1C5CDF.TRANS_REQ" />
+      <Connection Source="$EBD4AED87B535FFF.CNF" Destination="$F99EF9424A1C5CDF.TRANS_REQ" />
+      <Connection Source="$320A236A37A452BE.STEP_ENTER" Destination="$752AD8F48BBB50AE.REQ" />
+      <Connection Source="$F471B8BE3B2B5599.CNF" Destination="$752AD8F48BBB50AE.REQ" />
+      <Connection Source="$752AD8F48BBB50AE.CNF" Destination="$320A236A37A452BE.TRANS_REQ" />
+      <Connection Source="$CD7AD63F32955EBB.STEP_ENTER" Destination="$62021F7009955A49.REQ" />
+      <Connection Source="$62021F7009955A49.CNF" Destination="$CD7AD63F32955EBB.TRANS_REQ" />
+      <Connection Source="$ADD36FBA919050D4.CNF" Destination="$CD7AD63F32955EBB.TRANS_REQ" />
+      <Connection Source="$F166FEB9D94C5EDB.STEP_ENTER" Destination="$FB80C1F7228054AA.REQ" />
+      <Connection Source="$EBD4AED87B535FFF.CNF" Destination="$FB80C1F7228054AA.REQ" />
+      <Connection Source="$FB80C1F7228054AA.CNF" Destination="$F166FEB9D94C5EDB.TRANS_REQ" />
+      <Connection Source="$B36B8C608D225116.STEP_ENTER" Destination="$E48965CE11155C34.REQ" />
+      <Connection Source="$E48965CE11155C34.CNF" Destination="$B36B8C608D225116.TRANS_REQ" />
+      <Connection Source="$ADD36FBA919050D4.CNF" Destination="$B36B8C608D225116.TRANS_REQ" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$280BD35B2FB75CC5" Destination="$561B1F5B225D5149" />
+      <Connection Source="$43758A2E8FF258FF.OUT1" Destination="$1F4E5D429CBF541C.VALUE1" />
+      <Connection Source="$43758A2E8FF258FF.OUT2" Destination="$62021F7009955A49.VALUE1" />
+      <Connection Source="$43758A2E8FF258FF.OUT3" Destination="$E48965CE11155C34.VALUE1" />
+      <Connection Source="$54AC2DE73D3A5D73.VALUE1" Destination="$2459016C124A5479.Exceeded" />
+      <Connection Source="$EBD4AED87B535FFF.Pv" Destination="$F99EF9424A1C5CDF.Exceeded" />
+      <Connection Source="$F471B8BE3B2B5599.Pv" Destination="$752AD8F48BBB50AE.IN1" />
+      <Connection Source="$BFAA0EB882F85995" Destination="$752AD8F48BBB50AE.IN2" />
+      <Connection Source="$752AD8F48BBB50AE.OUT" Destination="$320A236A37A452BE.Exceeded" />
+      <Connection Source="$ADD36FBA919050D4.FbOpened" Destination="$CD7AD63F32955EBB.Exceeded" />
+      <Connection Source="$EBD4AED87B535FFF.Pv" Destination="$FB80C1F7228054AA.IN1" />
+      <Connection Source="$FB80C1F7228054AA.OUT1" Destination="$F166FEB9D94C5EDB.Exceeded" />
+      <Connection Source="$ADD36FBA919050D4.FbClosed" Destination="$B36B8C608D225116.Exceeded" />
+    </DataConnections>
+    <AdapterConnections>
+      <Connection Source="$57EE212DF4B15A6A.ISeqChain" Destination="$2459016C124A5479.ISeqChainIn" />
+      <Connection Source="$2459016C124A5479.ISeqChainOut" Destination="$E3B0E0F9B610507B.ISeqChainIn" />
+      <Connection Source="$E3B0E0F9B610507B.ISeqChainOut" Destination="$F99EF9424A1C5CDF.ISeqChainIn" />
+      <Connection Source="$F99EF9424A1C5CDF.ISeqChainOut" Destination="$320A236A37A452BE.ISeqChainIn" />
+      <Connection Source="$320A236A37A452BE.ISeqChainOut" Destination="$CD7AD63F32955EBB.ISeqChainIn" />
+      <Connection Source="$CD7AD63F32955EBB.ISeqChainOut" Destination="$F166FEB9D94C5EDB.ISeqChainIn" />
+      <Connection Source="$F166FEB9D94C5EDB.ISeqChainOut" Destination="$B36B8C608D225116.ISeqChainIn" />
+      <Connection Source="$B36B8C608D225116.ISeqChainOut" Destination="$5ECB7A4DF31658F8.ISeqChainIn" />
+      <Connection Source="$B36B8C608D225116.ITransJumpBack" Destination="$E3B0E0F9B610507B.ITransChainIn" />
+    </AdapterConnections>
+  </FBNetwork>
+</FBType>

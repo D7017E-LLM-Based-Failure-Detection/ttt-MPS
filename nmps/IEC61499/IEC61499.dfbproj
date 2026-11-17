@@ -133,14 +133,17 @@
     <None Include="..\HMI\AutoCycle\AutoCycle_sDefault.doc.xml">
       <DependentUpon>AutoCycle.fbt</DependentUpon>
     </None>
-    <None Include="..\HMI\ConveyorBelt\ConveyorBelt_sDefault.doc.xml">
-      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    <None Include="..\HMI\Conveyor\Conveyor_sDefault.doc.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
     </None>
     <None Include="..\HMI\Distribution\Distribution_sDefault.doc.xml">
       <DependentUpon>Distribution.fbt</DependentUpon>
     </None>
     <None Include="..\HMI\ResetSequence\ResetSequence_sDefault.doc.xml">
       <DependentUpon>ResetSequence.fbt</DependentUpon>
+    </None>
+    <None Include="..\HMI\StopPoint\StopPoint_sDefault.doc.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
     </None>
     <None Include="AutoCycle\AutoCycle.cfg">
       <DependentUpon>AutoCycle.fbt</DependentUpon>
@@ -178,39 +181,39 @@
       <Plugin>OPCUAConfigurator</Plugin>
       <IEC61499Type>CAT_OPCUA</IEC61499Type>
     </None>
-    <None Include="ConveyorBelt\ConveyorBelt.cfg">
-      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    <None Include="Conveyor\Conveyor.cfg">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
       <IEC61499Type>CAT</IEC61499Type>
     </None>
-    <None Include="ConveyorBelt\ConveyorBelt.doc.xml">
-      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    <None Include="Conveyor\Conveyor.doc.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
     </None>
-    <None Include="ConveyorBelt\ConveyorBelt.meta.xml">
-      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    <None Include="Conveyor\Conveyor.meta.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
     </None>
-    <None Include="ConveyorBelt\ConveyorBelt_CAT.offline.xml">
-      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    <None Include="Conveyor\Conveyor_CAT.offline.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
       <Plugin>OfflineParametrizationEditor</Plugin>
       <IEC61499Type>CAT_OFFLINE</IEC61499Type>
     </None>
-    <None Include="ConveyorBelt\ConveyorBelt_CAT.opcua.xml">
-      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    <None Include="Conveyor\Conveyor_CAT.opcua.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
       <Plugin>OPCUAConfigurator</Plugin>
       <IEC61499Type>CAT_OPCUA</IEC61499Type>
     </None>
-    <None Include="ConveyorBelt\ConveyorBelt_HMI.doc.xml">
-      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    <None Include="Conveyor\Conveyor_HMI.doc.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
     </None>
-    <None Include="ConveyorBelt\ConveyorBelt_HMI.meta.xml">
-      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    <None Include="Conveyor\Conveyor_HMI.meta.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
     </None>
-    <None Include="ConveyorBelt\ConveyorBelt_HMI.offline.xml">
-      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    <None Include="Conveyor\Conveyor_HMI.offline.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
       <Plugin>OfflineParametrizationEditor</Plugin>
       <IEC61499Type>CAT_OFFLINE</IEC61499Type>
     </None>
-    <None Include="ConveyorBelt\ConveyorBelt_HMI.opcua.xml">
-      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
+    <None Include="Conveyor\Conveyor_HMI.opcua.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
       <Plugin>OPCUAConfigurator</Plugin>
       <IEC61499Type>CAT_OPCUA</IEC61499Type>
     </None>
@@ -288,6 +291,42 @@
       <Plugin>OPCUAConfigurator</Plugin>
       <IEC61499Type>CAT_OPCUA</IEC61499Type>
     </None>
+    <None Include="StopPoint\StopPoint.cfg">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="StopPoint\StopPoint.doc.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+    </None>
+    <None Include="StopPoint\StopPoint.meta.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+    </None>
+    <None Include="StopPoint\StopPoint_CAT.offline.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="StopPoint\StopPoint_CAT.opcua.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="StopPoint\StopPoint_HMI.doc.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+    </None>
+    <None Include="StopPoint\StopPoint_HMI.meta.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+    </None>
+    <None Include="StopPoint\StopPoint_HMI.offline.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="StopPoint\StopPoint_HMI.opcua.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
     <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.cfg">
       <DependentUpon>0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system</DependentUpon>
     </None>
@@ -334,6 +373,26 @@
       <IEC61499Type>SystemDevice</IEC61499Type>
       <DependentUpon>0d5eb44a-26f1-468d-8caa-7f6bfe966b18.sysdev</DependentUpon>
     </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\dbea8d95-6366-4490-baf8-378790372fc9\dbea8d95-6366-4490-baf8-378790372fc9.hcf">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>dbea8d95-6366-4490-baf8-378790372fc9.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\dbea8d95-6366-4490-baf8-378790372fc9\dbea8d95-6366-4490-baf8-378790372fc9.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>dbea8d95-6366-4490-baf8-378790372fc9.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\dbea8d95-6366-4490-baf8-378790372fc9\dbea8d95-6366-4490-baf8-378790372fc9.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>dbea8d95-6366-4490-baf8-378790372fc9.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\dbea8d95-6366-4490-baf8-378790372fc9\E0601B81-4A3A-4A96-B6C2-007BDC680D59.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>dbea8d95-6366-4490-baf8-378790372fc9.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\dbea8d95-6366-4490-baf8-378790372fc9\F513CAE3-7194-4086-936C-02912EA0B352.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>dbea8d95-6366-4490-baf8-378790372fc9.sysdev</DependentUpon>
+    </None>
     <None Include="System\OpenAdapter\OpenAdapter.Connections.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -346,14 +405,14 @@
       <DependentUpon>AutoCycle.fbt</DependentUpon>
       <HMI>..\HMI\AutoCycle\AutoCycle_sDefault.cnv.cs</HMI>
     </Compile>
-    <Compile Include="ConveyorBelt\ConveyorBelt.fbt">
+    <Compile Include="Conveyor\Conveyor.fbt">
       <IEC61499Type>CAT</IEC61499Type>
     </Compile>
-    <Compile Include="ConveyorBelt\ConveyorBelt_HMI.fbt">
+    <Compile Include="Conveyor\Conveyor_HMI.fbt">
       <IEC61499Type>CAT</IEC61499Type>
       <Usage>Private</Usage>
-      <DependentUpon>ConveyorBelt.fbt</DependentUpon>
-      <HMI>..\HMI\ConveyorBelt\ConveyorBelt_sDefault.cnv.cs</HMI>
+      <DependentUpon>Conveyor.fbt</DependentUpon>
+      <HMI>..\HMI\Conveyor\Conveyor_sDefault.cnv.cs</HMI>
     </Compile>
     <Compile Include="Distribution\Distribution.fbt">
       <IEC61499Type>CAT</IEC61499Type>
@@ -372,6 +431,15 @@
       <Usage>Private</Usage>
       <DependentUpon>ResetSequence.fbt</DependentUpon>
       <HMI>..\HMI\ResetSequence\ResetSequence_sDefault.cnv.cs</HMI>
+    </Compile>
+    <Compile Include="StopPoint\StopPoint.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+    </Compile>
+    <Compile Include="StopPoint\StopPoint_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+      <HMI>..\HMI\StopPoint\StopPoint_sDefault.cnv.cs</HMI>
     </Compile>
     <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system">
       <IEC61499Type>System</IEC61499Type>
@@ -399,6 +467,14 @@
     <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9bf3b433-92e3-4d31-8cff-c20036297fe9\6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay">
       <DependentUpon>9bf3b433-92e3-4d31-8cff-c20036297fe9.sysapp</DependentUpon>
       <IEC61499Type>SystemLayer</IEC61499Type>
+    </Compile>
+    <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\dbea8d95-6366-4490-baf8-378790372fc9.sysdev">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system</DependentUpon>
+    </Compile>
+    <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\dbea8d95-6366-4490-baf8-378790372fc9\CC18A640DBB56A51.sysres">
+      <IEC61499Type>SystemResource</IEC61499Type>
+      <DependentUpon>dbea8d95-6366-4490-baf8-378790372fc9.sysdev</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -458,6 +534,24 @@
       <IEC61499Type>CAT_OPCUACLIENT</IEC61499Type>
       <Plugin>OPCUAClientConfigurator</Plugin>
       <DependentUpon>6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay</DependentUpon>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\dbea8d95-6366-4490-baf8-378790372fc9\CC18A640DBB56A51\offline.xml">
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+      <DependentUpon>CC18A640DBB56A51.sysres</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\dbea8d95-6366-4490-baf8-378790372fc9\CC18A640DBB56A51\opcua.xml">
+      <DependentUpon>CC18A640DBB56A51.sysres</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\dbea8d95-6366-4490-baf8-378790372fc9\CC18A640DBB56A51\opcuaclient.xml">
+      <DependentUpon>CC18A640DBB56A51.sysres</DependentUpon>
+      <Plugin>OPCUAClientConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUACLIENT</IEC61499Type>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\dbea8d95-6366-4490-baf8-378790372fc9\CC18A640DBB56A51\symlink.xml">
+      <DependentUpon>CC18A640DBB56A51.sysres</DependentUpon>
     </Content>
   </ItemGroup>
   <Import Project="$(SharpDevelopBinPath)\NxtControl.Build.61499.Targets" />
