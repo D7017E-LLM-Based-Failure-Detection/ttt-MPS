@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpcUaClientComplexObject xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <OpcUaClientComplexObject UID="00251bb5-91b6-4cb3-8f75-d660b9ee88f5" />
+</OpcUaClientComplexObject>
