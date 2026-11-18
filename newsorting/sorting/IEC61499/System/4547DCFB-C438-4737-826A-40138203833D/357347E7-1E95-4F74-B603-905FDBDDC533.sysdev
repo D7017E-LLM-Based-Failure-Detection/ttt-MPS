@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Device xmlns="https://www.se.com/LibraryElements" ID="357347E7-1E95-4F74-B603-905FDBDDC533" Name="Sorting_M580" Type="M580_dPAC" Namespace="SE.DPAC" x="1400" y="700">
+  <FBNetwork />
+</Device>

@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='utf-8'?>
+<FBType Name="SortingPermissives" Namespace="Main" GUID="a5ffb39c-21da-4d45-a266-bf8f1486cec1" Format="2.0" Comment="Sorting-only architecture following Distribution and tutorial modules 1-4">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="sorting2n" Version="2.0" Author="sorting2n" Date="2026-11-09" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" ID="EB65527804904EA1">
+        <With Var="State" />
+        <With Var="RunPermit" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="RouteReady" />
+        <With Var="CycleFault" />
+        <With Var="ResetFault" />
+        <With Var="B1Alarm" />
+        <With Var="B2Alarm" />
+        <With Var="MotorAlarm" />
+        <With Var="B1Open" />
+        <With Var="B2Open" />
+      </Event>
+      <Event Name="REQ" ID="FABA5F09D7BD490C">
+        <With Var="State" />
+        <With Var="RunPermit" />
+        <With Var="SlideSignal" />
+        <With Var="FullActiveHigh" />
+        <With Var="RouteReady" />
+        <With Var="CycleFault" />
+        <With Var="ResetFault" />
+        <With Var="B1Alarm" />
+        <With Var="B2Alarm" />
+        <With Var="MotorAlarm" />
+        <With Var="B1Open" />
+        <With Var="B2Open" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" ID="475E9CC0014649F2">
+        <With Var="MotorPermit" />
+        <With Var="Branch1Permit" />
+        <With Var="Branch2Permit" />
+        <With Var="ReleasePermit" />
+        <With Var="Fault" />
+        <With Var="Blocked" />
+      </Event>
+      <Event Name="CNF" ID="E56FBA3E2AC84AC1">
+        <With Var="MotorPermit" />
+        <With Var="Branch1Permit" />
+        <With Var="Branch2Permit" />
+        <With Var="ReleasePermit" />
+        <With Var="Fault" />
+        <With Var="Blocked" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="State" Type="OpState" ID="8B379F2A0A9D4907" Namespace="SE.App2StateManagement" />
+      <VarDeclaration Name="RunPermit" Type="BOOL" ID="C0DFBE9D277C4EBC" />
+      <VarDeclaration Name="SlideSignal" Type="BOOL" ID="D457F6099EC94582" />
+      <VarDeclaration Name="FullActiveHigh" Type="BOOL" ID="C906DD28CBE04963" />
+      <VarDeclaration Name="RouteReady" Type="BOOL" ID="229F058DEA8F481F" />
+      <VarDeclaration Name="CycleFault" Type="BOOL" ID="5FA268E3B55C4CD8" />
+      <VarDeclaration Name="ResetFault" Type="BOOL" ID="3708076E161E4E89" />
+      <VarDeclaration Name="B1Alarm" Type="BOOL" ID="74BAE69B64564DC1" />
+      <VarDeclaration Name="B2Alarm" Type="BOOL" ID="74A20F13233B447D" />
+      <VarDeclaration Name="MotorAlarm" Type="BOOL" ID="AD9B57253ACC4B32" />
+      <VarDeclaration Name="B1Open" Type="BOOL" ID="7E87A5D4A5694DA9" />
+      <VarDeclaration Name="B2Open" Type="BOOL" ID="B6BFF6FB7C124FD7" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="MotorPermit" Type="BOOL" ID="AA4163F7A9B84F33" />
+      <VarDeclaration Name="Branch1Permit" Type="BOOL" ID="212AEE43781B4AC9" />
+      <VarDeclaration Name="Branch2Permit" Type="BOOL" ID="49DBBFF79B474F89" />
+      <VarDeclaration Name="ReleasePermit" Type="BOOL" ID="979882D2FD384930" />
+      <VarDeclaration Name="Fault" Type="BOOL" ID="086E90F8A71A4E49" />
+      <VarDeclaration Name="Blocked" Type="BOOL" ID="3B2E0F55DF944F57" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <InternalVars>
+      <VarDeclaration Name="Executing" Type="BOOL" ID="3EB6ACA9D35F4B32" />
+    </InternalVars>
+    <ECC>
+      <ECState Name="IDLE" x="300" y="300" />
+      <ECState Name="ON_INIT" x="800" y="700">
+        <ECAction Algorithm="ON_INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="ON_REQ" x="1300" y="700">
+        <ECAction Algorithm="ON_REQ" Output="CNF" />
+      </ECState>
+      <ECTransition Source="IDLE" Destination="ON_INIT" Condition="INIT" />
+      <ECTransition Source="ON_INIT" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_REQ" Condition="REQ" />
+      <ECTransition Source="ON_REQ" Destination="IDLE" Condition="1" />
+    </ECC>
+    <Algorithm Name="ON_INIT">
+      <ST>
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+Fault := CycleFault OR ResetFault OR B1Alarm OR B2Alarm OR MotorAlarm;
+Executing := State = SE.App2StateManagement.OpState#PhaseExecute;
+MotorPermit := RunPermit AND Executing AND NOT Fault;
+Branch1Permit := MotorPermit AND NOT B2Open;
+Branch2Permit := MotorPermit AND NOT B1Open;
+ReleasePermit := MotorPermit AND RouteReady;
+</ST>
+    </Algorithm>
+    <Algorithm Name="ON_REQ">
+      <ST>
+IF FullActiveHigh THEN Blocked := SlideSignal; ELSE Blocked := NOT SlideSignal; END_IF;
+Fault := CycleFault OR ResetFault OR B1Alarm OR B2Alarm OR MotorAlarm;
+Executing := State = SE.App2StateManagement.OpState#PhaseExecute;
+MotorPermit := RunPermit AND Executing AND NOT Fault;
+Branch1Permit := MotorPermit AND NOT B2Open;
+Branch2Permit := MotorPermit AND NOT B1Open;
+ReleasePermit := MotorPermit AND RouteReady;
+</ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

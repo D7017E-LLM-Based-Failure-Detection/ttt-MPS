@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Layer xmlns="https://www.se.com/LibraryElements" ID="DC3AEC94-C5FF-4FF0-B930-F1F9D0887658" Name="Default" IsDefault="true" Format="2.0">
+  <SubAppNetwork>
+    <FB ID="98A898AABF344ACB" Name="Sorting" Type="Sorting" Namespace="Main" x="1200" y="600" />
+  </SubAppNetwork>
+</Layer>

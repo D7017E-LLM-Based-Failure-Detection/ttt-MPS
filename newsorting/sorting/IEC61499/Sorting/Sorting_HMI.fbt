@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<FBType Name="Sorting_HMI" Namespace="Main" GUID="4dcfeb73-ad46-409f-8462-cdcf69c4ea3c" Comment="Service Interface Function Block Type">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author="sorting2n" Date="10/19/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="AB9D3E5933A3AE92" Name="INIT">
+        <With Var="QI" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="AC7145C47EEAF95F" Name="INITO">
+        <With Var="QO" />
+        <With Var="STATUS" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="34EB8C05796D8AF6" Name="QI" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="CD389766D66659D6" Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+      <VarDeclaration ID="41EECBCE6CAEA557" Name="STATUS" Type="STRING" Comment="Service Status" />
+    </OutputVars>
+  </InterfaceList>
+  <Service RightInterface="" LeftInterface="">
+    <ServiceSequence Name="" />
+  </Service>
+</FBType>

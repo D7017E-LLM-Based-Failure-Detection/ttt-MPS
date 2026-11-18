@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Mapping>
+  <EventInputs>
+    <Event Name="STATUS_UPD">State;Route;Fault;SlideBlocked;RunPermit;Automatic;ResetLamp;StartLamp;SlideFullLamp;StationOccupied;ResetFinished;CycleEnd</Event>
+  </EventInputs>
+  <EventOutputs>
+    <Event Name="COMMAND">Command</Event>
+    <Event Name="MODE">AutoMode</Event>
+  </EventOutputs>
+  <Inputs>
+    <Input Name="State" Type="DINT" />
+    <Input Name="Route" Type="UINT" />
+    <Input Name="Fault" Type="BOOL" />
+    <Input Name="SlideBlocked" Type="BOOL" />
+    <Input Name="RunPermit" Type="BOOL" />
+    <Input Name="Automatic" Type="BOOL" />
+    <Input Name="ResetLamp" Type="BOOL" />
+    <Input Name="StartLamp" Type="BOOL" />
+    <Input Name="SlideFullLamp" Type="BOOL" />
+    <Input Name="StationOccupied" Type="BOOL" />
+    <Input Name="ResetFinished" Type="BOOL" />
+    <Input Name="CycleEnd" Type="BOOL" />
+  </Inputs>
+  <Outputs>
+    <Output Name="Command" Type="DINT" />
+    <Output Name="AutoMode" Type="BOOL" />
+  </Outputs>
+</Mapping>

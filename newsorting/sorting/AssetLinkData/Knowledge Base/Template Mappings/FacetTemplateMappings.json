@@ -1,0 +1,88 @@
+{
+	"FacetTemplateMappings": [
+		{
+			"AssetTemplate": "AVEVA_SERVER_DEVICE",
+			"AssetCategory": "AVEVA_SERVER_DEVICE",
+			"ControlFacetTemplate": "",
+			"SupervisoryFacetTemplate": "AVEVA_SERVER_DEVICE"
+		},
+		{
+			"AssetTemplate": "Workstation",
+			"AssetCategory": "Workstation",
+			"ControlFacetTemplate": "",
+			"SupervisoryFacetTemplate": "Workstation"
+		},
+		{
+			"AssetTemplate": "Galaxy",
+			"AssetCategory": "Galaxy",
+			"ControlFacetTemplate": "",
+			"SupervisoryFacetTemplate": "$Galaxy"
+		},
+		{
+			"AssetTemplate": "AVEVASystemPlatform",
+			"AssetCategory": "AVEVASystemPlatform",
+			"ControlFacetTemplate": "",
+			"SupervisoryFacetTemplate": "$aSEWinPlatform"
+		},
+		{
+			"AssetTemplate": "AVEVAApplicationEngine",
+			"AssetCategory": "AVEVAApplicationEngine",
+			"ControlFacetTemplate": "",
+			"SupervisoryFacetTemplate": "$aSEAppEngine"
+		},
+		{
+			"AssetTemplate": "DI_Object",
+			"AssetCategory": "DI_Object",
+			"ControlFacetTemplate": "",
+			"SupervisoryFacetTemplate": "$aSEOPCClient"
+		},
+		{
+			"AssetTemplate": "AVEVAViewEngine",
+			"AssetCategory": "AVEVAViewEngine",
+			"ControlFacetTemplate": "",
+			"SupervisoryFacetTemplate": "$aSEViewEngine"
+		},
+		{
+			"AssetTemplate": "AVEVAViewApplication",
+			"AssetCategory": "AVEVAViewApplication",
+			"ControlFacetTemplate": "",
+			"SupervisoryFacetTemplate": "$SEViewApp"
+		},
+		{
+			"AssetTemplate": "Location",
+			"AssetCategory": "Plant",
+			"ControlFacetTemplate": "Application",
+			"SupervisoryFacetTemplate": "$aSEArea"
+		},
+		{
+			"AssetTemplate": "Area",
+			"AssetCategory": "Area",
+			"ControlFacetTemplate": "",
+			"SupervisoryFacetTemplate": "$aSEArea"
+		},
+		{
+			"AssetTemplate": "Unit",
+			"AssetCategory": "Unit",
+			"ControlFacetTemplate": "",
+			"SupervisoryFacetTemplate": "$UserDefined"
+		},
+		{
+			"AssetTemplate": "Equipment",
+			"AssetCategory": "Equipment",
+			"ControlFacetTemplate": "",
+			"SupervisoryFacetTemplate": "$UserDefined"
+		},
+		{
+			"AssetTemplate": "Loop",
+			"AssetCategory": "Loop",
+			"ControlFacetTemplate": "",
+			"SupervisoryFacetTemplate": "$UserDefined"
+		},
+		{
+			"AssetTemplate": "Instrument",
+			"AssetCategory": "Instrument",
+			"ControlFacetTemplate": "",
+			"SupervisoryFacetTemplate": "$UserDefined"
+		}
+	]
+}

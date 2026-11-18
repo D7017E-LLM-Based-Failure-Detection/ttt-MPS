@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Resource xmlns="https://www.se.com/LibraryElements" ID="BDCAF085C0E04594" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management" Format="2.0">
+  <FBNetwork>
+    <FB ID="ADAFF47FD6CE45DF" Name="FullInit" Type="DPAC_FULLINIT" Namespace="SE.DPAC" x="600" y="300" Loaded="true" />
+    <EventConnections>
+      <Connection Source="$START.COLD" Destination="$ADAFF47FD6CE45DF.INIT" />
+      <Connection Source="$START.WARM" Destination="$ADAFF47FD6CE45DF.INIT" />
+      <Connection Source="$START.ONLINECHANGE" Destination="$ADAFF47FD6CE45DF.OC_RETRIGGER" />
+    </EventConnections>
+  </FBNetwork>
+</Resource>

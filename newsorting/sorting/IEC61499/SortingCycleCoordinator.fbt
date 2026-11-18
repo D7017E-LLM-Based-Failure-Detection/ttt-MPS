@@ -1,0 +1,521 @@
+<?xml version='1.0' encoding='utf-8'?>
+<FBType Name="SortingCycleCoordinator" Namespace="Main" GUID="2a0b0ea2-103a-4103-ab64-95f878c4f33d" Format="2.0" Comment="Minimal Reset, Run and Stop controller. Standard equipment and movement sequences remain separate.">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="sorting2n" Version="2.0" Author="sorting2n" Date="2026-11-09" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" ID="AC7AB829CAE44C0D">
+        <With Var="OperatorCmd" />
+        <With Var="RunPermit" />
+        <With Var="Fault" />
+        <With Var="Blocked" />
+        <With Var="HMICommand" />
+        <With Var="HMIAutomatic" />
+        <With Var="Automatic" />
+        <With Var="ResetComplete" />
+        <With Var="CycleComplete" />
+        <With Var="StopComplete" />
+        <With Var="ResetRunning" />
+        <With Var="CycleRunning" />
+        <With Var="WaitingFull" />
+      </Event>
+      <Event Name="REQ" ID="5245E52485194A23">
+        <With Var="OperatorCmd" />
+        <With Var="RunPermit" />
+        <With Var="Fault" />
+        <With Var="Blocked" />
+        <With Var="HMICommand" />
+        <With Var="HMIAutomatic" />
+        <With Var="Automatic" />
+        <With Var="ResetComplete" />
+        <With Var="CycleComplete" />
+        <With Var="StopComplete" />
+        <With Var="ResetRunning" />
+        <With Var="CycleRunning" />
+        <With Var="WaitingFull" />
+      </Event>
+      <Event Name="GUARD" ID="30EDA7064A0D4162">
+        <With Var="OperatorCmd" />
+        <With Var="RunPermit" />
+        <With Var="Fault" />
+        <With Var="Blocked" />
+        <With Var="HMICommand" />
+        <With Var="HMIAutomatic" />
+        <With Var="Automatic" />
+        <With Var="ResetComplete" />
+        <With Var="CycleComplete" />
+        <With Var="StopComplete" />
+        <With Var="ResetRunning" />
+        <With Var="CycleRunning" />
+        <With Var="WaitingFull" />
+      </Event>
+      <Event Name="HMI_CMD" ID="9399691B4A84473E">
+        <With Var="OperatorCmd" />
+        <With Var="RunPermit" />
+        <With Var="Fault" />
+        <With Var="Blocked" />
+        <With Var="HMICommand" />
+        <With Var="HMIAutomatic" />
+        <With Var="Automatic" />
+        <With Var="ResetComplete" />
+        <With Var="CycleComplete" />
+        <With Var="StopComplete" />
+        <With Var="ResetRunning" />
+        <With Var="CycleRunning" />
+        <With Var="WaitingFull" />
+      </Event>
+      <Event Name="HMI_MODE" ID="909F8EBF13A04FB0">
+        <With Var="OperatorCmd" />
+        <With Var="RunPermit" />
+        <With Var="Fault" />
+        <With Var="Blocked" />
+        <With Var="HMICommand" />
+        <With Var="HMIAutomatic" />
+        <With Var="Automatic" />
+        <With Var="ResetComplete" />
+        <With Var="CycleComplete" />
+        <With Var="StopComplete" />
+        <With Var="ResetRunning" />
+        <With Var="CycleRunning" />
+        <With Var="WaitingFull" />
+      </Event>
+      <Event Name="RESET_STATE" ID="B369ADF0ED04479D">
+        <With Var="OperatorCmd" />
+        <With Var="RunPermit" />
+        <With Var="Fault" />
+        <With Var="Blocked" />
+        <With Var="HMICommand" />
+        <With Var="HMIAutomatic" />
+        <With Var="Automatic" />
+        <With Var="ResetComplete" />
+        <With Var="CycleComplete" />
+        <With Var="StopComplete" />
+        <With Var="ResetRunning" />
+        <With Var="CycleRunning" />
+        <With Var="WaitingFull" />
+      </Event>
+      <Event Name="CYCLE_STATE" ID="61DD4B6D61C14019">
+        <With Var="OperatorCmd" />
+        <With Var="RunPermit" />
+        <With Var="Fault" />
+        <With Var="Blocked" />
+        <With Var="HMICommand" />
+        <With Var="HMIAutomatic" />
+        <With Var="Automatic" />
+        <With Var="ResetComplete" />
+        <With Var="CycleComplete" />
+        <With Var="StopComplete" />
+        <With Var="ResetRunning" />
+        <With Var="CycleRunning" />
+        <With Var="WaitingFull" />
+      </Event>
+      <Event Name="STOP_STATE" ID="BA2EC2FD824A4362">
+        <With Var="OperatorCmd" />
+        <With Var="RunPermit" />
+        <With Var="Fault" />
+        <With Var="Blocked" />
+        <With Var="HMICommand" />
+        <With Var="HMIAutomatic" />
+        <With Var="Automatic" />
+        <With Var="ResetComplete" />
+        <With Var="CycleComplete" />
+        <With Var="StopComplete" />
+        <With Var="ResetRunning" />
+        <With Var="CycleRunning" />
+        <With Var="WaitingFull" />
+      </Event>
+      <Event Name="START_REQUEST" ID="FBECF8287F18481F">
+        <With Var="OperatorCmd" />
+        <With Var="RunPermit" />
+        <With Var="Fault" />
+        <With Var="Blocked" />
+        <With Var="HMICommand" />
+        <With Var="HMIAutomatic" />
+        <With Var="Automatic" />
+        <With Var="ResetComplete" />
+        <With Var="CycleComplete" />
+        <With Var="StopComplete" />
+        <With Var="ResetRunning" />
+        <With Var="CycleRunning" />
+        <With Var="WaitingFull" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" ID="BA2B9DEAB2D94089">
+        <With Var="State" />
+        <With Var="AutoMode" />
+        <With Var="Ready" />
+        <With Var="StartFlag" />
+        <With Var="ResetLamp" />
+        <With Var="StartLamp" />
+      </Event>
+      <Event Name="STATE" ID="02BC65D2C74945B8">
+        <With Var="State" />
+        <With Var="AutoMode" />
+        <With Var="Ready" />
+        <With Var="StartFlag" />
+        <With Var="ResetLamp" />
+        <With Var="StartLamp" />
+      </Event>
+      <Event Name="MODE_CNF" ID="981480297E214B85">
+        <With Var="State" />
+        <With Var="AutoMode" />
+        <With Var="Ready" />
+        <With Var="StartFlag" />
+        <With Var="ResetLamp" />
+        <With Var="StartLamp" />
+      </Event>
+      <Event Name="RESET_START" ID="3E91FFF3F1194D52">
+        <With Var="State" />
+        <With Var="AutoMode" />
+        <With Var="Ready" />
+        <With Var="StartFlag" />
+        <With Var="ResetLamp" />
+        <With Var="StartLamp" />
+      </Event>
+      <Event Name="RUN_START" ID="B7BEC516B8CA4CD3">
+        <With Var="State" />
+        <With Var="AutoMode" />
+        <With Var="Ready" />
+        <With Var="StartFlag" />
+        <With Var="ResetLamp" />
+        <With Var="StartLamp" />
+      </Event>
+      <Event Name="STOP_START" ID="028E29BDF9FB4922">
+        <With Var="State" />
+        <With Var="AutoMode" />
+        <With Var="Ready" />
+        <With Var="StartFlag" />
+        <With Var="ResetLamp" />
+        <With Var="StartLamp" />
+      </Event>
+      <Event Name="STOP_SEQUENCES" ID="A6DB21D0CEF142A0">
+        <With Var="State" />
+        <With Var="AutoMode" />
+        <With Var="Ready" />
+        <With Var="StartFlag" />
+        <With Var="ResetLamp" />
+        <With Var="StartLamp" />
+      </Event>
+      <Event Name="RESET_PREP" ID="1DB48870FA4D4F70">
+        <With Var="State" />
+        <With Var="AutoMode" />
+        <With Var="Ready" />
+        <With Var="StartFlag" />
+        <With Var="ResetLamp" />
+        <With Var="StartLamp" />
+      </Event>
+      <Event Name="ACK" ID="B97B2CA1982049A4">
+        <With Var="State" />
+        <With Var="AutoMode" />
+        <With Var="Ready" />
+        <With Var="StartFlag" />
+        <With Var="ResetLamp" />
+        <With Var="StartLamp" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="OperatorCmd" Type="OpCmd" ID="55B2E665164A43E6" Namespace="SE.App2StateManagement" />
+      <VarDeclaration Name="RunPermit" Type="BOOL" ID="1962EFBA13AB4488" />
+      <VarDeclaration Name="Fault" Type="BOOL" ID="47602F9703344871" />
+      <VarDeclaration Name="Blocked" Type="BOOL" ID="203602AE40414ADC" />
+      <VarDeclaration Name="HMICommand" Type="DINT" ID="5F3E73F637764475" />
+      <VarDeclaration Name="HMIAutomatic" Type="BOOL" ID="C601F47BB0EC43C0" />
+      <VarDeclaration Name="Automatic" Type="BOOL" ID="DE70B7703F084554" />
+      <VarDeclaration Name="ResetComplete" ID="C16C5252EF994E2D" Type="BOOL" />
+      <VarDeclaration Name="CycleComplete" ID="D7469E95F4F54692" Type="BOOL" />
+      <VarDeclaration Name="StopComplete" ID="20550C8C6D1A4401" Type="BOOL" />
+      <VarDeclaration Name="ResetRunning" ID="7843BD0B52F34FAA" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="CycleRunning" ID="D614BE2F0EF74501" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="WaitingFull" ID="CF5BB61B9C9D45D4" Type="BOOL" InitialValue="FALSE" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="State" Type="OpState" ID="C9F454AF034B48F9" Namespace="SE.App2StateManagement" />
+      <VarDeclaration Name="AutoMode" Type="BOOL" ID="9BE483BA606F4F64" InitialValue="FALSE" />
+      <VarDeclaration Name="Ready" ID="CBCE963A9EC644C7" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="StartFlag" ID="8ED8DACB01204308" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="ResetLamp" ID="09AE5931662E4D92" Type="BOOL" InitialValue="FALSE" />
+      <VarDeclaration Name="StartLamp" ID="3BB42ED7A2314851" Type="BOOL" InitialValue="FALSE" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <InternalVars>
+      <VarDeclaration Name="Action" Type="DINT" ID="295A9397EB4A450D" />
+      <VarDeclaration Name="Requested" Type="DINT" ID="E38BFF80686845E1" />
+    </InternalVars>
+    <ECC>
+      <ECState Name="IDLE" x="200" y="200" />
+      <ECState Name="INITIALIZE" x="700" y="600">
+        <ECAction Algorithm="INITIALIZE" />
+        <ECAction Output="STOP_SEQUENCES" Algorithm="NOP" />
+        <ECAction Output="STATE" Algorithm="NOP" />
+        <ECAction Output="INITO" Algorithm="NOP" />
+      </ECState>
+      <ECState Name="ON_REQ" x="1300" y="600">
+        <ECAction Algorithm="ON_REQ" />
+      </ECState>
+      <ECState Name="ON_HMI_CMD" x="3100" y="600">
+        <ECAction Algorithm="ON_HMI_CMD" />
+      </ECState>
+      <ECState Name="ON_GUARD" x="4900" y="600">
+        <ECAction Algorithm="ON_GUARD" />
+      </ECState>
+      <ECState Name="ON_RESET_STATE" x="6700" y="600">
+        <ECAction Algorithm="ON_RESET_STATE" />
+      </ECState>
+      <ECState Name="ON_CYCLE_STATE" x="8500" y="600">
+        <ECAction Algorithm="ON_CYCLE_STATE" />
+      </ECState>
+      <ECState Name="ON_STOP_STATE" x="10300" y="600">
+        <ECAction Algorithm="ON_STOP_STATE" />
+      </ECState>
+      <ECState Name="SET_MODE" x="12100" y="600">
+        <ECAction Algorithm="SET_MODE" />
+        <ECAction Output="MODE_CNF" Algorithm="NOP" />
+      </ECState>
+      <ECState Name="RESET" x="12700" y="600">
+        <ECAction Algorithm="RESET" />
+        <ECAction Output="STOP_SEQUENCES" Algorithm="NOP" />
+        <ECAction Algorithm="NOP" Output="RESET_PREP" />
+        <ECAction Output="STATE" Algorithm="NOP" />
+        <ECAction Output="RESET_START" Algorithm="NOP" />
+      </ECState>
+      <ECState Name="RUN" x="13100" y="600">
+        <ECAction Algorithm="RUN" />
+        <ECAction Output="STOP_SEQUENCES" Algorithm="NOP" />
+        <ECAction Output="STATE" Algorithm="NOP" />
+        <ECAction Output="RUN_START" Algorithm="NOP" />
+      </ECState>
+      <ECState Name="STOP" x="13500" y="600">
+        <ECAction Algorithm="STOP" />
+        <ECAction Output="STOP_SEQUENCES" Algorithm="NOP" />
+        <ECAction Output="STATE" Algorithm="NOP" />
+        <ECAction Output="STOP_START" Algorithm="NOP" />
+      </ECState>
+      <ECState Name="RESET_DONE" x="13900" y="600">
+        <ECAction Algorithm="RESET_DONE" />
+        <ECAction Output="STATE" Algorithm="NOP" />
+      </ECState>
+      <ECState Name="RUN_DONE" x="14300" y="600">
+        <ECAction Algorithm="RUN_DONE" />
+        <ECAction Output="STATE" Algorithm="NOP" />
+      </ECState>
+      <ECState Name="STOP_DONE" x="14700" y="600">
+        <ECAction Algorithm="STOP_DONE" />
+        <ECAction Output="STATE" Algorithm="NOP" />
+      </ECState>
+      <ECState Name="RESET_OBSERVED" x="700" y="1000">
+        <ECAction Algorithm="RESET_OBSERVED" />
+        <ECAction Algorithm="NOP" Output="STATE" />
+      </ECState>
+      <ECState Name="RUN_OBSERVED" x="700" y="1000">
+        <ECAction Algorithm="RUN_OBSERVED" />
+        <ECAction Algorithm="NOP" Output="STATE" />
+      </ECState>
+      <ECState Name="ACKNOWLEDGE" x="700" y="1000">
+        <ECAction Algorithm="ACKNOWLEDGE" />
+        <ECAction Algorithm="NOP" Output="ACK" />
+      </ECState>
+      <ECState Name="ON_START_REQUEST" x="700" y="1400">
+        <ECAction Algorithm="ON_START_REQUEST" />
+      </ECState>
+      <ECTransition Source="IDLE" Destination="INITIALIZE" Condition="INIT" />
+      <ECTransition Source="INITIALIZE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_REQ" Condition="REQ" />
+      <ECTransition Source="ON_REQ" Destination="RESET" Condition="Action = 1" />
+      <ECTransition Source="ON_REQ" Destination="RUN" Condition="Action = 2" />
+      <ECTransition Source="ON_REQ" Destination="STOP" Condition="Action = 3" />
+      <ECTransition Source="ON_REQ" Destination="RESET_DONE" Condition="Action = 4" />
+      <ECTransition Source="ON_REQ" Destination="RUN_DONE" Condition="Action = 5" />
+      <ECTransition Source="ON_REQ" Destination="STOP_DONE" Condition="Action = 6" />
+      <ECTransition Source="ON_REQ" Destination="RESET_OBSERVED" Condition="Action = 7" />
+      <ECTransition Source="ON_REQ" Destination="RUN_OBSERVED" Condition="Action = 8" />
+      <ECTransition Source="ON_REQ" Destination="ACKNOWLEDGE" Condition="Action = 9" />
+      <ECTransition Source="ON_REQ" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_HMI_CMD" Condition="HMI_CMD" />
+      <ECTransition Source="ON_HMI_CMD" Destination="RESET" Condition="Action = 1" />
+      <ECTransition Source="ON_HMI_CMD" Destination="RUN" Condition="Action = 2" />
+      <ECTransition Source="ON_HMI_CMD" Destination="STOP" Condition="Action = 3" />
+      <ECTransition Source="ON_HMI_CMD" Destination="RESET_DONE" Condition="Action = 4" />
+      <ECTransition Source="ON_HMI_CMD" Destination="RUN_DONE" Condition="Action = 5" />
+      <ECTransition Source="ON_HMI_CMD" Destination="STOP_DONE" Condition="Action = 6" />
+      <ECTransition Source="ON_HMI_CMD" Destination="RESET_OBSERVED" Condition="Action = 7" />
+      <ECTransition Source="ON_HMI_CMD" Destination="RUN_OBSERVED" Condition="Action = 8" />
+      <ECTransition Source="ON_HMI_CMD" Destination="ACKNOWLEDGE" Condition="Action = 9" />
+      <ECTransition Source="ON_HMI_CMD" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_GUARD" Condition="GUARD" />
+      <ECTransition Source="ON_GUARD" Destination="RESET" Condition="Action = 1" />
+      <ECTransition Source="ON_GUARD" Destination="RUN" Condition="Action = 2" />
+      <ECTransition Source="ON_GUARD" Destination="STOP" Condition="Action = 3" />
+      <ECTransition Source="ON_GUARD" Destination="RESET_DONE" Condition="Action = 4" />
+      <ECTransition Source="ON_GUARD" Destination="RUN_DONE" Condition="Action = 5" />
+      <ECTransition Source="ON_GUARD" Destination="STOP_DONE" Condition="Action = 6" />
+      <ECTransition Source="ON_GUARD" Destination="RESET_OBSERVED" Condition="Action = 7" />
+      <ECTransition Source="ON_GUARD" Destination="RUN_OBSERVED" Condition="Action = 8" />
+      <ECTransition Source="ON_GUARD" Destination="ACKNOWLEDGE" Condition="Action = 9" />
+      <ECTransition Source="ON_GUARD" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_RESET_STATE" Condition="RESET_STATE" />
+      <ECTransition Source="ON_RESET_STATE" Destination="RESET" Condition="Action = 1" />
+      <ECTransition Source="ON_RESET_STATE" Destination="RUN" Condition="Action = 2" />
+      <ECTransition Source="ON_RESET_STATE" Destination="STOP" Condition="Action = 3" />
+      <ECTransition Source="ON_RESET_STATE" Destination="RESET_DONE" Condition="Action = 4" />
+      <ECTransition Source="ON_RESET_STATE" Destination="RUN_DONE" Condition="Action = 5" />
+      <ECTransition Source="ON_RESET_STATE" Destination="STOP_DONE" Condition="Action = 6" />
+      <ECTransition Source="ON_RESET_STATE" Destination="RESET_OBSERVED" Condition="Action = 7" />
+      <ECTransition Source="ON_RESET_STATE" Destination="RUN_OBSERVED" Condition="Action = 8" />
+      <ECTransition Source="ON_RESET_STATE" Destination="ACKNOWLEDGE" Condition="Action = 9" />
+      <ECTransition Source="ON_RESET_STATE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_CYCLE_STATE" Condition="CYCLE_STATE" />
+      <ECTransition Source="ON_CYCLE_STATE" Destination="RESET" Condition="Action = 1" />
+      <ECTransition Source="ON_CYCLE_STATE" Destination="RUN" Condition="Action = 2" />
+      <ECTransition Source="ON_CYCLE_STATE" Destination="STOP" Condition="Action = 3" />
+      <ECTransition Source="ON_CYCLE_STATE" Destination="RESET_DONE" Condition="Action = 4" />
+      <ECTransition Source="ON_CYCLE_STATE" Destination="RUN_DONE" Condition="Action = 5" />
+      <ECTransition Source="ON_CYCLE_STATE" Destination="STOP_DONE" Condition="Action = 6" />
+      <ECTransition Source="ON_CYCLE_STATE" Destination="RESET_OBSERVED" Condition="Action = 7" />
+      <ECTransition Source="ON_CYCLE_STATE" Destination="RUN_OBSERVED" Condition="Action = 8" />
+      <ECTransition Source="ON_CYCLE_STATE" Destination="ACKNOWLEDGE" Condition="Action = 9" />
+      <ECTransition Source="ON_CYCLE_STATE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_STOP_STATE" Condition="STOP_STATE" />
+      <ECTransition Source="ON_STOP_STATE" Destination="RESET" Condition="Action = 1" />
+      <ECTransition Source="ON_STOP_STATE" Destination="RUN" Condition="Action = 2" />
+      <ECTransition Source="ON_STOP_STATE" Destination="STOP" Condition="Action = 3" />
+      <ECTransition Source="ON_STOP_STATE" Destination="RESET_DONE" Condition="Action = 4" />
+      <ECTransition Source="ON_STOP_STATE" Destination="RUN_DONE" Condition="Action = 5" />
+      <ECTransition Source="ON_STOP_STATE" Destination="STOP_DONE" Condition="Action = 6" />
+      <ECTransition Source="ON_STOP_STATE" Destination="RESET_OBSERVED" Condition="Action = 7" />
+      <ECTransition Source="ON_STOP_STATE" Destination="RUN_OBSERVED" Condition="Action = 8" />
+      <ECTransition Source="ON_STOP_STATE" Destination="ACKNOWLEDGE" Condition="Action = 9" />
+      <ECTransition Source="ON_STOP_STATE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="SET_MODE" Condition="HMI_MODE" />
+      <ECTransition Source="SET_MODE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="RESET" Destination="IDLE" Condition="1" />
+      <ECTransition Source="RUN" Destination="IDLE" Condition="1" />
+      <ECTransition Source="STOP" Destination="IDLE" Condition="1" />
+      <ECTransition Source="RESET_DONE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="RUN_DONE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="STOP_DONE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="RESET_OBSERVED" Destination="IDLE" Condition="1" />
+      <ECTransition Source="RUN_OBSERVED" Destination="IDLE" Condition="1" />
+      <ECTransition Source="ACKNOWLEDGE" Destination="IDLE" Condition="1" />
+      <ECTransition Source="IDLE" Destination="ON_START_REQUEST" Condition="START_REQUEST" />
+      <ECTransition Source="ON_START_REQUEST" Destination="RESET" Condition="Action = 1" />
+      <ECTransition Source="ON_START_REQUEST" Destination="RUN" Condition="Action = 2" />
+      <ECTransition Source="ON_START_REQUEST" Destination="STOP" Condition="Action = 3" />
+      <ECTransition Source="ON_START_REQUEST" Destination="RESET_DONE" Condition="Action = 4" />
+      <ECTransition Source="ON_START_REQUEST" Destination="RUN_DONE" Condition="Action = 5" />
+      <ECTransition Source="ON_START_REQUEST" Destination="STOP_DONE" Condition="Action = 6" />
+      <ECTransition Source="ON_START_REQUEST" Destination="RESET_OBSERVED" Condition="Action = 7" />
+      <ECTransition Source="ON_START_REQUEST" Destination="RUN_OBSERVED" Condition="Action = 8" />
+      <ECTransition Source="ON_START_REQUEST" Destination="ACKNOWLEDGE" Condition="Action = 9" />
+      <ECTransition Source="ON_START_REQUEST" Destination="IDLE" Condition="1" />
+    </ECC>
+    <Algorithm Name="INITIALIZE">
+      <ST>
+State := SE.App2StateManagement.OpState#PhaseStopped; Ready := FALSE; AutoMode := Automatic; Action := 0; Requested := 0;
+
+StartFlag := FALSE; StartLamp := FALSE; ResetLamp := TRUE;</ST>
+    </Algorithm>
+    <Algorithm Name="ON_REQ">
+      <ST>Requested := OperatorCmd;
+Action := 0;
+IF Requested = 2 AND WaitingFull AND State = SE.App2StateManagement.OpState#PhaseExecute THEN Action := 9;
+ELSIF Requested = 3 OR Requested = 4 OR Requested = 6 OR Requested = 8 THEN IF State &lt;&gt; SE.App2StateManagement.OpState#PhaseStopping THEN Action := 3; END_IF;
+ELSIF Requested = 1 AND RunPermit THEN IF State = SE.App2StateManagement.OpState#PhaseStopped OR State = SE.App2StateManagement.OpState#PhaseIdle THEN Action := 1; END_IF;
+ELSIF Requested = 2 AND Ready AND RunPermit AND NOT Fault AND State = SE.App2StateManagement.OpState#PhaseIdle THEN Action := 2;
+END_IF;</ST>
+    </Algorithm>
+    <Algorithm Name="ON_HMI_CMD">
+      <ST>Requested := HMICommand;
+Action := 0;
+IF Requested = 2 AND WaitingFull AND State = SE.App2StateManagement.OpState#PhaseExecute THEN Action := 9;
+ELSIF Requested = 3 OR Requested = 4 OR Requested = 6 OR Requested = 8 THEN IF State &lt;&gt; SE.App2StateManagement.OpState#PhaseStopping THEN Action := 3; END_IF;
+ELSIF Requested = 1 AND RunPermit THEN IF State = SE.App2StateManagement.OpState#PhaseStopped OR State = SE.App2StateManagement.OpState#PhaseIdle THEN Action := 1; END_IF;
+ELSIF Requested = 2 AND Ready AND RunPermit AND NOT Fault AND State = SE.App2StateManagement.OpState#PhaseIdle THEN Action := 2;
+END_IF;</ST>
+    </Algorithm>
+    <Algorithm Name="ON_GUARD">
+      <ST>Action := 0;
+StartLamp := (State = SE.App2StateManagement.OpState#PhaseIdle) OR WaitingFull;
+ResetLamp := (State = SE.App2StateManagement.OpState#PhaseStopped) AND NOT Ready;
+IF (State = SE.App2StateManagement.OpState#PhaseExecute OR State = SE.App2StateManagement.OpState#PhaseResetting) AND (NOT RunPermit OR Fault) THEN Action := 3; END_IF;</ST>
+    </Algorithm>
+    <Algorithm Name="ON_RESET_STATE">
+      <ST>Action := 0;
+IF ResetComplete AND State = SE.App2StateManagement.OpState#PhaseResetting THEN Action := 4;
+ELSIF ResetRunning AND State &lt;&gt; SE.App2StateManagement.OpState#PhaseResetting AND State &lt;&gt; SE.App2StateManagement.OpState#PhaseStopping THEN Action := 7; END_IF;</ST>
+    </Algorithm>
+    <Algorithm Name="ON_CYCLE_STATE">
+      <ST>Action := 0;
+IF CycleComplete AND State = SE.App2StateManagement.OpState#PhaseExecute THEN Action := 5;
+ELSIF CycleRunning AND Ready AND RunPermit AND NOT Fault AND State = SE.App2StateManagement.OpState#PhaseIdle THEN Action := 8; END_IF;</ST>
+    </Algorithm>
+    <Algorithm Name="ON_STOP_STATE">
+      <ST>
+Action := 0; IF StopComplete AND State = SE.App2StateManagement.OpState#PhaseStopping THEN Action := 6; END_IF;
+</ST>
+    </Algorithm>
+    <Algorithm Name="SET_MODE">
+      <ST>
+AutoMode := HMIAutomatic;
+</ST>
+    </Algorithm>
+    <Algorithm Name="RESET">
+      <ST>
+State := SE.App2StateManagement.OpState#PhaseResetting; Ready := FALSE;
+
+StartFlag := FALSE; StartLamp := FALSE; ResetLamp := FALSE;</ST>
+    </Algorithm>
+    <Algorithm Name="RUN">
+      <ST>
+State := SE.App2StateManagement.OpState#PhaseExecute;
+
+StartFlag := TRUE; StartLamp := FALSE; ResetLamp := FALSE;</ST>
+    </Algorithm>
+    <Algorithm Name="STOP">
+      <ST>
+State := SE.App2StateManagement.OpState#PhaseStopping; Ready := FALSE;
+
+StartFlag := FALSE; StartLamp := FALSE; ResetLamp := TRUE;</ST>
+    </Algorithm>
+    <Algorithm Name="RESET_DONE">
+      <ST>
+State := SE.App2StateManagement.OpState#PhaseIdle; Ready := TRUE;
+
+StartFlag := FALSE; StartLamp := TRUE; ResetLamp := FALSE;</ST>
+    </Algorithm>
+    <Algorithm Name="RUN_DONE">
+      <ST>
+State := SE.App2StateManagement.OpState#PhaseIdle; Ready := TRUE;
+
+StartFlag := FALSE; StartLamp := TRUE; ResetLamp := FALSE;</ST>
+    </Algorithm>
+    <Algorithm Name="STOP_DONE">
+      <ST>
+State := SE.App2StateManagement.OpState#PhaseStopped; Ready := FALSE;
+
+StartFlag := FALSE; StartLamp := FALSE; ResetLamp := TRUE;</ST>
+    </Algorithm>
+    <Algorithm Name="NOP">
+      <ST>Action := Action;</ST>
+    </Algorithm>
+    <Algorithm Name="RESET_OBSERVED">
+      <ST>State := SE.App2StateManagement.OpState#PhaseResetting; Ready := FALSE; StartFlag := FALSE; ResetLamp := FALSE; StartLamp := FALSE;</ST>
+    </Algorithm>
+    <Algorithm Name="RUN_OBSERVED">
+      <ST>State := SE.App2StateManagement.OpState#PhaseExecute; StartFlag := TRUE; StartLamp := FALSE; ResetLamp := FALSE;</ST>
+    </Algorithm>
+    <Algorithm Name="ACKNOWLEDGE">
+      <ST>Action := 0;</ST>
+    </Algorithm>
+    <Algorithm Name="ON_START_REQUEST">
+      <ST>Requested := 2;
+Action := 0;
+IF Requested = 2 AND WaitingFull AND State = SE.App2StateManagement.OpState#PhaseExecute THEN Action := 9;
+ELSIF Requested = 3 OR Requested = 4 OR Requested = 6 OR Requested = 8 THEN IF State &lt;&gt; SE.App2StateManagement.OpState#PhaseStopping THEN Action := 3; END_IF;
+ELSIF Requested = 1 AND RunPermit THEN IF State = SE.App2StateManagement.OpState#PhaseStopped OR State = SE.App2StateManagement.OpState#PhaseIdle THEN Action := 1; END_IF;
+ELSIF Requested = 2 AND Ready AND RunPermit AND NOT Fault AND State = SE.App2StateManagement.OpState#PhaseIdle THEN Action := 2;
+END_IF;</ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>
