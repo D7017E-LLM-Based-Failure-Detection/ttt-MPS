@@ -217,14 +217,14 @@
             </ItemProperty>
           </ItemProperties>
           <ParameterValues>
-            <ParameterValue Name="DI00" Value="&quot;" IsSymlink="true" />
-            <ParameterValue Name="DI01" Value="" IsSymlink="true" />
-            <ParameterValue Name="DI02" Value="" IsSymlink="true" />
-            <ParameterValue Name="DI03" Value="" IsSymlink="true" />
-            <ParameterValue Name="DI04" Value="" IsSymlink="true" />
-            <ParameterValue Name="DI05" Value="" IsSymlink="true" />
-            <ParameterValue Name="DI06" Value="" IsSymlink="true" />
-            <ParameterValue Name="DI07" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI00" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI01" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.0FBBAF14BDC70C34.21.DIn" IsSymlink="true" />
+            <ParameterValue Name="DI02" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.0FBBAF14BDC70C34.13.DIn" IsSymlink="true" />
+            <ParameterValue Name="DI03" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.290E8CBB7083A708.13.DIn" IsSymlink="true" />
+            <ParameterValue Name="DI04" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.DA014101550A683C.15.DIn" IsSymlink="true" />
+            <ParameterValue Name="DI05" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.DA014101550A683C.9.DIn" IsSymlink="true" />
+            <ParameterValue Name="DI06" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.E97FD2E6D42C4155.6.DIn" IsSymlink="true" />
+            <ParameterValue Name="DI07" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.46A6896A3BC8F000.6.DIn" IsSymlink="true" />
             <ParameterValue Name="DI08" Value="" IsSymlink="true" />
             <ParameterValue Name="DI09" Value="" IsSymlink="true" />
             <ParameterValue Name="DI10" Value="" IsSymlink="true" />
@@ -241,10 +241,10 @@
           <Items />
         </ConfigurationBaseItem>
         <ConfigurationBaseItem>
-          <Name>TM3DQ16T_G</Name>
+          <Name>TM3DQ16R_G</Name>
           <ID>1B1182FF7E0009FF</ID>
           <Type>
-            <Name>TM3DQ16T_G</Name>
+            <Name>TM3DQ16R_G</Name>
             <Namespace>SE.IoTMx</Namespace>
           </Type>
           <ItemProperties>
@@ -254,11 +254,11 @@
             </ItemProperty>
           </ItemProperties>
           <ParameterValues>
-            <ParameterValue Name="DO00" Value="" IsSymlink="true" />
-            <ParameterValue Name="DO01" Value="" IsSymlink="true" />
-            <ParameterValue Name="DO02" Value="" IsSymlink="true" />
-            <ParameterValue Name="DO03" Value="" IsSymlink="true" />
-            <ParameterValue Name="DO04" Value="" IsSymlink="true" />
+            <ParameterValue Name="DO00" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.0FBBAF14BDC70C34.15.DOut" IsSymlink="true" />
+            <ParameterValue Name="DO01" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.290E8CBB7083A708.15.DOut" IsSymlink="true" />
+            <ParameterValue Name="DO02" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.B5A8A7975D57E904.5.DOut" IsSymlink="true" />
+            <ParameterValue Name="DO03" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.DA014101550A683C.16.DOut" IsSymlink="true" />
+            <ParameterValue Name="DO04" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.DA014101550A683C.11.DOut" IsSymlink="true" />
             <ParameterValue Name="DO05" Value="" IsSymlink="true" />
             <ParameterValue Name="DO06" Value="" IsSymlink="true" />
             <ParameterValue Name="DO07" Value="" IsSymlink="true" />
