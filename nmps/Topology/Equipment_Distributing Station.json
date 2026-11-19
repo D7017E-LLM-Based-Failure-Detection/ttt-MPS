@@ -1,7 +1,7 @@
 {
   "catalogReference": "M050_V01.00_01.00",
   "uuid": "c812e9ac-0b40-4bfa-b512-737553a507e5",
-  "identifier": "M251dPAC_1",
+  "identifier": "Distributing Station",
   "path": "Topology",
   "partNumber": "TM251MDESE",
   "properties": [
@@ -17,8 +17,8 @@
   "references": [
     {
       "diagramPath": "Physical Views",
-      "x": -135.59375,
-      "y": -63.412011718750023
+      "x": -181.59375,
+      "y": 112.58798828124998
     }
   ],
   "components": [
@@ -34,7 +34,7 @@
               "identifier": "IP Address",
               "isReadOnly": false,
               "domainReadOnly": false,
-              "ipAddress": "0.0.0.0",
+              "ipAddress": "10.10.215.133",
               "domain": "00000000-0000-0000-0000-000000000000"
             }
           ]

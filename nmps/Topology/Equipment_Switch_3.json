@@ -1,0 +1,111 @@
+{
+  "catalogReference": "GenericL2ManagedSwitch16Ports_V01.00_01.00",
+  "uuid": "2ced2b7e-5aa6-4e44-a92c-635b42faa66a",
+  "identifier": "Switch_3",
+  "path": "Topology",
+  "properties": [
+    {
+      "propertyName": "IsUnderConstruction",
+      "propertyValue": "False"
+    },
+    {
+      "propertyName": "DomainTag",
+      "propertyValue": "1bf87c9c-2a73-4176-9028-707d6be5c30d"
+    }
+  ],
+  "references": [
+    {
+      "diagramPath": "Physical Views",
+      "x": -109.59375,
+      "y": -93
+    }
+  ],
+  "components": [
+    {
+      "interfaces": [
+        {
+          "identifier": "Embedded Interface",
+          "disabled": false,
+          "internal": false,
+          "physicalAddress": "",
+          "endpoints": [
+            {
+              "identifier": "IP Address",
+              "isReadOnly": false,
+              "domainReadOnly": false,
+              "ipAddress": "0.0.0.0",
+              "domain": "00000000-0000-0000-0000-000000000000"
+            }
+          ]
+        }
+      ],
+      "ports": [
+        {
+          "identifier": "Port1",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port2",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port3",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port4",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port5",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port6",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port7",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port8",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port9",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port10",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port11",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port12",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port13",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port14",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port15",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port16",
+          "side": "Default"
+        }
+      ],
+      "componentType": "EthernetDEO"
+    }
+  ]
+}

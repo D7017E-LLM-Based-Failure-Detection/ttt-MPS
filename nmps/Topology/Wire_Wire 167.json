@@ -1,0 +1,15 @@
+{
+  "references": [
+    {
+      "diagramPath": "Physical Views",
+      "sourceSide": 1,
+      "destinationSide": 8
+    }
+  ],
+  "label": "Wire 167",
+  "identifier": "Wire 167",
+  "sourceEquipment": "2ced2b7e-5aa6-4e44-a92c-635b42faa66a",
+  "sourcePortIdentifier": "Port2",
+  "destinationEquipment": "c812e9ac-0b40-4bfa-b512-737553a507e5",
+  "destinationPortIdentifier": "Ethernet1_1"
+}

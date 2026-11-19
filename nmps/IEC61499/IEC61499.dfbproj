@@ -130,6 +130,8 @@
     <None Include="..\General\ConnectableAdapterList.xml" />
     <None Include="..\General\Folders.xml" />
     <None Include="..\General\ProjectInfo.xml" />
+    <None Include="..\General\se-rbac-roles.json" />
+    <None Include="..\General\se-rbac-users.json" />
     <None Include="..\HMI\AutoCycle\AutoCycle_sDefault.doc.xml">
       <DependentUpon>AutoCycle.fbt</DependentUpon>
     </None>
@@ -354,6 +356,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="..\General" />
     <Folder Include="..\General\Certificates" />
     <Folder Include="Configuration" />
     <Folder Include="License" />
