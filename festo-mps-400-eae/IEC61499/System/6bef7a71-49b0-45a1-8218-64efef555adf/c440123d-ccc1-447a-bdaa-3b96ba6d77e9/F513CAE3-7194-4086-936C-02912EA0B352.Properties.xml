@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SystemDeviceProperties xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.nxtControl.com/DeviceProperties">
+  <GroupProperty Name="Configuration" Expanded="true" Enabled="true">
+    <GroupProperty Name="Communication" Expanded="true" Enabled="true">
+      <GroupProperty Name="OPCUA" Expanded="true" Enabled="true">
+        <Property Name="MaxVariableNodes" Value="1000" IsPassword="false" />
+      </GroupProperty>
+    </GroupProperty>
+  </GroupProperty>
+</SystemDeviceProperties>

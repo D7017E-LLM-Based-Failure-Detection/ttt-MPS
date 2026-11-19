@@ -1,0 +1,300 @@
+<title>MPS 400 Layout</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one plan sheet; the drawing first, then the interface table beside the open points */
+:root {
+  --bg: #F2F5F4;
+  --panel: #FFFFFF;
+  --fg: #1B2829;
+  --muted: #5B6B6C;
+  --line: #A3B0B0;
+  --rule: #D6DEDD;
+  --belt: #3A444A;
+  --belt-mark: #A9B4B8;
+  --tray: #DCE2E3;
+  --stopper: #F4F7F6;
+  --wp: #C23B2B;
+  --accent: #0E7A69;
+  --accent-ink: #FFFFFF;
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111A1B; --panel: #1A2627; --fg: #E3EBEA; --muted: #9DADAC; --line: #4B5B5C; --rule: #2A3738;
+    --belt: #46535A; --belt-mark: #A8B3B7; --tray: #75838A; --stopper: #EEF3F2; --wp: #E5624F;
+    --accent: #3FC9A9; --accent-ink: #0A1F1A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111A1B; --panel: #1A2627; --fg: #E3EBEA; --muted: #9DADAC; --line: #4B5B5C; --rule: #2A3738;
+  --belt: #46535A; --belt-mark: #A8B3B7; --tray: #75838A; --stopper: #EEF3F2; --wp: #E5624F;
+  --accent: #3FC9A9; --accent-ink: #0A1F1A;
+  color-scheme: dark;
+}
+
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.5; }
+.wrap {
+  max-width: 1080px; margin: 0 auto; display: grid; gap: 28px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 48px;
+}
+header { display: grid; gap: 6px; }
+.eyebrow { margin: 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 40px; line-height: 1.05; letter-spacing: .01em; text-wrap: balance; }
+.lede { margin: 4px 0 0; max-width: 65ch; font-size: 17px; }
+h2 { margin: 0 0 10px; font-family: var(--font-display); font-weight: 600; font-size: 23px; letter-spacing: .02em; text-wrap: balance; }
+
+/* The drawing sheet */
+.plan { margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; }
+.plan .scroll { overflow-x: auto; padding: 8px 8px 0; }
+.plan svg { display: block; width: 100%; min-width: 720px; height: auto; }
+.plan figcaption { padding: 10px 16px 14px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 14px; max-width: 80ch; }
+.plan figcaption b { color: var(--fg); font-weight: 600; }
+
+/* Drawing elements (shared by the plan and the legend icons) */
+.belt { fill: var(--belt); }
+.chev { fill: none; stroke: var(--belt-mark); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.zone-used { fill: none; stroke: var(--accent); stroke-width: 2; }
+.zone-off { fill: none; stroke: var(--muted); stroke-width: 1.4; stroke-dasharray: 4 3; }
+.stopper { fill: var(--stopper); stroke: var(--fg); stroke-width: 1; }
+.tray { fill: var(--tray); stroke: var(--fg); stroke-width: 1.2; }
+.wp { fill: var(--wp); stroke: var(--fg); stroke-width: .8; }
+.station { fill: var(--panel); stroke: var(--line); stroke-width: 1.4; }
+.station-name { fill: var(--fg); font-family: var(--font-body); font-weight: 600; font-size: 15px; }
+.station-doc { fill: var(--muted); font-family: var(--font-mono); font-size: 11px; }
+.mk-used { fill: var(--accent); }
+.mk-off { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 2.5; }
+.mk-num { fill: var(--accent-ink); font-family: var(--font-display); font-weight: 700; font-size: 15px; }
+.mk-num-off { fill: var(--muted); font-family: var(--font-display); font-weight: 700; font-size: 15px; }
+.flow { fill: none; stroke: var(--fg); stroke-width: 1.8; }
+.ahf-fill { fill: var(--fg); }
+.note { fill: var(--muted); font-family: var(--font-body); font-size: 12.5px; }
+.note-strong { fill: var(--fg); font-family: var(--font-body); font-weight: 600; font-size: 12.5px; }
+.conv { fill: var(--muted); font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; }
+.loop-title { fill: var(--fg); font-family: var(--font-display); font-weight: 600; font-size: 20px; letter-spacing: .02em; }
+
+/* Legend */
+.legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 22px; color: var(--muted); font-size: 13.5px; }
+.legend li { display: flex; align-items: center; gap: 8px; }
+.legend svg { width: 30px; height: 18px; flex: none; }
+
+/* Table and open points */
+.two { display: grid; gap: 28px; grid-template-columns: 1fr; }
+.two > * { min-width: 0; }
+@media (min-width: 780px) { .two { grid-template-columns: 1.15fr 1fr; } }
+.tablewrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-weight: 600; color: var(--muted); font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; padding: 0 12px 8px 0; border-bottom: 1px solid var(--line); }
+td { padding: 9px 12px 9px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.badge { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; font-family: var(--font-display); font-weight: 700; font-size: 15px; }
+.badge.used { background: var(--accent); color: var(--accent-ink); }
+.badge.off { border: 1.5px dashed var(--muted); color: var(--muted); }
+.off-text { color: var(--muted); }
+.open { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+.open li::marker { color: var(--muted); }
+.docs p { margin: 0; max-width: 72ch; }
+.docs code { font-family: var(--font-mono); font-size: 13px; }
+.foot { margin: 0; color: var(--muted); font-size: 13px; }
+</style>
+
+<main class="wrap">
+  <header>
+    <p class="eyebrow">Festo MPS 400 · lab setup · agreed layout</p>
+    <h1>MPS 400 Layout</h1>
+    <p class="lede">Top view of the main conveyor loop and the stations at each interface, as confirmed on 9 November 2026. The points still open are listed below the drawing.</p>
+  </header>
+
+  <figure class="plan">
+    <div class="scroll">
+      <svg viewBox="110 96 880 664" role="img" aria-label="Top view of the MPS 400 main conveyor loop: four conveyors form one loop with six interfaces, trays travelling anticlockwise. Interfaces 1, 2 and 3 lie along the bottom side, 4, 5 and 6 along the top. At interface 1 Distributing, Testing and the tray stand in one straight line and the workpiece goes from Distributing through Testing onto the tray. At interface 2 Handling takes the workpiece from the tray into Processing and back. At interface 6 Handling moves the workpiece from the tray into Sorting, and the empty tray returns to interface 1. Interfaces 3, 4 and 5 are not used; trays stop there until released from the HMI.">
+        <defs>
+          <marker id="ahf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path class="ahf-fill" d="M0,0 L10,5 L0,10 z"/>
+          </marker>
+        </defs>
+
+        <!-- Four conveyors forming the loop -->
+        <rect class="belt" x="132" y="312" width="836" height="36" rx="3"/>
+        <rect class="belt" x="932" y="351" width="36" height="158" rx="3"/>
+        <rect class="belt" x="132" y="512" width="836" height="36" rx="3"/>
+        <rect class="belt" x="132" y="351" width="36" height="158" rx="3"/>
+
+        <!-- Travel direction: anticlockwise (bottom left to right, right side up, top right to left, left side down) -->
+        <polyline class="chev" points="194,323 186,330 194,337"/>
+        <polyline class="chev" points="449,323 441,330 449,337"/>
+        <polyline class="chev" points="724,323 716,330 724,337"/>
+        <polyline class="chev" points="929,323 921,330 929,337"/>
+        <polyline class="chev" points="943,394 950,386 957,394"/>
+        <polyline class="chev" points="943,474 950,466 957,474"/>
+        <polyline class="chev" points="186,523 194,530 186,537"/>
+        <polyline class="chev" points="441,523 449,530 441,537"/>
+        <polyline class="chev" points="716,523 724,530 716,537"/>
+        <polyline class="chev" points="921,523 929,530 921,537"/>
+        <polyline class="chev" points="143,366 150,374 157,366"/>
+        <polyline class="chev" points="143,486 150,494 157,486"/>
+
+        <!-- Interface positions on the belt -->
+        <rect class="zone-used" x="245" y="506" width="90" height="48" rx="5"/>
+        <rect class="zone-used" x="555" y="506" width="90" height="48" rx="5"/>
+        <rect class="zone-off" x="795" y="506" width="90" height="48" rx="5"/>
+        <rect class="zone-off" x="795" y="306" width="90" height="48" rx="5"/>
+        <rect class="zone-off" x="555" y="306" width="90" height="48" rx="5"/>
+        <rect class="zone-used" x="245" y="306" width="90" height="48" rx="5"/>
+
+        <!-- Stoppers, on the downstream side of each interface -->
+        <rect class="stopper" x="333" y="504" width="5" height="52"/>
+        <rect class="stopper" x="643" y="504" width="5" height="52"/>
+        <rect class="stopper" x="883" y="504" width="5" height="52"/>
+        <rect class="stopper" x="792" y="304" width="5" height="52"/>
+        <rect class="stopper" x="552" y="304" width="5" height="52"/>
+        <rect class="stopper" x="242" y="304" width="5" height="52"/>
+
+        <!-- Trays -->
+        <rect class="tray" x="275" y="517" width="56" height="26" rx="5"/>
+        <circle class="wp" cx="303" cy="530" r="8"/>
+        <rect class="tray" x="799" y="317" width="56" height="26" rx="5"/>
+        <circle class="wp" cx="827" cy="330" r="8"/>
+        <rect class="tray" x="137" y="402" width="26" height="56" rx="5"/>
+
+        <!-- Interface numbers, on the inside of the loop -->
+        <circle class="mk-used" cx="290" cy="490" r="12"/>
+        <text class="mk-num" x="290" y="495" text-anchor="middle">1</text>
+        <circle class="mk-used" cx="600" cy="490" r="12"/>
+        <text class="mk-num" x="600" y="495" text-anchor="middle">2</text>
+        <circle class="mk-off" cx="840" cy="490" r="12"/>
+        <text class="mk-num-off" x="840" y="495" text-anchor="middle">3</text>
+        <circle class="mk-off" cx="840" cy="370" r="12"/>
+        <text class="mk-num-off" x="840" y="375" text-anchor="middle">4</text>
+        <circle class="mk-off" cx="600" cy="370" r="12"/>
+        <text class="mk-num-off" x="600" y="375" text-anchor="middle">5</text>
+        <circle class="mk-used" cx="290" cy="370" r="12"/>
+        <text class="mk-num" x="290" y="375" text-anchor="middle">6</text>
+
+        <!-- Unused interfaces: tray waits for a manual release on the HMI -->
+        <text class="note-strong" x="840" y="590" text-anchor="middle">not used</text>
+        <text class="note" x="840" y="608" text-anchor="middle">release on HMI</text>
+        <text class="note-strong" x="840" y="270" text-anchor="middle">not used</text>
+        <text class="note" x="840" y="288" text-anchor="middle">release on HMI</text>
+        <text class="note-strong" x="600" y="270" text-anchor="middle">not used</text>
+        <text class="note" x="600" y="288" text-anchor="middle">release on HMI</text>
+
+        <!-- Interface 1: Distributing, Testing and the tray in one line -->
+        <rect class="station" x="220" y="588" width="140" height="62" rx="6"/>
+        <text class="station-name" x="290" y="616" text-anchor="middle">Testing</text>
+        <text class="station-doc" x="290" y="635" text-anchor="middle">CD folder 02</text>
+        <rect class="station" x="220" y="684" width="140" height="62" rx="6"/>
+        <text class="station-name" x="290" y="712" text-anchor="middle">Distributing</text>
+        <text class="station-doc" x="290" y="731" text-anchor="middle">CD folder 01</text>
+        <line class="flow" x1="290" y1="682" x2="290" y2="653" marker-end="url(#ahf)"/>
+        <line class="flow" x1="290" y1="586" x2="290" y2="557" marker-end="url(#ahf)"/>
+        <text class="note" x="304" y="576">onto tray</text>
+
+        <!-- Interface 2: Processing, Handling and the tray in one line -->
+        <rect class="station" x="530" y="588" width="140" height="62" rx="6"/>
+        <text class="station-name" x="600" y="616" text-anchor="middle">Handling</text>
+        <text class="station-doc" x="600" y="635" text-anchor="middle">CD folder 04</text>
+        <rect class="station" x="530" y="684" width="140" height="62" rx="6"/>
+        <text class="station-name" x="600" y="712" text-anchor="middle">Processing</text>
+        <text class="station-doc" x="600" y="731" text-anchor="middle">CD folder 03</text>
+        <line class="flow" x1="600" y1="560" x2="600" y2="583" marker-start="url(#ahf)" marker-end="url(#ahf)"/>
+        <line class="flow" x1="600" y1="656" x2="600" y2="679" marker-start="url(#ahf)" marker-end="url(#ahf)"/>
+        <text class="note" x="614" y="576">off and back</text>
+
+        <!-- Interface 6: Sorting, Handling and the tray in one line -->
+        <rect class="station" x="220" y="210" width="140" height="62" rx="6"/>
+        <text class="station-name" x="290" y="238" text-anchor="middle">Handling</text>
+        <text class="station-doc" x="290" y="257" text-anchor="middle">CD folder 04</text>
+        <rect class="station" x="220" y="114" width="140" height="62" rx="6"/>
+        <text class="station-name" x="290" y="142" text-anchor="middle">Sorting</text>
+        <text class="station-doc" x="290" y="161" text-anchor="middle">CD folder 09</text>
+        <line class="flow" x1="290" y1="302" x2="290" y2="276" marker-end="url(#ahf)"/>
+        <line class="flow" x1="290" y1="206" x2="290" y2="180" marker-end="url(#ahf)"/>
+        <text class="note" x="304" y="294">off tray</text>
+
+        <!-- Inside the loop -->
+        <text class="conv" x="720" y="374" text-anchor="middle">CONVEYOR C</text>
+        <text class="conv" x="914" y="430" text-anchor="middle" transform="rotate(90 914 430)">CONVEYOR B</text>
+        <text class="conv" x="720" y="494" text-anchor="middle">CONVEYOR A</text>
+        <text class="conv" x="186" y="420" text-anchor="middle" transform="rotate(-90 186 420)">CONVEYOR D</text>
+        <text class="loop-title" x="550" y="420" text-anchor="middle">Main conveyor loop</text>
+        <text class="note" x="550" y="442" text-anchor="middle">4 conveyors · 6 interfaces · 8 trays carry the workpieces</text>
+        <text class="note" x="550" y="464" text-anchor="middle">travel direction: anticlockwise</text>
+        <text class="note" x="182" y="470">empty tray back to 1</text>
+      </svg>
+    </div>
+    <figcaption><b>Top view, not to scale.</b> Four conveyors form one loop with six interfaces, and the trays travel anticlockwise. At interfaces 1, 2 and 6 the two stations stand in a straight line out from the conveyor, so the workpiece moves in one line between them and the tray. At 3, 4 and 5 the tray waits at the stopper until someone releases it from the HMI. The conveyors are named A to D in travel direction, starting with A, which carries interfaces 1 to 3.</figcaption>
+  </figure>
+
+  <ul class="legend" aria-label="Legend">
+    <li>
+      <svg viewBox="0 0 30 18" aria-hidden="true"><rect class="tray" x="2" y="3" width="26" height="12" rx="3"/><circle class="wp" cx="15" cy="9" r="4"/></svg>
+      Tray with workpiece
+    </li>
+    <li>
+      <svg viewBox="0 0 30 18" aria-hidden="true"><rect class="belt" x="0" y="4" width="30" height="10" rx="2"/><rect class="stopper" x="18" y="1" width="4" height="16"/></svg>
+      Stopper
+    </li>
+    <li>
+      <svg viewBox="0 0 30 18" aria-hidden="true"><rect class="belt" x="0" y="4" width="30" height="10" rx="2"/><polyline class="chev" points="17,5.5 12,9 17,12.5"/></svg>
+      Travel direction
+    </li>
+    <li>
+      <svg viewBox="0 0 30 18" aria-hidden="true"><circle class="mk-used" cx="15" cy="9" r="7.5"/></svg>
+      Interface in use
+    </li>
+    <li>
+      <svg viewBox="0 0 30 18" aria-hidden="true"><circle class="mk-off" cx="15" cy="9" r="7"/></svg>
+      Interface not used
+    </li>
+    <li>
+      <svg viewBox="0 0 30 18" aria-hidden="true">
+        <defs><marker id="ahf-legend" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path class="ahf-fill" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+        <line class="flow" x1="2" y1="9" x2="25" y2="9" marker-end="url(#ahf-legend)"/>
+      </svg>
+      Workpiece transfer
+    </li>
+  </ul>
+
+  <section class="two">
+    <div>
+      <h2>Interfaces</h2>
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th scope="col">No.</th><th scope="col">Stations, outermost first</th><th scope="col">What happens to the tray</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="badge used">1</span></td><td>Distributing, Testing</td><td>Gets a new workpiece: Distributing → Testing → tray</td></tr>
+            <tr><td><span class="badge used">2</span></td><td>Processing, Handling</td><td>Handling takes the workpiece into Processing and puts it back on the tray</td></tr>
+            <tr><td><span class="badge off">3</span></td><td class="off-text">Not used</td><td>Stopped; released by hand from the HMI</td></tr>
+            <tr><td><span class="badge off">4</span></td><td class="off-text">Not used</td><td>Stopped; released by hand from the HMI</td></tr>
+            <tr><td><span class="badge off">5</span></td><td class="off-text">Not used</td><td>Stopped; released by hand from the HMI</td></tr>
+            <tr><td><span class="badge used">6</span></td><td>Sorting, Handling</td><td>Handling moves the workpiece into Sorting; the empty tray returns to interface 1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <h2>Still open</h2>
+      <ul class="open">
+        <li>Which of the four conveyor I/O connectors belongs to which conveyor, and how they differ.</li>
+        <li>What the CONGESTION input at an interface means.</li>
+        <li>How the three lamps are driven.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="docs">
+    <h2>Documentation</h2>
+    <p>The MPS CD has a manual, circuit diagrams, a GRAFCET sequence and a video for each station type used here: <code>01_Distributing</code>, <code>02_Testing</code>, <code>03_Processing</code>, <code>04_Handling</code> (used twice) and <code>09_Sorting</code>. The conveyor loop, its stoppers and the trays are not on the CD. The knowledge graph in <code>docs/mps400/</code> records these facts in YAML.</p>
+  </section>
+
+  <p class="foot">Layout confirmed 9 November 2026.</p>
+</main>

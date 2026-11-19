@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Mapping>
+  <EventInputs>
+    <Event Name="UPD">FbStatus;TransFbStatus;CurrentOp;CurrentSp;NeedReset;CurrentOwner;FbFail;IlckCond;CondPos;PermClose;PermOpen;StdOwnerConnected</Event>
+  </EventInputs>
+  <EventOutputs>
+    <Event Name="CFG">MonTime;TripTime;ConfResetReq;ScanTime;AlmAckType;EnTrackSp;ValveCmdType;FbMode</Event>
+    <Event Name="SP_CMD">Sp</Event>
+    <Event Name="RESET_CMD">Reset</Event>
+    <Event Name="IND_MODE">Simulation;FbOverride;Maintenance;OutOfService</Event>
+    <Event Name="OWNER">Owner</Event>
+  </EventOutputs>
+  <Inputs>
+    <Input Name="FbStatus" Type="INT" />
+    <Input Name="TransFbStatus" Type="INT" />
+    <Input Name="CurrentOp" Type="INT" />
+    <Input Name="CurrentSp" Type="INT" />
+    <Input Name="NeedReset" Type="BOOL" />
+    <Input Name="CurrentOwner" Type="WORD" />
+    <Input Name="FbFail" Type="VTQBOOL" />
+    <Input Name="IlckCond" Type="BOOL" />
+    <Input Name="CondPos" Type="INT" />
+    <Input Name="PermClose" Type="BOOL" />
+    <Input Name="PermOpen" Type="BOOL" />
+    <Input Name="StdOwnerConnected" Type="BOOL" />
+  </Inputs>
+  <Outputs>
+    <Output Name="Owner" Type="WORD" />
+    <Output Name="MonTime" Type="DINT" />
+    <Output Name="TripTime" Type="DINT" />
+    <Output Name="ConfResetReq" Type="BOOL" />
+    <Output Name="Reset" Type="BOOL" />
+    <Output Name="Sp" Type="INT" />
+    <Output Name="Simulation" Type="BOOL" />
+    <Output Name="FbOverride" Type="BOOL" />
+    <Output Name="Maintenance" Type="BOOL" />
+    <Output Name="OutOfService" Type="BOOL" />
+    <Output Name="ScanTime" Type="DINT" />
+    <Output Name="AlmAckType" Type="USINT" />
+    <Output Name="EnTrackSp" Type="BOOL" />
+    <Output Name="ValveCmdType" Type="BOOL" />
+    <Output Name="FbMode" Type="BYTE" />
+  </Outputs>
+</Mapping>

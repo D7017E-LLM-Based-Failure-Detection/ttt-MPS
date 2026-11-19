@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<baseline xmlns:xsd="http://www.nxtControl.com/Snapshot" xmlns="http://tempuri.org/XMLSchema1.xsd">
+  <deployment>
+    <network_profile name="(Default)">
+      <device id="a0026ceb-2e0f-4635-9d99-a98c0e68dc61" CompileTime="2026-11-18 14:04:12Z" />
+      <device id="c440123d-ccc1-447a-bdaa-3b96ba6d77e9" CompileTime="2026-11-18 14:04:12Z" />
+      <device id="33050102-181b-42b2-a5f0-4e716a2ac3ff" CompileTime="2026-11-16 18:36:58Z" />
+    </network_profile>
+  </deployment>
+</baseline>

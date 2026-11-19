@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="ea99b2f3-4c17-4cf3-a7b7-5b302314cfef" Name="StationMode" Comment="Basic Function Block Type" Namespace="Flexbridge.FestoMPS400">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Flexbridge AB" Version="0.0" Author="Sandeep Patil" Date="11/16/2026" Remarks="Template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="D146E2B034FD7C8D" Name="INIT" Comment="Initialisation request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="3E546DBBFC71A558" Name="BUTTONS" Comment="Console buttons changed">
+        <With Var="Start" />
+        <With Var="Stop" />
+        <With Var="Reset" />
+      </Event>
+      <Event ID="ED9B713DA299DF56" Name="RESET_DONE" Comment="The station's reset sequence has finished" />
+      <Event ID="B23559B3B7689A61" Name="FAULT" Comment="The station's sequence stopped on a device fault" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="506E716B55FCE0A2" Name="INITO" Comment="Initialisation confirm">
+        <With Var="QO" />
+      </Event>
+      <Event ID="2F6AEE6C40FD625A" Name="DO_RESET" Comment="Start the station's reset sequence" />
+      <Event ID="A9AD17A654C0620C" Name="MODE" Comment="Station mode changed">
+        <With Var="Mode" />
+        <With Var="Started" />
+      </Event>
+      <Event ID="AE505668424E9D81" Name="LAMPS" Comment="Lamp states for the console">
+        <With Var="StartLamp" />
+        <With Var="ResetLamp" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="44E3B235148F2F2F" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="3F9F955FBD772861" Name="Start" Type="BOOL" Comment="START button pressed" />
+      <VarDeclaration ID="2DA8A40E7C90FB83" Name="Stop" Type="BOOL" Comment="STOP button pressed (already inverted: TRUE while pressed)" />
+      <VarDeclaration ID="FD0ACBF32CBAD84C" Name="Reset" Type="BOOL" Comment="RESET button pressed" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="A55A751A5FE16234" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration ID="BC367735D7BA9F60" Name="Mode" Type="INT" Comment="Station mode: 0 = wait for RESET, 1 = resetting, 2 = wait for START, 3 = started" />
+      <VarDeclaration ID="12BF2E46AA672AA2" Name="Started" Type="BOOL" Comment="TRUE while the station is started and accepts requests" />
+      <VarDeclaration ID="8D29F764CECC539B" Name="StartLamp" Type="BOOL" Comment="START lamp" />
+      <VarDeclaration ID="0E7F734B13311A8A" Name="ResetLamp" Type="BOOL" Comment="RESET lamp" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="algInit,algEdges,algResetting,algWaitStart,algStarted,algFault" />
+    <InternalVars>
+      <VarDeclaration Name="PrevStart" Type="BOOL" Comment="Start at the last BUTTONS event" />
+      <VarDeclaration Name="PrevStop" Type="BOOL" Comment="Stop at the last BUTTONS event" />
+      <VarDeclaration Name="PrevReset" Type="BOOL" Comment="Reset at the last BUTTONS event" />
+      <VarDeclaration Name="StartPressed" Type="BOOL" Comment="Rising edge of Start" />
+      <VarDeclaration Name="StopPressed" Type="BOOL" Comment="Rising edge of Stop" />
+      <VarDeclaration Name="ResetReleased" Type="BOOL" Comment="Falling edge of Reset" />
+    </InternalVars>
+    <ECC>
+      <ECState Name="START" Comment="Initial state" x="300" y="200" />
+      <ECState Name="INIT_S" x="900" y="200">
+        <ECAction Algorithm="algInit" Output="MODE" />
+        <ECAction Output="LAMPS" />
+        <ECAction Output="INITO" />
+      </ECState>
+      <ECState Name="W_RESET" Comment="Mode 0: wait for RESET" x="268" y="480" />
+      <ECState Name="E_WR" x="232" y="1028">
+        <ECAction Algorithm="algEdges" />
+      </ECState>
+      <ECState Name="RESETTING_S" x="576" y="1296">
+        <ECAction Algorithm="algResetting" Output="MODE" />
+        <ECAction Output="LAMPS" />
+        <ECAction Output="DO_RESET" />
+      </ECState>
+      <ECState Name="RESETTING" Comment="Mode 1: reset sequence running" x="1204" y="920.0001" />
+      <ECState Name="E_RS" x="2344" y="876.0001">
+        <ECAction Algorithm="algEdges" />
+      </ECState>
+      <ECState Name="W_START_S" x="1707" y="1369">
+        <ECAction Algorithm="algWaitStart" Output="MODE" />
+        <ECAction Output="LAMPS" />
+      </ECState>
+      <ECState Name="W_START" Comment="Mode 2: wait for START" x="1316" y="1788" />
+      <ECState Name="E_WS" x="228" y="1816">
+        <ECAction Algorithm="algEdges" />
+      </ECState>
+      <ECState Name="STARTED_S" x="994" y="2255">
+        <ECAction Algorithm="algStarted" Output="MODE" />
+        <ECAction Output="LAMPS" />
+      </ECState>
+      <ECState Name="STARTED" Comment="Mode 3: started" x="2074" y="1821" />
+      <ECState Name="E_ST" x="2678" y="1640">
+        <ECAction Algorithm="algEdges" />
+      </ECState>
+      <ECState Name="FAULT_S" x="1908" y="476">
+        <ECAction Algorithm="algFault" Output="MODE" />
+        <ECAction Output="LAMPS" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT_S" Condition="INIT" x="602.0541" y="111.9767" />
+      <ECTransition Source="INIT_S" Destination="W_RESET" Condition="1" x="629.4031" y="415.4004">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="172.9034,100.8186,139.5908,115.7883" />
+      </ECTransition>
+      <ECTransition Source="W_RESET" Destination="E_WR" Condition="BUTTONS" x="331.3806" y="758.9164">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="88.66056,171.654,86.2319,208.6236" />
+      </ECTransition>
+      <ECTransition Source="E_WR" Destination="RESETTING_S" Condition="ResetReleased" x="462.3046" y="1098.398">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="107.6128,263.9604,125.1161,277.5967" />
+      </ECTransition>
+      <ECTransition Source="E_WR" Destination="W_RESET" Condition="NOT ResetReleased" x="249.429" y="679">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="61.28567,181.9848,63.71433,145.0152" />
+      </ECTransition>
+      <ECTransition Source="RESETTING_S" Destination="RESETTING" Condition="1" x="872.1244" y="1032.696">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="203.6744,263.6515,241.3256,241.3485" />
+      </ECTransition>
+      <ECTransition Source="RESETTING" Destination="W_START_S" Condition="RESET_DONE" x="1520.092" y="1088.549">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="364.4363,253.1148,396.61,281.8344" />
+      </ECTransition>
+      <ECTransition Source="RESETTING" Destination="FAULT_S" Condition="FAULT" x="1542.576" y="621.4318">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="366.5616,163.6515,411.4384,135.3485" />
+      </ECTransition>
+      <ECTransition Source="RESETTING" Destination="E_RS" Condition="BUTTONS" x="1815.53" y="812.6697">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="419.1387,200.4403,488.6263,197.7583" />
+      </ECTransition>
+      <ECTransition Source="E_RS" Destination="RESETTING" Condition="1" x="1818.423" y="980.0702">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="489.5905,247.7399,420.1029,250.4219" />
+      </ECTransition>
+      <ECTransition Source="W_START_S" Destination="W_START" Condition="1" x="1580.337" y="1629.669">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="408.3865,398.5716,383.9191,424.7912" />
+      </ECTransition>
+      <ECTransition Source="W_START" Destination="E_WS" Condition="BUTTONS" x="748.0116" y="1886.316">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="220.5492,474.7994,153.7782,476.5178" />
+      </ECTransition>
+      <ECTransition Source="E_WS" Destination="STARTED_S" Condition="StartPressed" x="656.8301" y="1967.275">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="140.8519,473.2415,189.5099,501.1277" />
+      </ECTransition>
+      <ECTransition Source="E_WS" Destination="W_START" Condition="NOT StartPressed" x="746.082" y="1719">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="153.135,426.5259,219.906,424.8076" />
+      </ECTransition>
+      <ECTransition Source="W_START" Destination="FAULT_S" Condition="FAULT" x="1610.64" y="1057">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="380.2955,308.3181,425.7045,207.6818" />
+      </ECTransition>
+      <ECTransition Source="STARTED_S" Destination="STARTED" Condition="1" x="1523.231" y="1959.679">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="349.3213,498.2348,417.6788,470.7652" />
+      </ECTransition>
+      <ECTransition Source="STARTED" Destination="E_ST" Condition="BUTTONS" x="2393.988" y="1640.321">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="587.5276,409.5645,614.9418,401.3494" />
+      </ECTransition>
+      <ECTransition Source="E_ST" Destination="W_START_S" Condition="StopPressed" x="2220.828" y="1594.507">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="586.0684,411.7147,529.7805,396.0052" />
+      </ECTransition>
+      <ECTransition Source="E_ST" Destination="STARTED" Condition="NOT StopPressed" x="2432.371" y="1803.253">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="622.1182,450.2971,594.704,458.5123" />
+      </ECTransition>
+      <ECTransition Source="STARTED" Destination="FAULT_S" Condition="FAULT" x="1990.638" y="1223.5">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="504.1299,363.8181,491.37,260.4318" />
+      </ECTransition>
+      <ECTransition Source="FAULT_S" Destination="W_RESET" Condition="1" x="1094.101" y="559.8331">
+        <Attribute Name="Configuration.Transaction.BezierPoints" Value="328.1346,144.3627,218.9464,144.629" />
+      </ECTransition>
+    </ECC>
+    <Algorithm Name="algInit" Comment="Wait for RESET: RESET lamp on">
+      <ST><![CDATA[QO := QI;
+PrevStart := FALSE; PrevStop := FALSE; PrevReset := FALSE;
+StartPressed := FALSE; StopPressed := FALSE; ResetReleased := FALSE;
+Mode := 0; Started := FALSE;
+StartLamp := FALSE; ResetLamp := TRUE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algEdges" Comment="Edges of the buttons since the last BUTTONS event">
+      <ST><![CDATA[StartPressed := Start AND NOT PrevStart;
+StopPressed := Stop AND NOT PrevStop;
+ResetReleased := PrevReset AND NOT Reset;
+PrevStart := Start; PrevStop := Stop; PrevReset := Reset;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algResetting" Comment="Reset sequence running: RESET lamp stays on">
+      <ST><![CDATA[Mode := 1; Started := FALSE;
+StartLamp := FALSE; ResetLamp := TRUE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algWaitStart" Comment="Wait for START: START lamp on">
+      <ST><![CDATA[Mode := 2; Started := FALSE;
+StartLamp := TRUE; ResetLamp := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algStarted" Comment="Started: lamps off">
+      <ST><![CDATA[Mode := 3; Started := TRUE;
+StartLamp := FALSE; ResetLamp := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algFault" Comment="Device fault: back to wait for RESET">
+      <ST><![CDATA[Mode := 0; Started := FALSE;
+StartLamp := FALSE; ResetLamp := TRUE;
+]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

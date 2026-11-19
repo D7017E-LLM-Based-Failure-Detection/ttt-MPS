@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd" >
+<FBType Name="TestingSequence" Namespace="Flexbridge.FestoMPS400" GUID="c0689e0b-a7ae-41d2-8061-1ba84c8d31a4" Comment="Basic Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Flexbridge AB" Version="0.0" Author="Sandeep Patil" Date="11/16/2026" Remarks="Template" />
+  <CompilerInfo />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="6491447AA107ED7D" Name="INIT" Comment="Initialisation request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="E9D3978CBF4E1C7C" Name="MODE" Comment="Station mode changed (StationMode)">
+        <With Var="Mode" />
+        <With Var="Started" />
+      </Event>
+      <Event ID="404EEB99E842A269" Name="DO_RESET" Comment="Run the reset sequence (StationMode)">
+      </Event>
+      <Event ID="A0FA5D33EBAEE13D" Name="TRAY" Comment="Tray state at interface 1 (conveyor waypoint, IWaypoint)">
+        <With Var="Tray" />
+        <With Var="Workpiece" />
+      </Event>
+      <Event ID="99C1D4CAA8E589B4" Name="SIM_EMPTY" Comment="Stand-in: an empty tray has arrived (HMI button)">
+      </Event>
+      <Event ID="6EF7EFA72D6EF7A1" Name="SIM_FULL" Comment="Stand-in: a tray with a workpiece has arrived (HMI button)">
+      </Event>
+      <Event ID="CE103A6FE02EB000" Name="WP_CNF" Comment="Distributing has handed a workpiece over (IWorkpieceSupply)">
+      </Event>
+      <Event ID="7A64A6579328FF4D" Name="SENS" Comment="Colour or height sensor changed">
+        <With Var="NotBlackPv" />
+        <With Var="HeightOkPv" />
+      </Event>
+      <Event ID="8E4813D1C7842188" Name="T_EJ" Comment="Ejector time over (EjectTimer)">
+      </Event>
+      <Event ID="A56E83D77C8EC629" Name="T_SL" Comment="Air slide time over (SlideTimer)">
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="C882617665E13E09" Name="INITO" Comment="Initialisation confirm">
+        <With Var="QO" />
+      </Event>
+      <Event ID="BA6F71BB111389B6" Name="RESET_DONE" Comment="Reset sequence finished (StationMode)">
+      </Event>
+      <Event ID="AD818ACDC0589534" Name="FAULT" Comment="Stopped on a device fault (StationMode)">
+      </Event>
+      <Event ID="DFF8B512080D88F4" Name="WP_REQ" Comment="Ask Distributing for a workpiece (IWorkpieceSupply)">
+      </Event>
+      <Event ID="E108CB526FBA8331" Name="RELEASE" Comment="Release the tray (IWaypoint)">
+      </Event>
+      <Event ID="CF5A7E56D46470E9" Name="STATE_REQ" Comment="Ask the waypoint for the tray state (IWaypoint)">
+      </Event>
+      <Event ID="26F48BE458D4A159" Name="TSTART_EJ" Comment="Start the ejector timer">
+      </Event>
+      <Event ID="3F572A3C1D9074EF" Name="TSTART_SL" Comment="Start the air slide timer">
+      </Event>
+      <Event ID="A58B0990CCDD3855" Name="HMI_ST" Comment="State for the HMI">
+        <With Var="ModeText" />
+        <With Var="StepText" />
+        <With Var="Cycles" />
+        <With Var="Rejected" />
+        <With Var="StepNo" />
+        <With Var="TrayReleased" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="C4C11FDFE1382B30" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="330C3923E87968EE" Name="Mode" Type="INT" Comment="Station mode: 0 = wait for RESET, 1 = resetting, 2 = wait for START, 3 = started" />
+      <VarDeclaration ID="D1B46B5E8753AE36" Name="Started" Type="BOOL" Comment="Station started: trays are accepted" />
+      <VarDeclaration ID="387D6851593C63B9" Name="Tray" Type="BOOL" Comment="A tray is at the stopper of interface 1" />
+      <VarDeclaration ID="F7325DDC33AB364F" Name="Workpiece" Type="BOOL" Comment="The tray carries a workpiece" />
+      <VarDeclaration ID="6AD516F989FD7533" Name="NotBlackPv" Type="VTQBOOL" Comment="B2 workpiece is not black" />
+      <VarDeclaration ID="025262918B7AB4C1" Name="HeightOkPv" Type="VTQBOOL" Comment="Height comparator: height correct" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="4C4FC604D6B6E770" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration ID="6D6D41DA60BF85A2" Name="ModeText" Type="STRING[40]" Comment="Station mode as text" />
+      <VarDeclaration ID="50A0ACBB08EFF850" Name="StepText" Type="STRING[40]" Comment="Current step as text (number and name)" />
+      <VarDeclaration ID="C7ACEDB01AE67EA5" Name="Cycles" Type="UDINT" Comment="Workpieces put on a tray since start-up" />
+      <VarDeclaration ID="658AE5D5259A2BD9" Name="Rejected" Type="UDINT" Comment="Workpieces rejected (black or wrong height) since start-up" />
+      <VarDeclaration ID="3B0AEE5029ED66BF" Name="StepNo" Type="INT" Comment="Current step number" />
+      <VarDeclaration ID="D4E332979929154E" Name="TrayReleased" Type="BOOL" Comment="The tray has been released (until the next tray)" />
+    </OutputVars>
+    <Plugs>
+      <AdapterDeclaration Name="ILift" Type="IDevice" Namespace="SE.App2CommonProcess" />
+      <AdapterDeclaration Name="IEjector" Type="IDevice" Namespace="SE.App2CommonProcess" />
+      <AdapterDeclaration Name="IAirSlide" Type="IDevice" Namespace="SE.App2CommonProcess" />
+    </Plugs>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="algModeText,algInit,algIdle,algFaultOnly,algQTray,algQEmpty,algQFull,algQ_CHK,algS_R_SEL,algC_R_SEL,algS_R_HOME,algC_R_HOME,algS_R_EJ,algS_R_BACK,algC_R_BACK,algS_R_DONE,algS_C_PASS,algS_C_REQ,algS_C_COLOUR,algS_C_RAISE,algC_C_RAISE,algS_C_HEIGHT,algS_C_PUSH,algS_C_BACK,algC_C_BACK,algS_C_SLIDE,algS_C_LOWER,algC_C_LOWER,algS_C_DONE,algS_X_LOWER,algC_X_LOWER,algS_X_EJ,algS_X_BACK,algC_X_BACK,algS_X_COUNT,algFault,algRdyLift,algTkSelLift,algTkCmdLift" />
+    <InternalVars>
+      <VarDeclaration Name="Done" Type="BOOL" Comment="The current step has reached its target" />
+      <VarDeclaration Name="Fault" Type="BOOL" Comment="A device needs Rearm, or is not program local when it must be" />
+      <VarDeclaration Name="Accept" Type="BOOL" Comment="A tray is accepted (station started, tray present)" />
+      <VarDeclaration Name="TrayNow" Type="BOOL" Comment="A tray is present (from the waypoint or a stand-in button)" />
+      <VarDeclaration Name="Full" Type="BOOL" Comment="The present tray carries a workpiece" />
+      <VarDeclaration Name="Black" Type="BOOL" Comment="The workpiece is black" />
+      <VarDeclaration Name="HeightGood" Type="BOOL" Comment="The workpiece has the right height" />
+      <VarDeclaration Name="RdyLift" Type="BOOL" Comment="Lift has sent CNF_READY: its owner has initialised" />
+      <VarDeclaration Name="AdpLift" Type="BOOL" Comment="Lift taken over at start-up, or the reset sequence has run" />
+      <VarDeclaration Name="TryLift" Type="INT" Comment="Program-local requests sent to Lift at start-up" />
+    </InternalVars>
+    <ECC>
+      <ECState Name="START" Comment="Initial state" x="100" y="100" />
+      <ECState Name="INIT_S" x="100" y="500">
+        <ECAction Algorithm="algInit" />
+        <ECAction Algorithm="algModeText" />
+        <ECAction Output="HMI_ST" />
+        <ECAction Output="INITO" />
+      </ECState>
+      <ECState Name="S_IDLE" x="100" y="900">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algIdle" Output="HMI_ST" />
+      </ECState>
+      <ECState Name="IDLE_W" Comment="Idle: wait for RESET (reset sequence) or a tray" x="100" y="1300" />
+      <ECState Name="M_IDLE" x="100" y="1700">
+        <ECAction Algorithm="algModeText" Output="HMI_ST" />
+      </ECState>
+      <ECState Name="Q_TRAY" x="500" y="1700">
+        <ECAction Algorithm="algQTray" />
+      </ECState>
+      <ECState Name="Q_EMPTY" x="500" y="2100">
+        <ECAction Algorithm="algQEmpty" />
+      </ECState>
+      <ECState Name="Q_FULL" x="500" y="2500">
+        <ECAction Algorithm="algQFull" />
+      </ECState>
+      <ECState Name="Q_CHK" x="900" y="2100">
+        <ECAction Algorithm="algQ_CHK" />
+      </ECState>
+      <ECState Name="Q_NOSTART" x="900" y="2500">
+        <ECAction Algorithm="algModeText" Output="HMI_ST" />
+      </ECState>
+      <ECState Name="S_R_SEL" x="2100" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_R_SEL" Output="HMI_ST" />
+        <ECAction Output="ILift.REQ_PROGLOCALSEL" />
+        <ECAction Output="IEjector.REQ_PROGLOCALSEL" />
+        <ECAction Output="IAirSlide.REQ_PROGLOCALSEL" />
+      </ECState>
+      <ECState Name="C_R_SEL" x="2100" y="700">
+        <ECAction Algorithm="algC_R_SEL" />
+      </ECState>
+      <ECState Name="W_R_SEL" Comment="Wait: Reset: owners to program" x="2100" y="1100" />
+      <ECState Name="S_R_HOME" x="3000" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_R_HOME" Output="HMI_ST" />
+        <ECAction Output="IAirSlide.REQ_CMD" />
+        <ECAction Output="ILift.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_R_HOME" x="3000" y="700">
+        <ECAction Algorithm="algC_R_HOME" />
+      </ECState>
+      <ECState Name="W_R_HOME" Comment="Wait: Reset: air off, lift down" x="3000" y="1100" />
+      <ECState Name="S_R_EJ" x="3900" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_R_EJ" Output="HMI_ST" />
+        <ECAction Output="IEjector.REQ_CMD" />
+        <ECAction Output="TSTART_EJ" />
+      </ECState>
+      <ECState Name="W_R_EJ" Comment="Wait: Reset: eject" x="3900" y="700" />
+      <ECState Name="K_R_EJ" x="3900" y="1100">
+        <ECAction Algorithm="algFaultOnly" />
+      </ECState>
+      <ECState Name="S_R_BACK" x="4800" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_R_BACK" Output="HMI_ST" />
+        <ECAction Output="IEjector.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_R_BACK" x="4800" y="700">
+        <ECAction Algorithm="algC_R_BACK" />
+      </ECState>
+      <ECState Name="W_R_BACK" Comment="Wait: Reset: ejector back" x="4800" y="1100" />
+      <ECState Name="S_R_DONE" x="5700" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_R_DONE" Output="HMI_ST" />
+        <ECAction Output="RESET_DONE" />
+        <ECAction Output="STATE_REQ" />
+      </ECState>
+      <ECState Name="S_C_PASS" x="6600" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_PASS" Output="HMI_ST" />
+        <ECAction Output="RELEASE" />
+      </ECState>
+      <ECState Name="S_C_REQ" x="7500" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_REQ" Output="HMI_ST" />
+        <ECAction Output="WP_REQ" />
+      </ECState>
+      <ECState Name="W_C_REQ" Comment="Wait: Ask Distributing" x="7500" y="700" />
+      <ECState Name="K_C_REQ" x="7500" y="1100">
+        <ECAction Algorithm="algFaultOnly" />
+      </ECState>
+      <ECState Name="S_C_COLOUR" x="8400" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_COLOUR" Output="HMI_ST" />
+      </ECState>
+      <ECState Name="S_C_RAISE" x="9300" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_RAISE" Output="HMI_ST" />
+        <ECAction Output="ILift.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_C_RAISE" x="9300" y="700">
+        <ECAction Algorithm="algC_C_RAISE" />
+      </ECState>
+      <ECState Name="W_C_RAISE" Comment="Wait: Raise lift" x="9300" y="1100" />
+      <ECState Name="S_C_HEIGHT" x="10200" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_HEIGHT" Output="HMI_ST" />
+      </ECState>
+      <ECState Name="S_C_PUSH" x="11100" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_PUSH" Output="HMI_ST" />
+        <ECAction Output="IEjector.REQ_CMD" />
+        <ECAction Output="IAirSlide.REQ_CMD" />
+        <ECAction Output="TSTART_EJ" />
+      </ECState>
+      <ECState Name="W_C_PUSH" Comment="Wait: Push onto air slide" x="11100" y="700" />
+      <ECState Name="K_C_PUSH" x="11100" y="1100">
+        <ECAction Algorithm="algFaultOnly" />
+      </ECState>
+      <ECState Name="S_C_BACK" x="12000" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_BACK" Output="HMI_ST" />
+        <ECAction Output="IEjector.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_C_BACK" x="12000" y="700">
+        <ECAction Algorithm="algC_C_BACK" />
+      </ECState>
+      <ECState Name="W_C_BACK" Comment="Wait: Ejector back" x="12000" y="1100" />
+      <ECState Name="S_C_SLIDE" x="12900" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_SLIDE" Output="HMI_ST" />
+        <ECAction Output="TSTART_SL" />
+      </ECState>
+      <ECState Name="W_C_SLIDE" Comment="Wait: Air slide on" x="12900" y="700" />
+      <ECState Name="K_C_SLIDE" x="12900" y="1100">
+        <ECAction Algorithm="algFaultOnly" />
+      </ECState>
+      <ECState Name="S_C_LOWER" x="13800" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_LOWER" Output="HMI_ST" />
+        <ECAction Output="IAirSlide.REQ_CMD" />
+        <ECAction Output="ILift.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_C_LOWER" x="13800" y="700">
+        <ECAction Algorithm="algC_C_LOWER" />
+      </ECState>
+      <ECState Name="W_C_LOWER" Comment="Wait: Air off, lift down" x="13800" y="1100" />
+      <ECState Name="S_C_DONE" x="14700" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_DONE" Output="HMI_ST" />
+        <ECAction Output="RELEASE" />
+      </ECState>
+      <ECState Name="S_X_LOWER" x="15600" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_X_LOWER" Output="HMI_ST" />
+        <ECAction Output="ILift.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_X_LOWER" x="15600" y="700">
+        <ECAction Algorithm="algC_X_LOWER" />
+      </ECState>
+      <ECState Name="W_X_LOWER" Comment="Wait: Reject: lift down" x="15600" y="1100" />
+      <ECState Name="S_X_EJ" x="16500" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_X_EJ" Output="HMI_ST" />
+        <ECAction Output="IEjector.REQ_CMD" />
+        <ECAction Output="TSTART_EJ" />
+      </ECState>
+      <ECState Name="W_X_EJ" Comment="Wait: Reject: eject" x="16500" y="700" />
+      <ECState Name="K_X_EJ" x="16500" y="1100">
+        <ECAction Algorithm="algFaultOnly" />
+      </ECState>
+      <ECState Name="S_X_BACK" x="17400" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_X_BACK" Output="HMI_ST" />
+        <ECAction Output="IEjector.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_X_BACK" x="17400" y="700">
+        <ECAction Algorithm="algC_X_BACK" />
+      </ECState>
+      <ECState Name="W_X_BACK" Comment="Wait: Reject: ejector back" x="17400" y="1100" />
+      <ECState Name="S_X_COUNT" x="18300" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_X_COUNT" Output="HMI_ST" />
+      </ECState>
+      <ECState Name="FAULT_S" Comment="Fault: RESET restarts the reset sequence after Rearm on the faceplate" x="19200" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algFault" Output="HMI_ST" />
+        <ECAction Output="FAULT" />
+      </ECState>
+      <ECState Name="SR_Lift" Comment="Lift ready before INIT" x="100" y="2900">
+        <ECAction Algorithm="algRdyLift" />
+      </ECState>
+      <ECState Name="TR_Lift" x="100" y="3300">
+        <ECAction Algorithm="algRdyLift" />
+      </ECState>
+      <ECState Name="TK_Lift" Comment="Start-up takeover of Lift" x="100" y="3700" />
+      <ECState Name="TS_Lift" x="-200" y="4100">
+        <ECAction Algorithm="algTkSelLift" Output="ILift.REQ_PROGLOCALSEL" />
+      </ECState>
+      <ECState Name="TC_Lift" x="400" y="4100">
+        <ECAction Algorithm="algTkCmdLift" Output="ILift.REQ_CMD" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT_S" Condition="INIT" x="150" y="300" />
+      <ECTransition Source="INIT_S" Destination="S_IDLE" Condition="1" x="150" y="700" />
+      <ECTransition Source="S_IDLE" Destination="TK_Lift" Condition="1" x="150" y="1100" />
+      <ECTransition Source="IDLE_W" Destination="INIT_S" Condition="INIT" x="250" y="900" />
+      <ECTransition Source="IDLE_W" Destination="M_IDLE" Condition="MODE" x="150" y="1500" />
+      <ECTransition Source="M_IDLE" Destination="IDLE_W" Condition="1" x="250" y="1500" />
+      <ECTransition Source="IDLE_W" Destination="S_R_SEL" Condition="DO_RESET" x="400" y="1300" />
+      <ECTransition Source="IDLE_W" Destination="Q_TRAY" Condition="TRAY" x="350" y="1500" />
+      <ECTransition Source="IDLE_W" Destination="Q_EMPTY" Condition="SIM_EMPTY" x="350" y="1800" />
+      <ECTransition Source="IDLE_W" Destination="Q_FULL" Condition="SIM_FULL" x="350" y="2100" />
+      <ECTransition Source="Q_TRAY" Destination="Q_CHK" Condition="1" x="700" y="1900" />
+      <ECTransition Source="Q_EMPTY" Destination="Q_CHK" Condition="1" x="700" y="2100" />
+      <ECTransition Source="Q_FULL" Destination="Q_CHK" Condition="1" x="700" y="2300" />
+      <ECTransition Source="Q_CHK" Destination="Q_NOSTART" Condition="NOT Accept" x="950" y="2300" />
+      <ECTransition Source="Q_NOSTART" Destination="IDLE_W" Condition="1" x="600" y="1300" />
+      <ECTransition Source="Q_CHK" Destination="FAULT_S" Condition="Accept AND Fault" x="1100" y="2100" />
+      <ECTransition Source="Q_CHK" Destination="S_C_PASS" Condition="Accept AND NOT Fault AND Full" x="1100" y="2000" />
+      <ECTransition Source="Q_CHK" Destination="S_C_REQ" Condition="Accept AND NOT Fault AND NOT Full" x="1100" y="2200" />
+      <ECTransition Source="S_R_SEL" Destination="C_R_SEL" Condition="1" x="2150" y="500" />
+      <ECTransition Source="C_R_SEL" Destination="FAULT_S" Condition="Fault" x="2400" y="750" />
+      <ECTransition Source="C_R_SEL" Destination="S_R_HOME" Condition="NOT Fault AND Done" x="2400" y="650" />
+      <ECTransition Source="C_R_SEL" Destination="W_R_SEL" Condition="NOT Fault AND NOT Done" x="2150" y="900" />
+      <ECTransition Source="W_R_SEL" Destination="C_R_SEL" Condition="ILift.CNF_STATUS OR ILift.CNF_READY OR IEjector.CNF_STATUS OR IEjector.CNF_READY OR IAirSlide.CNF_STATUS OR IAirSlide.CNF_READY" x="2250" y="900" />
+      <ECTransition Source="S_R_HOME" Destination="C_R_HOME" Condition="1" x="3050" y="500" />
+      <ECTransition Source="C_R_HOME" Destination="FAULT_S" Condition="Fault" x="3300" y="750" />
+      <ECTransition Source="C_R_HOME" Destination="S_R_EJ" Condition="NOT Fault AND Done" x="3300" y="650" />
+      <ECTransition Source="C_R_HOME" Destination="W_R_HOME" Condition="NOT Fault AND NOT Done" x="3050" y="900" />
+      <ECTransition Source="W_R_HOME" Destination="C_R_HOME" Condition="ILift.CNF_STATUS OR ILift.CNF_READY OR IEjector.CNF_STATUS OR IEjector.CNF_READY OR IAirSlide.CNF_STATUS OR IAirSlide.CNF_READY" x="3150" y="900" />
+      <ECTransition Source="S_R_EJ" Destination="W_R_EJ" Condition="1" x="3950" y="500" />
+      <ECTransition Source="W_R_EJ" Destination="S_R_BACK" Condition="T_EJ" x="4200" y="700" />
+      <ECTransition Source="W_R_EJ" Destination="K_R_EJ" Condition="ILift.CNF_STATUS OR ILift.CNF_READY OR IEjector.CNF_STATUS OR IEjector.CNF_READY OR IAirSlide.CNF_STATUS OR IAirSlide.CNF_READY" x="3950" y="900" />
+      <ECTransition Source="K_R_EJ" Destination="FAULT_S" Condition="Fault" x="4200" y="1100" />
+      <ECTransition Source="K_R_EJ" Destination="W_R_EJ" Condition="NOT Fault" x="4050" y="900" />
+      <ECTransition Source="S_R_BACK" Destination="C_R_BACK" Condition="1" x="4850" y="500" />
+      <ECTransition Source="C_R_BACK" Destination="FAULT_S" Condition="Fault" x="5100" y="750" />
+      <ECTransition Source="C_R_BACK" Destination="S_R_DONE" Condition="NOT Fault AND Done" x="5100" y="650" />
+      <ECTransition Source="C_R_BACK" Destination="W_R_BACK" Condition="NOT Fault AND NOT Done" x="4850" y="900" />
+      <ECTransition Source="W_R_BACK" Destination="C_R_BACK" Condition="ILift.CNF_STATUS OR ILift.CNF_READY OR IEjector.CNF_STATUS OR IEjector.CNF_READY OR IAirSlide.CNF_STATUS OR IAirSlide.CNF_READY" x="4950" y="900" />
+      <ECTransition Source="S_R_DONE" Destination="IDLE_W" Condition="1" x="5750" y="500" />
+      <ECTransition Source="S_C_PASS" Destination="IDLE_W" Condition="1" x="6650" y="500" />
+      <ECTransition Source="S_C_REQ" Destination="W_C_REQ" Condition="1" x="7550" y="500" />
+      <ECTransition Source="W_C_REQ" Destination="S_C_COLOUR" Condition="WP_CNF" x="7800" y="700" />
+      <ECTransition Source="W_C_REQ" Destination="K_C_REQ" Condition="ILift.CNF_STATUS OR ILift.CNF_READY OR IEjector.CNF_STATUS OR IEjector.CNF_READY OR IAirSlide.CNF_STATUS OR IAirSlide.CNF_READY" x="7550" y="900" />
+      <ECTransition Source="K_C_REQ" Destination="FAULT_S" Condition="Fault" x="7800" y="1100" />
+      <ECTransition Source="K_C_REQ" Destination="W_C_REQ" Condition="NOT Fault" x="7650" y="900" />
+      <ECTransition Source="S_C_COLOUR" Destination="S_X_EJ" Condition="Black" x="8450" y="500" />
+      <ECTransition Source="S_C_COLOUR" Destination="S_C_RAISE" Condition="NOT Black" x="8450" y="500" />
+      <ECTransition Source="S_C_RAISE" Destination="C_C_RAISE" Condition="1" x="9350" y="500" />
+      <ECTransition Source="C_C_RAISE" Destination="FAULT_S" Condition="Fault" x="9600" y="750" />
+      <ECTransition Source="C_C_RAISE" Destination="S_C_HEIGHT" Condition="NOT Fault AND Done" x="9600" y="650" />
+      <ECTransition Source="C_C_RAISE" Destination="W_C_RAISE" Condition="NOT Fault AND NOT Done" x="9350" y="900" />
+      <ECTransition Source="W_C_RAISE" Destination="C_C_RAISE" Condition="ILift.CNF_STATUS OR ILift.CNF_READY OR IEjector.CNF_STATUS OR IEjector.CNF_READY OR IAirSlide.CNF_STATUS OR IAirSlide.CNF_READY" x="9450" y="900" />
+      <ECTransition Source="S_C_HEIGHT" Destination="S_C_PUSH" Condition="HeightGood" x="10250" y="500" />
+      <ECTransition Source="S_C_HEIGHT" Destination="S_X_LOWER" Condition="NOT HeightGood" x="10250" y="500" />
+      <ECTransition Source="S_C_PUSH" Destination="W_C_PUSH" Condition="1" x="11150" y="500" />
+      <ECTransition Source="W_C_PUSH" Destination="S_C_BACK" Condition="T_EJ" x="11400" y="700" />
+      <ECTransition Source="W_C_PUSH" Destination="K_C_PUSH" Condition="ILift.CNF_STATUS OR ILift.CNF_READY OR IEjector.CNF_STATUS OR IEjector.CNF_READY OR IAirSlide.CNF_STATUS OR IAirSlide.CNF_READY" x="11150" y="900" />
+      <ECTransition Source="K_C_PUSH" Destination="FAULT_S" Condition="Fault" x="11400" y="1100" />
+      <ECTransition Source="K_C_PUSH" Destination="W_C_PUSH" Condition="NOT Fault" x="11250" y="900" />
+      <ECTransition Source="S_C_BACK" Destination="C_C_BACK" Condition="1" x="12050" y="500" />
+      <ECTransition Source="C_C_BACK" Destination="FAULT_S" Condition="Fault" x="12300" y="750" />
+      <ECTransition Source="C_C_BACK" Destination="S_C_SLIDE" Condition="NOT Fault AND Done" x="12300" y="650" />
+      <ECTransition Source="C_C_BACK" Destination="W_C_BACK" Condition="NOT Fault AND NOT Done" x="12050" y="900" />
+      <ECTransition Source="W_C_BACK" Destination="C_C_BACK" Condition="ILift.CNF_STATUS OR ILift.CNF_READY OR IEjector.CNF_STATUS OR IEjector.CNF_READY OR IAirSlide.CNF_STATUS OR IAirSlide.CNF_READY" x="12150" y="900" />
+      <ECTransition Source="S_C_SLIDE" Destination="W_C_SLIDE" Condition="1" x="12950" y="500" />
+      <ECTransition Source="W_C_SLIDE" Destination="S_C_LOWER" Condition="T_SL" x="13200" y="700" />
+      <ECTransition Source="W_C_SLIDE" Destination="K_C_SLIDE" Condition="ILift.CNF_STATUS OR ILift.CNF_READY OR IEjector.CNF_STATUS OR IEjector.CNF_READY OR IAirSlide.CNF_STATUS OR IAirSlide.CNF_READY" x="12950" y="900" />
+      <ECTransition Source="K_C_SLIDE" Destination="FAULT_S" Condition="Fault" x="13200" y="1100" />
+      <ECTransition Source="K_C_SLIDE" Destination="W_C_SLIDE" Condition="NOT Fault" x="13050" y="900" />
+      <ECTransition Source="S_C_LOWER" Destination="C_C_LOWER" Condition="1" x="13850" y="500" />
+      <ECTransition Source="C_C_LOWER" Destination="FAULT_S" Condition="Fault" x="14100" y="750" />
+      <ECTransition Source="C_C_LOWER" Destination="S_C_DONE" Condition="NOT Fault AND Done" x="14100" y="650" />
+      <ECTransition Source="C_C_LOWER" Destination="W_C_LOWER" Condition="NOT Fault AND NOT Done" x="13850" y="900" />
+      <ECTransition Source="W_C_LOWER" Destination="C_C_LOWER" Condition="ILift.CNF_STATUS OR ILift.CNF_READY OR IEjector.CNF_STATUS OR IEjector.CNF_READY OR IAirSlide.CNF_STATUS OR IAirSlide.CNF_READY" x="13950" y="900" />
+      <ECTransition Source="S_C_DONE" Destination="IDLE_W" Condition="1" x="14750" y="500" />
+      <ECTransition Source="S_X_LOWER" Destination="C_X_LOWER" Condition="1" x="15650" y="500" />
+      <ECTransition Source="C_X_LOWER" Destination="FAULT_S" Condition="Fault" x="15900" y="750" />
+      <ECTransition Source="C_X_LOWER" Destination="S_X_EJ" Condition="NOT Fault AND Done" x="15900" y="650" />
+      <ECTransition Source="C_X_LOWER" Destination="W_X_LOWER" Condition="NOT Fault AND NOT Done" x="15650" y="900" />
+      <ECTransition Source="W_X_LOWER" Destination="C_X_LOWER" Condition="ILift.CNF_STATUS OR ILift.CNF_READY OR IEjector.CNF_STATUS OR IEjector.CNF_READY OR IAirSlide.CNF_STATUS OR IAirSlide.CNF_READY" x="15750" y="900" />
+      <ECTransition Source="S_X_EJ" Destination="W_X_EJ" Condition="1" x="16550" y="500" />
+      <ECTransition Source="W_X_EJ" Destination="S_X_BACK" Condition="T_EJ" x="16800" y="700" />
+      <ECTransition Source="W_X_EJ" Destination="K_X_EJ" Condition="ILift.CNF_STATUS OR ILift.CNF_READY OR IEjector.CNF_STATUS OR IEjector.CNF_READY OR IAirSlide.CNF_STATUS OR IAirSlide.CNF_READY" x="16550" y="900" />
+      <ECTransition Source="K_X_EJ" Destination="FAULT_S" Condition="Fault" x="16800" y="1100" />
+      <ECTransition Source="K_X_EJ" Destination="W_X_EJ" Condition="NOT Fault" x="16650" y="900" />
+      <ECTransition Source="S_X_BACK" Destination="C_X_BACK" Condition="1" x="17450" y="500" />
+      <ECTransition Source="C_X_BACK" Destination="FAULT_S" Condition="Fault" x="17700" y="750" />
+      <ECTransition Source="C_X_BACK" Destination="S_X_COUNT" Condition="NOT Fault AND Done" x="17700" y="650" />
+      <ECTransition Source="C_X_BACK" Destination="W_X_BACK" Condition="NOT Fault AND NOT Done" x="17450" y="900" />
+      <ECTransition Source="W_X_BACK" Destination="C_X_BACK" Condition="ILift.CNF_STATUS OR ILift.CNF_READY OR IEjector.CNF_STATUS OR IEjector.CNF_READY OR IAirSlide.CNF_STATUS OR IAirSlide.CNF_READY" x="17550" y="900" />
+      <ECTransition Source="S_X_COUNT" Destination="S_C_REQ" Condition="1" x="18350" y="500" />
+      <ECTransition Source="FAULT_S" Destination="IDLE_W" Condition="1" x="19250" y="500" />
+      <ECTransition Source="START" Destination="SR_Lift" Condition="ILift.CNF_READY" x="100" y="2700" />
+      <ECTransition Source="SR_Lift" Destination="START" Condition="1" x="200" y="2800" />
+      <ECTransition Source="IDLE_W" Destination="TR_Lift" Condition="ILift.CNF_READY" x="0" y="3100" />
+      <ECTransition Source="TR_Lift" Destination="TK_Lift" Condition="1" x="150" y="3500" />
+      <ECTransition Source="IDLE_W" Destination="TK_Lift" Condition="ILift.CNF_STATUS" x="-100" y="3500" />
+      <ECTransition Source="TK_Lift" Destination="TS_Lift" Condition="NOT AdpLift AND RdyLift AND NOT ILift.ProgLocal AND TryLift &lt; 3" x="-100" y="3900" />
+      <ECTransition Source="TK_Lift" Destination="TC_Lift" Condition="NOT AdpLift AND RdyLift AND ILift.ProgLocal AND (ILift.Status.value = 1 OR ILift.Status.value = 2)" x="300" y="3900" />
+      <ECTransition Source="TK_Lift" Destination="IDLE_W" Condition="NOT (NOT AdpLift AND RdyLift AND NOT ILift.ProgLocal AND TryLift &lt; 3) AND NOT (NOT AdpLift AND RdyLift AND ILift.ProgLocal AND (ILift.Status.value = 1 OR ILift.Status.value = 2))" x="150" y="4000" />
+      <ECTransition Source="TS_Lift" Destination="IDLE_W" Condition="1" x="-200" y="4300" />
+      <ECTransition Source="TC_Lift" Destination="IDLE_W" Condition="1" x="400" y="4300" />
+    </ECC>
+    <Algorithm Name="algModeText" Comment="Station mode as text">
+      <ST><![CDATA[CASE Mode OF
+    0: ModeText := 'Wait for RESET';
+    1: ModeText := 'Resetting';
+    2: ModeText := 'Wait for START';
+    3: ModeText := 'Started';
+ELSE
+    ModeText := 'Unknown mode';
+END_CASE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algInit" Comment="Idle">
+      <ST><![CDATA[QO := QI;
+StepNo := 0; StepText := '0 Idle';
+Cycles := 0; Rejected := 0; TrayReleased := FALSE;
+Done := FALSE; Fault := FALSE;
+AdpLift := FALSE; TryLift := 0;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algIdle" Comment="Idle">
+      <ST><![CDATA[StepNo := 0; StepText := '0 Idle';
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algFaultOnly" Comment="Fault check while waiting for a timer or a confirmation">
+      <ST><![CDATA[Fault := ILift.NeedReset OR IEjector.NeedReset OR IAirSlide.NeedReset;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algQTray" Comment="Tray state from the waypoint">
+      <ST><![CDATA[TrayNow := Tray; Full := Workpiece;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algQEmpty" Comment="Stand-in: empty tray">
+      <ST><![CDATA[TrayNow := TRUE; Full := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algQFull" Comment="Stand-in: tray with a workpiece">
+      <ST><![CDATA[TrayNow := TRUE; Full := TRUE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algQ_CHK" Comment="Tray: accept only when started; all devices must be ready">
+      <ST><![CDATA[Accept := Started AND TrayNow;
+Fault := ILift.NeedReset OR IEjector.NeedReset OR IAirSlide.NeedReset OR NOT (ILift.ProgLocal AND IEjector.ProgLocal AND IAirSlide.ProgLocal);
+IF NOT Started THEN
+    StepText := '0 Idle: press START first';
+ELSIF NOT TrayNow THEN
+    StepText := '0 Idle: no tray';
+END_IF;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_R_SEL" Comment="Reset: owners to program">
+      <ST><![CDATA[StepNo := 10; StepText := '10 Reset: owners to program';
+ILift.ProgLocalSel := TRUE;
+IEjector.ProgLocalSel := TRUE;
+IAirSlide.ProgLocalSel := TRUE;
+AdpLift := TRUE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_R_SEL" Comment="Check: Reset: owners to program">
+      <ST><![CDATA[Fault := ILift.NeedReset OR IEjector.NeedReset OR IAirSlide.NeedReset;
+Done := ILift.ProgLocal AND IEjector.ProgLocal AND IAirSlide.ProgLocal;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_R_HOME" Comment="Reset: air off, lift down">
+      <ST><![CDATA[StepNo := 11; StepText := '11 Reset: air off, lift down';
+IAirSlide.Lsp.value := 0;
+ILift.Lsp.value := 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_R_HOME" Comment="Check: Reset: air off, lift down">
+      <ST><![CDATA[Fault := ILift.NeedReset OR IEjector.NeedReset OR IAirSlide.NeedReset;
+Done := ILift.Status.value = 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_R_EJ" Comment="Reset: eject">
+      <ST><![CDATA[StepNo := 12; StepText := '12 Reset: eject';
+IEjector.Lsp.value := 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_R_BACK" Comment="Reset: ejector back">
+      <ST><![CDATA[StepNo := 13; StepText := '13 Reset: ejector back';
+IEjector.Lsp.value := 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_R_BACK" Comment="Check: Reset: ejector back">
+      <ST><![CDATA[Fault := ILift.NeedReset OR IEjector.NeedReset OR IAirSlide.NeedReset;
+Done := IEjector.Status.value = 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_R_DONE" Comment="Reset done">
+      <ST><![CDATA[StepNo := 14; StepText := '14 Reset done';
+TrayReleased := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_PASS" Comment="Tray full: released">
+      <ST><![CDATA[StepNo := 20; StepText := '20 Tray full: released';
+TrayReleased := TRUE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_REQ" Comment="Ask Distributing">
+      <ST><![CDATA[StepNo := 21; StepText := '21 Ask Distributing';
+TrayReleased := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_COLOUR" Comment="Check colour">
+      <ST><![CDATA[StepNo := 22; StepText := '22 Check colour';
+Black := NOT NotBlackPv.value;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_RAISE" Comment="Raise lift">
+      <ST><![CDATA[StepNo := 23; StepText := '23 Raise lift';
+ILift.Lsp.value := 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_C_RAISE" Comment="Check: Raise lift">
+      <ST><![CDATA[Fault := ILift.NeedReset OR IEjector.NeedReset OR IAirSlide.NeedReset;
+Done := ILift.Status.value = 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_HEIGHT" Comment="Check height">
+      <ST><![CDATA[StepNo := 24; StepText := '24 Check height';
+HeightGood := HeightOkPv.value;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_PUSH" Comment="Push onto air slide">
+      <ST><![CDATA[StepNo := 25; StepText := '25 Push onto air slide';
+IEjector.Lsp.value := 1;
+IAirSlide.Lsp.value := 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_BACK" Comment="Ejector back">
+      <ST><![CDATA[StepNo := 26; StepText := '26 Ejector back';
+IEjector.Lsp.value := 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_C_BACK" Comment="Check: Ejector back">
+      <ST><![CDATA[Fault := ILift.NeedReset OR IEjector.NeedReset OR IAirSlide.NeedReset;
+Done := IEjector.Status.value = 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_SLIDE" Comment="Air slide on">
+      <ST><![CDATA[StepNo := 27; StepText := '27 Air slide on';
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_LOWER" Comment="Air off, lift down">
+      <ST><![CDATA[StepNo := 28; StepText := '28 Air off, lift down';
+IAirSlide.Lsp.value := 0;
+ILift.Lsp.value := 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_C_LOWER" Comment="Check: Air off, lift down">
+      <ST><![CDATA[Fault := ILift.NeedReset OR IEjector.NeedReset OR IAirSlide.NeedReset;
+Done := ILift.Status.value = 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_DONE" Comment="Done: tray released">
+      <ST><![CDATA[StepNo := 29; StepText := '29 Done: tray released';
+Cycles := Cycles + 1;
+TrayReleased := TRUE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_X_LOWER" Comment="Reject: lift down">
+      <ST><![CDATA[StepNo := 32; StepText := '32 Reject: lift down';
+ILift.Lsp.value := 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_X_LOWER" Comment="Check: Reject: lift down">
+      <ST><![CDATA[Fault := ILift.NeedReset OR IEjector.NeedReset OR IAirSlide.NeedReset;
+Done := ILift.Status.value = 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_X_EJ" Comment="Reject: eject">
+      <ST><![CDATA[StepNo := 30; StepText := '30 Reject: eject';
+IEjector.Lsp.value := 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_X_BACK" Comment="Reject: ejector back">
+      <ST><![CDATA[StepNo := 31; StepText := '31 Reject: ejector back';
+IEjector.Lsp.value := 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_X_BACK" Comment="Check: Reject: ejector back">
+      <ST><![CDATA[Fault := ILift.NeedReset OR IEjector.NeedReset OR IAirSlide.NeedReset;
+Done := IEjector.Status.value = 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_X_COUNT" Comment="Rejected: ask again">
+      <ST><![CDATA[StepNo := 33; StepText := '33 Rejected: ask again';
+Rejected := Rejected + 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algFault" Comment="Device fault: stop here, report to StationMode">
+      <ST><![CDATA[StepNo := 99;
+IF ILift.NeedReset THEN
+    StepText := '99 FAULT: Rearm Lift';
+ELSIF IEjector.NeedReset THEN
+    StepText := '99 FAULT: Rearm Ejector';
+ELSIF IAirSlide.NeedReset THEN
+    StepText := '99 FAULT: Rearm AirSlide';
+ELSE
+    StepText := '99 FAULT: owner not program';
+END_IF;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algRdyLift" Comment="Lift has reported ready">
+      <ST><![CDATA[RdyLift := TRUE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algTkSelLift" Comment="Start-up: ask Lift for program local">
+      <ST><![CDATA[ILift.ProgLocalSel := TRUE;
+TryLift := TryLift + 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algTkCmdLift" Comment="Start-up: command the end position Lift reports (it does not move)">
+      <ST><![CDATA[ILift.Lsp.value := ILift.Status.value;
+AdpLift := TRUE;
+]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

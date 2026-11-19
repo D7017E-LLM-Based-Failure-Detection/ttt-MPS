@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" font-family="Arial, Helvetica, sans-serif">
+  <title>Channel map of one station: SysLink pins to TM3 channels</title>
+  <rect width="960" height="520" fill="#ffffff"/>
+
+  <g stroke="#333" stroke-width="1.2">
+    <rect x="20" y="60" width="360" height="190" rx="6" fill="#fff6d6"/>
+    <rect x="20" y="290" width="360" height="190" rx="6" fill="#fff6d6"/>
+    <rect x="600" y="60" width="340" height="190" rx="6" fill="#e8f0fb"/>
+    <rect x="600" y="290" width="340" height="190" rx="6" fill="#e8f0fb"/>
+  </g>
+
+  <g font-size="15" font-weight="bold" fill="#111" text-anchor="middle">
+    <text x="200" y="38">Festo side (SysLink, 24 pins)</text>
+    <text x="770" y="38">PLC side (M251 + TM3 modules)</text>
+    <text x="200" y="85">Station I/O terminal, XMA2</text>
+    <text x="200" y="315">Control console, XMG1</text>
+    <text x="770" y="85">TM3DI16G (input module)</text>
+    <text x="770" y="315">TM3DQ16RG (relay output module)</text>
+  </g>
+
+  <g font-size="14" fill="#111">
+    <text x="36" y="115">Inputs I0–I7: pins 13–20</text>
+    <text x="36" y="140">Outputs O0–O7: pins 1–8</text>
+    <text x="36" y="345">Inputs I0–I7: pins 13–20</text>
+    <text x="36" y="370">Outputs Q0–Q7: pins 1–8</text>
+
+    <text x="616" y="115">DI00–DI07 ← station I0–I7</text>
+    <text x="616" y="140">DI08–DI15 ← console I0–I7</text>
+    <text x="616" y="345">DO00–DO07 → station O0–O7</text>
+    <text x="616" y="370">DO08–DO15 → console Q0–Q7</text>
+  </g>
+
+  <g font-size="12" fill="#555">
+    <text x="36" y="180">Supply of the outputs: 24 V pins 9–10, 0 V pins 11–12</text>
+    <text x="36" y="200">Supply of the inputs: 24 V pins 21–22, 0 V pins 23–24</text>
+
+    <text x="36" y="405">Supply: 24 V pins 21–22, 0 V pins 23–24</text>
+    <text x="36" y="427">I0 START, I1 STOP (NC), I2 AUTO/MAN, I3 RESET</text>
+    <text x="36" y="449">Q0 START lamp, Q1 RESET lamp, Q2 and Q3 lamps</text>
+  </g>
+
+  <!-- signal paths: inputs blue (Festo to PLC), outputs red (PLC to Festo) -->
+  <g stroke-width="2" fill="none">
+    <path d="M380 110 L600 110" stroke="#1f6fb2"/>
+    <path d="M380 340 C 490 340, 490 135, 600 135" stroke="#1f6fb2"/>
+    <path d="M600 340 C 490 340, 490 135, 380 135" stroke="#c0392b"/>
+    <path d="M600 365 L380 365" stroke="#c0392b"/>
+  </g>
+
+  <g font-size="13" fill="#333" text-anchor="middle">
+    <text x="480" y="505">Rule: station bits on channels 0–7, control console bits on channels 8–15; one input and one output module per station.</text>
+  </g>
+</svg>

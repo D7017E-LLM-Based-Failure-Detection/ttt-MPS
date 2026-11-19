@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="cfbaa0ce-cab2-4e75-ada8-b632b3dd6b66" Name="Actuator2Op" Format="2.0" Comment="Composite Function Block Type" Namespace="Flexbridge.FestoMPS400">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Attribute Name="Configuration.FB.IDCounter" Value="20" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="1.0.1" Author="ApplicationLibDevTeam" Date="9/20/2023" Remarks="First Version" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="REQ_SUPPRESS_ALM" Comment="Request to update the alarm suppress status">
+        <With Var="SuppressAlarm" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="CNF" Comment="Execution confirmation">
+        <With Var="FbOpen" />
+        <With Var="FbClosed" />
+        <With Var="FbStopped" />
+      </Event>
+      <Event Name="CNF_FAIL" Comment="Execution confirmation of failure" />
+      <Event Name="CNF_ALARM" Comment="Execution confirmation of alarm">
+        <With Var="FbAlarm" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="SuppressAlarm" Type="BOOL" Comment="1 = Suppress alarm in HMI" />
+      <VarDeclaration Name="ActiveStateSel" Type="ActiveState" Namespace="SE.App2Base" Comment="Feedback type selection to determine the active state for valves [StateSel configured as Valve1Op or Valve2Op],  0 = Open State  1 = Closed State " />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="FbStopped" Type="BOOL" Comment="1 = Stopped" />
+      <VarDeclaration Name="FbOpen" Type="BOOL" Comment="1 = Open" />
+      <VarDeclaration Name="FbClosed" Type="BOOL" Comment="1 = Closed" />
+      <VarDeclaration Name="FbAlarm" Type="BOOL" Comment="1 = Feedback failure alarm is active" />
+    </OutputVars>
+    <AdapterInputs>
+      <Adapter Name="IRsp" Type="IDigital" Namespace="SE.App2Base" Comment="Program remote setpoint interface adapter" />
+      <Adapter Name="ISc" Type="IDevice" Namespace="SE.App2CommonProcess" Comment="Sequence control Interface adapter. Controls the block when owner is in program local" />
+      <Adapter Name="IIlck" Type="IOpCondS" Namespace="SE.App2CommonProcess" Comment="Interlock condition summary chain input from ilckCondItem blocks" />
+      <Adapter Name="IPerm" Type="IOpPermS" Namespace="SE.App2CommonProcess" Comment="Permission condition summary chain input from permCondItem blocks" />
+    </AdapterInputs>
+    <AdapterOutputs>
+      <Adapter Name="IFbState" Type="IDigital" Namespace="SE.App2Base" Comment="Current feedback status adapter (Value = device feedback status, Status = device alarm data,Bit 1 = Device failure status, Bit 2 = Feedback failure status" />
+    </AdapterOutputs>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="2" Name="interlock" Type="IlckCondSum" x="2700" y="2680" Namespace="SE.App2CommonProcess">
+      <Attribute Name="Configuration.Component.HideUnusedPorts" Value="" />
+    </FB>
+    <FB ID="3" Name="permissive" Type="PermCondSum" x="2660" y="1600" Namespace="SE.App2CommonProcess">
+      <Attribute Name="Configuration.Component.HideUnusedPorts" Value="" />
+    </FB>
+    <FB ID="20" UID="4" Name="localPanel" Type="ValveLp" x="2860" y="3780" Namespace="SE.App2CommonProcess">
+      <Attribute Name="Configuration.Component.HideUnusedPorts" Value="" />
+    </FB>
+    <FB ID="5" Name="maintenance" Type="DevMnt" x="2680" y="4840" Namespace="SE.App2CommonProcess">
+      <Attribute Name="Configuration.Component.HideUnusedPorts" Value="" />
+    </FB>
+    <FB ID="17" UID="6" Name="sc" Type="valve2OpSeqData" x="2840" y="5880" Namespace="SE.App2CommonProcess" />
+    <FB ID="9" Name="fbOpen" Type="dISignal" x="2840" y="500" Namespace="SE.App2Base">
+      <Attribute Name="Configuration.Component.HideUnusedPorts" Value="" />
+      <Parameter Name="$Name" Value="'$${PATH}DIn'" />
+    </FB>
+    <FB ID="11" Name="cmdOpen" Type="dOSignal" x="9660" y="839.9999" Namespace="SE.App2Base">
+      <Attribute Name="Configuration.Component.HideUnusedPorts" Value="" />
+      <Parameter Name="$Name" Value="'$${PATH}DOut'" />
+    </FB>
+    <FB ID="15" Name="fbClose" Type="dISignal" x="1440" y="500" Namespace="SE.App2Base">
+      <Attribute Name="Configuration.Component.HideUnusedPorts" Value="" />
+      <Parameter Name="$Name" Value="'$${PATH}DIn'" />
+    </FB>
+    <FB ID="16" Name="cmdClose" Type="dOSignal" x="9660" y="1380" Namespace="SE.App2Base">
+      <Attribute Name="Configuration.Component.HideUnusedPorts" Value="" />
+      <Parameter Name="$Name" Value="'$${PATH}DOut'" />
+    </FB>
+    <FB ID="18" UID="12" Name="actuator2OpBaseExt" Type="Actuator2OpBaseExt" x="6140" y="720" Namespace="Flexbridge.FestoMPS400" />
+    <Input Name="SuppressAlarm" x="5100" y="1052" Type="Data" />
+    <Input Name="REQ_SUPPRESS_ALM" x="5100" y="732" Type="Event" />
+    <Input Name="ISc" x="1500" y="6032" Type="Adapter" />
+    <Input Name="IPerm" x="1440" y="1752" Type="Adapter" />
+    <Input Name="IIlck" x="1400" y="2832" Type="Adapter" />
+    <Input Name="IRsp" x="5100" y="1352" Type="Adapter" />
+    <Input Name="ActiveStateSel" x="1620" y="4992" Type="Data" />
+    <Frame Name="FRAME1" X="4080" Y="180" Width="4740" Height="2000">
+      <Parameter Name="BackgroundColor" Value="AliceBlue" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 20.25pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="Valve Control" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME3" X="200" Y="1300" Width="3660" Height="880">
+      <Parameter Name="BackgroundColor" Value="ButtonFace" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 20.25pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="Permissive" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME4" X="200" Y="2380" Width="3660" Height="880">
+      <Parameter Name="BackgroundColor" Value="ButtonFace" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 20.25pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="Interlock" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME6" X="200" Y="5620" Width="3680" Height="880">
+      <Parameter Name="BackgroundColor" Value="AliceBlue" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 20.25pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="Sequence Control" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME7" X="200" Y="3460" Width="3660" Height="880.0002">
+      <Parameter Name="BackgroundColor" Value="ButtonFace" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 20.25pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="Local Panel" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME8" X="200" Y="4540" Width="3660" Height="880">
+      <Parameter Name="BackgroundColor" Value="ButtonFace" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 20.25pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="Maintenance" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME9" X="200" Y="180" Width="3640" Height="920">
+      <Parameter Name="BackgroundColor" Value="LightCyan" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 20.25pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="Input Hardware Interface" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME10" X="9040" Y="180" Width="1380" Height="2000">
+      <Parameter Name="BackgroundColor" Value="LightCyan" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 20.25pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="Output Hardware Interface" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Output Name="FbStopped" x="7340" y="1052" Type="Data" />
+    <Output Name="CNF" x="7340" y="732" Type="Event" />
+    <Output Name="CNF_FAIL" x="7340" y="851.9999" Type="Event" />
+    <Output Name="CNF_ALARM" x="7340" y="791.9999" Type="Event" />
+    <Output Name="FbOpen" x="7340" y="1112" Type="Data" />
+    <Output Name="FbAlarm" x="7340" y="1232" Type="Data" />
+    <Output Name="IFbState" x="7340" y="1412" Type="Adapter" />
+    <Output Name="FbClosed" x="7340" y="1172" Type="Data" />
+    <EventConnections>
+      <Connection Source="$REQ_SUPPRESS_ALM" Destination="$18.REQ_SUPPRESS_ALM" />
+      <Connection Source="$18.CNF_ALM" Destination="$CNF_ALARM" dx1="70" />
+      <Connection Source="$18.CNF_FAIL" Destination="$CNF_FAIL" dx1="90" />
+      <Connection Source="$18.CNF" Destination="$CNF" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$SuppressAlarm" Destination="$18.SuppressAlarm" />
+      <Connection Source="$18.FbAlarm" Destination="$FbAlarm" />
+      <Connection Source="$18.FbStopped" Destination="$FbStopped" />
+      <Connection Source="$18.FbClosed" Destination="$FbClosed" dx1="150" />
+      <Connection Source="$18.FbOpened" Destination="$FbOpen" />
+      <Connection Source="$ActiveStateSel" Destination="$5.ActiveState">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+    </DataConnections>
+    <AdapterConnections>
+      <Connection Source="$IPerm" Destination="$3.IOpPermIn">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$ISc" Destination="$17.ISc">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$IIlck" Destination="$2.IOpCondIn">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$20.ILocalPanel" Destination="$18.ILocalPanel" dx1="726.688">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$5.IMaintenance" Destination="$18.IMaintenance" dx1="717.688">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$IRsp" Destination="$18.IRsp" />
+      <Connection Source="$17.ISeqData" Destination="$18.ISeqData" dx1="660.7917">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$18.IFbState" Destination="$IFbState" />
+      <Connection Source="$9.IOut" Destination="$18.IFbOpen" dx1="175.7292">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$15.IOut" Destination="$18.IFbClose" dx1="155.7292">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$3.36" Destination="$18.IPermSum" dx1="592.521">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$2.36" Destination="$18.IIlckSum" dx1="630.146">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$18.IOpenedOut" Destination="$11.IOut" dx1="1898.063">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$18.IClosedOut" Destination="$16.IOut" dx1="1898.063">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+    </AdapterConnections>
+  </FBNetwork>
+</FBType>

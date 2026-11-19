@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="622f0445-fc5e-4a5f-a602-0b0ed3ecd62c" Name="Distributing" Format="2.0" Comment="CAT Function Block Type" Namespace="Flexbridge.FestoMPS400">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Flexbridge AB" Version="0.0" Author="Sandeep Patil" Date="11/16/2026" Remarks="template" />
+  <InterfaceList>
+    <Sockets>
+      <AdapterDeclaration Name="ISupply" Type="IWorkpieceSupply" Namespace="Flexbridge.FestoMPS400" x="600" y="2200" />
+    </Sockets>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="2FBD62AACB19C4D0" Name="Ejector" Type="Actuator" x="6700" y="5400" Namespace="Flexbridge.FestoMPS400" />
+    <FB ID="2A3396E3EDAD1E94" Name="Vacuum" Type="Actuator2Op" x="8400" y="5400" Namespace="Flexbridge.FestoMPS400" />
+    <FB ID="FCA8FDFEC7F80642" Name="Swivel" Type="Actuator2Op" x="10100" y="5400" Namespace="Flexbridge.FestoMPS400" />
+    <FB ID="1CF8BE89FAE42F13" Name="MagazineEmpty" Type="DigitalInput" x="2500" y="5400" Namespace="SE.App2CommonProcess" />
+    <FB ID="F90CFA335AABE342" Name="DownstreamFree" Type="DigitalInput" x="4300" y="5400" Namespace="SE.App2CommonProcess" />
+    <FB ID="050945416AA2DCB4" Name="EVENTCHAIN" Type="EVENTCHAIN" x="500" y="450" Namespace="Runtime.Standard">
+      <Parameter Name="$NAME" Value="'APP_INIT'" />
+      <Parameter Name="$PRIO" Value="20" />
+    </FB>
+    <FB ID="E8E59168E37C53AB" Name="IThis" Type="Distributing_HMI" x="3000" y="450" Namespace="Flexbridge.FestoMPS400">
+      <Parameter Name="$60D39011A5DC5435" Value="TRUE" />
+    </FB>
+    <FB ID="A37918525F834A2D" Name="Mode" Type="StationMode" x="2500" y="2000" Namespace="Flexbridge.FestoMPS400" />
+    <FB ID="CF5135D4E51544C4" Name="StationSeq" Type="DistributingSequence" x="4300" y="1900" Namespace="Flexbridge.FestoMPS400" />
+    <FB ID="8B72C88A67F8CA26" Name="EjectTimer" Type="E_DELAY" x="2500" y="3700" Namespace="IEC61499.Standard">
+      <Parameter Name="$DT" Value="T#500ms" />
+    </FB>
+    <FB ID="CCA3A8164AFDBD3F" Name="Console" Type="ControlConsole" x="2500" y="6600" Namespace="Flexbridge.FestoMPS400" />
+    <Frame Name="FRAME0" X="200" Y="200" Width="1800" Height="1200">
+      <Parameter Name="BackgroundColor" Value="AliceBlue" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 9.75pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="0 - INITIALIZATION" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME6" X="2200" Y="200" Width="4000" Height="1200">
+      <Parameter Name="BackgroundColor" Value="LightPink" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 9.75pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="6 - HMI INTERFACE" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME1" X="200" Y="1600" Width="1800" Height="3000">
+      <Parameter Name="BackgroundColor" Value="Cornsilk" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 9.75pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="1 - FUNCTIONAL INPUT INTERFACE" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME5" X="2200" Y="1600" Width="4000" Height="3000">
+      <Parameter Name="BackgroundColor" Value="Gainsboro" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 9.75pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="5 - LOGICS" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME2" X="6400" Y="1600" Width="1800" Height="3000">
+      <Parameter Name="BackgroundColor" Value="Cornsilk" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 9.75pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="2 - FUNCTIONAL OUTPUT INTERFACE" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME3" X="2200" Y="4800" Width="4000" Height="3000">
+      <Parameter Name="BackgroundColor" Value="PeachPuff" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 9.75pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="3 - FIELD INTERFACE (3.B FROM THE FIELD: plain sensors)" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME4" X="6400" Y="4800" Width="5500" Height="3400">
+      <Parameter Name="BackgroundColor" Value="Honeydew" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 9.75pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="4 - CHILDREN" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME4A" X="6500" Y="5100" Width="5300" Height="3000">
+      <Parameter Name="BackgroundColor" Value="DarkSeaGreen" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 9.75pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="4.A - TYPICALS (one device CAT per Festo device)" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <EventConnections>
+      <Connection Source="$050945416AA2DCB4.EO" Destination="$A37918525F834A2D.D146E2B034FD7C8D">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$A37918525F834A2D.506E716B55FCE0A2" Destination="$CF5135D4E51544C4.F152047E2A7D3578">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.E2B6BD869D22149D" Destination="$E8E59168E37C53AB.6737A09B7659076E">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$E8E59168E37C53AB.83A5EB3F65229F75" Destination="$050945416AA2DCB4.ACK">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CCA3A8164AFDBD3F.CDF39B39943C2455" Destination="$A37918525F834A2D.3E546DBBFC71A558">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$A37918525F834A2D.AE505668424E9D81" Destination="$CCA3A8164AFDBD3F.F38D3962E87A465D">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.BB0F5808547BF298" Destination="$CCA3A8164AFDBD3F.0639681D379A13D7">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$A37918525F834A2D.2F6AEE6C40FD625A" Destination="$CF5135D4E51544C4.96D131617B4873E3">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.20B5D238591A7C99" Destination="$A37918525F834A2D.ED9B713DA299DF56">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.0C912D6B671FFA85" Destination="$A37918525F834A2D.B23559B3B7689A61">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$A37918525F834A2D.A9AD17A654C0620C" Destination="$CF5135D4E51544C4.523917BE3D94E1C0">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$1CF8BE89FAE42F13.CNF" Destination="$CF5135D4E51544C4.4E07C964B6B5CBB7">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.B734926C08963196" Destination="$8B72C88A67F8CA26.START">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$8B72C88A67F8CA26.EO" Destination="$CF5135D4E51544C4.99C0229D1F801EBB">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.076E8180655D8C0A" Destination="$E8E59168E37C53AB.62451D65A05BFC5F">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$E8E59168E37C53AB.5A6DA96983B35B7F" Destination="$CF5135D4E51544C4.A648E7477B8A76F8">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$ISupply.REQ" Destination="$CF5135D4E51544C4.A648E7477B8A76F8">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.1BEB4AAF4185FC86" Destination="$ISupply.CNF">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$CCA3A8164AFDBD3F.3A70B32E1E848C6E" Destination="$A37918525F834A2D.3F9F955FBD772861">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CCA3A8164AFDBD3F.6DFB99779F2EE4FC" Destination="$A37918525F834A2D.2DA8A40E7C90FB83">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CCA3A8164AFDBD3F.85729CC88E0AA5D5" Destination="$A37918525F834A2D.FD0ACBF32CBAD84C">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$A37918525F834A2D.8D29F764CECC539B" Destination="$CCA3A8164AFDBD3F.C1C21BA11D3688C4">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$A37918525F834A2D.0E7F734B13311A8A" Destination="$CCA3A8164AFDBD3F.F561EF3E5C4CDB31">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.2A08AE2AD16C2624" Destination="$CCA3A8164AFDBD3F.BC21BDA15F54A0A7">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.8D5B7D2D703628BA" Destination="$CCA3A8164AFDBD3F.D566A61D11A7E56B">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$A37918525F834A2D.BC367735D7BA9F60" Destination="$CF5135D4E51544C4.CD28D6280087C73C">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$A37918525F834A2D.12BF2E46AA672AA2" Destination="$CF5135D4E51544C4.4B3E06EE96E365A6">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$1CF8BE89FAE42F13.Pv" Destination="$CF5135D4E51544C4.182A360099CC3F4F">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.6D53FD41F05BF1C9" Destination="$E8E59168E37C53AB.80700C42CDD9CD3C">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.AAB2B91E9FAFD38F" Destination="$E8E59168E37C53AB.495B3BAE541987B8">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.AFB9F7014066DE1D" Destination="$E8E59168E37C53AB.C5CD5B69C4A2A4B5">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.5433DB123A6B9F93" Destination="$E8E59168E37C53AB.FDE1D18C3E8A9C7D">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.38E33B515E0C108F" Destination="$E8E59168E37C53AB.11DE9692A32E349B">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </DataConnections>
+    <AdapterConnections>
+      <Connection Source="$CF5135D4E51544C4.IEjector" Destination="$2FBD62AACB19C4D0.ISc">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.IVacuum" Destination="$2A3396E3EDAD1E94.ISc">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$CF5135D4E51544C4.ISwivel" Destination="$FCA8FDFEC7F80642.ISc">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </AdapterConnections>
+  </FBNetwork>
+</FBType>

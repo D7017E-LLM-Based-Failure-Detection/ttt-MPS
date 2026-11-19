@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="1dab08a0-fe67-4fbf-b8f8-13ade4704814" Name="Actuator2Op_HMI" Comment="Service Interface Function Block Type" Namespace="Flexbridge.FestoMPS400">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="1.0.1" Author="ApplicationLibDevTeam" Date="9/20/2023" Remarks="First Version" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="163AD42D263471A" Name="INIT">
+        <With Var="QI" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="611329C0CE9CF053" Name="INITO">
+        <With Var="QO" />
+        <With Var="STATUS" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="6F12E16E32AB19FE" Name="QI" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="DA997391340A6297" Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+      <VarDeclaration ID="F889CBAEA1E7DAC4" Name="STATUS" Type="STRING" Comment="Service Status" />
+    </OutputVars>
+  </InterfaceList>
+  <Service RightInterface="" LeftInterface="">
+    <ServiceSequence Name="" />
+  </Service>
+</FBType>

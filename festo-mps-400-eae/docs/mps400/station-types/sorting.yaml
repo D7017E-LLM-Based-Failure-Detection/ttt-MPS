@@ -1,0 +1,245 @@
+# MPS 400 knowledge graph: Festo station type "Sorting".
+# Conventions (status values, sources, ids): see ../README.md.
+schema: mps400-kg/0.1
+updated: "2026-11-10"
+
+sources:
+  cd-09-el:
+    path: "resources/MPS documentation CD/09_Sorting/Circuit diagrams/Electric_Circuit_Diagram_Sorting.pdf"
+    title: "Circuit diagrams, MPS-C Sorting station (drawing 195786 el.)"
+    date: "2006-04-05"
+  cd-09-pn:
+    path: "resources/MPS documentation CD/09_Sorting/Circuit diagrams/Pneumatic_Circuit_Diagram_Sorting.pdf"
+    title: "Pneumatic circuit diagram, Sorting station"
+    date: "2005-04-11"
+  cd-09-grafcet:
+    path: "resources/MPS documentation CD/09_Sorting/Programming/09_Sorting_GRAFCET.pdf"
+    title: "Sorting station, function chart (GRAFCET to DIN EN 60848)"
+    date: "2004-01"
+  cd-09-parts:
+    path: "resources/MPS documentation CD/09_Sorting/Parts lists/526886_Parts_list_Sorting.pdf"
+    title: "Parts list Sorting station, kit 526886"
+    date: "2002-11-11"
+  nxt:
+    path: "resources/Solution Archive/MPS_NxtStudio_2_1"
+    title: Legacy NxtStudio 2.1 solution (I/O binding of device Sorting)
+
+station_type:
+  id: sorting
+  name: Sorting station
+  name_de: Station Sortieren
+  doc_series: MPS-C
+  status: documented
+  sources: [cd-09-el, cd-09-pn, cd-09-grafcet, cd-09-parts]
+  function: >-
+    A short belt conveyor with a stopper at its start and two pneumatic switches (separators)
+    that push workpieces onto slides 1 and 2; workpieces that pass both switches run onto
+    slide 3 at the end of the belt. Sensors at the start of the belt detect metal and
+    "not black".
+  function_status: inferred
+  note: >-
+    The Profibus variant on the CD (Electric_Circuit_Diagram_Sorting_Profibus.pdf, parts list
+    535227) is not the one in the lab and was not read.
+
+io_terminal:
+  id: XA2
+  part: "034035 I/O terminal (MP-B-AN-E/A-T)"
+  syslink_station: XMA2
+  syslink_console: XMG1
+  inputs: 8
+  outputs: 8
+  supply:
+    inputs: {plus: "24VB on XMA2 pins 21-22", minus: "0VB on XMA2 pins 23-24"}
+    outputs: {plus: "24VA on XMA2 pins 9-10", minus: "0VA on XMA2 pins 11-12"}
+  status: documented
+  sources: ["cd-09-el#3-5", cd-09-parts]
+
+valve_terminal:
+  id: "0Z1"
+  kind: CPV valve terminal
+  part: "196966 CP valve terminal, sorting (MP3-M-SCP)"
+  positions:
+    - {code: "M", valve: "1V1", coils: ["1M1"]}
+    - {code: "M", valve: "2V1", coils: ["2M1"]}
+    - {code: "M", valve: "3V1", coils: ["3M1"]}
+  status: documented
+  sources: [cd-09-pn, "cd-09-el#3", "cd-09-el#5"]
+
+devices:
+  - id: BELT
+    kind: belt conveyor, electric
+    name: Conveyor belt
+    name_de: Band
+    motor: M1 (24 V) via current limiter K1
+    sensors: []
+    part: {ref: "196962 Conveyor module 350 (MP3-M-BD); 150768 Current limiter (MP-B-ALSB-2,5A)", status: inferred}
+    status: documented
+    sources: ["cd-09-el#5", cd-09-parts]
+    note: One direction only, no run feedback.
+  - id: "1A1"
+    kind: pneumatic cylinder
+    name: Switch 1 (separator to slide 1)
+    name_de: Weiche 1
+    valve: "1V1"
+    coils: ["1M1"]
+    sensors: ["1B1", "1B2"]
+    flow_controls: ["1V2", "1V3"]
+    part: {ref: "526230 Branch module (MP3-M-W)", status: inferred}
+    status: documented
+    sources: [cd-09-pn, "cd-09-el#4-5"]
+    note: 1M1 extends. 1B1 = retracted, 1B2 = extended.
+  - id: "2A1"
+    kind: pneumatic cylinder
+    name: Switch 2 (separator to slide 2)
+    name_de: Weiche 2
+    valve: "2V1"
+    coils: ["2M1"]
+    sensors: ["2B1", "2B2"]
+    flow_controls: ["2V2", "2V3"]
+    part: {ref: "526230 Branch module (MP3-M-W)", status: inferred}
+    status: documented
+    sources: [cd-09-pn, "cd-09-el#4-5"]
+    note: 2M1 extends. 2B1 = retracted, 2B2 = extended.
+  - id: "3A1"
+    kind: pneumatic cylinder, single acting
+    name: Stopper
+    name_de: Stopperzylinder
+    valve: "3V1"
+    coils: ["3M1"]
+    sensors: []
+    part: {ref: "196971 Stopper module (MP3-M-S)", status: inferred}
+    status: documented
+    sources: [cd-09-pn, "cd-09-el#5"]
+    note: 3M1 retracts the stopper and lets the workpiece pass; with 3M1 off it blocks. No sensor.
+  - {id: "PART_AV", kind: optical sensor, name: Workpiece available, name_de: Werkstück vorhanden, status: documented, sources: ["cd-09-el#4"]}
+  - {id: "B2", kind: inductive sensor, name: Metallic workpiece, name_de: Werkstück aus Metall, status: documented, sources: ["cd-09-el#4"]}
+  - {id: "B3", kind: optical sensor, name: Workpiece is not black, name_de: Werkstück ist nicht schwarz, status: documented, sources: ["cd-09-el#4"]}
+  - {id: "B4", kind: retro-reflective sensor, name: Slide full, name_de: Rutsche voll, status: documented, sources: ["cd-09-el#4"]}
+  - {id: "IP_N_FO", kind: optical transmitter, name: "Station occupied, transmitter of the 1-bit link", name_de: Station belegt, status: documented, sources: ["cd-09-el#5"]}
+
+signals:
+  status: documented
+  sources: ["cd-09-el#4-5", nxt]
+  note: >-
+    legacy = the signal name in the NxtStudio solution, which binds DIN0-DIN3, DIN5, DIN7 and
+    DO0-DO3. The station has no "downstream station free" input: I7 is taken by switch 2.
+  verify: >-
+    The legacy names of I1 and I2 are swapped against the drawing: legacy I1 = WP_NOT_BLACK and
+    I2 = WP_METALL, drawing I1 = metallic and I2 = not black. Check on the hardware (open
+    question q-sort-sensors in plant.yaml).
+  inputs:
+    - {address: I0, pin: 13, symbol: "PART_AV", device: "PART_AV", meaning: Workpiece available, meaning_de: Werkstück vorhanden, legacy: WP_START}
+    - {address: I1, pin: 14, symbol: "B2", device: "B2", meaning: Metallic workpiece, meaning_de: Werkstück aus Metall, legacy: WP_NOT_BLACK}
+    - {address: I2, pin: 15, symbol: "B3", device: "B3", meaning: Workpiece is not black, meaning_de: Werkstück ist nicht schwarz, legacy: WP_METALL}
+    - {address: I3, pin: 16, symbol: "B4", device: "B4", meaning: Slide full, meaning_de: Rutsche voll, legacy: SLIDE_FULL}
+    - {address: I4, pin: 17, symbol: "1B1", device: "1A1", meaning: Switch 1 retracted, meaning_de: Weiche 1 eingefahren, legacy: null}
+    - {address: I5, pin: 18, symbol: "1B2", device: "1A1", meaning: Switch 1 extended, meaning_de: Weiche 1 ausgefahren, legacy: BR1_EXTENDED}
+    - {address: I6, pin: 19, symbol: "2B1", device: "2A1", meaning: Switch 2 retracted, meaning_de: Weiche 2 eingefahren, legacy: null}
+    - {address: I7, pin: 20, symbol: "2B2", device: "2A1", meaning: Switch 2 extended, meaning_de: Weiche 2 ausgefahren, legacy: BR2_EXTENDED}
+  outputs:
+    - {address: O0, pin: 1, symbol: "K1", device: BELT, meaning: Conveyor motor on, meaning_de: Bandmotor ein, legacy: DRIVE_ON}
+    - {address: O1, pin: 2, symbol: "1M1", device: "1A1", meaning: Extend switch 1, meaning_de: Weiche 1 ausfahren, legacy: BR1_EXTEND}
+    - {address: O2, pin: 3, symbol: "2M1", device: "2A1", meaning: Extend switch 2, meaning_de: Weiche 2 ausfahren, legacy: BR2_EXTEND}
+    - {address: O3, pin: 4, symbol: "3M1", device: "3A1", meaning: Retract stopper, meaning_de: Stopper einfahren, legacy: STOPPER_RETRACT}
+    - {address: O4, pin: 5, symbol: null, meaning: Not used}
+    - {address: O5, pin: 6, symbol: null, meaning: Not used}
+    - {address: O6, pin: 7, symbol: null, meaning: Not used}
+    - {address: O7, pin: 8, symbol: "IP_N_FO", device: "IP_N_FO", meaning: Station occupied, meaning_de: Station belegt, legacy: null}
+
+operator_panel:
+  syslink: XMG1
+  component_type: control-console
+  status: documented
+  sources: ["cd-09-el#3", "cd-09-grafcet#3-4"]
+
+parts:
+  kit: "526886 SORTING.STAT. MP3-S-SO-BS"
+  status: documented
+  sources: [cd-09-parts]
+  items:
+    - {part_no: "034035", name: I/O terminal, designation: MP-B-AN-E/A-T, qty: 1}
+    - {part_no: "526230", name: Branch module, designation: MP3-M-W, qty: 2}
+    - {part_no: "150768", name: Current limiter, designation: "MP-B-ALSB-2,5A", qty: 1}
+    - {part_no: "152894", name: Service unit, designation: S-PVW-LFR, qty: 1}
+    - {part_no: "162228", name: Connector, designation: MP2-M-VB, qty: 2}
+    - {part_no: "170395", name: Profile plate, designation: DE-PP-350B, qty: 1}
+    - {part_no: "653393", name: Slide module, designation: MP3-M-RT250, qty: 3}
+    - {part_no: "196959", name: Diffuse sensor, designation: MP3-M-RLT, qty: 2}
+    - {part_no: "654968", name: Guide rails, designation: MP3-M-LB-S, qty: 1}
+    - {part_no: "196962", name: Conveyor module 350, designation: MP3-M-BD, qty: 1}
+    - {part_no: "196963", name: SensLink transmitter, designation: MP3-M-SLS, qty: 1}
+    - {part_no: "196965", name: Holder TM-BG, designation: MP3-M-HTM, qty: 1}
+    - {part_no: "196966", name: CP valve terminal, designation: MP3-M-SCP, qty: 1}
+    - {part_no: "196958", name: Mounting system E, designation: MP3-M-TSE, qty: 1}
+    - {part_no: "196968", name: Inductive sensor, designation: MP3-M-SI, qty: 1}
+    - {part_no: "196969", name: Retro-reflective sensor, designation: MP3-M-SOEG-RT-Q3, qty: 1}
+    - {part_no: "196971", name: Stopper module, designation: MP3-M-S, qty: 1}
+    - {part_no: "526207", name: Accessories, designation: MP3-M-KTS, qty: 1}
+    - {part_no: "648821", name: Technical documentation, designation: MP-TD-SSO-DE/GB, qty: 1}
+
+sequence:
+  id: sorting-reference
+  standard: GRAFCET to DIN EN 60848
+  status: documented
+  sources: ["cd-09-grafcet#3-4"]
+  note: >-
+    Festo's sequence sorts red onto slide 1, silver onto slide 2 and black to the end of the
+    belt (slide 3). The lab behaviour follows the NxtStudio solution (see
+    ../legacy/sorting.yaml). "stored: true" marks actions drawn with the stored-action arrow.
+  steps:
+    - {id: S1, initial: true, name: Start}
+    - {id: S2, name: Reset indicator light, actions: [{do: Turn on the "reset" indicator light, stored: false}]}
+    - {id: S3, name: Initial position, actions: [{do: Move the station to its initial position, stored: true}]}
+    - {id: S4, name: Reset OK, actions: [{do: Set flag "reset finished", stored: true}]}
+    - {id: S5, name: Cycle start (empty step)}
+    - {id: S6, name: Start indicator light, actions: [{do: Turn on the "start" indicator light, stored: false}]}
+    - {id: S7, name: Slide full indicator light, actions: [{do: Turn off the "slide full" indicator light, stored: true}]}
+    - {id: S8, name: Station not occupied, actions: [{do: Signal "station not occupied", stored: true}]}
+    - id: S9
+      name: Conveyor belt motor
+      actions:
+        - {do: Signal "station occupied", stored: true}
+        - {do: Turn on the conveyor belt motor, stored: true}
+    - {id: S10, name: Workpiece sensing (empty step)}
+    - {id: S11, name: Finish transportation (empty step)}
+    - id: S12
+      name: Slide full
+      actions:
+        - {do: Signal "station occupied", stored: true}
+        - {do: Turn on the "slide full" indicator light, stored: true}
+        - {do: Turn on the "start" indicator light, stored: true}
+    - {id: S13, name: Sorting (empty step)}
+    - {id: S14, name: Extend separator 1, actions: [{do: Extend separator 1, stored: true}]}
+    - {id: S15, name: Retract stopper, actions: [{do: Retract stopper, stored: true}]}
+    - {id: S16, name: Extend separator 2, actions: [{do: Extend separator 2, stored: true}]}
+    - {id: S17, name: Retract stopper, actions: [{do: Retract stopper, stored: true}]}
+    - {id: S18, name: Retract stopper, actions: [{do: Retract stopper, stored: true}]}
+    - id: S19
+      name: Cycle end
+      actions:
+        - {do: Set flag "cycle end", stored: false}
+        - {do: Move the station to its initial position, stored: true}
+  transitions:
+    - {from: S1, to: S5, condition: Station is reset and in initial position}
+    - {from: S1, to: S2, condition: Station is not reset}
+    - {from: S2, to: S3, condition: Reset button pressed}
+    - {from: S3, to: S4, condition: Station in initial position}
+    - {from: S4, to: S5, condition: Flag "reset finished" is set}
+    - {from: S5, to: S6, condition: Flag "start" is not set}
+    - {from: S5, to: S7, condition: Flag "start" is set}
+    - {from: S6, to: S7, condition: Flag "start" is set}
+    - {from: S7, to: S8, condition: Slide is not full}
+    - {from: S7, to: S11, condition: Slide is full}
+    - {from: S8, to: S9, condition: Workpiece available}
+    - {from: S9, to: S10, condition: 3 s in step 9 and workpiece not available}
+    - {from: S10, to: S13, condition: 2 s in step 10}
+    - {from: S11, to: S12, condition: 1 s in step 11 and slide still full}
+    - {from: S11, to: S7, condition: 1 s in step 11 and slide not full}
+    - {from: S12, to: S7, condition: Error acknowledged}
+    - {from: S13, to: S14, condition: Workpiece is red}
+    - {from: S13, to: S16, condition: Workpiece is silver}
+    - {from: S13, to: S18, condition: Workpiece is black}
+    - {from: S14, to: S15, condition: Separator 1 extended}
+    - {from: S16, to: S17, condition: Separator 2 extended}
+    - {from: "S15, S17, S18", to: S19, condition: Workpiece has reached slide}
+    - {from: S19, to: S5, condition: Station in initial position}

@@ -1,0 +1,13 @@
+{
+  "solutionId": "6b0b16e9-2e49-4309-a482-6249a292fee1",
+  "csConfHash": "a50634854ffe345134d69baa2d335c560b387c41327cb74b3613dd71c3a11a07",
+  "deviceConfiguration": "{\u0022solutionId\u0022:\u00226b0b16e9-2e49-4309-a482-6249a292fee1\u0022,\u0022csConfHash\u0022:\u0022a50634854ffe345134d69baa2d335c560b387c41327cb74b3613dd71c3a11a07\u0022}",
+  "userInformation": "{\u0022version\u0022:\u00221\u0022,\u0022users_list\u0022:[{\u0022user_name\u0022:\u0022aic3\u0022,\u0022password\u0022:\u0022$1$5E7E1360DC8760DC2B53AC5DA298A2FD5F1066DA5C25987263D3893EE5D53D07$C176D4CFFA44A0A2A103A224476730A402226436F706C931D07BE54929B36343\u0022,\u0022state\u0022:\u0022Active\u0022,\u0022AccountStartDate\u0022:\u0022\u0022,\u0022assigned_role\u0022:[\u0022aic3\u0022]}]}",
+  "roleInformation": "{\u0022version\u0022:\u00221\u0022,\u0022roles_list\u0022:[{\u0022name\u0022:\u0022aic3\u0022,\u0022permission_name\u0022:[\u0022Security Management\u0022,\u0022File Transfer\u0022,\u0022IP Configuration\u0022,\u0022Firmware Management\u0022,\u0022LaunchCanvas\u0022,\u0022OpenFacePlate\u0022,\u0022EditSymbol\u0022,\u0022Level_15\u0022]}]}",
+  "anonymousCsConfHash": "a2b76b73c2ef2047823fd066d51eb2daf2cf813f9ec1e9c35255f4d325126cb9",
+  "anonymousDeviceConfiguration": "{\u0022solutionId\u0022:\u00226b0b16e9-2e49-4309-a482-6249a292fee1\u0022,\u0022csConfHash\u0022:\u0022a2b76b73c2ef2047823fd066d51eb2daf2cf813f9ec1e9c35255f4d325126cb9\u0022}",
+  "anonymousUserInformation": "{\u0022users_list\u0022:[{\u0022user_name\u0022:\u0022Anonymous\u0022,\u0022password\u0022:\u0022cb366a250499db16cfa075932fd153c2baf2dfdda46a14082b7ddf3eab1118d5\u0022,\u0022state\u0022:\u0022Active\u0022,\u0022AccountStartDate\u0022:null,\u0022assigned_role\u0022:[\u0022Anonymous\u0022]}],\u0022version\u0022:\u00221\u0022}",
+  "anonymousRoleInformation": "{\u0022roles_list\u0022:[{\u0022name\u0022:\u0022Anonymous\u0022,\u0022permission_name\u0022:[\u0022Security Management\u0022,\u0022File Transfer\u0022,\u0022IP Configuration\u0022,\u0022Firmware Management\u0022,\u0022LaunchCanvas\u0022,\u0022OpenFacePlate\u0022,\u0022EditSymbol\u0022,\u0022Level_15\u0022]}],\u0022version\u0022:\u00221\u0022}",
+  "solutionName": "festo-mps-400-eae",
+  "certThumbprint": "05A1F77EEEBD9D827AC2BB594AC6B1DAD3F96677;9BE58C1934510E4128FAB452C0062B45A75A22CC;EEB3DF5D4C7CF338D3D490320FE87A94E6FF0027;"
+}

@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd" >
+<FBType Name="DistributingSequence" Namespace="Flexbridge.FestoMPS400" GUID="63a16991-47a1-42b3-82db-3b11d3a7cf5b" Comment="Basic Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Flexbridge AB" Version="0.0" Author="Sandeep Patil" Date="11/16/2026" Remarks="Template" />
+  <CompilerInfo />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="F152047E2A7D3578" Name="INIT" Comment="Initialisation request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="523917BE3D94E1C0" Name="MODE" Comment="Station mode changed (StationMode)">
+        <With Var="Mode" />
+        <With Var="Started" />
+      </Event>
+      <Event ID="96D131617B4873E3" Name="DO_RESET" Comment="Run the reset sequence (StationMode)">
+      </Event>
+      <Event ID="A648E7477B8A76F8" Name="REQ_WP" Comment="Request one workpiece (Testing, or the HMI button)">
+      </Event>
+      <Event ID="4E07C964B6B5CBB7" Name="MAG" Comment="Magazine sensor changed">
+        <With Var="MagEmptyPv" />
+      </Event>
+      <Event ID="99C0229D1F801EBB" Name="TIMEOUT" Comment="Ejection pulse time over (EjectTimer)">
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="E2B6BD869D22149D" Name="INITO" Comment="Initialisation confirm">
+        <With Var="QO" />
+      </Event>
+      <Event ID="20B5D238591A7C99" Name="RESET_DONE" Comment="Reset sequence finished (StationMode)">
+      </Event>
+      <Event ID="0C912D6B671FFA85" Name="FAULT" Comment="Stopped on a device fault (StationMode)">
+      </Event>
+      <Event ID="1BEB4AAF4185FC86" Name="WP_DONE" Comment="Workpiece handed over (Testing)">
+      </Event>
+      <Event ID="BB0F5808547BF298" Name="AUX_LAMPS" Comment="Console lamps Q1 and Q2">
+        <With Var="Q1Lamp" />
+        <With Var="Q2Lamp" />
+      </Event>
+      <Event ID="B734926C08963196" Name="TSTART" Comment="Start the ejection pulse timer">
+      </Event>
+      <Event ID="076E8180655D8C0A" Name="HMI_ST" Comment="State for the HMI">
+        <With Var="ModeText" />
+        <With Var="StepText" />
+        <With Var="Waiting" />
+        <With Var="Cycles" />
+        <With Var="StepNo" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="20C3197B6370E1F2" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="CD28D6280087C73C" Name="Mode" Type="INT" Comment="Station mode: 0 = wait for RESET, 1 = resetting, 2 = wait for START, 3 = started" />
+      <VarDeclaration ID="4B3E06EE96E365A6" Name="Started" Type="BOOL" Comment="Station started: requests are accepted" />
+      <VarDeclaration ID="182A360099CC3F4F" Name="MagEmptyPv" Type="VTQBOOL" Comment="B4 magazine empty" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="5A02E3557E66AAB1" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration ID="2A08AE2AD16C2624" Name="Q1Lamp" Type="BOOL" Comment="Lamp Q1: waiting, magazine empty" />
+      <VarDeclaration ID="8D5B7D2D703628BA" Name="Q2Lamp" Type="BOOL" Comment="Lamp Q2: not used" />
+      <VarDeclaration ID="6D53FD41F05BF1C9" Name="ModeText" Type="STRING[40]" Comment="Station mode as text" />
+      <VarDeclaration ID="AAB2B91E9FAFD38F" Name="StepText" Type="STRING[40]" Comment="Current step as text (number and name)" />
+      <VarDeclaration ID="AFB9F7014066DE1D" Name="Waiting" Type="BOOL" Comment="Waiting for workpieces (magazine empty)" />
+      <VarDeclaration ID="5433DB123A6B9F93" Name="Cycles" Type="UDINT" Comment="Workpieces handed over since start-up" />
+      <VarDeclaration ID="38E33B515E0C108F" Name="StepNo" Type="INT" Comment="Current step number" />
+    </OutputVars>
+    <Plugs>
+      <AdapterDeclaration Name="IEjector" Type="IDevice" Namespace="SE.App2CommonProcess" />
+      <AdapterDeclaration Name="IVacuum" Type="IDevice" Namespace="SE.App2CommonProcess" />
+      <AdapterDeclaration Name="ISwivel" Type="IDevice" Namespace="SE.App2CommonProcess" />
+    </Plugs>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="algModeText,algInit,algIdle,algS_R_SEL,algC_R_SEL,algS_R_HOME,algC_R_HOME,algS_P_MAG,algC_P_MAG,algS_P_OFF,algC_P_OFF,algS_P_STOP,algS_R_DONE,algQ_CHK,algS_C_MAG,algS_C_PUSH,algC_C_PUSH,algS_C_BACK,algC_C_BACK,algS_C_TOMAG,algC_C_TOMAG,algS_C_GRIP,algC_C_GRIP,algS_C_TODOWN,algC_C_TODOWN,algS_C_REL,algK_C_REL,algS_C_VACOFF,algS_C_DONE,algFault,algRdySwivel,algTkSelSwivel,algTkCmdSwivel" />
+    <InternalVars>
+      <VarDeclaration Name="Done" Type="BOOL" Comment="The current step has reached its target" />
+      <VarDeclaration Name="Fault" Type="BOOL" Comment="A device needs Rearm, or is not program local when it must be" />
+      <VarDeclaration Name="InCycle" Type="BOOL" Comment="Parking belongs to a workpiece cycle (else to the reset sequence)" />
+      <VarDeclaration Name="Accept" Type="BOOL" Comment="A workpiece request is accepted (station started)" />
+      <VarDeclaration Name="RdySwivel" Type="BOOL" Comment="Swivel has sent CNF_READY: its owner has initialised" />
+      <VarDeclaration Name="AdpSwivel" Type="BOOL" Comment="Swivel taken over at start-up, or the reset sequence has run" />
+      <VarDeclaration Name="TrySwivel" Type="INT" Comment="Program-local requests sent to Swivel at start-up" />
+    </InternalVars>
+    <ECC>
+      <ECState Name="START" Comment="Initial state" x="100" y="100" />
+      <ECState Name="INIT_S" x="100" y="500">
+        <ECAction Algorithm="algInit" />
+        <ECAction Algorithm="algModeText" />
+        <ECAction Output="AUX_LAMPS" />
+        <ECAction Output="HMI_ST" />
+        <ECAction Output="INITO" />
+      </ECState>
+      <ECState Name="S_IDLE" x="100" y="900">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algIdle" Output="HMI_ST" />
+      </ECState>
+      <ECState Name="IDLE_W" Comment="Idle: wait for RESET (reset sequence) or a workpiece request" x="100" y="1300" />
+      <ECState Name="M_IDLE" x="100" y="1700">
+        <ECAction Algorithm="algModeText" Output="HMI_ST" />
+      </ECState>
+      <ECState Name="S_R_SEL" x="1200" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_R_SEL" Output="HMI_ST" />
+        <ECAction Output="IEjector.REQ_PROGLOCALSEL" />
+        <ECAction Output="IVacuum.REQ_PROGLOCALSEL" />
+        <ECAction Output="ISwivel.REQ_PROGLOCALSEL" />
+        <ECAction Output="AUX_LAMPS" />
+      </ECState>
+      <ECState Name="C_R_SEL" x="1200" y="700">
+        <ECAction Algorithm="algC_R_SEL" />
+      </ECState>
+      <ECState Name="W_R_SEL" Comment="Wait: Reset: owners to program" x="1200" y="1100" />
+      <ECState Name="S_R_HOME" x="2100" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_R_HOME" Output="HMI_ST" />
+        <ECAction Output="IVacuum.REQ_CMD" />
+        <ECAction Output="IEjector.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_R_HOME" x="2100" y="700">
+        <ECAction Algorithm="algC_R_HOME" />
+      </ECState>
+      <ECState Name="W_R_HOME" Comment="Wait: Reset: ejector home" x="2100" y="1100" />
+      <ECState Name="S_P_MAG" x="3000" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_P_MAG" Output="HMI_ST" />
+        <ECAction Output="ISwivel.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_P_MAG" x="3000" y="700">
+        <ECAction Algorithm="algC_P_MAG" />
+      </ECState>
+      <ECState Name="W_P_MAG" Comment="Wait: Park: swivel to magazine" x="3000" y="1100" />
+      <ECState Name="S_P_OFF" x="3900" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_P_OFF" Output="HMI_ST" />
+        <ECAction Output="ISwivel.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_P_OFF" x="3900" y="700">
+        <ECAction Algorithm="algC_P_OFF" />
+      </ECState>
+      <ECState Name="W_P_OFF" Comment="Wait: Park: off the magazine" x="3900" y="1100" />
+      <ECState Name="S_P_STOP" x="4800" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_P_STOP" Output="HMI_ST" />
+        <ECAction Output="ISwivel.REQ_CMD" />
+      </ECState>
+      <ECState Name="S_R_DONE" x="5700" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_R_DONE" Output="HMI_ST" />
+        <ECAction Output="RESET_DONE" />
+      </ECState>
+      <ECState Name="Q_CHK" x="6600" y="300">
+        <ECAction Algorithm="algQ_CHK" />
+      </ECState>
+      <ECState Name="Q_NOSTART" x="6600" y="700">
+        <ECAction Algorithm="algModeText" Output="HMI_ST" />
+      </ECState>
+      <ECState Name="S_C_MAG" x="7500" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_MAG" Output="HMI_ST" />
+        <ECAction Output="AUX_LAMPS" />
+      </ECState>
+      <ECState Name="W_C_MAG" Comment="Wait: magazine empty" x="7500" y="1100" />
+      <ECState Name="S_C_PUSH" x="8400" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_PUSH" Output="HMI_ST" />
+        <ECAction Output="IEjector.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_C_PUSH" x="8400" y="700">
+        <ECAction Algorithm="algC_C_PUSH" />
+      </ECState>
+      <ECState Name="W_C_PUSH" Comment="Wait: Push workpiece out" x="8400" y="1100" />
+      <ECState Name="S_C_BACK" x="9300" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_BACK" Output="HMI_ST" />
+        <ECAction Output="IEjector.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_C_BACK" x="9300" y="700">
+        <ECAction Algorithm="algC_C_BACK" />
+      </ECState>
+      <ECState Name="W_C_BACK" Comment="Wait: Ejector back home" x="9300" y="1100" />
+      <ECState Name="S_C_TOMAG" x="10200" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_TOMAG" Output="HMI_ST" />
+        <ECAction Output="ISwivel.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_C_TOMAG" x="10200" y="700">
+        <ECAction Algorithm="algC_C_TOMAG" />
+      </ECState>
+      <ECState Name="W_C_TOMAG" Comment="Wait: Swivel to magazine" x="10200" y="1100" />
+      <ECState Name="S_C_GRIP" x="11100" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_GRIP" Output="HMI_ST" />
+        <ECAction Output="IVacuum.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_C_GRIP" x="11100" y="700">
+        <ECAction Algorithm="algC_C_GRIP" />
+      </ECState>
+      <ECState Name="W_C_GRIP" Comment="Wait: Vacuum on, wait gripped" x="11100" y="1100" />
+      <ECState Name="S_C_TODOWN" x="12000" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_TODOWN" Output="HMI_ST" />
+        <ECAction Output="ISwivel.REQ_CMD" />
+      </ECState>
+      <ECState Name="C_C_TODOWN" x="12000" y="700">
+        <ECAction Algorithm="algC_C_TODOWN" />
+      </ECState>
+      <ECState Name="W_C_TODOWN" Comment="Wait: Swivel to Testing" x="12000" y="1100" />
+      <ECState Name="S_C_REL" x="12900" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_REL" Output="HMI_ST" />
+        <ECAction Output="IVacuum.REQ_CMD" />
+        <ECAction Output="TSTART" />
+      </ECState>
+      <ECState Name="W_C_REL" Comment="Wait: ejection pulse" x="12900" y="700" />
+      <ECState Name="K_C_REL" x="12900" y="1100">
+        <ECAction Algorithm="algK_C_REL" />
+      </ECState>
+      <ECState Name="S_C_VACOFF" x="13800" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_VACOFF" Output="HMI_ST" />
+        <ECAction Output="IVacuum.REQ_CMD" />
+      </ECState>
+      <ECState Name="S_C_DONE" x="14700" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algS_C_DONE" Output="HMI_ST" />
+        <ECAction Output="AUX_LAMPS" />
+        <ECAction Output="WP_DONE" />
+      </ECState>
+      <ECState Name="FAULT_S" Comment="Fault: RESET restarts the reset sequence after Rearm on the faceplate" x="15600" y="300">
+        <ECAction Algorithm="algModeText" />
+        <ECAction Algorithm="algFault" Output="HMI_ST" />
+        <ECAction Output="AUX_LAMPS" />
+        <ECAction Output="FAULT" />
+      </ECState>
+      <ECState Name="SR_Swivel" Comment="Swivel ready before INIT" x="100" y="2300">
+        <ECAction Algorithm="algRdySwivel" />
+      </ECState>
+      <ECState Name="TR_Swivel" x="100" y="2700">
+        <ECAction Algorithm="algRdySwivel" />
+      </ECState>
+      <ECState Name="TK_Swivel" Comment="Start-up takeover of Swivel" x="100" y="3100" />
+      <ECState Name="TS_Swivel" x="-200" y="3500">
+        <ECAction Algorithm="algTkSelSwivel" Output="ISwivel.REQ_PROGLOCALSEL" />
+      </ECState>
+      <ECState Name="TC_Swivel" x="400" y="3500">
+        <ECAction Algorithm="algTkCmdSwivel" Output="ISwivel.REQ_CMD" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT_S" Condition="INIT" x="150" y="300" />
+      <ECTransition Source="INIT_S" Destination="S_IDLE" Condition="1" x="150" y="700" />
+      <ECTransition Source="S_IDLE" Destination="TK_Swivel" Condition="1" x="150" y="1100" />
+      <ECTransition Source="IDLE_W" Destination="INIT_S" Condition="INIT" x="250" y="900" />
+      <ECTransition Source="IDLE_W" Destination="M_IDLE" Condition="MODE" x="150" y="1500" />
+      <ECTransition Source="M_IDLE" Destination="IDLE_W" Condition="1" x="250" y="1500" />
+      <ECTransition Source="IDLE_W" Destination="S_R_SEL" Condition="DO_RESET" x="400" y="1300" />
+      <ECTransition Source="IDLE_W" Destination="Q_CHK" Condition="REQ_WP" x="400" y="1400" />
+      <ECTransition Source="S_R_SEL" Destination="C_R_SEL" Condition="1" x="1250" y="500" />
+      <ECTransition Source="C_R_SEL" Destination="FAULT_S" Condition="Fault" x="1500" y="750" />
+      <ECTransition Source="C_R_SEL" Destination="S_R_HOME" Condition="NOT Fault AND Done" x="1500" y="650" />
+      <ECTransition Source="C_R_SEL" Destination="W_R_SEL" Condition="NOT Fault AND NOT Done" x="1250" y="900" />
+      <ECTransition Source="W_R_SEL" Destination="C_R_SEL" Condition="IEjector.CNF_STATUS OR IEjector.CNF_READY OR IVacuum.CNF_STATUS OR IVacuum.CNF_READY OR ISwivel.CNF_STATUS OR ISwivel.CNF_READY" x="1350" y="900" />
+      <ECTransition Source="S_R_HOME" Destination="C_R_HOME" Condition="1" x="2150" y="500" />
+      <ECTransition Source="C_R_HOME" Destination="FAULT_S" Condition="Fault" x="2400" y="750" />
+      <ECTransition Source="C_R_HOME" Destination="S_P_MAG" Condition="NOT Fault AND Done" x="2400" y="650" />
+      <ECTransition Source="C_R_HOME" Destination="W_R_HOME" Condition="NOT Fault AND NOT Done" x="2150" y="900" />
+      <ECTransition Source="W_R_HOME" Destination="C_R_HOME" Condition="IEjector.CNF_STATUS OR IEjector.CNF_READY OR IVacuum.CNF_STATUS OR IVacuum.CNF_READY OR ISwivel.CNF_STATUS OR ISwivel.CNF_READY" x="2250" y="900" />
+      <ECTransition Source="S_P_MAG" Destination="C_P_MAG" Condition="1" x="3050" y="500" />
+      <ECTransition Source="C_P_MAG" Destination="FAULT_S" Condition="Fault" x="3300" y="750" />
+      <ECTransition Source="C_P_MAG" Destination="S_P_OFF" Condition="NOT Fault AND Done" x="3300" y="650" />
+      <ECTransition Source="C_P_MAG" Destination="W_P_MAG" Condition="NOT Fault AND NOT Done" x="3050" y="900" />
+      <ECTransition Source="W_P_MAG" Destination="C_P_MAG" Condition="IEjector.CNF_STATUS OR IEjector.CNF_READY OR IVacuum.CNF_STATUS OR IVacuum.CNF_READY OR ISwivel.CNF_STATUS OR ISwivel.CNF_READY" x="3150" y="900" />
+      <ECTransition Source="S_P_OFF" Destination="C_P_OFF" Condition="1" x="3950" y="500" />
+      <ECTransition Source="C_P_OFF" Destination="FAULT_S" Condition="Fault" x="4200" y="750" />
+      <ECTransition Source="C_P_OFF" Destination="S_P_STOP" Condition="NOT Fault AND Done" x="4200" y="650" />
+      <ECTransition Source="C_P_OFF" Destination="W_P_OFF" Condition="NOT Fault AND NOT Done" x="3950" y="900" />
+      <ECTransition Source="W_P_OFF" Destination="C_P_OFF" Condition="IEjector.CNF_STATUS OR IEjector.CNF_READY OR IVacuum.CNF_STATUS OR IVacuum.CNF_READY OR ISwivel.CNF_STATUS OR ISwivel.CNF_READY" x="4050" y="900" />
+      <ECTransition Source="S_P_STOP" Destination="S_C_DONE" Condition="InCycle" x="4850" y="500" />
+      <ECTransition Source="S_P_STOP" Destination="S_R_DONE" Condition="NOT InCycle" x="4850" y="500" />
+      <ECTransition Source="S_R_DONE" Destination="IDLE_W" Condition="1" x="5750" y="500" />
+      <ECTransition Source="Q_CHK" Destination="Q_NOSTART" Condition="NOT Accept" x="6650" y="500" />
+      <ECTransition Source="Q_NOSTART" Destination="IDLE_W" Condition="1" x="6750" y="900" />
+      <ECTransition Source="Q_CHK" Destination="FAULT_S" Condition="Accept AND Fault" x="6900" y="500" />
+      <ECTransition Source="Q_CHK" Destination="S_C_MAG" Condition="Accept AND NOT Fault" x="6900" y="400" />
+      <ECTransition Source="S_C_MAG" Destination="S_C_PUSH" Condition="NOT Waiting" x="7800" y="400" />
+      <ECTransition Source="S_C_MAG" Destination="W_C_MAG" Condition="Waiting" x="7550" y="700" />
+      <ECTransition Source="W_C_MAG" Destination="S_C_MAG" Condition="MAG" x="7650" y="700" />
+      <ECTransition Source="S_C_PUSH" Destination="C_C_PUSH" Condition="1" x="8450" y="500" />
+      <ECTransition Source="C_C_PUSH" Destination="FAULT_S" Condition="Fault" x="8700" y="750" />
+      <ECTransition Source="C_C_PUSH" Destination="S_C_BACK" Condition="NOT Fault AND Done" x="8700" y="650" />
+      <ECTransition Source="C_C_PUSH" Destination="W_C_PUSH" Condition="NOT Fault AND NOT Done" x="8450" y="900" />
+      <ECTransition Source="W_C_PUSH" Destination="C_C_PUSH" Condition="IEjector.CNF_STATUS OR IEjector.CNF_READY OR IVacuum.CNF_STATUS OR IVacuum.CNF_READY OR ISwivel.CNF_STATUS OR ISwivel.CNF_READY" x="8550" y="900" />
+      <ECTransition Source="S_C_BACK" Destination="C_C_BACK" Condition="1" x="9350" y="500" />
+      <ECTransition Source="C_C_BACK" Destination="FAULT_S" Condition="Fault" x="9600" y="750" />
+      <ECTransition Source="C_C_BACK" Destination="S_C_TOMAG" Condition="NOT Fault AND Done" x="9600" y="650" />
+      <ECTransition Source="C_C_BACK" Destination="W_C_BACK" Condition="NOT Fault AND NOT Done" x="9350" y="900" />
+      <ECTransition Source="W_C_BACK" Destination="C_C_BACK" Condition="IEjector.CNF_STATUS OR IEjector.CNF_READY OR IVacuum.CNF_STATUS OR IVacuum.CNF_READY OR ISwivel.CNF_STATUS OR ISwivel.CNF_READY" x="9450" y="900" />
+      <ECTransition Source="S_C_TOMAG" Destination="C_C_TOMAG" Condition="1" x="10250" y="500" />
+      <ECTransition Source="C_C_TOMAG" Destination="FAULT_S" Condition="Fault" x="10500" y="750" />
+      <ECTransition Source="C_C_TOMAG" Destination="S_C_GRIP" Condition="NOT Fault AND Done" x="10500" y="650" />
+      <ECTransition Source="C_C_TOMAG" Destination="W_C_TOMAG" Condition="NOT Fault AND NOT Done" x="10250" y="900" />
+      <ECTransition Source="W_C_TOMAG" Destination="C_C_TOMAG" Condition="IEjector.CNF_STATUS OR IEjector.CNF_READY OR IVacuum.CNF_STATUS OR IVacuum.CNF_READY OR ISwivel.CNF_STATUS OR ISwivel.CNF_READY" x="10350" y="900" />
+      <ECTransition Source="S_C_GRIP" Destination="C_C_GRIP" Condition="1" x="11150" y="500" />
+      <ECTransition Source="C_C_GRIP" Destination="FAULT_S" Condition="Fault" x="11400" y="750" />
+      <ECTransition Source="C_C_GRIP" Destination="S_C_TODOWN" Condition="NOT Fault AND Done" x="11400" y="650" />
+      <ECTransition Source="C_C_GRIP" Destination="W_C_GRIP" Condition="NOT Fault AND NOT Done" x="11150" y="900" />
+      <ECTransition Source="W_C_GRIP" Destination="C_C_GRIP" Condition="IEjector.CNF_STATUS OR IEjector.CNF_READY OR IVacuum.CNF_STATUS OR IVacuum.CNF_READY OR ISwivel.CNF_STATUS OR ISwivel.CNF_READY" x="11250" y="900" />
+      <ECTransition Source="S_C_TODOWN" Destination="C_C_TODOWN" Condition="1" x="12050" y="500" />
+      <ECTransition Source="C_C_TODOWN" Destination="FAULT_S" Condition="Fault" x="12300" y="750" />
+      <ECTransition Source="C_C_TODOWN" Destination="S_C_REL" Condition="NOT Fault AND Done" x="12300" y="650" />
+      <ECTransition Source="C_C_TODOWN" Destination="W_C_TODOWN" Condition="NOT Fault AND NOT Done" x="12050" y="900" />
+      <ECTransition Source="W_C_TODOWN" Destination="C_C_TODOWN" Condition="IEjector.CNF_STATUS OR IEjector.CNF_READY OR IVacuum.CNF_STATUS OR IVacuum.CNF_READY OR ISwivel.CNF_STATUS OR ISwivel.CNF_READY" x="12150" y="900" />
+      <ECTransition Source="S_C_REL" Destination="W_C_REL" Condition="1" x="12950" y="500" />
+      <ECTransition Source="W_C_REL" Destination="S_C_VACOFF" Condition="TIMEOUT" x="13200" y="700" />
+      <ECTransition Source="W_C_REL" Destination="K_C_REL" Condition="IEjector.CNF_STATUS OR IEjector.CNF_READY OR IVacuum.CNF_STATUS OR IVacuum.CNF_READY OR ISwivel.CNF_STATUS OR ISwivel.CNF_READY" x="12950" y="900" />
+      <ECTransition Source="K_C_REL" Destination="FAULT_S" Condition="Fault" x="13200" y="1100" />
+      <ECTransition Source="K_C_REL" Destination="W_C_REL" Condition="NOT Fault" x="13050" y="900" />
+      <ECTransition Source="S_C_VACOFF" Destination="S_P_MAG" Condition="1" x="13850" y="500" />
+      <ECTransition Source="S_C_DONE" Destination="IDLE_W" Condition="1" x="14750" y="500" />
+      <ECTransition Source="FAULT_S" Destination="IDLE_W" Condition="1" x="15650" y="500" />
+      <ECTransition Source="START" Destination="SR_Swivel" Condition="ISwivel.CNF_READY" x="100" y="2100" />
+      <ECTransition Source="SR_Swivel" Destination="START" Condition="1" x="200" y="2200" />
+      <ECTransition Source="IDLE_W" Destination="TR_Swivel" Condition="ISwivel.CNF_READY" x="0" y="2500" />
+      <ECTransition Source="TR_Swivel" Destination="TK_Swivel" Condition="1" x="150" y="2900" />
+      <ECTransition Source="IDLE_W" Destination="TK_Swivel" Condition="ISwivel.CNF_STATUS" x="-100" y="2900" />
+      <ECTransition Source="TK_Swivel" Destination="TS_Swivel" Condition="NOT AdpSwivel AND RdySwivel AND NOT ISwivel.ProgLocal AND TrySwivel &lt; 3" x="-100" y="3300" />
+      <ECTransition Source="TK_Swivel" Destination="TC_Swivel" Condition="NOT AdpSwivel AND RdySwivel AND ISwivel.ProgLocal AND (ISwivel.Status.value = 1 OR ISwivel.Status.value = 2)" x="300" y="3300" />
+      <ECTransition Source="TK_Swivel" Destination="IDLE_W" Condition="NOT (NOT AdpSwivel AND RdySwivel AND NOT ISwivel.ProgLocal AND TrySwivel &lt; 3) AND NOT (NOT AdpSwivel AND RdySwivel AND ISwivel.ProgLocal AND (ISwivel.Status.value = 1 OR ISwivel.Status.value = 2))" x="150" y="3400" />
+      <ECTransition Source="TS_Swivel" Destination="IDLE_W" Condition="1" x="-200" y="3700" />
+      <ECTransition Source="TC_Swivel" Destination="IDLE_W" Condition="1" x="400" y="3700" />
+    </ECC>
+    <Algorithm Name="algModeText" Comment="Station mode as text">
+      <ST><![CDATA[CASE Mode OF
+    0: ModeText := 'Wait for RESET';
+    1: ModeText := 'Resetting';
+    2: ModeText := 'Wait for START';
+    3: ModeText := 'Started';
+ELSE
+    ModeText := 'Unknown mode';
+END_CASE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algInit" Comment="Idle; lamps Q1 and Q2 off">
+      <ST><![CDATA[QO := QI;
+StepNo := 0; StepText := '0 Idle';
+Waiting := FALSE; Q1Lamp := FALSE; Q2Lamp := FALSE;
+InCycle := FALSE; Done := FALSE; Fault := FALSE;
+Cycles := 0;
+AdpSwivel := FALSE; TrySwivel := 0;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algIdle" Comment="Idle">
+      <ST><![CDATA[StepNo := 0; StepText := '0 Idle';
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_R_SEL" Comment="Reset: owners to program">
+      <ST><![CDATA[StepNo := 10; StepText := '10 Reset: owners to program';
+IEjector.ProgLocalSel := TRUE;
+IVacuum.ProgLocalSel := TRUE;
+ISwivel.ProgLocalSel := TRUE;
+InCycle := FALSE; Waiting := FALSE; Q1Lamp := FALSE;
+AdpSwivel := TRUE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_R_SEL" Comment="Check: Reset: owners to program">
+      <ST><![CDATA[Fault := IEjector.NeedReset OR IVacuum.NeedReset OR ISwivel.NeedReset;
+Done := IEjector.ProgLocal AND IVacuum.ProgLocal AND ISwivel.ProgLocal;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_R_HOME" Comment="Reset: ejector home">
+      <ST><![CDATA[StepNo := 11; StepText := '11 Reset: ejector home';
+IVacuum.Lsp.value := 0;
+IEjector.Lsp.value := 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_R_HOME" Comment="Check: Reset: ejector home">
+      <ST><![CDATA[Fault := IEjector.NeedReset OR IVacuum.NeedReset OR ISwivel.NeedReset;
+Done := IEjector.Status.value = 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_P_MAG" Comment="Park: swivel to magazine">
+      <ST><![CDATA[StepNo := 20; StepText := '20 Park: swivel to magazine';
+ISwivel.Lsp.value := 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_P_MAG" Comment="Check: Park: swivel to magazine">
+      <ST><![CDATA[Fault := IEjector.NeedReset OR IVacuum.NeedReset OR ISwivel.NeedReset;
+Done := ISwivel.Status.value = 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_P_OFF" Comment="Park: off the magazine">
+      <ST><![CDATA[StepNo := 21; StepText := '21 Park: off the magazine';
+ISwivel.Lsp.value := 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_P_OFF" Comment="Check: Park: off the magazine">
+      <ST><![CDATA[Fault := IEjector.NeedReset OR IVacuum.NeedReset OR ISwivel.NeedReset;
+Done := ISwivel.Status.value <> 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_P_STOP" Comment="Park: swivel stopped">
+      <ST><![CDATA[StepNo := 22; StepText := '22 Park: swivel stopped';
+ISwivel.Lsp.value := 0;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_R_DONE" Comment="Reset done">
+      <ST><![CDATA[StepNo := 12; StepText := '12 Reset done';
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algQ_CHK" Comment="Workpiece request: accept only when started and all devices ready">
+      <ST><![CDATA[Accept := Started;
+Fault := IEjector.NeedReset OR IVacuum.NeedReset OR ISwivel.NeedReset OR NOT (IEjector.ProgLocal AND IVacuum.ProgLocal AND ISwivel.ProgLocal);
+IF NOT Accept THEN
+    StepText := '0 Idle: press START first';
+END_IF;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_MAG" Comment="Cycle: wait while the magazine is empty">
+      <ST><![CDATA[InCycle := TRUE;
+Waiting := MagEmptyPv.value;
+Q1Lamp := Waiting;
+IF Waiting THEN
+    StepNo := 31; StepText := '31 Wait: magazine empty';
+ELSE
+    StepNo := 31; StepText := '31 Magazine: workpiece there';
+END_IF;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_PUSH" Comment="Push workpiece out">
+      <ST><![CDATA[StepNo := 32; StepText := '32 Push workpiece out';
+IEjector.Lsp.value := 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_C_PUSH" Comment="Check: Push workpiece out">
+      <ST><![CDATA[Fault := IEjector.NeedReset OR IVacuum.NeedReset OR ISwivel.NeedReset;
+Done := IEjector.Status.value = 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_BACK" Comment="Ejector back home">
+      <ST><![CDATA[StepNo := 33; StepText := '33 Ejector back home';
+IEjector.Lsp.value := 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_C_BACK" Comment="Check: Ejector back home">
+      <ST><![CDATA[Fault := IEjector.NeedReset OR IVacuum.NeedReset OR ISwivel.NeedReset;
+Done := IEjector.Status.value = 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_TOMAG" Comment="Swivel to magazine">
+      <ST><![CDATA[StepNo := 34; StepText := '34 Swivel to magazine';
+ISwivel.Lsp.value := 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_C_TOMAG" Comment="Check: Swivel to magazine">
+      <ST><![CDATA[Fault := IEjector.NeedReset OR IVacuum.NeedReset OR ISwivel.NeedReset;
+Done := ISwivel.Status.value = 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_GRIP" Comment="Vacuum on, wait gripped">
+      <ST><![CDATA[StepNo := 35; StepText := '35 Vacuum on, wait gripped';
+IVacuum.Lsp.value := 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_C_GRIP" Comment="Check: Vacuum on, wait gripped">
+      <ST><![CDATA[Fault := IEjector.NeedReset OR IVacuum.NeedReset OR ISwivel.NeedReset;
+Done := IVacuum.Status.value = 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_TODOWN" Comment="Swivel to Testing">
+      <ST><![CDATA[StepNo := 36; StepText := '36 Swivel to Testing';
+ISwivel.Lsp.value := 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algC_C_TODOWN" Comment="Check: Swivel to Testing">
+      <ST><![CDATA[Fault := IEjector.NeedReset OR IVacuum.NeedReset OR ISwivel.NeedReset;
+Done := ISwivel.Status.value = 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_REL" Comment="Ejection pulse">
+      <ST><![CDATA[StepNo := 37; StepText := '37 Release: ejection pulse';
+IVacuum.Lsp.value := 2;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algK_C_REL" Comment="Fault check while the pulse runs">
+      <ST><![CDATA[Fault := IEjector.NeedReset OR IVacuum.NeedReset OR ISwivel.NeedReset;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_VACOFF" Comment="Vacuum off">
+      <ST><![CDATA[StepNo := 38; StepText := '38 Vacuum off';
+IVacuum.Lsp.value := 0;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algS_C_DONE" Comment="Cycle done: handed over">
+      <ST><![CDATA[StepNo := 40; StepText := '40 Cycle done: handed over';
+Cycles := Cycles + 1;
+InCycle := FALSE; Waiting := FALSE; Q1Lamp := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algFault" Comment="Device fault: stop here, report to StationMode">
+      <ST><![CDATA[StepNo := 99;
+IF IEjector.NeedReset THEN
+    StepText := '99 FAULT: Rearm Ejector';
+ELSIF IVacuum.NeedReset THEN
+    StepText := '99 FAULT: Rearm Vacuum';
+ELSIF ISwivel.NeedReset THEN
+    StepText := '99 FAULT: Rearm Swivel';
+ELSE
+    StepText := '99 FAULT: owner not program';
+END_IF;
+InCycle := FALSE; Waiting := FALSE; Q1Lamp := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algRdySwivel" Comment="Swivel has reported ready">
+      <ST><![CDATA[RdySwivel := TRUE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algTkSelSwivel" Comment="Start-up: ask Swivel for program local">
+      <ST><![CDATA[ISwivel.ProgLocalSel := TRUE;
+TrySwivel := TrySwivel + 1;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algTkCmdSwivel" Comment="Start-up: command the end position Swivel reports (it does not move)">
+      <ST><![CDATA[ISwivel.Lsp.value := ISwivel.Status.value;
+AdpSwivel := TRUE;
+]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

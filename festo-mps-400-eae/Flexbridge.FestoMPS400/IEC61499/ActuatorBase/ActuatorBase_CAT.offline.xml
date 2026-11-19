@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OfflineParameterModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" IsDefaultEventSelectionDialogsHidden="0">
+  <OfflineParameterModel ID="Main:CAT" IsDefaultEventSelectionDialogsHidden="0">
+    <OfflineAttributeModel Name="Persist" Value="True" Locked="false" AttributeMask="True;True|False;True" />
+  </OfflineParameterModel>
+  <OfflineParameterModel ID="47" IsDefaultEventSelectionDialogsHidden="0">
+    <OfflineParameterModel ID="861B8773AF2757FC" IsDefaultEventSelectionDialogsHidden="0">
+      <OfflineAttributeModel Name="Persist" Value="True" Locked="false" AttributeMask="True;True|False;True" />
+      <OfflineAttributeModel Name="Unit" Value="s" Locked="false" />
+    </OfflineParameterModel>
+    <OfflineParameterModel ID="5568E3E91B9AAED8" IsDefaultEventSelectionDialogsHidden="0">
+      <OfflineAttributeModel Name="Persist" Value="True" Locked="false" AttributeMask="True;True|False;True" />
+      <OfflineAttributeModel Name="Unit" Value="s" Locked="false" />
+    </OfflineParameterModel>
+    <OfflineParameterModel ID="22AB1FF8E4CF2F97" IsDefaultEventSelectionDialogsHidden="0">
+      <OfflineAttributeModel Name="Persist" Value="True" Locked="false" AttributeMask="True;True|False;True" />
+    </OfflineParameterModel>
+    <OfflineParameterModel ID="8F183A7300295122" IsDefaultEventSelectionDialogsHidden="0">
+      <OfflineAttributeModel Name="Persist" Value="True" Locked="false" AttributeMask="True;True|False;True" />
+    </OfflineParameterModel>
+  </OfflineParameterModel>
+  <OfflineParameterModel ID="59" IsDefaultEventSelectionDialogsHidden="0">
+    <OfflineParameterModel ID="17" IsDefaultEventSelectionDialogsHidden="0">
+      <OfflineParameterModel ID="9B928971DED99749" IsDefaultEventSelectionDialogsHidden="0">
+        <OfflineAttributeModel Name="Default Value" Value="16#8" Locked="false" />
+      </OfflineParameterModel>
+    </OfflineParameterModel>
+  </OfflineParameterModel>
+  <OfflineParameterModel ID="86" IsDefaultEventSelectionDialogsHidden="0">
+    <OfflineAttributeModel Name="Persist" Value="True" Locked="false" AttributeMask="True;True|False;True" />
+    <OfflineParameterModel ID="17" IsDefaultEventSelectionDialogsHidden="0">
+      <OfflineParameterModel ID="EF5B650DE62876CA" IsDefaultEventSelectionDialogsHidden="0">
+        <OfflineAttributeModel Name="Default Value" Value="16#9C" Locked="false" />
+      </OfflineParameterModel>
+      <OfflineParameterModel ID="C60ADA9F1E8E9DEC" IsDefaultEventSelectionDialogsHidden="0">
+        <OfflineAttributeModel Name="Default Value" Value="16#1C" Locked="false" />
+      </OfflineParameterModel>
+    </OfflineParameterModel>
+  </OfflineParameterModel>
+  <OfflineParameterModel ID="92" IsDefaultEventSelectionDialogsHidden="0">
+    <OfflineAttributeModel Name="Persist" Value="True" Locked="false" AttributeMask="True;True|False;True" />
+  </OfflineParameterModel>
+  <OfflineParameterModel ID="104" IsDefaultEventSelectionDialogsHidden="0">
+    <OfflineParameterModel ID="17" IsDefaultEventSelectionDialogsHidden="0">
+      <OfflineParameterModel ID="C60ADA9F1E8E9DEC" IsDefaultEventSelectionDialogsHidden="0">
+        <OfflineAttributeModel Name="Default Value" Value="16#5C" Locked="false" />
+      </OfflineParameterModel>
+      <OfflineParameterModel ID="EF5B650DE62876CA" IsDefaultEventSelectionDialogsHidden="0">
+        <OfflineAttributeModel Name="Default Value" Value="16#dC" Locked="false" />
+      </OfflineParameterModel>
+    </OfflineParameterModel>
+  </OfflineParameterModel>
+  <OfflineParameterModel ID="146" IsDefaultEventSelectionDialogsHidden="0">
+    <OfflineAttributeModel Name="Persist" Value="True" Locked="false" AttributeMask="True;True|False;True" />
+  </OfflineParameterModel>
+  <OfflineParameterModel ID="188" IsDefaultEventSelectionDialogsHidden="0">
+    <OfflineParameterModel ID="52A3AF601F61E85C" IsDefaultEventSelectionDialogsHidden="0">
+      <OfflineAttributeModel Name="Persist" Value="False" Locked="false" AttributeMask="True;True|False;True" />
+    </OfflineParameterModel>
+    <OfflineParameterModel ID="B394B8C6484B76DE" IsDefaultEventSelectionDialogsHidden="0">
+      <OfflineAttributeModel Name="Persist" Value="False" Locked="false" AttributeMask="True;True|False;True" />
+    </OfflineParameterModel>
+  </OfflineParameterModel>
+</OfflineParameterModel>

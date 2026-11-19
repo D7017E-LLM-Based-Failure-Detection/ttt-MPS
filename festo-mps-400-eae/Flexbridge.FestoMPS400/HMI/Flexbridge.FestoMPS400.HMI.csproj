@@ -1,0 +1,556 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{2E1B39DF-80EC-4119-9678-E8FE9191CDA7}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Flexbridge.FestoMPS400.HMI</RootNamespace>
+    <AssemblyName>Flexbridge.FestoMPS400.HMI</AssemblyName>
+    <HMILibraries>HMIBaseSymbols:</HMILibraries>
+    <NxtVersion>25.0.1.0</NxtVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <ProjectType>HMI</ProjectType>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'Windows' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\$(Platform)\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\$(Platform)\Release</OutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Verify' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\$(Platform)\Verify\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DefineConstants>DEBUG%3bTRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Windows' ">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommunicationProfile">
+      <HintPath>CommunicationProfile</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="HMIBaseSymbols">
+      <HintPath>HMIBaseSymbols</HintPath>
+    </Reference>
+    <Reference Include="NxtControl.ComponentModel">
+      <HintPath>NxtControl.ComponentModel</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NxtControl.GuiFramework">
+      <HintPath>NxtControl.GuiFramework</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SE.App2Base.HMI">
+      <Version>25.0.1.5</Version>
+      <HintPath>SE.App2Base.HMI</HintPath>
+    </Reference>
+    <Reference Include="SE.App2CommonProcess.HMI">
+      <Version>25.0.1.5</Version>
+      <HintPath>SE.App2CommonProcess.HMI</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actuator2OpBaseExt\Actuator2OpBaseExt.def.cs" />
+    <Compile Include="Actuator2OpBaseExt\Actuator2OpBaseExt.event.cs" />
+    <Compile Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sDamper.cnv.cs" />
+    <Compile Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sDamper.cnv.Designer.cs">
+      <DependentUpon>Actuator2OpBaseExt_sDamper.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sDefault.cnv.cs" />
+    <Compile Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sDefault.cnv.Designer.cs">
+      <DependentUpon>Actuator2OpBaseExt_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sDiverter.cnv.cs" />
+    <Compile Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sDiverter.cnv.Designer.cs">
+      <DependentUpon>Actuator2OpBaseExt_sDiverter.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sInstanceName.cnv.cs" />
+    <Compile Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sInstanceName.cnv.Designer.cs">
+      <DependentUpon>Actuator2OpBaseExt_sInstanceName.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2OpBase\Actuator2OpBase.def.cs" />
+    <Compile Include="Actuator2OpBase\Actuator2OpBase.event.cs" />
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_fpDefault.cnv.cs" />
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_fpDefault.cnv.Designer.cs">
+      <DependentUpon>Actuator2OpBase_fpDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_fpParameter.cnv.cs" />
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_fpParameter.cnv.Designer.cs">
+      <DependentUpon>Actuator2OpBase_fpParameter.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_fpTrend.cnv.cs" />
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_fpTrend.cnv.Designer.cs">
+      <DependentUpon>Actuator2OpBase_fpTrend.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_sDamper.cnv.cs" />
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_sDamper.cnv.Designer.cs">
+      <DependentUpon>Actuator2OpBase_sDamper.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_sDefault.cnv.cs" />
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_sDefault.cnv.Designer.cs">
+      <DependentUpon>Actuator2OpBase_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_sDiverter.cnv.cs" />
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_sDiverter.cnv.Designer.cs">
+      <DependentUpon>Actuator2OpBase_sDiverter.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_sInstanceName.cnv.cs" />
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_sInstanceName.cnv.Designer.cs">
+      <DependentUpon>Actuator2OpBase_sInstanceName.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2Op\Actuator2Op.def.cs" />
+    <Compile Include="Actuator2Op\Actuator2Op.event.cs" />
+    <Compile Include="Actuator2Op\Actuator2Op_sDamper.cnv.cs" />
+    <Compile Include="Actuator2Op\Actuator2Op_sDamper.cnv.Designer.cs">
+      <DependentUpon>Actuator2Op_sDamper.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2Op\Actuator2Op_sDefault.cnv.cs" />
+    <Compile Include="Actuator2Op\Actuator2Op_sDefault.cnv.Designer.cs">
+      <DependentUpon>Actuator2Op_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2Op\Actuator2Op_sDiverter.cnv.cs" />
+    <Compile Include="Actuator2Op\Actuator2Op_sDiverter.cnv.Designer.cs">
+      <DependentUpon>Actuator2Op_sDiverter.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator2Op\Actuator2Op_sInstanceName.cnv.cs" />
+    <Compile Include="Actuator2Op\Actuator2Op_sInstanceName.cnv.Designer.cs">
+      <DependentUpon>Actuator2Op_sInstanceName.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt.def.cs" />
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt.event.cs" />
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sDamper.cnv.cs" />
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sDamper.cnv.Designer.cs">
+      <DependentUpon>ActuatorBaseExt_sDamper.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sDefault.cnv.cs" />
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sDefault.cnv.Designer.cs">
+      <DependentUpon>ActuatorBaseExt_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sDiverter.cnv.cs" />
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sDiverter.cnv.Designer.cs">
+      <DependentUpon>ActuatorBaseExt_sDiverter.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sInstanceName.cnv.cs" />
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sInstanceName.cnv.Designer.cs">
+      <DependentUpon>ActuatorBaseExt_sInstanceName.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sLflHorz.cnv.cs" />
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sLflHorz.cnv.Designer.cs">
+      <DependentUpon>ActuatorBaseExt_sLflHorz.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sLflValve.cnv.cs" />
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sLflValve.cnv.Designer.cs">
+      <DependentUpon>ActuatorBaseExt_sLflValve.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sLflVert.cnv.cs" />
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_sLflVert.cnv.Designer.cs">
+      <DependentUpon>ActuatorBaseExt_sLflVert.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBase\ActuatorBase.def.cs" />
+    <Compile Include="ActuatorBase\ActuatorBase.event.cs" />
+    <Compile Include="ActuatorBase\ActuatorBase_fpDefault.cnv.cs" />
+    <Compile Include="ActuatorBase\ActuatorBase_fpDefault.cnv.Designer.cs">
+      <DependentUpon>ActuatorBase_fpDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBase\ActuatorBase_fpParameter.cnv.cs" />
+    <Compile Include="ActuatorBase\ActuatorBase_fpParameter.cnv.Designer.cs">
+      <DependentUpon>ActuatorBase_fpParameter.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBase\ActuatorBase_fpTrend.cnv.cs" />
+    <Compile Include="ActuatorBase\ActuatorBase_fpTrend.cnv.Designer.cs">
+      <DependentUpon>ActuatorBase_fpTrend.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBase\ActuatorBase_sDamper.cnv.cs" />
+    <Compile Include="ActuatorBase\ActuatorBase_sDamper.cnv.Designer.cs">
+      <DependentUpon>ActuatorBase_sDamper.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBase\ActuatorBase_sDefault.cnv.cs" />
+    <Compile Include="ActuatorBase\ActuatorBase_sDefault.cnv.Designer.cs">
+      <DependentUpon>ActuatorBase_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBase\ActuatorBase_sDiverter.cnv.cs" />
+    <Compile Include="ActuatorBase\ActuatorBase_sDiverter.cnv.Designer.cs">
+      <DependentUpon>ActuatorBase_sDiverter.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBase\ActuatorBase_sInstanceName.cnv.cs" />
+    <Compile Include="ActuatorBase\ActuatorBase_sInstanceName.cnv.Designer.cs">
+      <DependentUpon>ActuatorBase_sInstanceName.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBase\ActuatorBase_sLflHorz.cnv.cs" />
+    <Compile Include="ActuatorBase\ActuatorBase_sLflHorz.cnv.Designer.cs">
+      <DependentUpon>ActuatorBase_sLflHorz.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBase\ActuatorBase_sLflValve.cnv.cs" />
+    <Compile Include="ActuatorBase\ActuatorBase_sLflValve.cnv.Designer.cs">
+      <DependentUpon>ActuatorBase_sLflValve.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActuatorBase\ActuatorBase_sLflVert.cnv.cs" />
+    <Compile Include="ActuatorBase\ActuatorBase_sLflVert.cnv.Designer.cs">
+      <DependentUpon>ActuatorBase_sLflVert.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator\Actuator.def.cs" />
+    <Compile Include="Actuator\Actuator.event.cs" />
+    <Compile Include="Actuator\Actuator_sDamper.cnv.cs" />
+    <Compile Include="Actuator\Actuator_sDamper.cnv.Designer.cs">
+      <DependentUpon>Actuator_sDamper.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator\Actuator_sDefault.cnv.cs" />
+    <Compile Include="Actuator\Actuator_sDefault.cnv.Designer.cs">
+      <DependentUpon>Actuator_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator\Actuator_sDiverter.cnv.cs" />
+    <Compile Include="Actuator\Actuator_sDiverter.cnv.Designer.cs">
+      <DependentUpon>Actuator_sDiverter.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator\Actuator_sInstanceName.cnv.cs" />
+    <Compile Include="Actuator\Actuator_sInstanceName.cnv.Designer.cs">
+      <DependentUpon>Actuator_sInstanceName.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator\Actuator_sLflHorz.cnv.cs" />
+    <Compile Include="Actuator\Actuator_sLflHorz.cnv.Designer.cs">
+      <DependentUpon>Actuator_sLflHorz.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator\Actuator_sLflValve.cnv.cs" />
+    <Compile Include="Actuator\Actuator_sLflValve.cnv.Designer.cs">
+      <DependentUpon>Actuator_sLflValve.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Actuator\Actuator_sLflVert.cnv.cs" />
+    <Compile Include="Actuator\Actuator_sLflVert.cnv.Designer.cs">
+      <DependentUpon>Actuator_sLflVert.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Colors\ProjectColors.cs" />
+    <Compile Include="Colors\ProjectDrawingObjects.cs" />
+    <Compile Include="ControlConsole\ControlConsole.def.cs" />
+    <Compile Include="ControlConsole\ControlConsole.event.cs" />
+    <Compile Include="ControlConsole\ControlConsole_sDefault.cnv.cs" />
+    <Compile Include="ControlConsole\ControlConsole_sDefault.cnv.Designer.cs">
+      <DependentUpon>ControlConsole_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Distributing\Distributing.def.cs" />
+    <Compile Include="Distributing\Distributing.event.cs" />
+    <Compile Include="Distributing\Distributing_sDefault.cnv.cs" />
+    <Compile Include="Distributing\Distributing_sDefault.cnv.Designer.cs">
+      <DependentUpon>Distributing_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IOTest16\IOTest16.def.cs" />
+    <Compile Include="IOTest16\IOTest16.event.cs" />
+    <Compile Include="IOTest16\IOTest16_sDefault.cnv.cs" />
+    <Compile Include="IOTest16\IOTest16_sDefault.cnv.Designer.cs">
+      <DependentUpon>IOTest16_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Testing\Testing.def.cs" />
+    <Compile Include="Testing\Testing.event.cs" />
+    <Compile Include="Testing\Testing_sDefault.cnv.cs" />
+    <Compile Include="Testing\Testing_sDefault.cnv.Designer.cs">
+      <DependentUpon>Testing_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Actuator2OpBaseExt\Actuator2OpBaseExt.Design.resx" />
+    <None Include="Actuator2OpBase\Actuator2OpBase.Design.resx" />
+    <None Include="Actuator2Op\Actuator2Op.Design.resx" />
+    <None Include="ActuatorBaseExt\ActuatorBaseExt.Design.resx" />
+    <None Include="ActuatorBase\ActuatorBase.Design.resx" />
+    <None Include="Actuator\Actuator.Design.resx" />
+    <None Include="Alarms\AlarmClasses.xml" />
+    <None Include="Colors\ProjectColors.xml" />
+    <None Include="Colors\ProjectDrawingObjects.xml" />
+    <none Include="GeneralProperties\Properties.xml" />
+    <None Include="ImageStorage\ImageStorage.xml" />
+    <none Include="Languages\neutral\Dictionary.Resources.xml" />
+    <none Include="Theme\Languages\neutral\Dictionary.Resources.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sDamper.cnv.resx">
+      <DependentUpon>Actuator2OpBaseExt_sDamper.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sDamper.cnv.xml">
+      <DependentUpon>Actuator2OpBaseExt_sDamper.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sDefault.cnv.resx">
+      <DependentUpon>Actuator2OpBaseExt_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sDefault.cnv.xml">
+      <DependentUpon>Actuator2OpBaseExt_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sDiverter.cnv.resx">
+      <DependentUpon>Actuator2OpBaseExt_sDiverter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sDiverter.cnv.xml">
+      <DependentUpon>Actuator2OpBaseExt_sDiverter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sInstanceName.cnv.resx">
+      <DependentUpon>Actuator2OpBaseExt_sInstanceName.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBaseExt\Actuator2OpBaseExt_sInstanceName.cnv.xml">
+      <DependentUpon>Actuator2OpBaseExt_sInstanceName.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBase\Actuator2OpBase_fpDefault.cnv.resx">
+      <DependentUpon>Actuator2OpBase_fpDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBase\Actuator2OpBase_fpParameter.cnv.resx">
+      <DependentUpon>Actuator2OpBase_fpParameter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBase\Actuator2OpBase_fpTrend.cnv.resx">
+      <DependentUpon>Actuator2OpBase_fpTrend.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBase\Actuator2OpBase_sDamper.cnv.resx">
+      <DependentUpon>Actuator2OpBase_sDamper.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBase\Actuator2OpBase_sDamper.cnv.xml">
+      <DependentUpon>Actuator2OpBase_sDamper.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBase\Actuator2OpBase_sDefault.cnv.resx">
+      <DependentUpon>Actuator2OpBase_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBase\Actuator2OpBase_sDefault.cnv.xml">
+      <DependentUpon>Actuator2OpBase_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBase\Actuator2OpBase_sDiverter.cnv.resx">
+      <DependentUpon>Actuator2OpBase_sDiverter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBase\Actuator2OpBase_sDiverter.cnv.xml">
+      <DependentUpon>Actuator2OpBase_sDiverter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBase\Actuator2OpBase_sInstanceName.cnv.resx">
+      <DependentUpon>Actuator2OpBase_sInstanceName.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2OpBase\Actuator2OpBase_sInstanceName.cnv.xml">
+      <DependentUpon>Actuator2OpBase_sInstanceName.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2Op\Actuator2Op_sDamper.cnv.resx">
+      <DependentUpon>Actuator2Op_sDamper.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2Op\Actuator2Op_sDamper.cnv.xml">
+      <DependentUpon>Actuator2Op_sDamper.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2Op\Actuator2Op_sDefault.cnv.resx">
+      <DependentUpon>Actuator2Op_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2Op\Actuator2Op_sDefault.cnv.xml">
+      <DependentUpon>Actuator2Op_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2Op\Actuator2Op_sDiverter.cnv.resx">
+      <DependentUpon>Actuator2Op_sDiverter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2Op\Actuator2Op_sDiverter.cnv.xml">
+      <DependentUpon>Actuator2Op_sDiverter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2Op\Actuator2Op_sInstanceName.cnv.resx">
+      <DependentUpon>Actuator2Op_sInstanceName.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator2Op\Actuator2Op_sInstanceName.cnv.xml">
+      <DependentUpon>Actuator2Op_sInstanceName.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sDamper.cnv.resx">
+      <DependentUpon>ActuatorBaseExt_sDamper.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sDamper.cnv.xml">
+      <DependentUpon>ActuatorBaseExt_sDamper.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sDefault.cnv.resx">
+      <DependentUpon>ActuatorBaseExt_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sDefault.cnv.xml">
+      <DependentUpon>ActuatorBaseExt_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sDiverter.cnv.resx">
+      <DependentUpon>ActuatorBaseExt_sDiverter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sDiverter.cnv.xml">
+      <DependentUpon>ActuatorBaseExt_sDiverter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sInstanceName.cnv.resx">
+      <DependentUpon>ActuatorBaseExt_sInstanceName.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sInstanceName.cnv.xml">
+      <DependentUpon>ActuatorBaseExt_sInstanceName.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sLflHorz.cnv.resx">
+      <DependentUpon>ActuatorBaseExt_sLflHorz.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sLflHorz.cnv.xml">
+      <DependentUpon>ActuatorBaseExt_sLflHorz.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sLflValve.cnv.resx">
+      <DependentUpon>ActuatorBaseExt_sLflValve.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sLflValve.cnv.xml">
+      <DependentUpon>ActuatorBaseExt_sLflValve.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sLflVert.cnv.resx">
+      <DependentUpon>ActuatorBaseExt_sLflVert.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBaseExt\ActuatorBaseExt_sLflVert.cnv.xml">
+      <DependentUpon>ActuatorBaseExt_sLflVert.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_fpDefault.cnv.resx">
+      <DependentUpon>ActuatorBase_fpDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_fpParameter.cnv.resx">
+      <DependentUpon>ActuatorBase_fpParameter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_fpTrend.cnv.resx">
+      <DependentUpon>ActuatorBase_fpTrend.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sDamper.cnv.resx">
+      <DependentUpon>ActuatorBase_sDamper.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sDamper.cnv.xml">
+      <DependentUpon>ActuatorBase_sDamper.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sDefault.cnv.resx">
+      <DependentUpon>ActuatorBase_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sDefault.cnv.xml">
+      <DependentUpon>ActuatorBase_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sDiverter.cnv.resx">
+      <DependentUpon>ActuatorBase_sDiverter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sDiverter.cnv.xml">
+      <DependentUpon>ActuatorBase_sDiverter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sInstanceName.cnv.resx">
+      <DependentUpon>ActuatorBase_sInstanceName.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sInstanceName.cnv.xml">
+      <DependentUpon>ActuatorBase_sInstanceName.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sLflHorz.cnv.resx">
+      <DependentUpon>ActuatorBase_sLflHorz.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sLflHorz.cnv.xml">
+      <DependentUpon>ActuatorBase_sLflHorz.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sLflValve.cnv.resx">
+      <DependentUpon>ActuatorBase_sLflValve.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sLflValve.cnv.xml">
+      <DependentUpon>ActuatorBase_sLflValve.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sLflVert.cnv.resx">
+      <DependentUpon>ActuatorBase_sLflVert.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActuatorBase\ActuatorBase_sLflVert.cnv.xml">
+      <DependentUpon>ActuatorBase_sLflVert.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sDamper.cnv.resx">
+      <DependentUpon>Actuator_sDamper.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sDamper.cnv.xml">
+      <DependentUpon>Actuator_sDamper.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sDefault.cnv.resx">
+      <DependentUpon>Actuator_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sDefault.cnv.xml">
+      <DependentUpon>Actuator_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sDiverter.cnv.resx">
+      <DependentUpon>Actuator_sDiverter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sDiverter.cnv.xml">
+      <DependentUpon>Actuator_sDiverter.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sInstanceName.cnv.resx">
+      <DependentUpon>Actuator_sInstanceName.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sInstanceName.cnv.xml">
+      <DependentUpon>Actuator_sInstanceName.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sLflHorz.cnv.resx">
+      <DependentUpon>Actuator_sLflHorz.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sLflHorz.cnv.xml">
+      <DependentUpon>Actuator_sLflHorz.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sLflValve.cnv.resx">
+      <DependentUpon>Actuator_sLflValve.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sLflValve.cnv.xml">
+      <DependentUpon>Actuator_sLflValve.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sLflVert.cnv.resx">
+      <DependentUpon>Actuator_sLflVert.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Actuator\Actuator_sLflVert.cnv.xml">
+      <DependentUpon>Actuator_sLflVert.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Alarms\AlarmClasses.xml" />
+    <EmbeddedResource Include="Alarms\SystemAlarmClasses.xml" />
+    <EmbeddedResource Include="Configurations\HistoryTrend.xml" />
+    <EmbeddedResource Include="Configurations\Journalling.xml" />
+    <EmbeddedResource Include="Configurations\TagValueEditor.xml" />
+    <EmbeddedResource Include="ControlConsole\ControlConsole.Design.resx" />
+    <EmbeddedResource Include="ControlConsole\ControlConsole_sDefault.cnv.resx">
+      <DependentUpon>ControlConsole_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlConsole\ControlConsole_sDefault.cnv.xml">
+      <DependentUpon>ControlConsole_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Distributing\Distributing.Design.resx" />
+    <EmbeddedResource Include="Distributing\Distributing_sDefault.cnv.resx">
+      <DependentUpon>Distributing_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Distributing\Distributing_sDefault.cnv.xml">
+      <DependentUpon>Distributing_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IOTest16\IOTest16.Design.resx" />
+    <EmbeddedResource Include="IOTest16\IOTest16_sDefault.cnv.resx">
+      <DependentUpon>IOTest16_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IOTest16\IOTest16_sDefault.cnv.xml">
+      <DependentUpon>IOTest16_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Testing\Testing.Design.resx" />
+    <EmbeddedResource Include="Testing\Testing_sDefault.cnv.resx">
+      <DependentUpon>Testing_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Testing\Testing_sDefault.cnv.xml">
+      <DependentUpon>Testing_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
+</Project>

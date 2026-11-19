@@ -1,0 +1,83 @@
+# MPS 400 knowledge graph: how the NxtStudio solution runs the Processing station.
+# This is the behaviour version 1 must reproduce. Conventions: see ../README.md.
+schema: mps400-kg/0.1
+updated: "2026-11-10"
+
+sources:
+  nxt:
+    path: "resources/Solution Archive/MPS_NxtStudio_2_1/IEC61499"
+    title: Legacy NxtStudio 2.1 solution (types and System.sys)
+
+legacy_station:
+  station: processing-1
+  station_type: processing
+  cat: Processing2CAT
+  instance: ProcessingStation
+  device: Processing (DCSmini)
+  status: documented
+  sources: [nxt]
+
+interfaces:
+  - name: ADP1
+    adapter: EVENT_HS
+    role: plug
+    peer: ProcHanding.ADP2 (handling-1)
+    events_in: {REQ: Handling has put a workpiece on the table.}
+    events_out: {CNF: The workpiece is processed and can be taken back.}
+
+signals:
+  note: >-
+    Station bits as in ../station-types/processing.yaml (same bit numbers). No control panel.
+    The names of I1 and I2 contradict Festo's drawing; see the verify note there.
+  inputs:
+    - {name: WP_AVAIL, bit: I0, used: false, meaning: Workpiece available; read but not used}
+    - {name: WP_DRILL, bit: I1, used: true, meaning: Workpiece at the drilling unit (legacy name)}
+    - {name: WP_TEST, bit: I2, used: true, meaning: Workpiece at the checking unit (legacy name)}
+    - {name: DRILL_RAISED, bit: I3, used: true, meaning: Drill up}
+    - {name: DRILL_LOWERED, bit: I4, used: true, meaning: Drill down}
+    - {name: IN_POSITION, bit: I5, used: true, meaning: Table positioned}
+    - {name: HOLE_DETECTED, bit: I6, used: true, meaning: Check result (Festo - checking drill hole ok)}
+  outputs:
+    - {name: START_DRILL, bit: O0, meaning: Drill motor on}
+    - {name: ROTATE, bit: O1, meaning: Table start pulse}
+    - {name: LOWER_DRILL, bit: O2, meaning: Lower the drill}
+    - {name: RAISE_DRILL, bit: O3, meaning: Raise the drill}
+    - {name: CLAMP, bit: O4, meaning: Clamp the workpiece}
+    - {name: TEST, bit: O5, meaning: Checking probe down}
+
+actuator_blocks:
+  - {instance: FB2, type: TableDriver, kind: composite, drives: [ROTATE], feedback: [IN_POSITION], note: "At start-up: if the table is not in position, step it into position (TableInit)."}
+  - {instance: Drill, type: DrillDriver, kind: composite, drives: [LOWER_DRILL, RAISE_DRILL, START_DRILL], feedback: [DRILL_RAISED, DRILL_LOWERED], note: "Feed is a DoubleActingCylinder (EXTEND = lower); the motor a SingleActingActuator. At start-up the drill is raised."}
+  - {instance: Clamp, type: SingleActingActuator, kind: basic FB, drives: [CLAMP], feedback: []}
+  - {instance: Tester, type: SingleActingActuator, kind: basic FB, drives: [TEST], feedback: []}
+
+behaviour:
+  status: documented
+  sources: [nxt]
+  start_up:
+    - "No control panel, no reset sequence. At start-up the drill is raised and the table is stepped into position if needed."
+  table_step: >-
+    TableRotate: ROTATE on; as soon as IN_POSITION goes off, ROTATE off; then wait until
+    IN_POSITION is on again. (The relay circuit keeps the motor running in between.)
+  cycle:
+    trigger: ADP1.REQ from handling-1 (a workpiece has been put on the table).
+    steps:
+      - {n: 1, block: RotateToTester (TableRotateQI), do: "Table step, wait 500 ms; repeat until WP_TEST."}
+      - {n: 2, block: Test, do: "TEST on for 500 ms, read HOLE_DETECTED, TEST off for 500 ms."}
+      - {n: 3, block: RotateToDrill (TableRotateQI), do: "Table step, wait 500 ms; repeat until WP_DRILL."}
+      - {n: 4, block: DrillingSequence, do: "Only if HOLE_DETECTED was on: LOWER_DRILL and CLAMP on; at DRILL_LOWERED START_DRILL on for 1000 ms; then drill off and RAISE_DRILL; at DRILL_RAISED CLAMP off."}
+      - {n: 5, block: TableRotate, do: "One more table step."}
+      - {n: 6, do: "ADP1.CNF to handling-1."}
+  timers:
+    - {what: Settle time after each table step, value: 500 ms}
+    - {what: Checking probe down, value: 500 ms}
+    - {what: Checking probe up, value: 500 ms}
+    - {what: Drilling at the bottom, value: 1000 ms}
+
+observations:
+  - "One workpiece at a time; Festo's sequence works on three in parallel."
+  - "The drill motor starts only when the drill has reached the bottom; Festo starts it while lowering."
+  - "The table steps until the workpiece reaches the checking and drilling positions and then one step more; handling-1 takes the workpiece back from the place where it put it. How these positions map onto the table's six nests is to be checked on the hardware (q-proc-sensors)."
+  - "Workpieces that fail the check are not drilled but still go back onto the tray."
+  - "The ejector (O6), the workpiece-available sensor and the 1-bit link are not used."
+  - "No timeouts on movements."

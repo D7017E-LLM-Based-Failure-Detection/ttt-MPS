@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE FBType SYSTEM "../LibraryElement.dtd" >
+  <FBType Name="ControlConsole_HMI" Namespace="Flexbridge.FestoMPS400" GUID="8f891f1f-ee2b-4c72-b013-06ddec9098eb" Comment="Service Interface Function Block Type" >
+    <Identification Standard="61499-2" />
+    <VersionInfo Organization="Flexbridge AB" Version="0.0" Author="Sandeep Patil" Date="11/16/2026" Remarks="template" />
+    <InterfaceList>
+      <EventInputs>
+        <Event ID="FF5F82C83CDA1171" Name="INIT">
+          <With Var="QI" />
+        </Event>
+      </EventInputs>
+      <EventOutputs>
+        <Event ID="0BCC3F5A9960565E" Name="INITO">
+          <With Var="QO" />
+          <With Var="STATUS" />
+        </Event>
+      </EventOutputs>
+      <InputVars>
+        <VarDeclaration ID="ABD9923B565AF91A" Name="QI" Type="BOOL" />
+      </InputVars>
+      <OutputVars>
+        <VarDeclaration ID="1258C46EC667BDF7" Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+        <VarDeclaration ID="69D6B4DA5D9EF962" Name="STATUS" Type="STRING" Comment="Service Status" />
+      </OutputVars>
+    </InterfaceList>
+    <Service RightInterface="" LeftInterface="">
+      <ServiceSequence Name= "" />
+    </Service>
+  </FBType>
+  

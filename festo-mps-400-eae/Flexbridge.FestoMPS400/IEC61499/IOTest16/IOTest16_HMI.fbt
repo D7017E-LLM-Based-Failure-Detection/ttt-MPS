@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE FBType SYSTEM "../LibraryElement.dtd" >
+  <FBType Name="IOTest16_HMI" Namespace="Flexbridge.FestoMPS400" GUID="f1223ba5-9edf-4c9f-b700-a99ff248bde5" Comment="Service Interface Function Block Type" >
+    <Identification Standard="61499-2" />
+    <VersionInfo Organization="Flexbridge AB" Version="0.0" Author="Sandeep Patil" Date="11/13/2026" Remarks="template" />
+<InterfaceList>
+    <EventInputs>
+      <Event ID="B63507A5491DBA4C" Name="INIT">
+        <With Var="QI" />
+      </Event>
+      <Event ID="76823A330AA1E11A" Name="REQ_LBL">
+        <With Var="LabelDI00" />
+        <With Var="LabelDI01" />
+        <With Var="LabelDI02" />
+        <With Var="LabelDI03" />
+        <With Var="LabelDI04" />
+        <With Var="LabelDI05" />
+        <With Var="LabelDI06" />
+        <With Var="LabelDI07" />
+        <With Var="LabelDI08" />
+        <With Var="LabelDI09" />
+        <With Var="LabelDI10" />
+        <With Var="LabelDI11" />
+        <With Var="LabelDI12" />
+        <With Var="LabelDI13" />
+        <With Var="LabelDI14" />
+        <With Var="LabelDI15" />
+        <With Var="LabelDO00" />
+        <With Var="LabelDO01" />
+        <With Var="LabelDO02" />
+        <With Var="LabelDO03" />
+        <With Var="LabelDO04" />
+        <With Var="LabelDO05" />
+        <With Var="LabelDO06" />
+        <With Var="LabelDO07" />
+        <With Var="LabelDO08" />
+        <With Var="LabelDO09" />
+        <With Var="LabelDO10" />
+        <With Var="LabelDO11" />
+        <With Var="LabelDO12" />
+        <With Var="LabelDO13" />
+        <With Var="LabelDO14" />
+        <With Var="LabelDO15" />
+      </Event>
+      <Event ID="54230140E274F0DB" Name="REQ_DI">
+        <With Var="DI00" />
+        <With Var="DI01" />
+        <With Var="DI02" />
+        <With Var="DI03" />
+        <With Var="DI04" />
+        <With Var="DI05" />
+        <With Var="DI06" />
+        <With Var="DI07" />
+        <With Var="DI08" />
+        <With Var="DI09" />
+        <With Var="DI10" />
+        <With Var="DI11" />
+        <With Var="DI12" />
+        <With Var="DI13" />
+        <With Var="DI14" />
+        <With Var="DI15" />
+      </Event>
+      <Event ID="34403BA68899974A" Name="REQ_DO">
+        <With Var="DOSt00" />
+        <With Var="DOSt01" />
+        <With Var="DOSt02" />
+        <With Var="DOSt03" />
+        <With Var="DOSt04" />
+        <With Var="DOSt05" />
+        <With Var="DOSt06" />
+        <With Var="DOSt07" />
+        <With Var="DOSt08" />
+        <With Var="DOSt09" />
+        <With Var="DOSt10" />
+        <With Var="DOSt11" />
+        <With Var="DOSt12" />
+        <With Var="DOSt13" />
+        <With Var="DOSt14" />
+        <With Var="DOSt15" />
+        <With Var="EnDO00" />
+        <With Var="EnDO01" />
+        <With Var="EnDO02" />
+        <With Var="EnDO03" />
+        <With Var="EnDO04" />
+        <With Var="EnDO05" />
+        <With Var="EnDO06" />
+        <With Var="EnDO07" />
+        <With Var="EnDO08" />
+        <With Var="EnDO09" />
+        <With Var="EnDO10" />
+        <With Var="EnDO11" />
+        <With Var="EnDO12" />
+        <With Var="EnDO13" />
+        <With Var="EnDO14" />
+        <With Var="EnDO15" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="64A629998C2B4D18" Name="INITO">
+        <With Var="QO" />
+        <With Var="STATUS" />
+      </Event>
+      <Event ID="46C3A447E157753C" Name="CMD">
+        <With Var="CmdDO00" />
+        <With Var="CmdDO01" />
+        <With Var="CmdDO02" />
+        <With Var="CmdDO03" />
+        <With Var="CmdDO04" />
+        <With Var="CmdDO05" />
+        <With Var="CmdDO06" />
+        <With Var="CmdDO07" />
+        <With Var="CmdDO08" />
+        <With Var="CmdDO09" />
+        <With Var="CmdDO10" />
+        <With Var="CmdDO11" />
+        <With Var="CmdDO12" />
+        <With Var="CmdDO13" />
+        <With Var="CmdDO14" />
+        <With Var="CmdDO15" />
+      </Event>
+      <Event ID="28B4B8110E8B23BA" Name="ALL_OFF">
+        <With Var="AllOff" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="AD37AFEC6A19DC73" Name="QI" Type="BOOL" />
+      <VarDeclaration ID="AAD360AE0031FBA7" Name="LabelDI00" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="34F8F4E8D5BD5270" Name="LabelDI01" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="711E2B78537B9C76" Name="LabelDI02" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="EA5F92EF2702E72A" Name="LabelDI03" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="B76F7352E26DAEE5" Name="LabelDI04" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="0D90E8F0FD1572E3" Name="LabelDI05" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="E6E724C318C07961" Name="LabelDI06" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="FF560F6D08B1558D" Name="LabelDI07" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="33F536C3388479B8" Name="LabelDI08" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="0092EBF7D09B1BB1" Name="LabelDI09" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="DFB9DE52D9D3F241" Name="LabelDI10" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="F80C75F157269E73" Name="LabelDI11" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="3A2AF3DB14E057B8" Name="LabelDI12" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="696BAC93C6231267" Name="LabelDI13" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="BE7DD780B388821F" Name="LabelDI14" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="00B4737EF87E9111" Name="LabelDI15" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="C91F03C5F3D96794" Name="LabelDO00" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="6C3353A6278F31A7" Name="LabelDO01" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="9A90B29082BAD88B" Name="LabelDO02" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="DA1A96FCDFEEF866" Name="LabelDO03" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="215A0125F98E8D42" Name="LabelDO04" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="BE06B8F15663C0B1" Name="LabelDO05" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="6305E534B39F2EE6" Name="LabelDO06" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="89781FCD347D10FA" Name="LabelDO07" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="84372BA8D08A8AC4" Name="LabelDO08" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="D28F405939B8975E" Name="LabelDO09" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="6B71D2D92FFB8089" Name="LabelDO10" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="BF8ECB0CDB9E1E69" Name="LabelDO11" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="6A2AD1AEF0A7089C" Name="LabelDO12" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="3E5EF677AEEB17E9" Name="LabelDO13" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="AD9EF1048BD1ACBA" Name="LabelDO14" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="192C79BC3C368A07" Name="LabelDO15" Type="STRING" Comment="Label text" />
+      <VarDeclaration ID="D8822B67D02F9092" Name="DI00" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="5FCEC26253E236DD" Name="DI01" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="B6265428486F3C44" Name="DI02" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="350803B156590673" Name="DI03" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="08D042CA123BBAD6" Name="DI04" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="CCBF62D8F886AF7C" Name="DI05" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="D19743C15D298BBE" Name="DI06" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="3E78C72AA8E3D7CE" Name="DI07" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="944F09A1740ED60C" Name="DI08" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="19911228B40C640C" Name="DI09" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="ADE63BA19C92226A" Name="DI10" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="A626A0A5B091DAA5" Name="DI11" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="04C923A6ED5ACDAD" Name="DI12" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="AABBB683BD394519" Name="DI13" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="250639C9D2AC2F88" Name="DI14" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="521435408CEF7A3E" Name="DI15" Type="BOOL" Comment="Input lamp" />
+      <VarDeclaration ID="E09A83D8A036E0B5" Name="DOSt00" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="AB87D38FEB7AD14B" Name="DOSt01" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="CF1768B1C1E14D27" Name="DOSt02" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="A2264B1337E3CE4F" Name="DOSt03" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="5A3733277ADA1972" Name="DOSt04" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="9ACC547135D942C2" Name="DOSt05" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="F4751479B8EF136F" Name="DOSt06" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="F3D21410B005D7DD" Name="DOSt07" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="870CA74D6592AE8C" Name="DOSt08" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="76D1F83FA874663D" Name="DOSt09" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="BBC6AFF2758488E3" Name="DOSt10" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="E6FB069BD7AE847F" Name="DOSt11" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="C65E5D253AE76FB6" Name="DOSt12" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="4B9EB0BE8906812E" Name="DOSt13" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="5940D288A5435331" Name="DOSt14" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="1B42CA3924E970A2" Name="DOSt15" Type="BOOL" Comment="Output state lamp" />
+      <VarDeclaration ID="E942C3278740B311" Name="EnDO00" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="2C7D3EFEDD65334C" Name="EnDO01" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="218682D551B5E363" Name="EnDO02" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="BE9EA829314C321C" Name="EnDO03" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="1A6032D49A7418F6" Name="EnDO04" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="5CFB3642C430CA38" Name="EnDO05" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="DFD7541C44C59897" Name="EnDO06" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="C3C6D2AF4F6B5A2B" Name="EnDO07" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="46D1595BC77B5B44" Name="EnDO08" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="6375DB34DE05CEDB" Name="EnDO09" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="223D8DD33D7A9374" Name="EnDO10" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="73CF9439ACCA3B49" Name="EnDO11" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="CC9913EA3EC62326" Name="EnDO12" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="F4C67A480DCCD141" Name="EnDO13" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="9EC199434FC33EAC" Name="EnDO14" Type="BOOL" Comment="Button enabled" />
+      <VarDeclaration ID="C2165E4B8F3E9590" Name="EnDO15" Type="BOOL" Comment="Button enabled" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="2F7F7E534548B3AE" Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+      <VarDeclaration ID="486F78BCE63C4901" Name="STATUS" Type="STRING" Comment="Service Status" />
+      <VarDeclaration ID="5894EF1F76DACBEF" Name="CmdDO00" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="0210C65D19A82559" Name="CmdDO01" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="680269FA2EA04FD1" Name="CmdDO02" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="35D3947E2ABD81D4" Name="CmdDO03" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="4F8A76D29C6427F5" Name="CmdDO04" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="34E981D743B5E114" Name="CmdDO05" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="A4E053B122E4DEFE" Name="CmdDO06" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="B46E07C375751ECD" Name="CmdDO07" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="03FAD46C5D8D1BB6" Name="CmdDO08" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="D33DD8C84FDCD9A9" Name="CmdDO09" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="AF4F70D66078F64D" Name="CmdDO10" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="80C2EAF9C573BE9F" Name="CmdDO11" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="BB4ED98C4E679B32" Name="CmdDO12" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="F53FDC552BC54BC6" Name="CmdDO13" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="28D6362AB72212B7" Name="CmdDO14" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="30DBE17A2158E4C0" Name="CmdDO15" Type="BOOL" Comment="Button: requested output state" />
+      <VarDeclaration ID="EE30FD658267EF15" Name="AllOff" Type="BOOL" Comment="Button: all outputs off" />
+    </OutputVars>
+  </InterfaceList>
+  <Service RightInterface="" LeftInterface="">
+    <ServiceSequence Name="" />
+  </Service>
+</FBType>

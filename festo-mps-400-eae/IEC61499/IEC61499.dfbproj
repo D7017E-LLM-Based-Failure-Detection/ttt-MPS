@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{6B0B16E9-2E49-4309-A482-6249A292FEE1}</ProjectGuid>
+    <ProjectTypeGuids>{EAD1E85F-CEF5-4861-AFF8-597F2DDE70FC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Windows</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Main</RootNamespace>
+    <AssemblyName>IEC61499</AssemblyName>
+    <NxtVersion>25.0.0.0</NxtVersion>
+    <CheckConnectionsStrictly>TRUE</CheckConnectionsStrictly>
+    <HardwareConfigurationMigrationVersion>1</HardwareConfigurationMigrationVersion>
+    <HMIProject>HMI</HMIProject>
+    <CATInstancesHaveIds>true</CATInstancesHaveIds>
+    <MultiUserSupport>true</MultiUserSupport>
+    <IsConnectionIdModified>true</IsConnectionIdModified>
+    <ProjectType>IEC61499</ProjectType>
+    <CheckGenericInstances>False</CheckGenericInstances>
+    <ConvertStringValues>False</ConvertStringValues>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'Windows' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Default\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <IntermediateOutputPath>obj\Default\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Default\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <IntermediateOutputPath>obj\Default\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Windows' ">
+    <Version>1.0</Version>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Verify' ">
+    <OutputPath>bin\Verify</OutputPath>
+    <IntermediateOutputPath>obj\Verify\</IntermediateOutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Runtime.Base">
+      <Version>25.0.1.2</Version>
+    </Reference>
+    <Reference Include="SE.App2Base">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2CommonProcess">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2Conveying">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2LiquidFood">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2MMM">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2SingleLinePowerMonitoring">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2StateManagement">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2WWW">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.AppSequence">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.DPAC">
+      <Version>25.0.1.10</Version>
+    </Reference>
+    <Reference Include="SE.FieldDevice">
+      <Version>25.0.1.10</Version>
+    </Reference>
+    <Reference Include="SE.HwCommon">
+      <Version>25.0.1.4</Version>
+    </Reference>
+    <Reference Include="SE.IoATV">
+      <Version>25.0.1.9</Version>
+    </Reference>
+    <Reference Include="SE.IoNet">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.IoTMx">
+      <Version>25.0.1.4</Version>
+    </Reference>
+    <Reference Include="SE.IoX80">
+      <Version>25.0.1.4</Version>
+    </Reference>
+    <Reference Include="SE.ModbusGateway">
+      <Version>25.0.1.6</Version>
+    </Reference>
+    <Reference Include="SE.ModEdgeIONTS">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.Standard">
+      <Version>25.0.1.1</Version>
+    </Reference>
+    <Reference Include="Standard.IoEtherNetIP">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="Standard.IoModbus">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="Standard.IoModbusSlave">
+      <Version>25.0.1.2</Version>
+    </Reference>
+    <Reference Include="Standard.OPCUAClient">
+      <Version>25.0.1.2</Version>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\General\Archive.xml" />
+    <None Include="..\General\Certificates\Certificates.xml" />
+    <None Include="..\General\ConnectableAdapterList.xml" />
+    <None Include="..\General\Folders.xml" />
+    <None Include="..\General\ProjectInfo.xml" />
+    <None Include="..\General\se-rbac-roles.json" />
+    <None Include="..\General\se-rbac-users.json" />
+    <none Include="Languages\neutral\Dictionary.Resources.xml" />
+    <None Include="Project.doc.xml" />
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf.cfg">
+      <DependentUpon>6bef7a71-49b0-45a1-8218-64efef555adf.system</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf.doc.xml">
+      <DependentUpon>6bef7a71-49b0-45a1-8218-64efef555adf.system</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\33050102-181b-42b2-a5f0-4e716a2ac3ff\33050102-181b-42b2-a5f0-4e716a2ac3ff.hcf">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>33050102-181b-42b2-a5f0-4e716a2ac3ff.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\33050102-181b-42b2-a5f0-4e716a2ac3ff\33050102-181b-42b2-a5f0-4e716a2ac3ff.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>33050102-181b-42b2-a5f0-4e716a2ac3ff.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\33050102-181b-42b2-a5f0-4e716a2ac3ff\33050102-181b-42b2-a5f0-4e716a2ac3ff.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>33050102-181b-42b2-a5f0-4e716a2ac3ff.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\33050102-181b-42b2-a5f0-4e716a2ac3ff\E0601B81-4A3A-4A96-B6C2-007BDC680D59.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>33050102-181b-42b2-a5f0-4e716a2ac3ff.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\33050102-181b-42b2-a5f0-4e716a2ac3ff\F513CAE3-7194-4086-936C-02912EA0B352.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>33050102-181b-42b2-a5f0-4e716a2ac3ff.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\a0026ceb-2e0f-4635-9d99-a98c0e68dc61\a0026ceb-2e0f-4635-9d99-a98c0e68dc61.hcf">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>a0026ceb-2e0f-4635-9d99-a98c0e68dc61.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\a0026ceb-2e0f-4635-9d99-a98c0e68dc61\a0026ceb-2e0f-4635-9d99-a98c0e68dc61.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>a0026ceb-2e0f-4635-9d99-a98c0e68dc61.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\a0026ceb-2e0f-4635-9d99-a98c0e68dc61\a0026ceb-2e0f-4635-9d99-a98c0e68dc61.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>a0026ceb-2e0f-4635-9d99-a98c0e68dc61.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\a0026ceb-2e0f-4635-9d99-a98c0e68dc61\E0601B81-4A3A-4A96-B6C2-007BDC680D59.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>a0026ceb-2e0f-4635-9d99-a98c0e68dc61.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\a0026ceb-2e0f-4635-9d99-a98c0e68dc61\F513CAE3-7194-4086-936C-02912EA0B352.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>a0026ceb-2e0f-4635-9d99-a98c0e68dc61.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c440123d-ccc1-447a-bdaa-3b96ba6d77e9\c440123d-ccc1-447a-bdaa-3b96ba6d77e9.hcf">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>c440123d-ccc1-447a-bdaa-3b96ba6d77e9.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c440123d-ccc1-447a-bdaa-3b96ba6d77e9\c440123d-ccc1-447a-bdaa-3b96ba6d77e9.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>c440123d-ccc1-447a-bdaa-3b96ba6d77e9.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c440123d-ccc1-447a-bdaa-3b96ba6d77e9\c440123d-ccc1-447a-bdaa-3b96ba6d77e9.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>c440123d-ccc1-447a-bdaa-3b96ba6d77e9.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c440123d-ccc1-447a-bdaa-3b96ba6d77e9\E0601B81-4A3A-4A96-B6C2-007BDC680D59.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>c440123d-ccc1-447a-bdaa-3b96ba6d77e9.sysdev</DependentUpon>
+    </None>
+    <None Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c440123d-ccc1-447a-bdaa-3b96ba6d77e9\F513CAE3-7194-4086-936C-02912EA0B352.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>c440123d-ccc1-447a-bdaa-3b96ba6d77e9.sysdev</DependentUpon>
+    </None>
+    <None Include="System\OpenAdapter\OpenAdapter.Connections.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="System\6bef7a71-49b0-45a1-8218-64efef555adf.system">
+      <IEC61499Type>System</IEC61499Type>
+    </Compile>
+    <Compile Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\33050102-181b-42b2-a5f0-4e716a2ac3ff.sysdev">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>6bef7a71-49b0-45a1-8218-64efef555adf.system</DependentUpon>
+    </Compile>
+    <Compile Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\33050102-181b-42b2-a5f0-4e716a2ac3ff\CB4A17392C40E929.sysres">
+      <IEC61499Type>SystemResource</IEC61499Type>
+      <DependentUpon>33050102-181b-42b2-a5f0-4e716a2ac3ff.sysdev</DependentUpon>
+    </Compile>
+    <Compile Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\a0026ceb-2e0f-4635-9d99-a98c0e68dc61.sysdev">
+      <DependentUpon>6bef7a71-49b0-45a1-8218-64efef555adf.system</DependentUpon>
+      <IEC61499Type>SystemDevice</IEC61499Type>
+    </Compile>
+    <Compile Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\a0026ceb-2e0f-4635-9d99-a98c0e68dc61\95C11A11031952EC.sysres">
+      <DependentUpon>a0026ceb-2e0f-4635-9d99-a98c0e68dc61.sysdev</DependentUpon>
+      <IEC61499Type>SystemResource</IEC61499Type>
+    </Compile>
+    <Compile Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c150401c-b062-4862-b804-7d24429a0ec8.sysapp">
+      <IEC61499Type>SystemApplication</IEC61499Type>
+      <DependentUpon>6bef7a71-49b0-45a1-8218-64efef555adf.system</DependentUpon>
+    </Compile>
+    <Compile Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c150401c-b062-4862-b804-7d24429a0ec8\4b6ba894-33a0-4fe0-9811-56db8c17902b.syslay">
+      <IEC61499Type>SystemLayer</IEC61499Type>
+      <DependentUpon>c150401c-b062-4862-b804-7d24429a0ec8.sysapp</DependentUpon>
+    </Compile>
+    <Compile Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c440123d-ccc1-447a-bdaa-3b96ba6d77e9.sysdev">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>6bef7a71-49b0-45a1-8218-64efef555adf.system</DependentUpon>
+    </Compile>
+    <Compile Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c440123d-ccc1-447a-bdaa-3b96ba6d77e9\2964FF8937C9313D.sysres">
+      <IEC61499Type>SystemResource</IEC61499Type>
+      <DependentUpon>c440123d-ccc1-447a-bdaa-3b96ba6d77e9.sysdev</DependentUpon>
+    </Compile>
+    <Compile Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\f7d832e6-2374-4871-aafd-991b1d817d4e.sysapp">
+      <DependentUpon>6bef7a71-49b0-45a1-8218-64efef555adf.system</DependentUpon>
+      <IEC61499Type>SystemApplication</IEC61499Type>
+    </Compile>
+    <Compile Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\f7d832e6-2374-4871-aafd-991b1d817d4e\7071b388-2da2-45ee-b1e1-68dd443ea638.syslay">
+      <DependentUpon>f7d832e6-2374-4871-aafd-991b1d817d4e.sysapp</DependentUpon>
+      <IEC61499Type>SystemLayer</IEC61499Type>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="..\General" />
+    <Folder Include="..\General\Certificates" />
+    <Folder Include="Configuration" />
+    <Folder Include="License" />
+    <Folder Include="Log" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\33050102-181b-42b2-a5f0-4e716a2ac3ff\CB4A17392C40E929\offline.xml">
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+      <DependentUpon>CB4A17392C40E929.sysres</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\33050102-181b-42b2-a5f0-4e716a2ac3ff\CB4A17392C40E929\opcua.xml">
+      <DependentUpon>CB4A17392C40E929.sysres</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\33050102-181b-42b2-a5f0-4e716a2ac3ff\CB4A17392C40E929\opcuaclient.xml">
+      <DependentUpon>CB4A17392C40E929.sysres</DependentUpon>
+      <Plugin>OPCUAClientConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUACLIENT</IEC61499Type>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\33050102-181b-42b2-a5f0-4e716a2ac3ff\CB4A17392C40E929\symlink.xml">
+      <DependentUpon>CB4A17392C40E929.sysres</DependentUpon>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\a0026ceb-2e0f-4635-9d99-a98c0e68dc61\95C11A11031952EC\offline.xml">
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <DependentUpon>95C11A11031952EC.sysres</DependentUpon>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\a0026ceb-2e0f-4635-9d99-a98c0e68dc61\95C11A11031952EC\opcua.xml">
+      <DependentUpon>95C11A11031952EC.sysres</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\a0026ceb-2e0f-4635-9d99-a98c0e68dc61\95C11A11031952EC\opcuaclient.xml">
+      <IEC61499Type>CAT_OPCUACLIENT</IEC61499Type>
+      <Plugin>OPCUAClientConfigurator</Plugin>
+      <DependentUpon>95C11A11031952EC.sysres</DependentUpon>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\a0026ceb-2e0f-4635-9d99-a98c0e68dc61\95C11A11031952EC\symlink.xml">
+      <DependentUpon>95C11A11031952EC.sysres</DependentUpon>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c150401c-b062-4862-b804-7d24429a0ec8\4b6ba894-33a0-4fe0-9811-56db8c17902b\offline.xml">
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+      <DependentUpon>4b6ba894-33a0-4fe0-9811-56db8c17902b.syslay</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c150401c-b062-4862-b804-7d24429a0ec8\4b6ba894-33a0-4fe0-9811-56db8c17902b\opcua.xml">
+      <DependentUpon>4b6ba894-33a0-4fe0-9811-56db8c17902b.syslay</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c150401c-b062-4862-b804-7d24429a0ec8\4b6ba894-33a0-4fe0-9811-56db8c17902b\opcuaclient.xml">
+      <DependentUpon>4b6ba894-33a0-4fe0-9811-56db8c17902b.syslay</DependentUpon>
+      <Plugin>OPCUAClientConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUACLIENT</IEC61499Type>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c440123d-ccc1-447a-bdaa-3b96ba6d77e9\2964FF8937C9313D\offline.xml">
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+      <DependentUpon>2964FF8937C9313D.sysres</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c440123d-ccc1-447a-bdaa-3b96ba6d77e9\2964FF8937C9313D\opcua.xml">
+      <DependentUpon>2964FF8937C9313D.sysres</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c440123d-ccc1-447a-bdaa-3b96ba6d77e9\2964FF8937C9313D\opcuaclient.xml">
+      <DependentUpon>2964FF8937C9313D.sysres</DependentUpon>
+      <Plugin>OPCUAClientConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUACLIENT</IEC61499Type>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\c440123d-ccc1-447a-bdaa-3b96ba6d77e9\2964FF8937C9313D\symlink.xml">
+      <DependentUpon>2964FF8937C9313D.sysres</DependentUpon>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\f7d832e6-2374-4871-aafd-991b1d817d4e\7071b388-2da2-45ee-b1e1-68dd443ea638\offline.xml">
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <DependentUpon>7071b388-2da2-45ee-b1e1-68dd443ea638.syslay</DependentUpon>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\f7d832e6-2374-4871-aafd-991b1d817d4e\7071b388-2da2-45ee-b1e1-68dd443ea638\opcua.xml">
+      <DependentUpon>7071b388-2da2-45ee-b1e1-68dd443ea638.syslay</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="System\6bef7a71-49b0-45a1-8218-64efef555adf\f7d832e6-2374-4871-aafd-991b1d817d4e\7071b388-2da2-45ee-b1e1-68dd443ea638\opcuaclient.xml">
+      <IEC61499Type>CAT_OPCUACLIENT</IEC61499Type>
+      <Plugin>OPCUAClientConfigurator</Plugin>
+      <DependentUpon>7071b388-2da2-45ee-b1e1-68dd443ea638.syslay</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Flexbridge.FestoMPS400\IEC61499\Flexbridge.FestoMPS400.dfbproj">
+      <Project>{694249c0-81b8-4402-86d4-9decac2036ad}</Project>
+      <Name>Flexbridge.FestoMPS400</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(SharpDevelopBinPath)\NxtControl.Build.61499.Targets" />
+</Project>

@@ -1,0 +1,109 @@
+# MPS 400 knowledge graph: how the NxtStudio solution runs the two Handling stations.
+# This is the behaviour version 1 must reproduce. Conventions: see ../README.md.
+schema: mps400-kg/0.1
+updated: "2026-11-10"
+
+sources:
+  nxt:
+    path: "resources/Solution Archive/MPS_NxtStudio_2_1/IEC61499"
+    title: Legacy NxtStudio 2.1 solution (types and System.sys)
+
+legacy_stations:
+  - station: handling-1
+    station_type: handling
+    cat: TransportHandingCAT
+    instance: ProcHanding
+    device: Handing1 (DCSmini)
+    conveyor_side: {position: right, input: ARM_RIGHT, festo: "1B2 at downstream station (I2)"}
+    station_side: {position: left, input: ARM_LEFT, festo: "1B1 at upstream station (I1)", peer: Processing}
+    status: documented
+    sources: [nxt]
+  - station: handling-2
+    station_type: handling
+    cat: OutputHanding
+    instance: OutputHanding
+    device: Handing2 (DCSmini)
+    conveyor_side: {position: left, input: ARM_LEFT, festo: "1B1 at upstream station (I1)"}
+    station_side: {position: right, input: ARM_RIGHT, festo: "1B2 at downstream station (I2)", peer: Sorting}
+    status: documented
+    sources: [nxt]
+    note: >-
+      The two types share their building blocks; the horizontal axis is mirrored (handling-2
+      binds extend and retract the other way round), so in both stations "retract" moves
+      towards the conveyor.
+
+interfaces:
+  - name: ADP1
+    adapter: CONVEYOR_HS
+    role: plug
+    peer: "Station2.ADP1 (handling-1), Station6.ADP1 (handling-2): the conveyor waypoints"
+    events_out: {REQ: Ask the waypoint for its state., READY: The tray may be released.}
+    events_in: {RSP: "Waypoint state, with Tray (a tray is present) and Workpiece (a workpiece is on it)."}
+  - name: ADP2
+    adapter: EVENT_HS
+    role: socket
+    peer: "ProcessingStation.ADP1 (handling-1), OutputSorting.ADP2 (handling-2)"
+    events_out: {REQ: A workpiece has been put into the station.}
+    events_in: {CNF: The station has finished with the workpiece.}
+  - name: REQ and READY
+    kind: plain events
+    peer: SB0 (LampControl)
+    note: "REQ switches the station's lamp on, READY switches it off."
+
+signals:
+  note: >-
+    Station bits as in ../station-types/handling.yaml (same bit numbers on both stations).
+    Neither Handling station has a control panel in the NxtStudio solution.
+  inputs:
+    - {name: WP_AV, bit: I0, used: false, meaning: Workpiece available; read but not used}
+    - {name: ARM_LEFT, bit: I1, used: true, meaning: Arm at the left (Festo upstream) position}
+    - {name: ARM_RIGHT, bit: I2, used: true, meaning: Arm at the right (Festo downstream) position}
+    - {name: ARM_MID, bit: I3, used: false, meaning: Arm at the middle position; read but not used}
+    - {name: GRIPPER_LOWERED, bit: I4, used: true, meaning: Gripper lowered}
+    - {name: GRIPPER_RAISED, bit: I5, used: true, meaning: Gripper raised}
+    - {name: WP_GRIPPED, bit: I6, used: false, meaning: "Read but not used (Festo: workpiece is not black)"}
+  outputs:
+    - {name: ARM_TO_LEFT, bit: O0, meaning: Move the arm left}
+    - {name: ARM_TO_RIGHT, bit: O1, meaning: Move the arm right}
+    - {name: LOWER_GRIPPER, bit: O2, meaning: Lower the gripper}
+    - {name: OPEN_GRIPPER, bit: O3, meaning: Open the gripper}
+
+actuator_blocks:
+  - {instance: HorizontalCyl, type: DoubleActingCylinder, kind: basic FB, drives: [ARM_TO_LEFT, ARM_TO_RIGHT], feedback: [ARM_LEFT, ARM_RIGHT], commands: [EXTEND, RETRACT], note: "RETRACT = towards the conveyor. At start-up it drives towards the conveyor; once there, both outputs go off."}
+  - {instance: VerticalCyl, type: SingleActingCylinder, kind: basic FB, drives: [LOWER_GRIPPER], feedback: [GRIPPER_RAISED, GRIPPER_LOWERED], commands: [EXTEND, RETRACT], note: EXTEND = lower.}
+  - {instance: Gripper, type: SingleActingActuator, kind: basic FB, drives: [OPEN_GRIPPER], feedback: [], commands: [TURN_ON, TURN_OFF], note: TURN_ON = open.}
+
+behaviour:
+  status: documented
+  sources: [nxt]
+  start_up:
+    - "No control panel, no reset sequence. At start-up the arm moves to the conveyor side with the gripper raised and closed."
+    - "From start-up on, the station asks its conveyor waypoint for its state once per second (E_CYCLE), without waiting for a START."
+  building_blocks:
+    move_arm: "MoveArm: command the horizontal move and the raise at the same time, then wait until both end positions are reached (the gripper is normally already raised)."
+    take: "TakeWorkpiece: open the gripper, lower until GRIPPER_LOWERED, close the gripper, raise until GRIPPER_RAISED."
+    put: "PutWorkpiece: lower until GRIPPER_LOWERED, open the gripper, raise until GRIPPER_RAISED, close the gripper."
+    to_station: "TransportToClient: move to the conveyor, take, move to the station, put."
+    to_conveyor: "TransportToConveyor: move to the station, take, move to the conveyor, put."
+  cycle_handling_1:
+    trigger: A tray arrives at interface 2 (rising edge of Tray in the waypoint's answer).
+    steps:
+      - {n: 1, do: "If the tray is empty: release it (ADP1.READY). End."}
+      - {n: 2, do: "Lamp on (REQ). TransportToClient: carry the workpiece from the tray into Processing."}
+      - {n: 3, do: "Tell Processing (ADP2.REQ) and wait. The tray stays at the stopper."}
+      - {n: 4, do: "When Processing confirms (ADP2.CNF): TransportToConveyor, back onto the same tray."}
+      - {n: 5, do: "Release the tray (ADP1.READY); lamp off (READY)."}
+  cycle_handling_2:
+    trigger: A tray arrives at interface 6 (rising edge of Tray in the waypoint's answer).
+    steps:
+      - {n: 1, do: "If the tray is empty: release it (ADP1.READY). End."}
+      - {n: 2, do: "Lamp on (REQ). TransportToClient: carry the workpiece from the tray into Sorting."}
+      - {n: 3, do: "Tell Sorting (ADP2.REQ), release the tray (ADP1.READY) and switch the lamp off (READY), all at once."}
+
+observations:
+  - "Polling once per second (E_CYCLE) instead of events on change."
+  - "No control panel and no reset sequence, although the stations have consoles (q-panel-legacy in plant.yaml)."
+  - "The gripper is closed and raised without checking that a workpiece was picked; WP_GRIPPED is not used."
+  - "handling-2 does not wait for Sorting's confirmation (ADP2.CNF is not connected) and does not check that Sorting is free before putting the next workpiece in."
+  - "The middle position (ARM_MID) and the workpiece-available sensor are not used."
+  - "No timeouts on movements."

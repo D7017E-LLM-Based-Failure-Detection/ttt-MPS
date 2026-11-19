@@ -1,0 +1,87 @@
+# MPS 400 knowledge graph: how the NxtStudio solution runs the Sorting station.
+# This is the behaviour version 1 must reproduce. Conventions: see ../README.md.
+schema: mps400-kg/0.1
+updated: "2026-11-10"
+
+sources:
+  nxt:
+    path: "resources/Solution Archive/MPS_NxtStudio_2_1/IEC61499"
+    title: Legacy NxtStudio 2.1 solution (types and System.sys)
+
+legacy_station:
+  station: sorting-1
+  station_type: sorting
+  cat: Sorting
+  instance: OutputSorting
+  device: Sorting (DCSmini)
+  status: documented
+  sources: [nxt]
+
+interfaces:
+  - name: ADP2
+    adapter: EVENT_HS
+    role: plug
+    peer: OutputHanding.ADP2 (handling-2)
+    events_in: {REQ: Handling has put a workpiece at the start of the belt.}
+    events_out: {CNF: "The workpiece is sorted (handling-2 does not listen to it)."}
+
+signals:
+  note: >-
+    Station bits as in ../station-types/sorting.yaml (same bit numbers). The names of I1 and I2
+    contradict Festo's drawing; see the verify note there.
+  inputs:
+    - {name: WP_START, bit: I0, used: false, meaning: Workpiece at the start of the belt; read but not used}
+    - {name: WP_NOT_BLACK, bit: I1, used: true, meaning: First sort decision (legacy name)}
+    - {name: WP_METALL, bit: I2, used: true, meaning: Second sort decision (legacy name)}
+    - {name: SLIDE_FULL, bit: I3, used: false, meaning: Slide full; read but not used}
+    - {name: BR1_EXTENDED, bit: I5, used: true, meaning: Switch 1 extended}
+    - {name: BR2_EXTENDED, bit: I7, used: true, meaning: Switch 2 extended}
+  outputs:
+    - {name: DRIVE_ON, bit: O0, meaning: Belt motor on}
+    - {name: BR1_EXTEND, bit: O1, meaning: Extend switch 1}
+    - {name: BR2_EXTEND, bit: O2, meaning: Extend switch 2}
+    - {name: STOPPER_RETRACT, bit: O3, meaning: Retract the stopper}
+
+actuator_blocks:
+  - {instance: Drive, type: E_SR, kind: standard latch, drives: [DRIVE_ON]}
+  - {instance: Branch1, type: E_SR, kind: standard latch, drives: [BR1_EXTEND]}
+  - {instance: Branch2, type: E_SR, kind: standard latch, drives: [BR2_EXTEND]}
+  - {instance: ReleaseStopper, type: E_SR, kind: standard latch, drives: [STOPPER_RETRACT]}
+  - {instance: FB1, type: ControlPanel, kind: composite, note: "Bound to the console but only initialised: its events are not connected."}
+
+behaviour:
+  status: documented
+  sources: [nxt]
+  start_up:
+    - "No reset sequence. The control panel block is initialised, which switches the RESET lamp on; nothing switches it off again (inferred from the network)."
+  cycle:
+    trigger: ADP2.REQ from handling-2 (a workpiece has been put at the start of the belt).
+    steps:
+      - {n: 1, do: "DRIVE_ON. Wait 1 s."}
+      - {n: 2, do: "STOPPER_RETRACT on, and decide on the sensor values at that moment:"}
+      - {n: 3, when: WP_NOT_BLACK (I1) on, do: "Let the belt run for 5 s (slide 3 at the end of the belt)."}
+      - {n: 4, when: "I1 off and WP_METALL (I2) on", do: "BR2_EXTEND until BR2_EXTENDED, wait 3000 ms, BR2_EXTEND off (slide 2)."}
+      - {n: 5, when: I1 off and I2 off, do: "BR1_EXTEND until BR1_EXTENDED, wait 2500 ms, BR1_EXTEND off (slide 1)."}
+      - {n: 6, do: "DRIVE_ON off, STOPPER_RETRACT off, ADP2.CNF."}
+  timers:
+    - {what: Belt run before deciding, value: 1000 ms}
+    - {what: Belt run to slide 3, value: 5000 ms}
+    - {what: Belt run after switch 2 is out, value: 3000 ms}
+    - {what: Belt run after switch 1 is out, value: 2500 ms}
+  sorting_result:
+    status: inferred
+    note: >-
+      Which colour lands where depends on which reading of I1 and I2 is right
+      (q-sort-sensors in plant.yaml). The project owner remembers red workpieces on the middle
+      slide (2026-11-11), which fits the Festo drawing if the middle slide is slide 2.
+    if_festo_drawing_is_right: "I1 = metal, I2 = not black: silver to slide 3, red to slide 2, black to slide 1."
+    if_legacy_names_are_right: >-
+      I1 = not black, I2 = metal: red and silver to slide 3; black to slide 1 (no black
+      workpiece is metal, so slide 2 is never used). Testing already rejects black workpieces,
+      so every workpiece would end on slide 3.
+
+observations:
+  - "SLIDE_FULL and the workpiece sensor are not used; a full slide is not detected."
+  - "The confirmation (ADP2.CNF) is sent, but handling-2 does not wait for it."
+  - "START, STOP and RESET on the console have no effect."
+  - "No timeouts on the switch movements."

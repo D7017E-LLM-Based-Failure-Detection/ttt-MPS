@@ -1,0 +1,107 @@
+# MPS 400 knowledge graph: how the NxtStudio solution runs the Testing station.
+# This is the behaviour version 1 must reproduce. Conventions: see ../README.md.
+schema: mps400-kg/0.1
+updated: "2026-11-10"
+
+sources:
+  nxt:
+    path: "resources/Solution Archive/MPS_NxtStudio_2_1/IEC61499"
+    title: Legacy NxtStudio 2.1 solution (types and System.sys)
+  eae-port:
+    path: "resources/Solution Archive/MPS_EAE_25_0_1/IEC61499"
+    title: Student's EAE port (untested)
+
+legacy_station:
+  station: testing-1
+  station_type: testing
+  cat: TestingStation
+  instance: Testing
+  device: Testing (DCSmini)
+  status: documented
+  sources: [nxt]
+
+interfaces:
+  - name: Supply
+    adapter: EVENT_HS
+    role: socket
+    peer: Distribution.WORKPIECE_REQUEST
+    events_out: {REQ: Ask Distributing for a workpiece.}
+    events_in: {CNF: Distributing has handed a workpiece over.}
+  - name: Client
+    adapter: CONVEYOR_HS
+    role: plug
+    peer: Station1.ADP1 (conveyor waypoint at interface 1)
+    events_out: {REQ: Ask the waypoint for its state., READY: The tray may be released.}
+    events_in: {RSP: "Waypoint state, with Tray (a tray is present) and Workpiece (a workpiece is on it)."}
+  - name: REQ and READY
+    kind: plain events
+    peer: SB0 (LampControl)
+    note: "REQ switches the station's lamp on, READY switches it off."
+
+signals:
+  note: >-
+    Station bits as in ../station-types/testing.yaml (same bit numbers). The control panel is
+    bound separately, see ../component-types/control-console.yaml.
+  inputs:
+    - {name: WP_AVA, bit: I0, used: false, meaning: Workpiece available; read but not used}
+    - {name: WP_NOT_BLK, bit: I1, used: true, meaning: Workpiece is not black}
+    - {name: LIGHT_CURTAIN, bit: I2, used: false, meaning: Safety light barrier; read but not used}
+    - {name: HEIGHT_OK, bit: I3, used: true, meaning: Workpiece height correct}
+    - {name: LIFT_AT_TOP, bit: I4, used: true, meaning: Lift raised}
+    - {name: LIFT_AT_BOTTOM, bit: I5, used: true, meaning: Lift lowered}
+    - {name: EJECTOR_RET, bit: I6, used: true, meaning: Ejector retracted}
+  outputs:
+    - {name: LOWER_LIFT, bit: O0, meaning: Lower the lift}
+    - {name: RAISE_LIFT, bit: O1, meaning: Raise the lift}
+    - {name: EXTEND_EJECTOR, bit: O2, meaning: Extend the ejector}
+    - {name: AIR_SLIDE, bit: O3, meaning: Air slide on}
+
+actuator_blocks:
+  - {instance: Lift, type: DoubleActingCylinder, kind: basic FB, drives: [LOWER_LIFT, RAISE_LIFT], feedback: [LIFT_AT_BOTTOM, LIFT_AT_TOP], commands: [EXTEND, RETRACT], note: "EXTEND = raise, RETRACT = lower."}
+  - {instance: Ejector, type: E_SR, kind: standard latch, drives: [EXTEND_EJECTOR], feedback: [EJECTOR_RET]}
+  - {instance: AirSlide, type: E_SR, kind: standard latch, drives: [AIR_SLIDE], feedback: []}
+
+behaviour:
+  status: documented
+  sources: [nxt]
+  panel:
+    - "At start-up the RESET lamp is on."
+    - "Releasing the RESET button starts the reset sequence; when it is done the RESET lamp goes off and the START lamp comes on."
+    - "Pressing START switches the START lamp off and starts asking the conveyor waypoint for its state once per second. Pressing STOP stops the asking."
+    - "The AUTO/MAN key switch and lamps Q1 and Q2 are not used."
+  reset_sequence:
+    block: RejectWorkpiece
+    steps:
+      - Lower the lift until LIFT_AT_BOTTOM.
+      - "Eject: extend the ejector for 1 s, then retract it until EJECTOR_RET."
+  cycle:
+    trigger: A tray arrives at interface 1 (rising edge of Tray in the waypoint's answer).
+    steps:
+      - {n: 1, do: "If the tray already carries a workpiece: send Client.READY (release the tray). End."}
+      - {n: 2, do: "If the tray is empty: send Supply.REQ to Distributing and switch the lamp on."}
+      - {n: 3, do: "When Distributing confirms (Supply.CNF), start TestingSequence1."}
+      - {n: 4, block: CheckBlack, do: "If the workpiece is black: eject it at the bottom (extend 1 s, retract) and go back to step 2."}
+      - {n: 5, block: RaiseLift (SimpleMove), do: "Raise the lift until LIFT_AT_TOP."}
+      - {n: 6, block: CheckHeight, do: "If the height is not ok: lower the lift until LIFT_AT_BOTTOM, eject the workpiece and go back to step 2."}
+      - {n: 7, block: Eject, do: "Height ok: extend the ejector for 1 s (pushes the workpiece onto the air slide), then retract it until EJECTOR_RET."}
+      - {n: 8, block: SlideWorkpiece (SimpleMove), do: "Air slide on until the waypoint reports a workpiece on the tray, then off."}
+      - {n: 9, block: LowerLift (SimpleMove), do: "Lower the lift until LIFT_AT_BOTTOM."}
+      - {n: 10, do: "Send Client.READY (release the tray) and switch the lamp off."}
+  timers:
+    - {what: Ejector extended, value: 1000 ms}
+    - {what: Asking the conveyor waypoint, value: every 1000 ms}
+
+observations:
+  - "The station polls the waypoint once per second (E_CYCLE). The design pattern asks for events on change instead."
+  - "Black workpieces are rejected. Festo's reference sequence passes them on and only shows a 'material' light."
+  - "The height is checked as soon as the lift is up; Festo's sequence waits 2 s first."
+  - "The safety light barrier and the workpiece-available sensor are not used."
+  - "No timeouts on movements; no limit on how often a rejected workpiece is replaced."
+  - "STOP only stops the polling; it does not abort a running cycle."
+
+port_deviations:
+  status: documented
+  sources: [eae-port]
+  items:
+    - "The port binds only the seven station inputs (DI00-DI06, matching the legacy bits); outputs and the control panel are not bound."
+    - "In the port the instance is named FB1 instead of Testing."

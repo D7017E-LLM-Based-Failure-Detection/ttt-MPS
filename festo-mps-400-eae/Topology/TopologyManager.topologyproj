@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{B4E9AD72-6E69-4B3D-A496-E3676AB36812}</ProjectGuid>
+    <ProjectTypeGuids>{B8625A29-8134-4135-BEBD-5371646CD051}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TopologyManager</RootNamespace>
+    <AssemblyName>TopologyManager</AssemblyName>
+    <ProjectType>TopologyManager</ProjectType>
+    <TemplateName>TopologyManager</TemplateName>
+    <TemplateCategory>TopologyManagerLibrary</TemplateCategory>
+    <ProjectFileExtension>.topologyproj</ProjectFileExtension>
+    <LibraryName>Main</LibraryName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release</OutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Verify' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Verify\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'Windows' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="6b0b16e9-2e49-4309-a482-6249a292fee1.solutionData" />
+    <None Include="BroadcastDomain_Default Network.json" />
+    <None Include="Equipment_Conveyor System.json" />
+    <None Include="Equipment_Distributing Station.json" />
+    <None Include="Equipment_Switch_1.json" />
+    <None Include="Equipment_Testing.json" />
+    <None Include="Equipment_Workstation_1.json" />
+    <None Include="Wire_Wire 117.json" />
+    <None Include="Wire_Wire 141.json" />
+    <None Include="Wire_Wire 69.json" />
+    <None Include="Wire_Wire 93.json" />
+  </ItemGroup>
+  <Import Project="$(SharpDevelopBinPath)\Plugins\TopologyManagerPlugin\TopologyManager.targets" />
+</Project>

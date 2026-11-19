@@ -1,0 +1,78 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 5.2
+Project("{EAD1E85F-CEF5-4861-AFF8-597F2DDE70FC}") = "IEC61499", "IEC61499\IEC61499.dfbproj", "{6B0B16E9-2E49-4309-A482-6249A292FEE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMI", "HMI\HMI.csproj", "{B091F1E3-6E60-4C54-82D8-A59E4B59107E}"
+EndProject
+Project("{72AEB29F-A91B-8B3D-40ED-1C96841A14A3}") = "HwConfiguration", "HwConfiguration\HwConfiguration.hwconfigproj", "{F4B43022-52A8-4AE3-A906-46F922ECF0ED}"
+EndProject
+Project("{E25C2A81-DD87-490C-A304-820B0BA163F2}") = "AssetLinkData", "AssetLinkData\AssetLinkData.assetLinkDataproj", "{29AE70A5-0E5D-4D6C-98C2-07AD3FF06A92}"
+EndProject
+Project("{B8625A29-8134-4135-BEBD-5371646CD051}") = "TopologyManager", "Topology\TopologyManager.topologyproj", "{B4E9AD72-6E69-4B3D-A496-E3676AB36812}"
+EndProject
+Project("{AF5A4E9E-1CB6-4325-AE5C-F3437C6CEE36}") = "ATVHMIPlugin", "ATVHMIPlugin\ATVHMIPlugin.atvdisplayproj", "{5751B40A-BB97-4E12-839F-C254082857F9}"
+EndProject
+Project("{EAD1E85F-CEF5-4861-AFF8-597F2DDE70FC}") = "Flexbridge.FestoMPS400", "Flexbridge.FestoMPS400\IEC61499\Flexbridge.FestoMPS400.dfbproj", "{694249C0-81B8-4402-86D4-9DECAC2036AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flexbridge.FestoMPS400.HMI", "Flexbridge.FestoMPS400\HMI\Flexbridge.FestoMPS400.HMI.csproj", "{2E1B39DF-80EC-4119-9678-E8FE9191CDA7}"
+EndProject
+Project("{72AEB29F-A91B-8B3D-40ED-1C96841A14A3}") = "Flexbridge.FestoMPS400.HwConfiguration", "Flexbridge.FestoMPS400\HwConfiguration\Flexbridge.FestoMPS400.HwConfiguration.hwconfigproj", "{A64CE6E3-9E2A-4F55-ABA4-FB9DB8861F47}"
+EndProject
+Project("{E25C2A81-DD87-490C-A304-820B0BA163F2}") = "Flexbridge.FestoMPS400.AssetLinkData", "Flexbridge.FestoMPS400\AssetLinkData\Flexbridge.FestoMPS400.AssetLinkData.assetLinkDataproj", "{CABE1842-8CE8-4CFA-BDC4-613759ECD176}"
+EndProject
+Project("{AF5A4E9E-1CB6-4325-AE5C-F3437C6CEE36}") = "Flexbridge.FestoMPS400.ATVHMIPlugin", "Flexbridge.FestoMPS400\ATVHMIPlugin\Flexbridge.FestoMPS400.ATVHMIPlugin.atvdisplayproj", "{576CA7ED-89D3-4C7D-8A0C-E8A52A95F646}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Windows = Debug|Windows
+		Release|Windows = Release|Windows
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B0B16E9-2E49-4309-A482-6249A292FEE1}.Debug|Windows.ActiveCfg = Debug|Windows
+		{6B0B16E9-2E49-4309-A482-6249A292FEE1}.Debug|Windows.Build.0 = Debug|Windows
+		{6B0B16E9-2E49-4309-A482-6249A292FEE1}.Release|Windows.ActiveCfg = Release|Windows
+		{6B0B16E9-2E49-4309-A482-6249A292FEE1}.Release|Windows.Build.0 = Release|Windows
+		{B091F1E3-6E60-4C54-82D8-A59E4B59107E}.Debug|Windows.ActiveCfg = Debug|Windows
+		{B091F1E3-6E60-4C54-82D8-A59E4B59107E}.Debug|Windows.Build.0 = Debug|Windows
+		{B091F1E3-6E60-4C54-82D8-A59E4B59107E}.Release|Windows.ActiveCfg = Release|Windows
+		{B091F1E3-6E60-4C54-82D8-A59E4B59107E}.Release|Windows.Build.0 = Release|Windows
+		{F4B43022-52A8-4AE3-A906-46F922ECF0ED}.Debug|Windows.ActiveCfg = Debug|Windows
+		{F4B43022-52A8-4AE3-A906-46F922ECF0ED}.Debug|Windows.Build.0 = Debug|Windows
+		{F4B43022-52A8-4AE3-A906-46F922ECF0ED}.Release|Windows.ActiveCfg = Release|Windows
+		{F4B43022-52A8-4AE3-A906-46F922ECF0ED}.Release|Windows.Build.0 = Release|Windows
+		{29AE70A5-0E5D-4D6C-98C2-07AD3FF06A92}.Debug|Windows.ActiveCfg = Debug|Windows
+		{29AE70A5-0E5D-4D6C-98C2-07AD3FF06A92}.Debug|Windows.Build.0 = Debug|Windows
+		{29AE70A5-0E5D-4D6C-98C2-07AD3FF06A92}.Release|Windows.ActiveCfg = Release|Windows
+		{29AE70A5-0E5D-4D6C-98C2-07AD3FF06A92}.Release|Windows.Build.0 = Release|Windows
+		{B4E9AD72-6E69-4B3D-A496-E3676AB36812}.Debug|Windows.ActiveCfg = Debug|Windows
+		{B4E9AD72-6E69-4B3D-A496-E3676AB36812}.Debug|Windows.Build.0 = Debug|Windows
+		{B4E9AD72-6E69-4B3D-A496-E3676AB36812}.Release|Windows.ActiveCfg = Release|Windows
+		{B4E9AD72-6E69-4B3D-A496-E3676AB36812}.Release|Windows.Build.0 = Release|Windows
+		{5751B40A-BB97-4E12-839F-C254082857F9}.Debug|Windows.ActiveCfg = Debug|Windows
+		{5751B40A-BB97-4E12-839F-C254082857F9}.Debug|Windows.Build.0 = Debug|Windows
+		{5751B40A-BB97-4E12-839F-C254082857F9}.Release|Windows.ActiveCfg = Release|Windows
+		{5751B40A-BB97-4E12-839F-C254082857F9}.Release|Windows.Build.0 = Release|Windows
+		{694249C0-81B8-4402-86D4-9DECAC2036AD}.Debug|Windows.ActiveCfg = Debug|Windows
+		{694249C0-81B8-4402-86D4-9DECAC2036AD}.Debug|Windows.Build.0 = Debug|Windows
+		{694249C0-81B8-4402-86D4-9DECAC2036AD}.Release|Windows.ActiveCfg = Release|Windows
+		{694249C0-81B8-4402-86D4-9DECAC2036AD}.Release|Windows.Build.0 = Release|Windows
+		{2E1B39DF-80EC-4119-9678-E8FE9191CDA7}.Debug|Windows.ActiveCfg = Debug|Windows
+		{2E1B39DF-80EC-4119-9678-E8FE9191CDA7}.Debug|Windows.Build.0 = Debug|Windows
+		{2E1B39DF-80EC-4119-9678-E8FE9191CDA7}.Release|Windows.ActiveCfg = Release|Windows
+		{2E1B39DF-80EC-4119-9678-E8FE9191CDA7}.Release|Windows.Build.0 = Release|Windows
+		{A64CE6E3-9E2A-4F55-ABA4-FB9DB8861F47}.Debug|Windows.ActiveCfg = Debug|Windows
+		{A64CE6E3-9E2A-4F55-ABA4-FB9DB8861F47}.Debug|Windows.Build.0 = Debug|Windows
+		{A64CE6E3-9E2A-4F55-ABA4-FB9DB8861F47}.Release|Windows.ActiveCfg = Release|Windows
+		{A64CE6E3-9E2A-4F55-ABA4-FB9DB8861F47}.Release|Windows.Build.0 = Release|Windows
+		{CABE1842-8CE8-4CFA-BDC4-613759ECD176}.Debug|Windows.ActiveCfg = Debug|Windows
+		{CABE1842-8CE8-4CFA-BDC4-613759ECD176}.Debug|Windows.Build.0 = Debug|Windows
+		{CABE1842-8CE8-4CFA-BDC4-613759ECD176}.Release|Windows.ActiveCfg = Release|Windows
+		{CABE1842-8CE8-4CFA-BDC4-613759ECD176}.Release|Windows.Build.0 = Release|Windows
+		{576CA7ED-89D3-4C7D-8A0C-E8A52A95F646}.Debug|Windows.ActiveCfg = Debug|Windows
+		{576CA7ED-89D3-4C7D-8A0C-E8A52A95F646}.Debug|Windows.Build.0 = Debug|Windows
+		{576CA7ED-89D3-4C7D-8A0C-E8A52A95F646}.Release|Windows.ActiveCfg = Release|Windows
+		{576CA7ED-89D3-4C7D-8A0C-E8A52A95F646}.Release|Windows.Build.0 = Release|Windows
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,308 @@
+# MPS 400 knowledge graph: the lab installation.
+# Conventions (status values, sources, ids): see README.md in this folder.
+schema: mps400-kg/0.1
+updated: "2026-11-10"
+
+sources:
+  user-2026-11-09:
+    kind: conversation
+    note: >-
+      Plant description, corrections, conveyor names, control panel use and confirmation of the
+      layout from the project owner, 2026-11-09.
+  user-2026-11-10:
+    kind: conversation
+    note: >-
+      Controller hardware and assignment, wiring rule, trays, scope of the first version and HMI
+      from the project owner, 2026-11-10.
+  user-2026-11-11:
+    kind: conversation
+    note: >-
+      Version 0 (I/O test panel), black rejection in version 1, Sorting red on the middle
+      slide, controller MAC addresses and IP rule, from the project owner, 2026-11-11.
+  user-2026-11-13:
+    kind: conversation
+    note: PLC ports and addresses confirmed with the Automation Device Maintenance tool, 2026-11-13.
+  layout:
+    kind: drawing
+    path: docs/mps400/layout.html
+    url: https://claude.ai/artifact/XQzbKFMrY1LQ5h1Gw9NRt1
+    note: Top view confirmed by the project owner on 2026-11-09.
+  nxt:
+    kind: solution
+    path: "resources/Solution Archive/MPS_NxtStudio_2_1"
+    note: >-
+      Legacy NxtStudio 2.1 solution that ran the line. The project owner names it the reference
+      ("the truth") wherever it differs from the EAE port.
+  eae-port:
+    kind: solution
+    path: "resources/Solution Archive/MPS_EAE_25_0_1"
+    note: A student's untested hand port of the NxtStudio solution to EAE 25.0.1. Incomplete.
+
+plant:
+  id: mps400
+  name: Festo MPS 400, LTU lab
+  status: user
+  sources: [user-2026-11-09, user-2026-11-10]
+  notes:
+    - "Mainly a DCS with only boolean data (project owner's words)."
+    - "Control is distributed over five PLCs (see controllers)."
+
+scope:
+  status: user
+  sources: [user-2026-11-10, user-2026-11-11]
+  version_0: >-
+    I/O commissioning before version 1 (proposed by the project owner 2026-11-11): one simple
+    CAT per station with a button for every output and a lamp for every input, bound to the
+    TM3 channels with SYMLINKMULTIVAR blocks, so each machine can be tested by hand. Built with
+    four students as a teaching exercise (device, hardware configuration, topology, symbolic
+    links, deploy). Design not yet agreed.
+  version_1: >-
+    Same behaviour as the NxtStudio solution, rebuilt on the AHU design pattern with library
+    CATs. All conveyors start together. Tray numbers are not identified. Testing rejects black
+    workpieces, as in the NxtStudio solution (confirmed 2026-11-11).
+  version_2: >-
+    A close-to-reality HMI visualisation, possibly built from Festo CAD models.
+  removed:
+    - {what: Robot station with cap and spring magazines at interface 4, legacy_types: [RoboCat, CapDistributionCAT], note: Not used any more.}
+  hmi:
+    first: Runs on the host PC where the EAE solution runs.
+    later: A Schneider Electric Harmony HMI device from the lab inventory.
+  opc_ua: >-
+    Every CAT exposes everything it has. OPC UA clients pick what they need.
+  lamps: >-
+    Three lamps stay on the HTTP remote I/O at 10.135.109.113 (legacy LampControl, instance SB0):
+    one each for Testing, Handling at interface 2 and Handling at interface 6, on while the
+    station is working on a request.
+
+controllers:
+  status: user
+  sources: [user-2026-11-10, user-2026-11-11]
+  type: M251 dPAC
+  firmware: {value: "dPAC (EcoRT) 25.0.1, matching EAE 25.0 UP 1", status: user, source: user-2026-11-11}
+  count: 5
+  io_modules:
+    input: {type: TM3DI16G, channels: 16}
+    output: {type: TM3DQ16RG, channels: 16, kind: relay}
+  wiring_rule: >-
+    Modules alternate input, output, input, output. A station uses one input and one output
+    module: station I/O terminal bits 0-7 on channels 0-7 and control panel bits 0-7 on
+    channels 8-15. A PLC shared by two stations has two such pairs in the same order. The
+    conveyor PLC has two pairs: conveyors A and B share the first, C and D the second.
+  addressing:
+    rule: >-
+      Two Ethernet ports per M251 (TM251MESE). ETH1 = 10.10.XXX.YYY: the port on the lab switch,
+      used by EAE and the HMI. ETH2 = 10.11.XXX.YYY, used for configuration. XXX and YYY are the
+      last two bytes of the PLC's MAC address, written in decimal (D7 = 215, 85 = 133).
+    status: confirmed
+    source: user-2026-11-13
+    note: >-
+      Confirmed 2026-11-13 in the Automation Device Maintenance tool (ETH1 addresses, IPv6
+      link-local addresses ending in the MAC bytes). An earlier note had 10.11 as the EAE address.
+  items:
+    - {id: plc-distributing, stations: [distributing-1], module_pairs: 1, mac_last_bytes: "D7:85", ip_eth1: 10.10.215.133, ip_eth2: 10.11.215.133}
+    - {id: plc-testing, stations: [testing-1], module_pairs: 1, mac_last_bytes: "D7:19", ip_eth1: 10.10.215.25, ip_eth2: 10.11.215.25}
+    - id: plc-handling-processing
+      stations: [handling-1, processing-1]
+      module_pairs: 2
+      pair_order: [handling-1, processing-1]
+      mac_last_bytes: "D7:15"
+      ip_eth1: 10.10.215.21
+      ip_eth2: 10.11.215.21
+    - {id: plc-conveyor, line: main-loop, module_pairs: 2, mac_last_bytes: "D7:13", ip_eth1: 10.10.215.19, ip_eth2: 10.11.215.19}
+    - id: plc-handling-sorting
+      stations: [handling-2, sorting-1]
+      module_pairs: 2
+      pair_order: [handling-2, sorting-1]
+      mac_last_bytes: "D6:FB"
+      ip_eth1: 10.10.214.251
+      ip_eth2: 10.11.214.251
+  note: >-
+    The nxtMini (DCSmini) PLCs of the legacy installation are removed. Legacy had nine
+    controllers: one per station, a Beckhoff CX2030 for the conveyor and a separate box for
+    interface 4.
+
+line:
+  id: main-loop
+  kind: conveyor loop
+  status: user
+  sources: [user-2026-11-09, user-2026-11-10, layout]
+  travel_direction: anticlockwise
+  conveyors:
+    count: 4
+    start: All four start at the same time in version 1.
+    items:
+      - {id: conveyor-a, name: A, layout_side: bottom, interfaces: [if1, if2, if3]}
+      - {id: conveyor-b, name: B, layout_side: right, interfaces: []}
+      - {id: conveyor-c, name: C, layout_side: top, interfaces: [if4, if5, if6]}
+      - {id: conveyor-d, name: D, layout_side: left, interfaces: []}
+    note: >-
+      Named A to D in travel direction (anticlockwise), starting with A, which carries the
+      station set at interface 1. Sides follow the confirmed top view.
+  carriers:
+    kind: tray
+    function: Carries a workpiece from station to station.
+    count: 8
+    identification: >-
+      The DECODER input at an interface counts contacts on the tray, which gives the tray
+      number. Version 1 does not identify trays.
+
+interfaces:
+  - id: if1
+    number: 1
+    used: true
+    status: user
+    sources: [user-2026-11-09, layout]
+    conveyor: conveyor-a
+    layout: {side: bottom, position: left}
+    stations: [distributing-1, testing-1]
+    arrangement: {line: [distributing-1, testing-1, tray]}
+    stopper: {present: true}
+    tray_handling: The tray receives a new workpiece from Testing.
+    legacy_waypoint: Station1
+  - id: if2
+    number: 2
+    used: true
+    status: user
+    sources: [user-2026-11-09, layout]
+    conveyor: conveyor-a
+    layout: {side: bottom, position: middle}
+    stations: [processing-1, handling-1]
+    arrangement: {line: [processing-1, handling-1, tray]}
+    stopper: {present: true}
+    tray_handling: Handling takes the workpiece off the tray into Processing and puts it back on the tray.
+    legacy_waypoint: Station2
+  - id: if3
+    number: 3
+    used: false
+    status: user
+    sources: [user-2026-11-09, layout]
+    conveyor: conveyor-a
+    layout: {side: bottom, position: right}
+    stations: []
+    stopper: {present: true}
+    release: Manual release button on the HMI.
+    legacy_waypoint: Station3
+  - id: if4
+    number: 4
+    used: false
+    status: user
+    sources: [user-2026-11-09, user-2026-11-10, layout]
+    conveyor: conveyor-c
+    layout: {side: top, position: right}
+    stations: []
+    stopper: {present: true}
+    release: Manual release button on the HMI.
+    legacy_waypoint: Station4
+    note: The legacy solution had the robot station here; it is removed.
+  - id: if5
+    number: 5
+    used: false
+    status: user
+    sources: [user-2026-11-09, layout]
+    conveyor: conveyor-c
+    layout: {side: top, position: middle}
+    stations: []
+    stopper: {present: true}
+    release: Manual release button on the HMI.
+    legacy_waypoint: Station5
+  - id: if6
+    number: 6
+    used: true
+    status: user
+    sources: [user-2026-11-09, layout]
+    conveyor: conveyor-c
+    layout: {side: top, position: left}
+    stations: [sorting-1, handling-2]
+    arrangement: {line: [sorting-1, handling-2, tray]}
+    stopper: {present: true}
+    tray_handling: Handling moves the workpiece off the tray into Sorting; the tray continues empty.
+    legacy_waypoint: Station6
+
+layout_note: >-
+  Confirmed by the project owner on 2026-11-09. Interfaces 1-3 lie along the bottom (conveyor A)
+  from left to right and 4-6 along the top (conveyor C) from right to left, numbered in travel
+  direction, so 1 and 6 sit at the same end. Every interface has a stopper. At each used
+  interface the two stations and the tray stand in one straight line out from the conveyor;
+  Testing, Handling and Handling stand next to the tray at interfaces 1, 2 and 6.
+
+# Conveyor I/O as bound in the legacy solution (device ConSys, EtherCAT terminals EL1008/EL2008).
+# One connector = one 8-input and one 8-output terminal, listed in bus order.
+conveyor_io_legacy:
+  status: documented
+  sources: [nxt]
+  verify: >-
+    The project owner notes that the four I/O connectors differ slightly from each other. Which
+    connector belongs to which conveyor (A-D), and the meaning of CONGESTION, are not known yet.
+    Check on the hardware before wiring.
+  signals:
+    inputs:
+      PALLET: A tray is at the interface.
+      WP: A workpiece is on the tray.
+      DECODER: Tray identification contacts (not used in version 1).
+      CONGESTION: Meaning not known; not used.
+      RELEASED: The stopper has released the tray.
+    outputs:
+      RELEASE: Release the stopper.
+      CONVEYOR: Conveyor motor on.
+  connectors:
+    - order: 1
+      inputs: {DI0: Station1.RELEASED, DI1: Station1.DECODER, DI2: Station1.PALLET, DI3: Station1.CONGESTION, DI4: Station2.CONGESTION, DI5: Station1.WP, DI6: Station2.WP, DI7: Station2.DECODER}
+      outputs: {DO0: Station1.RELEASE, DO1: Station2.RELEASE, DO2: CONVEYOR}
+    - order: 2
+      inputs: {DI0: Station2.PALLET, DI1: Station2.RELEASED}
+      outputs: {DO0: Station3.RELEASE, DO1: CONVEYOR}
+    - order: 3
+      inputs: {DI1: Station4.CONGESTION, DI2: Station4.PALLET, DI3: Station4.DECODER, DI5: Station4.WP}
+      outputs: {DO0: Station4.RELEASE, DO1: CONVEYOR}
+    - order: 4
+      inputs: {DI0: Station6.DECODER, DI1: Station6.CONGESTION, DI2: Station6.WP, DI3: Station6.PALLET}
+      outputs: {DO0: Station5.RELEASE, DO1: Station6.RELEASE, DO2: CONVEYOR}
+  note: >-
+    Interfaces 3 and 5 have only a RELEASE output in the legacy binding (they were skipped
+    stations). Each connector has its own CONVEYOR output, all driven by one signal.
+
+# Each station refers to station-types/<type>.yaml. So far only distributing.yaml exists.
+stations:
+  - {id: distributing-1, type: distributing, interface: if1, controller: plc-distributing, status: user}
+  - {id: testing-1, type: testing, interface: if1, controller: plc-testing, status: user}
+  - {id: processing-1, type: processing, interface: if2, controller: plc-handling-processing, status: user}
+  - {id: handling-1, type: handling, interface: if2, controller: plc-handling-processing, status: user}
+  - {id: handling-2, type: handling, interface: if6, controller: plc-handling-sorting, status: user}
+  - {id: sorting-1, type: sorting, interface: if6, controller: plc-handling-sorting, status: user}
+
+station_operation:
+  status: user
+  sources: [user-2026-11-09]
+  control_panel: {type: control-console, per_station: true}
+  startup_sequence:
+    - {step: 1, panel: RESET lamp on, meaning: The station is not reset.}
+    - {step: 2, panel: RESET pressed, meaning: The station moves to its initial position.}
+    - {step: 3, panel: RESET lamp off and START lamp on, meaning: The station is in its initial position.}
+    - {step: 4, panel: START pressed, meaning: The station is ready to accept requests.}
+  note: >-
+    Every station has its own control panel (Festo control console, see
+    component-types/control-console.yaml). The sequence matches the start of Festo's reference
+    sequences, for example steps S1-S6 in station-types/distributing.yaml.
+
+workpiece_flow:
+  status: user
+  sources: [user-2026-11-09, layout]
+  steps:
+    - {at: if1, from: distributing-1, to: testing-1}
+    - {at: if1, from: testing-1, to: tray}
+    - {at: if2, from: tray, to: processing-1, via: handling-1}
+    - {at: if2, from: processing-1, to: tray, via: handling-1}
+    - {at: [if3, if4, if5], action: The tray waits at the stopper until released from the HMI.}
+    - {at: if6, from: tray, to: sorting-1, via: handling-2}
+    - {at: if1, action: The empty tray returns to interface 1.}
+  note: >-
+    The step at interface 1 matches Festo's Distributing sequence, which hands the workpiece to
+    its downstream station (see station-types/distributing.yaml).
+
+open_questions:
+  - {id: q-connectors, question: "Which of the four conveyor I/O connectors belongs to which conveyor (A-D), and how do the connectors differ?"}
+  - {id: q-congestion, question: "What does the CONGESTION input at an interface mean?"}
+  - {id: q-proc-sensors, question: "Processing: is input I1 the sensor at the checking unit (Festo drawing) or at the drilling unit (NxtStudio name WP_DRILL)? And at which table position does Handling put and take the workpiece?"}
+  - {id: q-sort-sensors, question: "Sorting: is input I1 the metal sensor (Festo drawing) or the not-black sensor (NxtStudio name WP_NOT_BLACK)?", evidence: "Project owner 2026-11-11: red workpieces went to the middle slide. If the slides run 1, 2, 3 along the belt (inferred from the legacy belt times 2.5 s, 3 s, 5 s), that is slide 2, which fits the Festo drawing. To confirm in the version 0 I/O test.", status: inferred}
+  - {id: q-panel-legacy, question: "Handling and Processing have no control-panel logic in the NxtStudio solution, and Sorting's panel does nothing. Should version 1 give all five stations the RESET/START sequence?"}
+  - {id: q-panel-other, question: "How are STOP, the AUTO/MAN key switch and lamps Q1 and Q2 used in the lab?"}

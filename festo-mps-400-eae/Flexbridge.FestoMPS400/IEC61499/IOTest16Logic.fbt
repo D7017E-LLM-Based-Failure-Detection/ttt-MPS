@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="2d1d91bd-0f84-49d4-bb79-f01e76ab76b8" Name="IOTest16Logic" Comment="Basic Function Block Type" Namespace="Flexbridge.FestoMPS400">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Flexbridge AB" Version="0.0" Author="Sandeep Patil" Date="11/13/2026" Remarks="Template" />
+<InterfaceList>
+    <EventInputs>
+      <Event ID="C8E24F7DFBF9DC0B" Name="INIT" Comment="Initialise; takes over the exclusive pairs and pulse times">
+        <With Var="Excl00" />
+        <With Var="Excl01" />
+        <With Var="Excl02" />
+        <With Var="Excl03" />
+        <With Var="Excl04" />
+        <With Var="Excl05" />
+        <With Var="Excl06" />
+        <With Var="Excl07" />
+        <With Var="Excl08" />
+        <With Var="Excl09" />
+        <With Var="Excl10" />
+        <With Var="Excl11" />
+        <With Var="Excl12" />
+        <With Var="Excl13" />
+        <With Var="Excl14" />
+        <With Var="Excl15" />
+        <With Var="Pulse00" />
+        <With Var="Pulse01" />
+        <With Var="Pulse02" />
+        <With Var="Pulse03" />
+        <With Var="Pulse04" />
+        <With Var="Pulse05" />
+        <With Var="Pulse06" />
+        <With Var="Pulse07" />
+        <With Var="Pulse08" />
+        <With Var="Pulse09" />
+        <With Var="Pulse10" />
+        <With Var="Pulse11" />
+        <With Var="Pulse12" />
+        <With Var="Pulse13" />
+        <With Var="Pulse14" />
+        <With Var="Pulse15" />
+      </Event>
+      <Event ID="4F41D35F800CFC8F" Name="CMD" Comment="Button states requested on the HMI">
+        <With Var="Cmd00" />
+        <With Var="Cmd01" />
+        <With Var="Cmd02" />
+        <With Var="Cmd03" />
+        <With Var="Cmd04" />
+        <With Var="Cmd05" />
+        <With Var="Cmd06" />
+        <With Var="Cmd07" />
+        <With Var="Cmd08" />
+        <With Var="Cmd09" />
+        <With Var="Cmd10" />
+        <With Var="Cmd11" />
+        <With Var="Cmd12" />
+        <With Var="Cmd13" />
+        <With Var="Cmd14" />
+        <With Var="Cmd15" />
+      </Event>
+      <Event ID="A50B78E1728D04A4" Name="ALL_OFF" Comment="Switch every output off" />
+      <Event ID="37D8E079D482C806" Name="DI" Comment="An input channel changed">
+        <With Var="In00" />
+        <With Var="In01" />
+        <With Var="In02" />
+        <With Var="In03" />
+        <With Var="In04" />
+        <With Var="In05" />
+        <With Var="In06" />
+        <With Var="In07" />
+        <With Var="In08" />
+        <With Var="In09" />
+        <With Var="In10" />
+        <With Var="In11" />
+        <With Var="In12" />
+        <With Var="In13" />
+        <With Var="In14" />
+        <With Var="In15" />
+      </Event>
+      <Event ID="3BECA61FDE7B44FF" Name="PULSE_END" Comment="Pulse timer elapsed" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="43EC3925751B5FC3" Name="INITO" Comment="Initialisation done" />
+      <Event ID="51822766C426B5C0" Name="DO_UPD" Comment="New output values for the dOSignal blocks">
+        <With Var="Out00" />
+        <With Var="Out01" />
+        <With Var="Out02" />
+        <With Var="Out03" />
+        <With Var="Out04" />
+        <With Var="Out05" />
+        <With Var="Out06" />
+        <With Var="Out07" />
+        <With Var="Out08" />
+        <With Var="Out09" />
+        <With Var="Out10" />
+        <With Var="Out11" />
+        <With Var="Out12" />
+        <With Var="Out13" />
+        <With Var="Out14" />
+        <With Var="Out15" />
+      </Event>
+      <Event ID="34AB0D5D62F7B6BD" Name="HMI_DO" Comment="Output states and enabled buttons for the HMI">
+        <With Var="St00" />
+        <With Var="St01" />
+        <With Var="St02" />
+        <With Var="St03" />
+        <With Var="St04" />
+        <With Var="St05" />
+        <With Var="St06" />
+        <With Var="St07" />
+        <With Var="St08" />
+        <With Var="St09" />
+        <With Var="St10" />
+        <With Var="St11" />
+        <With Var="St12" />
+        <With Var="St13" />
+        <With Var="St14" />
+        <With Var="St15" />
+        <With Var="En00" />
+        <With Var="En01" />
+        <With Var="En02" />
+        <With Var="En03" />
+        <With Var="En04" />
+        <With Var="En05" />
+        <With Var="En06" />
+        <With Var="En07" />
+        <With Var="En08" />
+        <With Var="En09" />
+        <With Var="En10" />
+        <With Var="En11" />
+        <With Var="En12" />
+        <With Var="En13" />
+        <With Var="En14" />
+        <With Var="En15" />
+      </Event>
+      <Event ID="95657124D8C8D43B" Name="HMI_DI" Comment="Input values for the HMI">
+        <With Var="Di00" />
+        <With Var="Di01" />
+        <With Var="Di02" />
+        <With Var="Di03" />
+        <With Var="Di04" />
+        <With Var="Di05" />
+        <With Var="Di06" />
+        <With Var="Di07" />
+        <With Var="Di08" />
+        <With Var="Di09" />
+        <With Var="Di10" />
+        <With Var="Di11" />
+        <With Var="Di12" />
+        <With Var="Di13" />
+        <With Var="Di14" />
+        <With Var="Di15" />
+      </Event>
+      <Event ID="2259194325478FA9" Name="TSTART" Comment="Start the pulse timer">
+        <With Var="PulseDT" />
+      </Event>
+      <Event ID="AF504EDCD2D79B37" Name="TSTOP" Comment="Cancel the pulse timer" />
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="DDAE9F07F58D3AF3" Name="Excl00" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 00; -1 = none" />
+      <VarDeclaration ID="D490237C6D4E6516" Name="Excl01" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 01; -1 = none" />
+      <VarDeclaration ID="E50209420C009F4D" Name="Excl02" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 02; -1 = none" />
+      <VarDeclaration ID="A2672ABC3CF05A06" Name="Excl03" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 03; -1 = none" />
+      <VarDeclaration ID="A05A62EB81F65CCD" Name="Excl04" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 04; -1 = none" />
+      <VarDeclaration ID="B3814EB203391BC5" Name="Excl05" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 05; -1 = none" />
+      <VarDeclaration ID="99EC20DF40F4004D" Name="Excl06" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 06; -1 = none" />
+      <VarDeclaration ID="539F691D9B0278AE" Name="Excl07" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 07; -1 = none" />
+      <VarDeclaration ID="E5B6E21CFC3AC94B" Name="Excl08" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 08; -1 = none" />
+      <VarDeclaration ID="B9844DC9EC2DA2D3" Name="Excl09" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 09; -1 = none" />
+      <VarDeclaration ID="D8E968D9ED6EAD78" Name="Excl10" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 10; -1 = none" />
+      <VarDeclaration ID="BD42D8EE1CF28EC7" Name="Excl11" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 11; -1 = none" />
+      <VarDeclaration ID="8ABE4B38E6F4FDE1" Name="Excl12" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 12; -1 = none" />
+      <VarDeclaration ID="1B8E5A84135FAAE2" Name="Excl13" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 13; -1 = none" />
+      <VarDeclaration ID="59086C3BA1BC429D" Name="Excl14" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 14; -1 = none" />
+      <VarDeclaration ID="0A12E6B7B932122B" Name="Excl15" Type="INT" InitialValue="-1" Comment="Output that must never be on together with output 15; -1 = none" />
+      <VarDeclaration ID="E9B291DAE8EC3101" Name="Pulse00" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 00; T#0s = toggle" />
+      <VarDeclaration ID="7A512D95D4D0A61F" Name="Pulse01" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 01; T#0s = toggle" />
+      <VarDeclaration ID="7525532A8E06D4CE" Name="Pulse02" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 02; T#0s = toggle" />
+      <VarDeclaration ID="20EE2114B0F6DEE5" Name="Pulse03" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 03; T#0s = toggle" />
+      <VarDeclaration ID="715C126EE559FCC9" Name="Pulse04" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 04; T#0s = toggle" />
+      <VarDeclaration ID="F1A616C66D70ACBF" Name="Pulse05" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 05; T#0s = toggle" />
+      <VarDeclaration ID="D0FF2731166DFF80" Name="Pulse06" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 06; T#0s = toggle" />
+      <VarDeclaration ID="44692470B3E913D9" Name="Pulse07" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 07; T#0s = toggle" />
+      <VarDeclaration ID="7E55167A22BDC761" Name="Pulse08" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 08; T#0s = toggle" />
+      <VarDeclaration ID="B7057C48294FDC9E" Name="Pulse09" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 09; T#0s = toggle" />
+      <VarDeclaration ID="655342177DFDBEE1" Name="Pulse10" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 10; T#0s = toggle" />
+      <VarDeclaration ID="5E0272D074046E45" Name="Pulse11" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 11; T#0s = toggle" />
+      <VarDeclaration ID="99E7F0AA334970C5" Name="Pulse12" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 12; T#0s = toggle" />
+      <VarDeclaration ID="37A96D725CFAB133" Name="Pulse13" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 13; T#0s = toggle" />
+      <VarDeclaration ID="3223EB9B0F78537C" Name="Pulse14" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 14; T#0s = toggle" />
+      <VarDeclaration ID="03045199FBDEE93E" Name="Pulse15" Type="TIME" InitialValue="T#0s" Comment="Pulse time of output 15; T#0s = toggle" />
+      <VarDeclaration ID="0EDDD3C97AD8F01D" Name="Cmd00" Type="BOOL" Comment="Requested state of output 00" />
+      <VarDeclaration ID="B9E6EF29DE219689" Name="Cmd01" Type="BOOL" Comment="Requested state of output 01" />
+      <VarDeclaration ID="B813F17B6064C18A" Name="Cmd02" Type="BOOL" Comment="Requested state of output 02" />
+      <VarDeclaration ID="1ECD9FF20E604D7E" Name="Cmd03" Type="BOOL" Comment="Requested state of output 03" />
+      <VarDeclaration ID="0889FE27E9AC83E5" Name="Cmd04" Type="BOOL" Comment="Requested state of output 04" />
+      <VarDeclaration ID="9074CB2F470CFAB6" Name="Cmd05" Type="BOOL" Comment="Requested state of output 05" />
+      <VarDeclaration ID="A3D544F56D200CE3" Name="Cmd06" Type="BOOL" Comment="Requested state of output 06" />
+      <VarDeclaration ID="10748F208DCC929B" Name="Cmd07" Type="BOOL" Comment="Requested state of output 07" />
+      <VarDeclaration ID="8FBB0D2B7E3D4228" Name="Cmd08" Type="BOOL" Comment="Requested state of output 08" />
+      <VarDeclaration ID="3ACE7EDDDACA5682" Name="Cmd09" Type="BOOL" Comment="Requested state of output 09" />
+      <VarDeclaration ID="1351E0491AD76222" Name="Cmd10" Type="BOOL" Comment="Requested state of output 10" />
+      <VarDeclaration ID="A3712C3A94CC2AB6" Name="Cmd11" Type="BOOL" Comment="Requested state of output 11" />
+      <VarDeclaration ID="7829DE08B48CBA69" Name="Cmd12" Type="BOOL" Comment="Requested state of output 12" />
+      <VarDeclaration ID="9D95F0AA02B53062" Name="Cmd13" Type="BOOL" Comment="Requested state of output 13" />
+      <VarDeclaration ID="470106CE276F2006" Name="Cmd14" Type="BOOL" Comment="Requested state of output 14" />
+      <VarDeclaration ID="8D7AF47444EF7843" Name="Cmd15" Type="BOOL" Comment="Requested state of output 15" />
+      <VarDeclaration ID="E88733B66EEDE5AC" Name="In00" Type="VTQBOOL" Comment="Input channel 00" />
+      <VarDeclaration ID="2D9172D0E7F74B4A" Name="In01" Type="VTQBOOL" Comment="Input channel 01" />
+      <VarDeclaration ID="2413D9E06A0A664C" Name="In02" Type="VTQBOOL" Comment="Input channel 02" />
+      <VarDeclaration ID="229FEA2BAA13F955" Name="In03" Type="VTQBOOL" Comment="Input channel 03" />
+      <VarDeclaration ID="8AE96DD03FA39359" Name="In04" Type="VTQBOOL" Comment="Input channel 04" />
+      <VarDeclaration ID="9B9AF66C91608DD0" Name="In05" Type="VTQBOOL" Comment="Input channel 05" />
+      <VarDeclaration ID="4B59957A10E9D2A8" Name="In06" Type="VTQBOOL" Comment="Input channel 06" />
+      <VarDeclaration ID="92EC702D9FE9D6FB" Name="In07" Type="VTQBOOL" Comment="Input channel 07" />
+      <VarDeclaration ID="1A3DAD59292D205F" Name="In08" Type="VTQBOOL" Comment="Input channel 08" />
+      <VarDeclaration ID="6998087FAC67F3DD" Name="In09" Type="VTQBOOL" Comment="Input channel 09" />
+      <VarDeclaration ID="753A90A42240AB8C" Name="In10" Type="VTQBOOL" Comment="Input channel 10" />
+      <VarDeclaration ID="FDC421EAFC181624" Name="In11" Type="VTQBOOL" Comment="Input channel 11" />
+      <VarDeclaration ID="0BE32C4A5AD3A5ED" Name="In12" Type="VTQBOOL" Comment="Input channel 12" />
+      <VarDeclaration ID="E508BA5ACAC55AE7" Name="In13" Type="VTQBOOL" Comment="Input channel 13" />
+      <VarDeclaration ID="C23C564628BECC7A" Name="In14" Type="VTQBOOL" Comment="Input channel 14" />
+      <VarDeclaration ID="49E71BE0894ECE8C" Name="In15" Type="VTQBOOL" Comment="Input channel 15" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="04664C0CBB69D8D5" Name="Out00" Type="VTQBOOL" Comment="Output channel 00" />
+      <VarDeclaration ID="89A51AF88B7AA097" Name="Out01" Type="VTQBOOL" Comment="Output channel 01" />
+      <VarDeclaration ID="3AB76BADE1F2940E" Name="Out02" Type="VTQBOOL" Comment="Output channel 02" />
+      <VarDeclaration ID="D70803A3D192B869" Name="Out03" Type="VTQBOOL" Comment="Output channel 03" />
+      <VarDeclaration ID="78B1306E37D3C554" Name="Out04" Type="VTQBOOL" Comment="Output channel 04" />
+      <VarDeclaration ID="A3E89E8867874630" Name="Out05" Type="VTQBOOL" Comment="Output channel 05" />
+      <VarDeclaration ID="334B40A2F4D71B13" Name="Out06" Type="VTQBOOL" Comment="Output channel 06" />
+      <VarDeclaration ID="DE950EAA1286FE39" Name="Out07" Type="VTQBOOL" Comment="Output channel 07" />
+      <VarDeclaration ID="CE47C34426EFB090" Name="Out08" Type="VTQBOOL" Comment="Output channel 08" />
+      <VarDeclaration ID="A413288515257406" Name="Out09" Type="VTQBOOL" Comment="Output channel 09" />
+      <VarDeclaration ID="C2357E05B78CD97A" Name="Out10" Type="VTQBOOL" Comment="Output channel 10" />
+      <VarDeclaration ID="BE8E59BD43C3FE78" Name="Out11" Type="VTQBOOL" Comment="Output channel 11" />
+      <VarDeclaration ID="E286D5C4FA1ECD64" Name="Out12" Type="VTQBOOL" Comment="Output channel 12" />
+      <VarDeclaration ID="04A1CE1AF5BB5C0C" Name="Out13" Type="VTQBOOL" Comment="Output channel 13" />
+      <VarDeclaration ID="D31B2FDCBDE9B579" Name="Out14" Type="VTQBOOL" Comment="Output channel 14" />
+      <VarDeclaration ID="A85E311937FF6E1C" Name="Out15" Type="VTQBOOL" Comment="Output channel 15" />
+      <VarDeclaration ID="70542509E2B5733D" Name="St00" Type="BOOL" Comment="Current state of output 00" />
+      <VarDeclaration ID="124542E49CA6AA23" Name="St01" Type="BOOL" Comment="Current state of output 01" />
+      <VarDeclaration ID="0C4C190DABE52E6E" Name="St02" Type="BOOL" Comment="Current state of output 02" />
+      <VarDeclaration ID="5FEB31C180EEE23E" Name="St03" Type="BOOL" Comment="Current state of output 03" />
+      <VarDeclaration ID="B77A123416E9E838" Name="St04" Type="BOOL" Comment="Current state of output 04" />
+      <VarDeclaration ID="ABAB61C97C68E080" Name="St05" Type="BOOL" Comment="Current state of output 05" />
+      <VarDeclaration ID="3A934E9EBE304B9F" Name="St06" Type="BOOL" Comment="Current state of output 06" />
+      <VarDeclaration ID="691E069AE5B99296" Name="St07" Type="BOOL" Comment="Current state of output 07" />
+      <VarDeclaration ID="2EE13BAB9E6BB6F9" Name="St08" Type="BOOL" Comment="Current state of output 08" />
+      <VarDeclaration ID="877766A2EA3666A1" Name="St09" Type="BOOL" Comment="Current state of output 09" />
+      <VarDeclaration ID="2909F54A051FC588" Name="St10" Type="BOOL" Comment="Current state of output 10" />
+      <VarDeclaration ID="0A8D17318C17F619" Name="St11" Type="BOOL" Comment="Current state of output 11" />
+      <VarDeclaration ID="F832BB0B12B6DF77" Name="St12" Type="BOOL" Comment="Current state of output 12" />
+      <VarDeclaration ID="BEF94186384B2688" Name="St13" Type="BOOL" Comment="Current state of output 13" />
+      <VarDeclaration ID="9475C4ECC76ECBAE" Name="St14" Type="BOOL" Comment="Current state of output 14" />
+      <VarDeclaration ID="840AB1AF61ACDCBF" Name="St15" Type="BOOL" Comment="Current state of output 15" />
+      <VarDeclaration ID="6D052A3B40885921" Name="En00" Type="BOOL" Comment="Button of output 00 may be pressed" />
+      <VarDeclaration ID="D2A00432A826B8DE" Name="En01" Type="BOOL" Comment="Button of output 01 may be pressed" />
+      <VarDeclaration ID="074568EE3A022E5C" Name="En02" Type="BOOL" Comment="Button of output 02 may be pressed" />
+      <VarDeclaration ID="4A0020CA77DCD6AE" Name="En03" Type="BOOL" Comment="Button of output 03 may be pressed" />
+      <VarDeclaration ID="218A6BCF580FB933" Name="En04" Type="BOOL" Comment="Button of output 04 may be pressed" />
+      <VarDeclaration ID="5125227FF732F976" Name="En05" Type="BOOL" Comment="Button of output 05 may be pressed" />
+      <VarDeclaration ID="74FA905002DF3FC5" Name="En06" Type="BOOL" Comment="Button of output 06 may be pressed" />
+      <VarDeclaration ID="49A280672D3D265F" Name="En07" Type="BOOL" Comment="Button of output 07 may be pressed" />
+      <VarDeclaration ID="B30658EF959D2757" Name="En08" Type="BOOL" Comment="Button of output 08 may be pressed" />
+      <VarDeclaration ID="3AA55A681C7F4560" Name="En09" Type="BOOL" Comment="Button of output 09 may be pressed" />
+      <VarDeclaration ID="B5C9E4089E02069C" Name="En10" Type="BOOL" Comment="Button of output 10 may be pressed" />
+      <VarDeclaration ID="FA55C4B1BDFCF1FF" Name="En11" Type="BOOL" Comment="Button of output 11 may be pressed" />
+      <VarDeclaration ID="6016850F89DCAD9B" Name="En12" Type="BOOL" Comment="Button of output 12 may be pressed" />
+      <VarDeclaration ID="D1EE8ED0B0C69C1A" Name="En13" Type="BOOL" Comment="Button of output 13 may be pressed" />
+      <VarDeclaration ID="C416F1247A07DDE9" Name="En14" Type="BOOL" Comment="Button of output 14 may be pressed" />
+      <VarDeclaration ID="D280A15AC902A5AE" Name="En15" Type="BOOL" Comment="Button of output 15 may be pressed" />
+      <VarDeclaration ID="4B5EC8A5B332C6E6" Name="Di00" Type="BOOL" Comment="Value of input 00" />
+      <VarDeclaration ID="36A460996A9CEBAA" Name="Di01" Type="BOOL" Comment="Value of input 01" />
+      <VarDeclaration ID="EEEFA62CB9FCB4DC" Name="Di02" Type="BOOL" Comment="Value of input 02" />
+      <VarDeclaration ID="93D8556D9BF5BEDE" Name="Di03" Type="BOOL" Comment="Value of input 03" />
+      <VarDeclaration ID="06DFEB3EA6402D6A" Name="Di04" Type="BOOL" Comment="Value of input 04" />
+      <VarDeclaration ID="847650F12A885802" Name="Di05" Type="BOOL" Comment="Value of input 05" />
+      <VarDeclaration ID="AAC103CA2E5BE052" Name="Di06" Type="BOOL" Comment="Value of input 06" />
+      <VarDeclaration ID="447D9C7678504652" Name="Di07" Type="BOOL" Comment="Value of input 07" />
+      <VarDeclaration ID="E16DCAC5E8025B8F" Name="Di08" Type="BOOL" Comment="Value of input 08" />
+      <VarDeclaration ID="B6CEDB756BE42D88" Name="Di09" Type="BOOL" Comment="Value of input 09" />
+      <VarDeclaration ID="8DB923E5026BA397" Name="Di10" Type="BOOL" Comment="Value of input 10" />
+      <VarDeclaration ID="0EDCD0AE06406A09" Name="Di11" Type="BOOL" Comment="Value of input 11" />
+      <VarDeclaration ID="F94D2283B770D8ED" Name="Di12" Type="BOOL" Comment="Value of input 12" />
+      <VarDeclaration ID="DA0A6CF8ADAD5257" Name="Di13" Type="BOOL" Comment="Value of input 13" />
+      <VarDeclaration ID="0AD975F74C991833" Name="Di14" Type="BOOL" Comment="Value of input 14" />
+      <VarDeclaration ID="4815DE5BF679E0A9" Name="Di15" Type="BOOL" Comment="Value of input 15" />
+      <VarDeclaration ID="FEFD9E0A876A54DD" Name="PulseDT" Type="TIME" Comment="Duration of the pulse being started" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="algInit,algDI,algCmd,algAllOff,algTimeout,algUpdate" />
+    <InternalVars>
+      <VarDeclaration Name="Changed" Type="BOOL" Comment="An output state changed" />
+      <VarDeclaration Name="StartPulse" Type="BOOL" Comment="A pulse timer must be started" />
+      <VarDeclaration Name="StopPulse" Type="BOOL" Comment="The pulse timer must be cancelled" />
+      <VarDeclaration Name="PulseCh" Type="INT" InitialValue="-1" Comment="Output whose pulse is running; -1 = none" />
+      <VarDeclaration Name="PrevRq00" Type="BOOL" Comment="Last requested state of output 00" />
+      <VarDeclaration Name="PrevRq01" Type="BOOL" Comment="Last requested state of output 01" />
+      <VarDeclaration Name="PrevRq02" Type="BOOL" Comment="Last requested state of output 02" />
+      <VarDeclaration Name="PrevRq03" Type="BOOL" Comment="Last requested state of output 03" />
+      <VarDeclaration Name="PrevRq04" Type="BOOL" Comment="Last requested state of output 04" />
+      <VarDeclaration Name="PrevRq05" Type="BOOL" Comment="Last requested state of output 05" />
+      <VarDeclaration Name="PrevRq06" Type="BOOL" Comment="Last requested state of output 06" />
+      <VarDeclaration Name="PrevRq07" Type="BOOL" Comment="Last requested state of output 07" />
+      <VarDeclaration Name="PrevRq08" Type="BOOL" Comment="Last requested state of output 08" />
+      <VarDeclaration Name="PrevRq09" Type="BOOL" Comment="Last requested state of output 09" />
+      <VarDeclaration Name="PrevRq10" Type="BOOL" Comment="Last requested state of output 10" />
+      <VarDeclaration Name="PrevRq11" Type="BOOL" Comment="Last requested state of output 11" />
+      <VarDeclaration Name="PrevRq12" Type="BOOL" Comment="Last requested state of output 12" />
+      <VarDeclaration Name="PrevRq13" Type="BOOL" Comment="Last requested state of output 13" />
+      <VarDeclaration Name="PrevRq14" Type="BOOL" Comment="Last requested state of output 14" />
+      <VarDeclaration Name="PrevRq15" Type="BOOL" Comment="Last requested state of output 15" />
+    </InternalVars>
+    <ECC>
+      <ECState Name="START" Comment="Initial State" x="400" y="1200" />
+      <ECState Name="INIT_S" x="1600" y="200">
+        <ECAction Algorithm="algInit" />
+        <ECAction Algorithm="algUpdate" Output="DO_UPD" />
+        <ECAction Output="HMI_DO" />
+        <ECAction Algorithm="algDI" Output="HMI_DI" />
+        <ECAction Output="INITO" />
+      </ECState>
+      <ECState Name="DI_S" x="1600" y="600">
+        <ECAction Algorithm="algDI" Output="HMI_DI" />
+      </ECState>
+      <ECState Name="CMD_S" x="1600" y="1000">
+        <ECAction Algorithm="algCmd" />
+      </ECState>
+      <ECState Name="OFF_S" x="1600" y="1400">
+        <ECAction Algorithm="algAllOff" />
+      </ECState>
+      <ECState Name="TO_S" x="1600" y="1800">
+        <ECAction Algorithm="algTimeout" />
+      </ECState>
+      <ECState Name="OUT_S" x="2800" y="1400">
+        <ECAction Algorithm="algUpdate" Output="DO_UPD" />
+        <ECAction Output="HMI_DO" />
+      </ECState>
+      <ECState Name="PSTOP_S" x="4000" y="1200">
+        <ECAction Output="TSTOP" />
+      </ECState>
+      <ECState Name="PSTART_S" x="4000" y="1700">
+        <ECAction Output="TSTART" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT_S" Condition="INIT" x="1000.0" y="700.0" />
+      <ECTransition Source="INIT_S" Destination="START" Condition="1" x="1000.0" y="700.0" />
+      <ECTransition Source="START" Destination="DI_S" Condition="DI" x="1000.0" y="900.0" />
+      <ECTransition Source="DI_S" Destination="START" Condition="1" x="1000.0" y="900.0" />
+      <ECTransition Source="START" Destination="CMD_S" Condition="CMD" x="1000.0" y="1100.0" />
+      <ECTransition Source="CMD_S" Destination="OUT_S" Condition="Changed" x="2200.0" y="1200.0" />
+      <ECTransition Source="CMD_S" Destination="START" Condition="NOT Changed" x="1000.0" y="1100.0" />
+      <ECTransition Source="START" Destination="OFF_S" Condition="ALL_OFF" x="1000.0" y="1300.0" />
+      <ECTransition Source="OFF_S" Destination="OUT_S" Condition="1" x="2200.0" y="1400.0" />
+      <ECTransition Source="START" Destination="TO_S" Condition="PULSE_END" x="1000.0" y="1500.0" />
+      <ECTransition Source="TO_S" Destination="OUT_S" Condition="Changed" x="2200.0" y="1600.0" />
+      <ECTransition Source="TO_S" Destination="START" Condition="NOT Changed" x="1000.0" y="1500.0" />
+      <ECTransition Source="OUT_S" Destination="PSTOP_S" Condition="StopPulse" x="3400.0" y="1300.0" />
+      <ECTransition Source="OUT_S" Destination="PSTART_S" Condition="StartPulse AND NOT StopPulse" x="3400.0" y="1550.0" />
+      <ECTransition Source="OUT_S" Destination="START" Condition="NOT StartPulse AND NOT StopPulse" x="1600.0" y="1300.0" />
+      <ECTransition Source="PSTOP_S" Destination="PSTART_S" Condition="StartPulse" x="4000.0" y="1450.0" />
+      <ECTransition Source="PSTOP_S" Destination="START" Condition="NOT StartPulse" x="2200.0" y="1200.0" />
+      <ECTransition Source="PSTART_S" Destination="START" Condition="1" x="2200.0" y="1450.0" />
+    </ECC>
+    <Algorithm Name="algInit">
+      <ST><![CDATA[(* All outputs off, no pulse running *)
+St00 := FALSE;
+PrevRq00 := FALSE;
+St01 := FALSE;
+PrevRq01 := FALSE;
+St02 := FALSE;
+PrevRq02 := FALSE;
+St03 := FALSE;
+PrevRq03 := FALSE;
+St04 := FALSE;
+PrevRq04 := FALSE;
+St05 := FALSE;
+PrevRq05 := FALSE;
+St06 := FALSE;
+PrevRq06 := FALSE;
+St07 := FALSE;
+PrevRq07 := FALSE;
+St08 := FALSE;
+PrevRq08 := FALSE;
+St09 := FALSE;
+PrevRq09 := FALSE;
+St10 := FALSE;
+PrevRq10 := FALSE;
+St11 := FALSE;
+PrevRq11 := FALSE;
+St12 := FALSE;
+PrevRq12 := FALSE;
+St13 := FALSE;
+PrevRq13 := FALSE;
+St14 := FALSE;
+PrevRq14 := FALSE;
+St15 := FALSE;
+PrevRq15 := FALSE;
+PulseCh := -1;
+Changed := FALSE;
+StartPulse := FALSE;
+StopPulse := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algDI">
+      <ST><![CDATA[(* Copy the input values for the HMI *)
+Di00 := In00.value;
+Di01 := In01.value;
+Di02 := In02.value;
+Di03 := In03.value;
+Di04 := In04.value;
+Di05 := In05.value;
+Di06 := In06.value;
+Di07 := In07.value;
+Di08 := In08.value;
+Di09 := In09.value;
+Di10 := In10.value;
+Di11 := In11.value;
+Di12 := In12.value;
+Di13 := In13.value;
+Di14 := In14.value;
+Di15 := In15.value;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algCmd">
+      <ST><![CDATA[VAR
+  aSt : ARRAY[0..15] OF BOOL;
+  aRq : ARRAY[0..15] OF BOOL;
+  aPr : ARRAY[0..15] OF BOOL;
+  aEx : ARRAY[0..15] OF INT;
+  aPu : ARRAY[0..15] OF TIME;
+  i : INT;
+  p : INT;
+  allowed : BOOL;
+END_VAR
+aSt[0] := St00;
+aSt[1] := St01;
+aSt[2] := St02;
+aSt[3] := St03;
+aSt[4] := St04;
+aSt[5] := St05;
+aSt[6] := St06;
+aSt[7] := St07;
+aSt[8] := St08;
+aSt[9] := St09;
+aSt[10] := St10;
+aSt[11] := St11;
+aSt[12] := St12;
+aSt[13] := St13;
+aSt[14] := St14;
+aSt[15] := St15;
+aRq[0] := Cmd00;
+aRq[1] := Cmd01;
+aRq[2] := Cmd02;
+aRq[3] := Cmd03;
+aRq[4] := Cmd04;
+aRq[5] := Cmd05;
+aRq[6] := Cmd06;
+aRq[7] := Cmd07;
+aRq[8] := Cmd08;
+aRq[9] := Cmd09;
+aRq[10] := Cmd10;
+aRq[11] := Cmd11;
+aRq[12] := Cmd12;
+aRq[13] := Cmd13;
+aRq[14] := Cmd14;
+aRq[15] := Cmd15;
+aPr[0] := PrevRq00;
+aPr[1] := PrevRq01;
+aPr[2] := PrevRq02;
+aPr[3] := PrevRq03;
+aPr[4] := PrevRq04;
+aPr[5] := PrevRq05;
+aPr[6] := PrevRq06;
+aPr[7] := PrevRq07;
+aPr[8] := PrevRq08;
+aPr[9] := PrevRq09;
+aPr[10] := PrevRq10;
+aPr[11] := PrevRq11;
+aPr[12] := PrevRq12;
+aPr[13] := PrevRq13;
+aPr[14] := PrevRq14;
+aPr[15] := PrevRq15;
+aEx[0] := Excl00;
+aEx[1] := Excl01;
+aEx[2] := Excl02;
+aEx[3] := Excl03;
+aEx[4] := Excl04;
+aEx[5] := Excl05;
+aEx[6] := Excl06;
+aEx[7] := Excl07;
+aEx[8] := Excl08;
+aEx[9] := Excl09;
+aEx[10] := Excl10;
+aEx[11] := Excl11;
+aEx[12] := Excl12;
+aEx[13] := Excl13;
+aEx[14] := Excl14;
+aEx[15] := Excl15;
+aPu[0] := Pulse00;
+aPu[1] := Pulse01;
+aPu[2] := Pulse02;
+aPu[3] := Pulse03;
+aPu[4] := Pulse04;
+aPu[5] := Pulse05;
+aPu[6] := Pulse06;
+aPu[7] := Pulse07;
+aPu[8] := Pulse08;
+aPu[9] := Pulse09;
+aPu[10] := Pulse10;
+aPu[11] := Pulse11;
+aPu[12] := Pulse12;
+aPu[13] := Pulse13;
+aPu[14] := Pulse14;
+aPu[15] := Pulse15;
+Changed := FALSE;
+StartPulse := FALSE;
+StopPulse := FALSE;
+(* Only buttons whose request changed since the last CMD are handled, so a request that was
+   refused earlier never switches an output on later by surprise. *)
+FOR i := 0 TO 15 DO
+  IF aRq[i] <> aPr[i] THEN
+    aPr[i] := aRq[i];
+    IF aRq[i] <> aSt[i] THEN
+      IF NOT aRq[i] THEN
+        (* Switching off is always allowed *)
+        aSt[i] := FALSE;
+        Changed := TRUE;
+        IF PulseCh = i THEN
+          PulseCh := -1;
+          StopPulse := TRUE;
+        END_IF;
+      ELSE
+        (* Switching on: refused while the partner output is on, or while another pulse runs *)
+        allowed := TRUE;
+        p := aEx[i];
+        IF (p >= 0) AND (p <= 15) THEN
+          IF aSt[p] THEN
+            allowed := FALSE;
+          END_IF;
+        END_IF;
+        IF (aPu[i] > T#0s) AND (PulseCh >= 0) THEN
+          allowed := FALSE;
+        END_IF;
+        IF allowed THEN
+          aSt[i] := TRUE;
+          Changed := TRUE;
+          IF aPu[i] > T#0s THEN
+            PulseCh := i;
+            PulseDT := aPu[i];
+            StartPulse := TRUE;
+          END_IF;
+        END_IF;
+      END_IF;
+    END_IF;
+  END_IF;
+END_FOR;
+St00 := aSt[0];
+St01 := aSt[1];
+St02 := aSt[2];
+St03 := aSt[3];
+St04 := aSt[4];
+St05 := aSt[5];
+St06 := aSt[6];
+St07 := aSt[7];
+St08 := aSt[8];
+St09 := aSt[9];
+St10 := aSt[10];
+St11 := aSt[11];
+St12 := aSt[12];
+St13 := aSt[13];
+St14 := aSt[14];
+St15 := aSt[15];
+PrevRq00 := aPr[0];
+PrevRq01 := aPr[1];
+PrevRq02 := aPr[2];
+PrevRq03 := aPr[3];
+PrevRq04 := aPr[4];
+PrevRq05 := aPr[5];
+PrevRq06 := aPr[6];
+PrevRq07 := aPr[7];
+PrevRq08 := aPr[8];
+PrevRq09 := aPr[9];
+PrevRq10 := aPr[10];
+PrevRq11 := aPr[11];
+PrevRq12 := aPr[12];
+PrevRq13 := aPr[13];
+PrevRq14 := aPr[14];
+PrevRq15 := aPr[15];
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algAllOff">
+      <ST><![CDATA[(* Switch everything off and cancel a running pulse *)
+St00 := FALSE;
+St01 := FALSE;
+St02 := FALSE;
+St03 := FALSE;
+St04 := FALSE;
+St05 := FALSE;
+St06 := FALSE;
+St07 := FALSE;
+St08 := FALSE;
+St09 := FALSE;
+St10 := FALSE;
+St11 := FALSE;
+St12 := FALSE;
+St13 := FALSE;
+St14 := FALSE;
+St15 := FALSE;
+StopPulse := (PulseCh >= 0);
+PulseCh := -1;
+StartPulse := FALSE;
+Changed := TRUE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algTimeout">
+      <ST><![CDATA[VAR
+  aSt : ARRAY[0..15] OF BOOL;
+END_VAR
+aSt[0] := St00;
+aSt[1] := St01;
+aSt[2] := St02;
+aSt[3] := St03;
+aSt[4] := St04;
+aSt[5] := St05;
+aSt[6] := St06;
+aSt[7] := St07;
+aSt[8] := St08;
+aSt[9] := St09;
+aSt[10] := St10;
+aSt[11] := St11;
+aSt[12] := St12;
+aSt[13] := St13;
+aSt[14] := St14;
+aSt[15] := St15;
+Changed := FALSE;
+StartPulse := FALSE;
+StopPulse := FALSE;
+IF (PulseCh >= 0) AND (PulseCh <= 15) THEN
+  aSt[PulseCh] := FALSE;
+  PulseCh := -1;
+  Changed := TRUE;
+END_IF;
+St00 := aSt[0];
+St01 := aSt[1];
+St02 := aSt[2];
+St03 := aSt[3];
+St04 := aSt[4];
+St05 := aSt[5];
+St06 := aSt[6];
+St07 := aSt[7];
+St08 := aSt[8];
+St09 := aSt[9];
+St10 := aSt[10];
+St11 := aSt[11];
+St12 := aSt[12];
+St13 := aSt[13];
+St14 := aSt[14];
+St15 := aSt[15];
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algUpdate">
+      <ST><![CDATA[VAR
+  aSt : ARRAY[0..15] OF BOOL;
+  aEx : ARRAY[0..15] OF INT;
+  aPu : ARRAY[0..15] OF TIME;
+  aEn : ARRAY[0..15] OF BOOL;
+  i : INT;
+  p : INT;
+END_VAR
+aSt[0] := St00;
+aSt[1] := St01;
+aSt[2] := St02;
+aSt[3] := St03;
+aSt[4] := St04;
+aSt[5] := St05;
+aSt[6] := St06;
+aSt[7] := St07;
+aSt[8] := St08;
+aSt[9] := St09;
+aSt[10] := St10;
+aSt[11] := St11;
+aSt[12] := St12;
+aSt[13] := St13;
+aSt[14] := St14;
+aSt[15] := St15;
+aEx[0] := Excl00;
+aEx[1] := Excl01;
+aEx[2] := Excl02;
+aEx[3] := Excl03;
+aEx[4] := Excl04;
+aEx[5] := Excl05;
+aEx[6] := Excl06;
+aEx[7] := Excl07;
+aEx[8] := Excl08;
+aEx[9] := Excl09;
+aEx[10] := Excl10;
+aEx[11] := Excl11;
+aEx[12] := Excl12;
+aEx[13] := Excl13;
+aEx[14] := Excl14;
+aEx[15] := Excl15;
+aPu[0] := Pulse00;
+aPu[1] := Pulse01;
+aPu[2] := Pulse02;
+aPu[3] := Pulse03;
+aPu[4] := Pulse04;
+aPu[5] := Pulse05;
+aPu[6] := Pulse06;
+aPu[7] := Pulse07;
+aPu[8] := Pulse08;
+aPu[9] := Pulse09;
+aPu[10] := Pulse10;
+aPu[11] := Pulse11;
+aPu[12] := Pulse12;
+aPu[13] := Pulse13;
+aPu[14] := Pulse14;
+aPu[15] := Pulse15;
+(* A button is enabled unless its partner output is on, or it is a pulse output while another pulse runs *)
+FOR i := 0 TO 15 DO
+  aEn[i] := TRUE;
+  p := aEx[i];
+  IF (p >= 0) AND (p <= 15) THEN
+    IF aSt[p] THEN
+      aEn[i] := FALSE;
+    END_IF;
+  END_IF;
+  IF (aPu[i] > T#0s) AND (PulseCh >= 0) AND (PulseCh <> i) THEN
+    aEn[i] := FALSE;
+  END_IF;
+END_FOR;
+En00 := aEn[0];
+En01 := aEn[1];
+En02 := aEn[2];
+En03 := aEn[3];
+En04 := aEn[4];
+En05 := aEn[5];
+En06 := aEn[6];
+En07 := aEn[7];
+En08 := aEn[8];
+En09 := aEn[9];
+En10 := aEn[10];
+En11 := aEn[11];
+En12 := aEn[12];
+En13 := aEn[13];
+En14 := aEn[14];
+En15 := aEn[15];
+Out00.value := St00;
+Out01.value := St01;
+Out02.value := St02;
+Out03.value := St03;
+Out04.value := St04;
+Out05.value := St05;
+Out06.value := St06;
+Out07.value := St07;
+Out08.value := St08;
+Out09.value := St09;
+Out10.value := St10;
+Out11.value := St11;
+Out12.value := St12;
+Out13.value := St13;
+Out14.value := St14;
+Out15.value := St15;
+]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

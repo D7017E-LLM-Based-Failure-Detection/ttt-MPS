@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Folders xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="festo-mps-400-eae" Version="1.6.0.0" xmlns="http://www.nxtcontrol.com/IEC61499.xsd">
+  <Folder Type="SystemDevice" Name="Root">
+    <Items>
+      <item>a0026ceb-2e0f-4635-9d99-a98c0e68dc61</item>
+      <item>c440123d-ccc1-447a-bdaa-3b96ba6d77e9</item>
+      <item>33050102-181b-42b2-a5f0-4e716a2ac3ff</item>
+    </Items>
+  </Folder>
+</Folders>

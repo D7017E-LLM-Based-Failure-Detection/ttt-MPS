@@ -1,0 +1,80 @@
+# MPS 400 knowledge graph: Festo component type "Control console" (operator panel of a station).
+# Conventions (status values, sources, ids): see ../README.md.
+schema: mps400-kg/0.1
+updated: "2026-11-09"
+
+sources:
+  cd-00-console-el:
+    path: "resources/MPS documentation CD/00_Boards/Controle console/Circuit diagrams/Electric_Circuit_Diagram__Control_console.pdf"
+    title: Circuit diagrams, MPS-C control console (Bedienpult)
+    date: "2006-04-05"
+  cd-00-console-manual:
+    path: "resources/MPS documentation CD/00_Boards/Controle console/668860_Manual_Control_console.pdf"
+    title: Control console, manual 668860
+    date: "2005-06"
+
+component_type:
+  id: control-console
+  name: Control console
+  name_de: Bedienpult
+  doc_series: MPS-C
+  status: documented
+  sources: [cd-00-console-el, cd-00-console-manual]
+  function: >-
+    Operator panel of one MPS station, connected to the station's controller through SysLink
+    XMG1. It holds the control panel (membrane keypad) and two communication panels with 4 mm
+    safety sockets for signals to the upstream and downstream stations.
+  modules:
+    - id: control-panel
+      name: Control panel
+      note: "START button with LED (normally open), STOP button (normally closed), RESET button with LED (normally open), AUTO/MAN key switch, indicator lights Q1 and Q2 with program-defined functions."
+    - id: comm-upstream
+      name: Communication panel to the upstream station
+      note: "Left front plate: inputs I4 and I5, outputs Q4 and Q5, GND."
+    - id: comm-downstream
+      name: Communication panel to the downstream station
+      note: "Right front plate: inputs I6 and I7, outputs Q6 and Q7, GND."
+    - {id: spare-panel, name: Spare panel}
+
+connectors:
+  status: documented
+  sources: ["cd-00-console-el#3", "cd-00-console-el#6"]
+  items:
+    - {id: XMG1, kind: SysLink, signals: "I0-I7 and Q0-Q7", note: Main connection to the station controller.}
+    - {id: X2, kind: SysLink, signals: "I10-I17 and Q10-Q17", note: Second SysLink; the console takes up to 16 inputs and 16 outputs in total.}
+    - {id: X3, kind: 37-pin D-SUB male, note: All inputs.}
+    - {id: X4, kind: 37-pin D-SUB female, note: All outputs.}
+    - {id: X5, kind: Emergency stop connector, name_de: NOTAUS}
+    - {id: X7, kind: Terminal strip, note: "XMG1 signals on terminals 1-16, 24 V on 17 and 0 V on 18."}
+  supply:
+    plus: 24 V on XMG1 pins 21-22
+    minus: 0 V on XMG1 pins 23-24
+
+signals:
+  status: documented
+  sources: ["cd-00-console-el#4-5", "cd-00-console-manual#5"]
+  confirmed_by: >-
+    The NxtStudio solution binds the console in the same order: inputs CP_START, CP_STOP,
+    CP_MANUAL, CP_RESET, CP_I4-CP_I7 and outputs CP_START_LED, CP_RESET_LED, CP_Q1, CP_Q2,
+    CP_Q4-CP_Q7 on bits 0-7.
+  note: >-
+    The manual describes START and RESET as buttons with LEDs; these are taken to be the START
+    and RESET indicator lights P1 and P2 (inferred).
+  inputs:
+    - {address: I0, pin: 13, terminal: 1, symbol: S1, element: START button, contact: normally open, element_de: Taster START}
+    - {address: I1, pin: 14, terminal: 2, symbol: S2, element: STOP button, contact: normally closed, element_de: "Taster STOP (Öffner)"}
+    - {address: I2, pin: 15, terminal: 3, symbol: S3, element: AUTO/MAN key switch, element_de: Schalter AUTO/MAN}
+    - {address: I3, pin: 16, terminal: 4, symbol: S4, element: RESET button, contact: normally open, element_de: Taster RICHTEN}
+    - {address: I4, pin: 17, terminal: 5, element: External input I4 on the upstream communication panel, element_de: Externer Eingang E4}
+    - {address: I5, pin: 18, terminal: 6, element: External emergency stop input on the upstream communication panel, element_de: NOTAUS extern E5, note: "With MPS-C the emergency stop signal comes from the PLC."}
+    - {address: I6, pin: 19, terminal: 7, element: External input I6 on the downstream communication panel, element_de: Externer Eingang E6}
+    - {address: I7, pin: 20, terminal: 8, element: External input I7 on the downstream communication panel, element_de: Externer Eingang E7}
+  outputs:
+    - {address: Q0, pin: 1, terminal: 9, symbol: P1, element: START indicator light, element_de: Leuchtmelder START}
+    - {address: Q1, pin: 2, terminal: 10, symbol: P2, element: RESET indicator light, element_de: Leuchtmelder RESET}
+    - {address: Q2, pin: 3, terminal: 11, symbol: P3, element: Indicator light Q1 with a program-defined function, element_de: Leuchtmelder Sonderfunktion Q1}
+    - {address: Q3, pin: 4, terminal: 12, symbol: P4, element: Indicator light Q2 with a program-defined function, element_de: Leuchtmelder Sonderfunktion Q2}
+    - {address: Q4, pin: 5, terminal: 13, element: External output Q4 on the upstream communication panel, element_de: Externer Ausgang A4}
+    - {address: Q5, pin: 6, terminal: 14, element: External output Q5 on the upstream communication panel, element_de: Externer Ausgang A5}
+    - {address: Q6, pin: 7, terminal: 15, element: External output Q6 on the downstream communication panel, element_de: Externer Ausgang A6}
+    - {address: Q7, pin: 8, terminal: 16, element: External output Q7 on the downstream communication panel, element_de: Externer Ausgang A7}

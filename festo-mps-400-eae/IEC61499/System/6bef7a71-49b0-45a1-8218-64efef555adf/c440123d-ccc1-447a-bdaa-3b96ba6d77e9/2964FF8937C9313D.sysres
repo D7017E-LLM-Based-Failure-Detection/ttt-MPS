@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="2964FF8937C9313D" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management" Format="2.0" xmlns="https://www.se.com/LibraryElements">
+  <FBNetwork>
+    <FB ID="64F09694E621FE4F" Name="FB1" Type="DPAC_FULLINIT" Namespace="SE.DPAC" x="1260" y="140" Loaded="true" />
+    <FB ID="544E6D9A6B9AB39E" Name="TS01" Type="Testing" Namespace="Flexbridge.FestoMPS400" Mapping="C8C2D58680F47653" x="1440" y="859.9999" />
+    <EventConnections>
+      <Connection Source="$START.COLD" Destination="$64F09694E621FE4F.INIT" dx1="88.60419" />
+      <Connection Source="$START.WARM" Destination="$64F09694E621FE4F.INIT" dx1="70" />
+      <Connection Source="$START.ONLINECHANGE" Destination="$64F09694E621FE4F.OC_RETRIGGER" dx1="90" />
+    </EventConnections>
+  </FBNetwork>
+</Resource>

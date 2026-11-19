@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Mapping>
+  <EventInputs>
+    <Event Name="REQ_ST">ModeText;StepText;Cycles;Rejected;StepNo;TrayReleased</Event>
+  </EventInputs>
+  <EventOutputs>
+    <Event Name="HMI_EMPTY">TrayEmpty</Event>
+    <Event Name="HMI_FULL">TrayFull</Event>
+  </EventOutputs>
+  <Inputs>
+    <Input Name="ModeText" Type="STRING" />
+    <Input Name="StepText" Type="STRING" />
+    <Input Name="Cycles" Type="UDINT" />
+    <Input Name="Rejected" Type="UDINT" />
+    <Input Name="StepNo" Type="INT" />
+    <Input Name="TrayReleased" Type="BOOL" />
+  </Inputs>
+  <Outputs>
+    <Output Name="TrayEmpty" Type="BOOL" />
+    <Output Name="TrayFull" Type="BOOL" />
+  </Outputs>
+</Mapping>

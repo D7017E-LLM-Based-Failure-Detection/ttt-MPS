@@ -1,0 +1,268 @@
+# MPS 400 knowledge graph: Festo station type "Processing".
+# Conventions (status values, sources, ids): see ../README.md.
+schema: mps400-kg/0.1
+updated: "2026-11-10"
+
+sources:
+  cd-03-el:
+    path: "resources/MPS documentation CD/03_Processing/Circuit diagrams/Electric_Circuit_Diagram_Processing.pdf"
+    title: "Circuit diagrams, MPS-C Processing station (drawing 195782 el.)"
+    date: "2006-04-05"
+  cd-03-grafcet:
+    path: "resources/MPS documentation CD/03_Processing/Programming/03_Processing_GRAFCET.pdf"
+    title: "Processing station, function chart (GRAFCET to DIN EN 60848)"
+    date: "2004-01"
+  cd-03-parts:
+    path: "resources/MPS documentation CD/03_Processing/Parts lists/526882_Parts_list_Processing.pdf"
+    title: "Parts list Processing station, kit 526882"
+    date: "2002-11-11"
+  nxt:
+    path: "resources/Solution Archive/MPS_NxtStudio_2_1"
+    title: Legacy NxtStudio 2.1 solution (I/O binding of device Processing)
+
+station_type:
+  id: processing
+  name: Processing station
+  name_de: Station Bearbeiten
+  doc_series: MPS-C
+  status: documented
+  sources: [cd-03-el, cd-03-grafcet, cd-03-parts]
+  function: >-
+    A rotary indexing table carries workpieces past a checking unit (is the workpiece the right
+    way up?) and a drilling unit (clamp, lower, drill, raise). Festo's version ejects finished
+    workpieces with an electrical ejector. All actuators are electric; the station has no
+    pneumatics.
+  function_status: inferred
+
+io_terminal:
+  id: XA2
+  part: "034035 I/O terminal (MP-B-AN-E/A-T)"
+  syslink_station: XMA2
+  syslink_console: XMG1
+  inputs: 8
+  outputs: 8
+  supply:
+    inputs: {plus: "24VB on XMA2 pins 21-22", minus: "0VB on XMA2 pins 23-24"}
+    outputs: {plus: "24VA on XMA2 pins 9-10", minus: "0VA on XMA2 pins 11-12"}
+  relays: ["K1", "K2", "K3", "K4", "K5"]
+  status: documented
+  sources: ["cd-03-el#3-7", cd-03-parts]
+
+devices:
+  - id: TABLE
+    kind: rotary indexing table, electric
+    name: Rotary indexing table
+    name_de: Rundschalttisch
+    motor: M2 (24 V, 5 W)
+    relays: ["K2", "K5"]
+    sensors: ["B3"]
+    part: {ref: "654972 Rotary indexing table (MP3-M-RST)", status: inferred}
+    status: documented
+    sources: ["cd-03-el#5-6"]
+    note: >-
+      Output O1 is a start pulse, not a run command: it pulls in relay K2, which holds itself
+      and runs motor M2. When sensor B3 reports the next position, relay K5 drops K2 and the
+      motor stops (with a braking resistor R1). The PLC therefore switches O1 on, and off again
+      once the table has left its position.
+  - id: DRILL
+    kind: drilling unit, electric
+    name: Drilling unit
+    name_de: Bohrmaschine
+    motors: {drill: "M3 (24 V, 25 W) via relay K1", feed: "M1 (24 V, 5 W), reversed by relays K3 (raise) and K4 (lower)"}
+    sensors: ["1B1", "1B2"]
+    part: {ref: "196974 Drilling module (MP3-M-B-BS)", status: inferred}
+    status: documented
+    sources: ["cd-03-el#4-7"]
+    note: >-
+      The limit switches 1B1 (upper) and 1B2 (lower) sit in the coil circuits of K3 and K4, so
+      the feed stops at the end positions in hardware. They are also wired to inputs I3 and I4.
+  - id: M4
+    kind: solenoid
+    name: Clamping (fixing workpiece)
+    name_de: Werkstück spannen
+    sensors: []
+    part: {ref: "526218 Clamping module (MP3-M-S-BS)", status: inferred}
+    status: documented
+    sources: ["cd-03-el#5"]
+  - id: M5
+    kind: solenoid
+    name: Checking unit, verifying magnet (probe)
+    name_de: Werkstück prüfen
+    sensors: ["B4"]
+    part: {ref: "195773 Testing module (MP3-M-BP-B-BS)", status: inferred}
+    status: documented
+    sources: ["cd-03-el#4-5", "cd-03-grafcet#5"]
+    note: >-
+      The probe goes down onto the workpiece; B4 reports "checking drill hole ok", which Festo's
+      sequence reads as "workpiece orientation ok" (opening facing up).
+  - id: M6
+    kind: solenoid
+    name: Ejector (push out workpiece)
+    name_de: Werkstück auswerfen
+    sensors: []
+    part: {ref: "526873 Branch module (MP3-M-AW-BS)", status: inferred}
+    status: documented
+    sources: ["cd-03-el#5"]
+    note: Fed through resistor R3 (56 ohm).
+  - {id: "PART_AV", kind: capacitive sensor, name: Workpiece available (input position), name_de: Werkstück vorhanden, status: documented, sources: ["cd-03-el#4"]}
+  - {id: "B1", kind: capacitive sensor, name: Workpiece at checking unit, name_de: Werkstück bei Prüfvorrichtung, status: documented, sources: ["cd-03-el#4"]}
+  - {id: "B2", kind: capacitive sensor, name: Workpiece at drilling unit, name_de: Werkstück bei Bohrvorrichtung, status: documented, sources: ["cd-03-el#4"]}
+  - {id: "B3", kind: inductive sensor, name: Indexing table positioned, name_de: Rundschalttisch positioniert, status: documented, sources: ["cd-03-el#4", "cd-03-el#6"]}
+  - {id: "B4", kind: inductive sensor, name: Checking drill hole ok, name_de: Bohrlochprüfung in Ordnung, status: documented, sources: ["cd-03-el#4"]}
+  - {id: "IP_FI", kind: optical receiver, name: "Downstream station free, receiver of the 1-bit link", name_de: Folgestation frei, status: documented, sources: ["cd-03-el#4"]}
+  - {id: "IP_N_FO", kind: optical transmitter, name: "Station occupied, transmitter of the 1-bit link", name_de: Station belegt, status: documented, sources: ["cd-03-el#5"]}
+
+signals:
+  status: documented
+  sources: ["cd-03-el#4-5", nxt]
+  note: >-
+    legacy = the signal name in the NxtStudio solution, which binds the same bit numbers
+    (DIN0-DIN6, DO0-DO5).
+  verify: >-
+    The legacy names of I1 and I2 are swapped against the drawing: legacy I1 = WP_DRILL and
+    I2 = WP_TEST, drawing I1 = at checking unit and I2 = at drilling unit. Either the lab
+    station is wired differently or the legacy names are wrong. Check on the hardware
+    (open question q-proc-sensors in plant.yaml).
+  inputs:
+    - {address: I0, pin: 13, symbol: "PART_AV", device: "PART_AV", meaning: Workpiece available, meaning_de: Werkstück vorhanden, legacy: WP_AVAIL}
+    - {address: I1, pin: 14, symbol: "B1", device: "B1", meaning: Workpiece at checking unit, meaning_de: Werkstück bei Prüfvorrichtung, legacy: WP_DRILL}
+    - {address: I2, pin: 15, symbol: "B2", device: "B2", meaning: Workpiece at drilling unit, meaning_de: Werkstück bei Bohrvorrichtung, legacy: WP_TEST}
+    - {address: I3, pin: 16, symbol: "1B1", device: DRILL, meaning: Drilling unit in upper position, meaning_de: Bohrmaschine oben, legacy: DRILL_RAISED}
+    - {address: I4, pin: 17, symbol: "1B2", device: DRILL, meaning: Drilling unit in lower position, meaning_de: Bohrmaschine unten, legacy: DRILL_LOWERED}
+    - {address: I5, pin: 18, symbol: "B3", device: "B3", meaning: Indexing table positioned, meaning_de: Rundschalttisch positioniert, legacy: IN_POSITION}
+    - {address: I6, pin: 19, symbol: "B4", device: "B4", meaning: Checking drill hole ok, meaning_de: Bohrlochprüfung in Ordnung, legacy: HOLE_DETECTED}
+    - {address: I7, pin: 20, symbol: "IP_FI", device: "IP_FI", meaning: Downstream station free, meaning_de: Folgestation frei, legacy: null}
+  outputs:
+    - {address: O0, pin: 1, symbol: "K1", device: DRILL, meaning: Drilling unit motor on, meaning_de: Bohrmaschine Motor ein, legacy: START_DRILL}
+    - {address: O1, pin: 2, symbol: "K2", device: TABLE, meaning: Indexing table motor on (start pulse), meaning_de: Rundschalttisch Motor ein, legacy: ROTATE}
+    - {address: O2, pin: 3, symbol: "K4", device: DRILL, meaning: Lower drilling unit, meaning_de: Bohrmaschine nach unten, legacy: LOWER_DRILL}
+    - {address: O3, pin: 4, symbol: "K3", device: DRILL, meaning: Raise drilling unit, meaning_de: Bohrmaschine nach oben, legacy: RAISE_DRILL}
+    - {address: O4, pin: 5, symbol: "M4", device: M4, meaning: Fixing (clamping) workpiece, meaning_de: Werkstück spannen, legacy: CLAMP}
+    - {address: O5, pin: 6, symbol: "M5", device: M5, meaning: Proofing (checking) workpiece, meaning_de: Werkstück prüfen, legacy: TEST}
+    - {address: O6, pin: 7, symbol: "M6", device: M6, meaning: Push out workpiece, meaning_de: Werkstück auswerfen, legacy: null}
+    - {address: O7, pin: 8, symbol: "IP_N_FO", device: "IP_N_FO", meaning: Station occupied, meaning_de: Station belegt, legacy: null}
+
+operator_panel:
+  syslink: XMG1
+  component_type: control-console
+  status: documented
+  sources: ["cd-03-el#3", "cd-03-grafcet#3"]
+
+parts:
+  kit: "526882 PROCESS.STAT. MP3-S-BE-BS"
+  status: documented
+  sources: [cd-03-parts]
+  items:
+    - {part_no: "034035", name: I/O terminal, designation: MP-B-AN-E/A-T, qty: 1}
+    - {part_no: "162228", name: Connector, designation: MP2-M-VB, qty: 2}
+    - {part_no: "170395", name: Profile plate, designation: DE-PP-350B, qty: 1}
+    - {part_no: "195773", name: Testing module, designation: MP3-M-BP-B-BS, qty: 1}
+    - {part_no: "196958", name: Mounting system E, designation: MP3-M-TSE, qty: 1}
+    - {part_no: "196963", name: SensLink transmitter, designation: MP3-M-SLS, qty: 1}
+    - {part_no: "196964", name: SensLink receiver, designation: MP3-M-SLE, qty: 1}
+    - {part_no: "196965", name: Holder TM-BG, designation: MP3-M-HTM, qty: 1}
+    - {part_no: "196974", name: Drilling module, designation: MP3-M-B-BS, qty: 1}
+    - {part_no: "654972", name: Rotary indexing table, designation: MP3-M-RST, qty: 1}
+    - {part_no: "268327", name: Relay, designation: "710755", qty: 5}
+    - {part_no: "196980", name: Capacitive sensor, designation: MP3-M-SE-KAP-BS, qty: 3}
+    - {part_no: "526198", name: Inductive sensor, designation: MP3-M-SE-IND-W-BS, qty: 1}
+    - {part_no: "526218", name: Clamping module, designation: MP3-M-S-BS, qty: 1}
+    - {part_no: "526873", name: Branch module, designation: MP3-M-AW-BS, qty: 1}
+    - {part_no: "526229", name: Terminal block, designation: MP3-KBL, qty: 1}
+    - {part_no: "526858", name: Accessories, designation: MP3-KT-BS, qty: 1}
+    - {part_no: "648813", name: Technical documentation, designation: MP-TD-SB-DE/GB, qty: 1}
+
+sequence:
+  id: processing-reference
+  standard: GRAFCET to DIN EN 60848
+  status: documented
+  sources: ["cd-03-grafcet#3-7"]
+  note: >-
+    Festo's sequence works on up to three workpieces at once: after each table step, checking
+    (macro step M20), drilling (M30) and output (M40) run in parallel, and the check result
+    ("workpiece orientation", 1 = not ok) is shifted along a bit register with the table. The
+    lab behaviour follows the NxtStudio solution, which handles one workpiece at a time (see
+    ../legacy/processing.yaml). M20, M30 and M40 each end at once when the start flag is not
+    set or there is nothing to do.
+  steps:
+    - {id: S1, initial: true, name: Start}
+    - {id: S2, name: Reset indicator light, actions: [{do: Turn on the "reset" indicator light, stored: false}]}
+    - {id: S3, name: Initial position, actions: [{do: Move the station to its initial position, stored: true}]}
+    - {id: S4, name: Turn rotary indexing table, actions: [{do: Turn the table to its initial position, stored: false}]}
+    - {id: S5, name: Reset OK, actions: [{do: Set flag "reset finished", stored: true}]}
+    - {id: S6, name: Cycle start (empty step)}
+    - {id: S7, name: Start indicator light, actions: [{do: Turn on the "start" indicator light, stored: false}]}
+    - {id: S8, name: Station not occupied, actions: [{do: Signal "station not occupied", stored: true}]}
+    - {id: S9, name: Station occupied, actions: [{do: Signal "station occupied", stored: true}]}
+    - {id: S10, name: Wait until downstream station is free (empty step)}
+    - {id: S11, name: Rotary indexing table, actions: [{do: Turn on the rotary indexing table, stored: false}]}
+    - {id: S12, name: Program synchronisation (empty step)}
+    - {id: S13, name: Delay (empty step)}
+    - {id: M20, name: "Macro step: drill hole checking (parallel)"}
+    - {id: S21, name: Checking workpiece orientation, actions: [{do: Turn on verifying magnet, stored: true}]}
+    - id: S22
+      name: Workpiece orientation ok
+      actions:
+        - {do: Turn off verifying magnet, stored: true}
+        - {do: Reset bit 1 of "workpiece orientation", stored: true}
+    - id: S23
+      name: Workpiece orientation not ok
+      actions:
+        - {do: Turn off verifying magnet, stored: true}
+        - {do: Set bit 1 of "workpiece orientation", stored: true}
+    - {id: M30, name: "Macro step: drilling (parallel)"}
+    - {id: S31, name: Fixate workpiece, actions: [{do: Fixate workpiece, stored: true}]}
+    - id: S32
+      name: Drill on
+      actions:
+        - {do: Lower drilling unit, stored: true}
+        - {do: Turn on drill, stored: true}
+    - id: S33
+      name: Drill off
+      actions:
+        - {do: Raise drilling unit, stored: true}
+        - {do: Turn off drill, stored: true}
+    - {id: S34, name: Free workpiece, actions: [{do: Unfix workpiece, stored: true}]}
+    - {id: M40, name: "Macro step: workpiece output (parallel)"}
+    - {id: S41, name: Workpiece orientation ok, actions: [{do: Eject workpiece, stored: false}]}
+    - id: S42
+      name: Workpiece orientation not ok
+      actions:
+        - {do: Turn on the "start" indicator light, stored: false}
+        - {do: Turn on the "workpiece orientation not ok" indicator light, stored: false}
+    - id: S14
+      name: Cycle end
+      actions:
+        - {do: Set flag "cycle end", stored: false}
+        - {do: Shift the "workpiece orientation" bits by one position, stored: false}
+  transitions:
+    - {from: S1, to: S6, condition: Station is reset and in initial position}
+    - {from: S1, to: S2, condition: Station is not reset}
+    - {from: S2, to: S3, condition: Reset button pressed}
+    - {from: S3, to: S4, condition: Drill in upward position}
+    - {from: S4, to: S5, condition: Station in initial position}
+    - {from: S5, to: S6, condition: Flag "reset finished" is set}
+    - {from: S6, to: S7, condition: Flag "start" is not set}
+    - {from: S6, to: S8, condition: Flag "start" is set}
+    - {from: S7, to: S8, condition: Flag "start" is set}
+    - {from: S8, to: S9, condition: Workpiece available}
+    - {from: S9, to: S10, condition: 3 s in step 9}
+    - {from: S10, to: S11, condition: Downstream station free}
+    - {from: S11, to: S12, condition: Rotary indexing table not positioned}
+    - {from: S12, to: S13, condition: Rotary indexing table positioned}
+    - {from: S13, to: "M20, M30, M40", condition: 1 s in step 13 (parallel start)}
+    - {from: M20, to: S21, condition: Workpiece available}
+    - {from: S21, to: S22, condition: 3 s in step 21 and workpiece orientation ok}
+    - {from: S21, to: S23, condition: 3 s in step 21 and workpiece orientation not ok}
+    - {from: "S22, S23", to: end of M20, condition: Verifying magnet is off}
+    - {from: M30, to: S31, condition: Workpiece available and bit 2 of "workpiece orientation" not set}
+    - {from: S31, to: S32, condition: Workpiece is fixed}
+    - {from: S32, to: S33, condition: Drilling unit lowered}
+    - {from: S33, to: S34, condition: Drilling unit raised}
+    - {from: S34, to: end of M30, condition: Workpiece is unfixed}
+    - {from: M40, to: S41, condition: Bit 3 of "workpiece orientation" not set}
+    - {from: M40, to: S42, condition: Bit 3 of "workpiece orientation" set}
+    - {from: S41, to: end of M40, condition: 1 s in step 41}
+    - {from: S42, to: end of M40, condition: Error acknowledged}
+    - {from: "M20, M30, M40", to: S14, condition: "Macro steps M20, M30 and M40 completed"}
+    - {from: S14, to: S6, condition: Flag "cycle end" is set}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="4b6ba894-33a0-4fe0-9811-56db8c17902b" Name="Default" Comment="" IsDefault="true" Format="2.0" xmlns="https://www.se.com/LibraryElements">
+  <SubAppNetwork>
+    <FB ID="4A49DD7FEEFD8EC0" Name="DS01" Type="Distributing" Namespace="Flexbridge.FestoMPS400" x="820" y="900" />
+    <FB ID="C8C2D58680F47653" Name="TS01" Type="Testing" Namespace="Flexbridge.FestoMPS400" x="1440" y="859.9999" />
+    <AdapterConnections>
+      <Connection Source="$C8C2D58680F47653.ISupply" Destination="$4A49DD7FEEFD8EC0.ISupply" dx1="40" dx2="30" dy="320">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+    </AdapterConnections>
+  </SubAppNetwork>
+</Layer>

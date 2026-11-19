@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="650" viewBox="0 0 960 650" font-family="Arial, Helvetica, sans-serif">
+  <title>From the wire to the screen: one input and one output of the Distributing station</title>
+  <rect width="960" height="650" fill="#ffffff"/>
+  <defs>
+    <marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f6fb2"/>
+    </marker>
+    <marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <!-- level names -->
+  <g font-size="13" fill="#555">
+    <text x="20" y="64">HMI (lab PC)</text>
+    <text x="20" y="172">Application</text>
+    <text x="20" y="188">(on the PLC)</text>
+    <text x="20" y="290">Symbolic link</text>
+    <text x="20" y="390">Hardware</text>
+    <text x="20" y="406">configuration</text>
+    <text x="20" y="502">Wiring</text>
+    <text x="20" y="604">Field device</text>
+  </g>
+
+  <!-- level boxes -->
+  <g stroke="#333" stroke-width="1.2">
+    <rect x="150" y="30" width="780" height="64" rx="6" fill="#fde2e7"/>
+    <rect x="150" y="140" width="780" height="64" rx="6" fill="#e8f0fb"/>
+    <rect x="150" y="262" width="780" height="44" rx="6" fill="#f2f2f2"/>
+    <rect x="150" y="362" width="780" height="64" rx="6" fill="#fdebd3"/>
+    <rect x="150" y="474" width="780" height="64" rx="6" fill="#fff6d6"/>
+    <rect x="150" y="584" width="780" height="44" rx="6" fill="#e6f4ea"/>
+  </g>
+
+  <!-- shared titles -->
+  <g font-size="14" font-weight="bold" fill="#111" text-anchor="middle">
+    <text x="540" y="54">Canvas V0_DS, symbol of panel DS</text>
+    <text x="540" y="164">Instance DS : IOTest16 in resource RES0 of device PLC_DS</text>
+    <text x="540" y="386">Bus BMTM3 of device PLC_DS</text>
+    <text x="540" y="498">TM3 terminal, wire, SysLink XMA2 of the station I/O terminal</text>
+  </g>
+
+  <!-- input column (left) and output column (right) -->
+  <g font-size="13" fill="#111" text-anchor="middle">
+    <text x="345" y="80">lamp "I4 3B1 Swivel at magazine"</text>
+    <text x="735" y="80">button "O3 3M1 Swivel to magazine"</text>
+
+    <text x="345" y="190">DI04 (dISignal) → Logic → IThis.REQ_DI</text>
+    <text x="735" y="190">IThis.CMD → Logic → DO03 (dOSignal)</text>
+
+    <text x="345" y="289" font-family="Consolas, 'Courier New', monospace">'RES0.DS.DI04.DIn'</text>
+    <text x="735" y="289" font-family="Consolas, 'Courier New', monospace">'RES0.DS.DO03.DOut'</text>
+
+    <text x="345" y="412">TM3DI16_G, channel DI04</text>
+    <text x="735" y="412">TM3DQ16R_G, channel DO03</text>
+
+    <text x="345" y="524">input I4 = SysLink pin 17</text>
+    <text x="735" y="524">output O3 = SysLink pin 4</text>
+
+    <text x="345" y="611">Sensor 3B1 (swivel at magazine)</text>
+    <text x="735" y="611">Valve coil 3M1 (swivel to magazine)</text>
+  </g>
+
+  <!-- arrows in the gaps between the levels: input upwards (blue), output downwards (red) -->
+  <g stroke-width="2.2">
+    <line x1="345" y1="584" x2="345" y2="540" stroke="#1f6fb2" marker-end="url(#blue)"/>
+    <line x1="345" y1="474" x2="345" y2="428" stroke="#1f6fb2" marker-end="url(#blue)"/>
+    <line x1="345" y1="362" x2="345" y2="308" stroke="#1f6fb2" marker-end="url(#blue)"/>
+    <line x1="345" y1="262" x2="345" y2="206" stroke="#1f6fb2" marker-end="url(#blue)"/>
+    <line x1="345" y1="140" x2="345" y2="96" stroke="#1f6fb2" marker-end="url(#blue)"/>
+
+    <line x1="735" y1="94" x2="735" y2="138" stroke="#c0392b" marker-end="url(#red)"/>
+    <line x1="735" y1="204" x2="735" y2="260" stroke="#c0392b" marker-end="url(#red)"/>
+    <line x1="735" y1="306" x2="735" y2="360" stroke="#c0392b" marker-end="url(#red)"/>
+    <line x1="735" y1="426" x2="735" y2="472" stroke="#c0392b" marker-end="url(#red)"/>
+    <line x1="735" y1="538" x2="735" y2="582" stroke="#c0392b" marker-end="url(#red)"/>
+  </g>
+
+  <!-- what connects the levels -->
+  <g font-size="12" fill="#555" text-anchor="middle">
+    <text x="540" y="122">network: wss://10.10.215.133:51443</text>
+    <text x="540" y="238">the block publishes its link name</text>
+    <text x="540" y="340">the channel holds the link name</text>
+    <text x="540" y="454">TM3 bus, module terminals</text>
+    <text x="540" y="566">SysLink cable</text>
+  </g>
+  <g font-size="13" font-weight="bold">
+    <text x="335" y="238" text-anchor="end" fill="#1f6fb2">input</text>
+    <text x="745" y="238" fill="#c0392b">output</text>
+  </g>
+</svg>

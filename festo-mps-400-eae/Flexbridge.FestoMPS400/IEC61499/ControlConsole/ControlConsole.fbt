@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType Name="ControlConsole" Namespace="Flexbridge.FestoMPS400" Format="2.0" GUID="8884e1f3-3844-4533-ba26-f9655a060ef7" Comment="CAT Function Block Type" >
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Flexbridge AB" Version="0.0" Author="Sandeep Patil" Date="11/16/2026" Remarks="template" />
+  <CompilerInfo />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="F38D3962E87A465D" Name="LAMPS" Comment="START and RESET lamps (from StationMode)">
+        <With Var="StartLamp" />
+        <With Var="ResetLamp" />
+      </Event>
+      <Event ID="0639681D379A13D7" Name="AUX_LAMPS" Comment="Lamps Q1 and Q2 (from the station sequence)">
+        <With Var="Q1Lamp" />
+        <With Var="Q2Lamp" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="CDF39B39943C2455" Name="BUTTONS" Comment="Button states changed">
+        <With Var="Start" />
+        <With Var="Stop" />
+        <With Var="Reset" />
+        <With Var="AutoMan" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="C1C21BA11D3688C4" Name="StartLamp" Type="BOOL" Comment="StartLamp on" />
+      <VarDeclaration ID="F561EF3E5C4CDB31" Name="ResetLamp" Type="BOOL" Comment="ResetLamp on" />
+      <VarDeclaration ID="BC21BDA15F54A0A7" Name="Q1Lamp" Type="BOOL" Comment="Q1Lamp on" />
+      <VarDeclaration ID="D566A61D11A7E56B" Name="Q2Lamp" Type="BOOL" Comment="Q2Lamp on" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="3A70B32E1E848C6E" Name="Start" Type="BOOL" Comment="START pressed" />
+      <VarDeclaration ID="6DFB99779F2EE4FC" Name="Stop" Type="BOOL" Comment="STOP pressed (NC inverted)" />
+      <VarDeclaration ID="85729CC88E0AA5D5" Name="Reset" Type="BOOL" Comment="RESET pressed" />
+      <VarDeclaration ID="D34512644C4112F2" Name="AutoMan" Type="BOOL" Comment="Key switch position" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="7247FA0B17CAB9FB" Name="EVENTCHAIN" Type="EVENTCHAIN" x="500" y="450" Namespace="Runtime.Standard">
+      <Parameter Name="$NAME" Value="'APP_INIT'" />
+      <Parameter Name="$PRIO" Value="10" />
+    </FB>
+    <FB ID="0A99224F7DFB8AF7" Name="IO" Type="ConsoleIO" x="2600" y="1900" Namespace="Flexbridge.FestoMPS400" />
+    <FB ID="DEC87E78F0C08068" Name="S1_Start" Type="DigitalInput" x="500" y="5000" Namespace="SE.App2CommonProcess" />
+    <FB ID="F0E0EC572BFE124E" Name="S2_Stop" Type="DigitalInput" x="2000" y="5000" Namespace="SE.App2CommonProcess" />
+    <FB ID="4E178EA735A8129F" Name="S4_Reset" Type="DigitalInput" x="3500" y="5000" Namespace="SE.App2CommonProcess" />
+    <FB ID="7A75D3B19297999C" Name="S3_AutoMan" Type="DigitalInput" x="5000" y="5000" Namespace="SE.App2CommonProcess" />
+    <FB ID="7BCDCF3017917616" Name="P1_StartLamp" Type="DigitalOutput" x="500" y="7600" Namespace="SE.App2CommonProcess" />
+    <FB ID="A0601174F6E930C5" Name="P2_ResetLamp" Type="DigitalOutput" x="2000" y="7600" Namespace="SE.App2CommonProcess" />
+    <FB ID="91D947534CE0F6F1" Name="P3_Q1Lamp" Type="DigitalOutput" x="3500" y="7600" Namespace="SE.App2CommonProcess" />
+    <FB ID="5313256D06E00A6F" Name="P4_Q2Lamp" Type="DigitalOutput" x="5000" y="7600" Namespace="SE.App2CommonProcess" />
+    <Input ID="F38D3962E87A465D" Name="LAMPS" x="200" y="1900" Type="Event" />
+    <Input ID="0639681D379A13D7" Name="AUX_LAMPS" x="200" y="1960" Type="Event" />
+    <Input ID="C1C21BA11D3688C4" Name="StartLamp" x="200" y="2020" Type="Data" />
+    <Input ID="F561EF3E5C4CDB31" Name="ResetLamp" x="200" y="2080" Type="Data" />
+    <Input ID="BC21BDA15F54A0A7" Name="Q1Lamp" x="200" y="2140" Type="Data" />
+    <Input ID="D566A61D11A7E56B" Name="Q2Lamp" x="200" y="2200" Type="Data" />
+    <Output ID="CDF39B39943C2455" Name="BUTTONS" x="5600" y="1900" Type="Event" />
+    <Output ID="3A70B32E1E848C6E" Name="Start" x="5600" y="1960" Type="Data" />
+    <Output ID="6DFB99779F2EE4FC" Name="Stop" x="5600" y="2020" Type="Data" />
+    <Output ID="85729CC88E0AA5D5" Name="Reset" x="5600" y="2080" Type="Data" />
+    <Output ID="D34512644C4112F2" Name="AutoMan" x="5600" y="2140" Type="Data" />
+    <Frame Name="FRAME0" X="200" Y="200" Width="1800" Height="1300">
+      <Parameter Name="BackgroundColor" Value="AliceBlue" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 9.75pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="0 - INITIALIZATION" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME5" X="2200" Y="1600" Width="3000" Height="2800">
+      <Parameter Name="BackgroundColor" Value="Gainsboro" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 9.75pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="5 - LOGICS (ConsoleIO)" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME3B" X="200" Y="4600" Width="6200" Height="2400">
+      <Parameter Name="BackgroundColor" Value="PeachPuff" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 9.75pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="3.B - FROM THE FIELD (buttons, DI08-DI11)" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <Frame Name="FRAME3A" X="200" Y="7200" Width="6200" Height="2600">
+      <Parameter Name="BackgroundColor" Value="PeachPuff" />
+      <Parameter Name="TextColor" Value="Black" />
+      <Parameter Name="Font" Value="Microsoft Sans Serif, 9.75pt, style=Bold" />
+      <Parameter Name="TextAlignment" Value="TopLeft" />
+      <Parameter Name="MoveStyle" Value="AnyContained" />
+      <Parameter Name="Text" Value="3.A - TO THE FIELD (lamps, DO08-DO11)" />
+      <Parameter Name="NxtLayerIdentifier" Value="" />
+    </Frame>
+    <EventConnections>
+      <Connection Source="$7247FA0B17CAB9FB.EO" Destination="$0A99224F7DFB8AF7.CF17A3A20C3B3F02">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0A99224F7DFB8AF7.FAC0516D4DAA96AF" Destination="$7247FA0B17CAB9FB.ACK">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$DEC87E78F0C08068.CNF" Destination="$0A99224F7DFB8AF7.11F7DB78522EBE48">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$F0E0EC572BFE124E.CNF" Destination="$0A99224F7DFB8AF7.11F7DB78522EBE48">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$4E178EA735A8129F.CNF" Destination="$0A99224F7DFB8AF7.11F7DB78522EBE48">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$7A75D3B19297999C.CNF" Destination="$0A99224F7DFB8AF7.11F7DB78522EBE48">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$F38D3962E87A465D" Destination="$0A99224F7DFB8AF7.A6CC5589F9FDD606">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0639681D379A13D7" Destination="$0A99224F7DFB8AF7.361D350505FDC329">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0A99224F7DFB8AF7.84256DBB027645A5" Destination="$CDF39B39943C2455">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$DEC87E78F0C08068.Pv" Destination="$0A99224F7DFB8AF7.3EE3AB50F3E8E96B">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$F0E0EC572BFE124E.Pv" Destination="$0A99224F7DFB8AF7.0E66A1C0AB9B0669">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$4E178EA735A8129F.Pv" Destination="$0A99224F7DFB8AF7.3C53C6708AA7CF3D">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$7A75D3B19297999C.Pv" Destination="$0A99224F7DFB8AF7.8C710150FEABB6A9">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$C1C21BA11D3688C4" Destination="$0A99224F7DFB8AF7.CCFF2AE6EE39DBC3">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$F561EF3E5C4CDB31" Destination="$0A99224F7DFB8AF7.0B78BC6C9C6B8214">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$BC21BDA15F54A0A7" Destination="$0A99224F7DFB8AF7.75C5304D2789265E">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$D566A61D11A7E56B" Destination="$0A99224F7DFB8AF7.34940EE5A0F46D47">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0A99224F7DFB8AF7.0B6D19BE58729877" Destination="$3A70B32E1E848C6E">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0A99224F7DFB8AF7.9C54266DB970A6FF" Destination="$6DFB99779F2EE4FC">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0A99224F7DFB8AF7.0804DB50531020CA" Destination="$85729CC88E0AA5D5">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0A99224F7DFB8AF7.DAFE9C0EFB2D6EA3" Destination="$D34512644C4112F2">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </DataConnections>
+    <AdapterConnections>
+      <Connection Source="$0A99224F7DFB8AF7.IStartLamp" Destination="$7BCDCF3017917616.ISc">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0A99224F7DFB8AF7.IResetLamp" Destination="$A0601174F6E930C5.ISc">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0A99224F7DFB8AF7.IQ1Lamp" Destination="$91D947534CE0F6F1.ISc">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+      <Connection Source="$0A99224F7DFB8AF7.IQ2Lamp" Destination="$5313256D06E00A6F.ISc">
+        <Attribute Name="Configuration.Connections.CrossReference" Value="True" />
+      </Connection>
+    </AdapterConnections>
+  </FBNetwork>
+</FBType>

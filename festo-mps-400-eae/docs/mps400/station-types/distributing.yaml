@@ -1,0 +1,268 @@
+# MPS 400 knowledge graph: Festo station type "Distributing".
+# Conventions (status values, sources, ids): see ../README.md.
+schema: mps400-kg/0.1
+updated: "2026-11-10"
+
+sources:
+  cd-01-el:
+    path: "resources/MPS documentation CD/01_Distributing/Circuit diagrams/Electric_Circuit_Diagram_Distributing.pdf"
+    title: "Circuit diagrams, MPS-C Distributing station (drawing 195780 el.)"
+    date: "2006-04-05"
+  cd-01-pn:
+    path: "resources/MPS documentation CD/01_Distributing/Circuit diagrams/Pneumatic_Circuit_Diagram_Distributing.pdf"
+    title: "Pneumatic circuit diagram, MPS-C Distributing station"
+    date: "2005-04-11"
+  cd-01-grafcet:
+    path: "resources/MPS documentation CD/01_Distributing/Programming/01_Distributing_GRAFCET.pdf"
+    title: "Distribution station, function chart (GRAFCET to DIN EN 60848)"
+    date: "2004-01"
+  cd-01-parts:
+    path: "resources/MPS documentation CD/01_Distributing/Parts lists/526880_Parts_list_Distribution.pdf"
+    title: "Parts list Distribution station, kit 526880"
+    date: "2002-11-11"
+  cd-01-datasheets:
+    path: "resources/MPS documentation CD/01_Distributing/Data sheets/"
+    title: Component data sheets (matched by file name only; contents not read)
+  nxt:
+    path: "resources/Solution Archive/MPS_NxtStudio_2_1"
+    title: Legacy NxtStudio 2.1 solution (I/O binding of device Distribution)
+
+station_type:
+  id: distributing
+  name: Distributing station
+  name_de: Station Verteilen
+  doc_series: MPS-C
+  status: documented
+  sources: [cd-01-el, cd-01-pn, cd-01-grafcet, cd-01-parts]
+  function: >-
+    Pushes a workpiece out of the stack magazine with the ejecting cylinder, picks it up with a
+    vacuum suction cup on a swivel arm, and swivels it over to the downstream station.
+  function_status: inferred
+
+io_terminal:
+  id: XA2
+  part: "034035 I/O terminal (MP-B-AN-E/A-T)"
+  syslink_station: XMA2
+  syslink_console: XMG1
+  inputs: 8
+  outputs: 8
+  supply:
+    inputs: {plus: "24VB on XMA2 pins 21-22", minus: "0VB on XMA2 pins 23-24"}
+    outputs: {plus: "24VA on XMA2 pins 9-10", minus: "0VA on XMA2 pins 11-12"}
+  status: documented
+  sources: ["cd-01-el#3-5", cd-01-parts]
+
+valve_terminal:
+  id: "0V1"
+  kind: CPV valve terminal
+  part: "196972 CP valve terminal, distributing (MP3-M-VCP)"
+  positions:
+    - {code: "M", valve: "1V1", coils: ["1M1"]}
+    - {code: "E", valve: "2V1", coils: ["2M1", "2M2"]}
+    - {code: "N", valve: "3V1", coils: ["3M1", "3M2"]}
+  status: documented
+  sources: [cd-01-pn, "cd-01-el#3", cd-01-parts]
+  verify: >-
+    The valve function at each position (single or double solenoid, 3/2 or 5/2) has not been
+    read yet; see data sheets 161414 (CPV ..52) and 161417 (CPV ..32O) and the vacuum
+    generator 185865 (CPV-VI70).
+
+devices:
+  - id: "1A1"
+    kind: pneumatic cylinder
+    name: Ejecting cylinder
+    name_de: Ausschiebezylinder
+    valve: "1V1"
+    coils: ["1M1"]
+    sensors: ["1B1", "1B2"]
+    flow_controls: ["1V2", "1V3"]
+    data_sheet: {ref: "019181 Pneumatic cylinder DSNU-8-80", status: inferred}
+    status: documented
+    sources: [cd-01-pn, "cd-01-el#4-5"]
+    note: >-
+      Pushes the workpiece out of the stack magazine. The sequence calls this "extend magazine
+      slide (retract ejecting cylinder)", and the output description calls it "push out
+      workpiece".
+  - id: "2A1"
+    kind: vacuum suction cup
+    name: Vacuum suction cup on the swivel arm
+    name_de: Vakuum Greifer
+    valve: "2V1"
+    coils: ["2M1", "2M2"]
+    sensors: ["2B1"]
+    other_components: ["2V2", "2V3", "2Z1"]
+    data_sheet: {ref: "036135 Suction cup VAS-8-M5-PUR", status: inferred}
+    status: documented
+    sources: [cd-01-pn, "cd-01-el#4-5"]
+    note: 2M1 switches the vacuum on; 2M2 gives an ejection (blow-off) pulse.
+  - id: "3A1"
+    kind: swivel drive
+    name: Swivel drive of the swivel arm
+    name_de: Schwenkzylinder
+    valve: "3V1"
+    coils: ["3M1", "3M2"]
+    sensors: ["3B1", "3B2"]
+    flow_controls: ["3V2", "3V3"]
+    data_sheet: {ref: "011910 Rotary drive DSR-16-180", status: inferred}
+    status: documented
+    sources: [cd-01-pn, "cd-01-el#4-5"]
+    note: >-
+      Two positions, "magazine" and "downstream station". The pneumatic diagram names the
+      end-position sensors -3S1 and -3S2; the electrical diagram names them 3B1 and 3B2 and
+      draws them as micro switches.
+  - id: "B4"
+    kind: light barrier
+    name: Magazine empty sensor
+    name_de: Magazin leer
+    part: {ref: "526205 Light barrier (MP3-M-LS-SM)", status: inferred}
+    status: documented
+    sources: ["cd-01-el#4", cd-01-parts]
+  - id: "IP_FI"
+    kind: optical receiver
+    name: Downstream station free, receiver of the 1-bit link to the next station
+    name_de: Folgestation frei
+    part: {ref: "196964 SensLink receiver (MP3-M-SLE)", status: inferred}
+    status: documented
+    sources: ["cd-01-el#4", "cd-01-grafcet#3", cd-01-parts]
+
+signals:
+  status: documented
+  sources: ["cd-01-el#4-5", nxt]
+  note: >-
+    legacy = the signal name in the NxtStudio solution, which binds the same bit numbers
+    (DIN1-DIN6, DO0-DO4) and so confirms that the sensors sit on I1-I7 and I0 is empty.
+    The legacy names of I1 and I2 describe the magazine slide, Festo's describe the ejecting
+    cylinder: the slide is retracted when the cylinder is extended (see the sequence, steps
+    S11 and S13). Bits without a legacy name are not used there.
+  inputs:
+    - {address: I0, pin: 13, symbol: null, meaning: Not connected, legacy: null}
+    - {address: I1, pin: 14, symbol: "1B2", device: "1A1", sensor: proximity sensor, meaning: Ejecting cylinder extended, meaning_de: Ausschiebezylinder ausgefahren, legacy: CYL_RET}
+    - {address: I2, pin: 15, symbol: "1B1", device: "1A1", sensor: proximity sensor, meaning: Ejecting cylinder retracted, meaning_de: Ausschiebezylinder eingefahren, legacy: CYL_EXT}
+    - {address: I3, pin: 16, symbol: "2B1", device: "2A1", sensor: vacuum switch, meaning: Workpiece gripped, meaning_de: Werkstück angesaugt, legacy: WP_PICKED}
+    - {address: I4, pin: 17, symbol: "3B1", device: "3A1", sensor: micro switch, meaning: Swivel drive in magazine position, meaning_de: Schwenkzylinder in Position Magazin, legacy: ARM_AT_MAG}
+    - {address: I5, pin: 18, symbol: "3B2", device: "3A1", sensor: micro switch, meaning: Swivel drive in downstream station position, meaning_de: Schwenkzylinder in Position Folgestation, legacy: ARM_AT_DOWN}
+    - {address: I6, pin: 19, symbol: "B4", device: "B4", sensor: light barrier, meaning: Magazine empty, meaning_de: Magazin leer, legacy: MAG_EMPTY}
+    - {address: I7, pin: 20, symbol: "IP_FI", device: "IP_FI", sensor: optical receiver, meaning: Downstream station free, meaning_de: Folgestation frei, legacy: null}
+  outputs:
+    - {address: O0, pin: 1, symbol: "1M1", device: "1A1", meaning: "Ejecting cylinder: push out workpiece", meaning_de: Ausschiebezylinder Werkstück ausschieben, legacy: EXTEND_CYL}
+    - {address: O1, pin: 2, symbol: "2M1", device: "2A1", meaning: Vacuum on, meaning_de: Vakuum ein, legacy: VACUUM_ON}
+    - {address: O2, pin: 3, symbol: "2M2", device: "2A1", meaning: Ejection pulse on, meaning_de: Abwurfimpuls ein, legacy: VACUUM_OFF}
+    - {address: O3, pin: 4, symbol: "3M1", device: "3A1", meaning: Swivel drive to magazine, meaning_de: Schwenkzylinder zu Magazin, legacy: ARM_TO_MAG}
+    - {address: O4, pin: 5, symbol: "3M2", device: "3A1", meaning: Swivel drive to downstream station, meaning_de: Schwenkzylinder zu Folgestation, legacy: ARM_TO_DOWN}
+    - {address: O5, pin: 6, symbol: null, meaning: Not used}
+    - {address: O6, pin: 7, symbol: null, meaning: Not used}
+    - {address: O7, pin: 8, symbol: null, meaning: Not used}
+
+operator_panel:
+  syslink: XMG1
+  component_type: control-console
+  status: documented
+  sources: ["cd-01-el#3", "cd-01-grafcet#3-4"]
+  note: >-
+    The sequence uses the reset button, a start flag, manual and automatic mode, error
+    acknowledgement and indicator lights (reset, start, magazine empty). These come from the
+    station's control console through XMG1 (component-types/control-console.yaml). In the lab
+    every station has one; see station_operation in plant.yaml.
+
+parts:
+  kit: "526880 DISTR.STAT. MP3-S-VE-BS"
+  status: documented
+  sources: [cd-01-parts]
+  note: >-
+    The parts list (2002, MP3 kit) is older than the circuit diagrams (2006, MPS-C); parts in
+    the lab may differ.
+  items:
+    - {part_no: "034035", name: I/O terminal, designation: MP-B-AN-E/A-T, qty: 1}
+    - {part_no: "152894", name: Service unit, designation: S-PVW-LFR, qty: 1}
+    - {part_no: "162228", name: Connector, designation: MP2-M-VB, qty: 2}
+    - {part_no: "162385", name: Stack magazine, designation: MP2-M-SM, qty: 1}
+    - {part_no: "162387", name: Changer module, designation: MP2-M-US, qty: 1}
+    - {part_no: "170395", name: Profile plate, designation: DE-PP-350B, qty: 1}
+    - {part_no: "196958", name: Mounting system E, designation: MP3-M-TSE, qty: 1}
+    - {part_no: "196964", name: SensLink receiver, designation: MP3-M-SLE, qty: 1}
+    - {part_no: "196965", name: Holder TM-BG, designation: MP3-M-HTM, qty: 1}
+    - {part_no: "196972", name: CP valve terminal, designation: MP3-M-VCP, qty: 1}
+    - {part_no: "196973", name: Vacuum switch, designation: MP3-M-VS, qty: 1}
+    - {part_no: "526205", name: Light barrier, designation: MP3-M-LS-SM, qty: 1}
+    - {part_no: "526209", name: Accessories, designation: MP3-M, qty: 1}
+    - {part_no: "648811", name: Technical documentation, designation: MP-TD-SV-DE/GB, qty: 1}
+
+sequence:
+  id: distributing-reference
+  standard: GRAFCET to DIN EN 60848
+  status: documented
+  sources: ["cd-01-grafcet#3-4"]
+  note: >-
+    Festo's reference sequence for a stand-alone station with a 1-bit link to the downstream
+    station. The lab's sequence may differ, because the workpiece goes onto a tray at
+    interface 1. "stored: true" marks actions drawn with the stored-action arrow; "stored:
+    false" marks plain (continuous) actions.
+  steps:
+    - {id: S1, initial: true, name: Start}
+    - id: S2
+      name: Reset indicator light
+      actions: [{do: Turn on the "reset" indicator light, stored: false}]
+    - id: S3
+      name: Initial position
+      actions: [{do: Move the station to its initial position, stored: true}]
+    - id: S4
+      name: Reset OK
+      actions: [{do: Set flag "reset finished", stored: true}]
+    - {id: S5, name: Cycle start (empty step)}
+    - id: S6
+      name: Start indicator light
+      actions: [{do: Turn on the "start" indicator light, stored: false}]
+    - {id: S7, name: Downstream station free (empty step)}
+    - id: S8
+      name: Swivel arm to downstream station
+      actions: [{do: Swivel arm to position "downstream station", stored: true}]
+    - {id: S9, name: Magazine status (empty step)}
+    - id: S10
+      name: Magazine indicator light
+      actions:
+        - {do: Turn on the "magazine empty" indicator light, stored: false}
+        - {do: Turn on the "start" indicator light, stored: false}
+    - id: S11
+      name: Eject workpiece
+      actions: [{do: Extend magazine slide (retract ejecting cylinder), stored: true}]
+    - id: S12
+      name: Swivel arm to magazine
+      actions: [{do: Move swivel arm to position "magazine", stored: true}]
+    - id: S13
+      name: Workpiece picked up
+      actions:
+        - {do: Turn on vacuum, stored: true}
+        - {do: Retract magazine slide (extend ejecting cylinder), stored: true}
+    - id: S14
+      name: Swivel arm to downstream station
+      actions: [{do: Move swivel arm to position "downstream station", stored: true}]
+    - id: S15
+      name: Drop off workpiece
+      actions: [{do: Turn off vacuum, stored: true}]
+    - id: S16
+      name: Cycle end
+      actions:
+        - {do: Set flag "cycle end", stored: null}
+        - {do: Swivel arm to position "magazine", stored: true}
+      verify: Whether "set flag cycle end" is drawn as a stored action is unclear in the source.
+  transitions:
+    - {from: S1, to: S5, condition: Station is reset and in initial position}
+    - {from: S1, to: S2, condition: Station is not reset}
+    - {from: S2, to: S3, condition: The "reset" button is pressed}
+    - {from: S3, to: S4, condition: Station in initial position}
+    - {from: S4, to: S5, condition: Flag "reset finished" is set}
+    - {from: S5, to: S6, condition: Flag "start" is not set}
+    - {from: S5, to: S7, condition: Flag "start" is set}
+    - {from: S6, to: S7, condition: Flag "start" is set}
+    - {from: S7, to: S8, condition: Downstream station free}
+    - {from: S8, to: S9, condition: Swivel arm in position "downstream station"}
+    - {from: S9, to: S11, condition: Workpiece in magazine and swivel arm in position "downstream station"}
+    - {from: S9, to: S10, condition: No workpiece in magazine and swivel arm in position "downstream station"}
+    - {from: S10, to: S11, condition: Workpiece in magazine and error acknowledged}
+    - {from: S11, to: S12, condition: Workpiece ejected}
+    - {from: S12, to: S13, condition: Swivel arm in position "magazine" and downstream station free}
+    - {from: S13, to: S14, condition: Workpiece picked up and magazine slide retracted and downstream station free}
+    - {from: S14, to: S15, condition: Swivel arm in position "downstream station"}
+    - {from: S15, to: S16, condition: No workpiece picked up and manual mode}
+    - {from: S15, to: S9, condition: No workpiece picked up and automatic mode}
+    - {from: S16, to: S5, condition: Swivel arm in position "magazine"}

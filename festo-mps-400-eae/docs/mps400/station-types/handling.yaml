@@ -1,0 +1,236 @@
+# MPS 400 knowledge graph: Festo station type "Handling" (pneumatic PicAlfa).
+# The lab has two of these: handling-1 at interface 2 and handling-2 at interface 6.
+# Conventions (status values, sources, ids): see ../README.md.
+schema: mps400-kg/0.1
+updated: "2026-11-10"
+
+sources:
+  cd-04-el:
+    path: "resources/MPS documentation CD/04_Handling/Circuit diagrams/Electric_Circuit_Diagram_Handling.pdf"
+    title: "Circuit diagrams, MPS-C Handling station (drawing 195783 el.)"
+    date: "2006-04-05"
+  cd-04-pn:
+    path: "resources/MPS documentation CD/04_Handling/Circuit diagrams/Pneumatic_Circuit_Diagram_Handling.pdf"
+    title: "Pneumatic circuit diagram, Handling station (PickAlfa)"
+    date: "2006-04-06"
+  cd-04-grafcet:
+    path: "resources/MPS documentation CD/04_Handling/Programming/04_Handling_GRAFCET.pdf"
+    title: "Handling station, function chart (GRAFCET to DIN EN 60848)"
+    date: "2004-01"
+  cd-04-parts:
+    path: "resources/MPS documentation CD/04_Handling/Parts lists/526883_Parts_list_Handling.pdf"
+    title: "Parts list Handling station, kit 526883"
+    date: "2002-11-11"
+  nxt:
+    path: "resources/Solution Archive/MPS_NxtStudio_2_1"
+    title: Legacy NxtStudio 2.1 solution (I/O binding of devices Handing1 and Handing2)
+
+station_type:
+  id: handling
+  name: Handling station
+  name_de: Station Handhaben
+  doc_series: MPS-C
+  status: documented
+  sources: [cd-04-el, cd-04-pn, cd-04-grafcet, cd-04-parts]
+  function: >-
+    A pneumatic pick-and-place unit (PicAlfa): a gripper on a vertical cylinder, carried by a
+    horizontal linear drive with three stop positions. In Festo's stand-alone setup it takes a
+    workpiece from the upstream station and puts it on a slide or into the downstream station.
+    In the lab it moves workpieces between a conveyor tray and the neighbouring station.
+  function_status: inferred
+
+io_terminal:
+  id: XA2
+  part: "034035 I/O terminal (MP-B-AN-E/A-T)"
+  syslink_station: XMA2
+  syslink_console: XMG1
+  inputs: 8
+  outputs: 8
+  supply:
+    inputs: {plus: "24VB on XMA2 pins 21-22", minus: "0VB on XMA2 pins 23-24"}
+    outputs: {plus: "24VA on XMA2 pins 9-10", minus: "0VA on XMA2 pins 11-12"}
+  status: documented
+  sources: ["cd-04-el#3-5", cd-04-parts]
+
+valve_terminal:
+  id: "0V1"
+  kind: CPV valve terminal
+  part: "526872 CP valve terminal, handling (MP3-CP-GMM)"
+  positions:
+    - {code: "C", valve: "1V1", coils: ["1M1", "1M2"]}
+    - {code: "M", valve: "2V1", coils: ["2M1"]}
+    - {code: "M", valve: "3V1", coils: ["3M1"]}
+  status: documented
+  sources: [cd-04-pn, "cd-04-el#3", "cd-04-el#5"]
+
+devices:
+  - id: "1A1"
+    kind: pneumatic linear drive
+    name: Linear drive, X axis
+    name_de: Zylinder X-Achse
+    valve: "1V1"
+    coils: ["1M1", "1M2"]
+    sensors: ["1B1", "1B2", "1B3"]
+    flow_controls: ["1V2", "1V3"]
+    part: {ref: "526215 PicAlfa module (MP3-M-PA-B-BS)", status: inferred}
+    status: documented
+    sources: [cd-04-pn, "cd-04-el#4-5"]
+    note: >-
+      Two coils: 1M1 moves towards the upstream station, 1M2 towards the downstream station;
+      with both off the drive stops. Three position sensors: 1B1 at the upstream station, 1B2 at
+      the downstream station, 1B3 at the middle ("sorting") position.
+  - id: "2A1"
+    kind: pneumatic cylinder
+    name: Lifting cylinder, Z axis
+    name_de: Zylinder Z-Achse
+    valve: "2V1"
+    coils: ["2M1"]
+    sensors: ["2B1", "2B2"]
+    flow_controls: ["2V2", "2V3"]
+    status: documented
+    sources: [cd-04-pn, "cd-04-el#4-5"]
+    note: >-
+      Festo calls this "gripper extend/retract". 2M1 extends (lowers the gripper). 2B1 =
+      extended (lowered), 2B2 = retracted (raised).
+  - id: "3A1"
+    kind: pneumatic gripper
+    name: Gripper
+    name_de: Greifer
+    valve: "3V1"
+    coils: ["3M1"]
+    sensors: []
+    status: documented
+    sources: [cd-04-pn, "cd-04-el#5"]
+    note: 3M1 opens the gripper; with 3M1 off it is closed. No sensor on the jaws.
+  - id: "PART_AV"
+    kind: optical sensor
+    name: Workpiece available
+    name_de: Werkstück vorhanden
+    part: {ref: "526212 Diffuse sensor (MP3-M-RLT-BS)", status: inferred}
+    status: documented
+    sources: ["cd-04-el#4", cd-04-parts]
+  - id: "3B1"
+    kind: optical sensor
+    name: Workpiece is not black
+    name_de: Werkstück ist nicht schwarz
+    part: {ref: "526212 Diffuse sensor (MP3-M-RLT-BS)", status: inferred}
+    status: documented
+    sources: ["cd-04-el#4", cd-04-parts]
+    note: >-
+      The NxtStudio solution names this input WP_GRIPPED (but does not use it). Where the sensor
+      sits, at the pick-up point or on the gripper, is not shown in the drawings.
+  - {id: "IP_FI", kind: optical receiver, name: "Downstream station free, receiver of the 1-bit link", name_de: Folgestation frei, status: documented, sources: ["cd-04-el#4"]}
+  - {id: "IP_N_FO", kind: optical transmitter, name: "Station occupied, transmitter of the 1-bit link", name_de: Station belegt, status: documented, sources: ["cd-04-el#5"]}
+
+signals:
+  status: documented
+  sources: ["cd-04-el#4-5", nxt]
+  note: >-
+    legacy = the signal name in the NxtStudio solution, which binds the same bit numbers on both
+    Handling stations (DIN0-DIN6, DO0-DO3). Left = Festo's upstream position, right = Festo's
+    downstream position.
+  inputs:
+    - {address: I0, pin: 13, symbol: "PART_AV", device: "PART_AV", meaning: Workpiece available, meaning_de: Werkstück vorhanden, legacy: WP_AV}
+    - {address: I1, pin: 14, symbol: "1B1", device: "1A1", meaning: Handling at upstream station, meaning_de: Handhabung bei Vorgängerstation, legacy: ARM_LEFT}
+    - {address: I2, pin: 15, symbol: "1B2", device: "1A1", meaning: Handling at downstream station, meaning_de: Handhabung bei Folgestation, legacy: ARM_RIGHT}
+    - {address: I3, pin: 16, symbol: "1B3", device: "1A1", meaning: Handling at sorting (middle) position, meaning_de: Handhabung bei Sortierposition, legacy: ARM_MID}
+    - {address: I4, pin: 17, symbol: "2B1", device: "2A1", meaning: Gripper extended (lowered), meaning_de: Greifer ausgefahren, legacy: GRIPPER_LOWERED}
+    - {address: I5, pin: 18, symbol: "2B2", device: "2A1", meaning: Gripper retracted (raised), meaning_de: Greifer eingefahren, legacy: GRIPPER_RAISED}
+    - {address: I6, pin: 19, symbol: "3B1", device: "3B1", meaning: Workpiece is not black, meaning_de: Werkstück ist nicht schwarz, legacy: WP_GRIPPED}
+    - {address: I7, pin: 20, symbol: "IP_FI", device: "IP_FI", meaning: Downstream station free, meaning_de: Folgestation frei, legacy: null}
+  outputs:
+    - {address: O0, pin: 1, symbol: "1M1", device: "1A1", meaning: Handling to upstream station, meaning_de: Handhabung zu Vorgängerstation, legacy: ARM_TO_LEFT}
+    - {address: O1, pin: 2, symbol: "1M2", device: "1A1", meaning: Handling to downstream station, meaning_de: Handhabung zu Folgestation, legacy: ARM_TO_RIGHT}
+    - {address: O2, pin: 3, symbol: "2M1", device: "2A1", meaning: Extend gripper (lower), meaning_de: Greifer ausfahren, legacy: LOWER_GRIPPER}
+    - {address: O3, pin: 4, symbol: "3M1", device: "3A1", meaning: Open gripper, meaning_de: Greifer öffnen, legacy: OPEN_GRIPPER}
+    - {address: O4, pin: 5, symbol: null, meaning: Not used}
+    - {address: O5, pin: 6, symbol: null, meaning: Not used}
+    - {address: O6, pin: 7, symbol: null, meaning: Not used}
+    - {address: O7, pin: 8, symbol: "IP_N_FO", device: "IP_N_FO", meaning: Station occupied, meaning_de: Station belegt, legacy: null}
+
+operator_panel:
+  syslink: XMG1
+  component_type: control-console
+  status: documented
+  sources: ["cd-04-el#3", "cd-04-grafcet#3"]
+
+parts:
+  kit: "526883 Handling station"
+  status: documented
+  sources: [cd-04-parts]
+  items:
+    - {part_no: "034035", name: I/O terminal, designation: MP-B-AN-E/A-T, qty: 1}
+    - {part_no: "152894", name: Service unit, designation: S-PVW-LFR, qty: 1}
+    - {part_no: "162228", name: Connector, designation: MP2-M-VB, qty: 2}
+    - {part_no: "170395", name: Profile plate, designation: DE-PP-350B, qty: 1}
+    - {part_no: "195777", name: Holder module, designation: MP3-M-AN-BS, qty: 1}
+    - {part_no: "653393", name: Slide module, designation: MP3-M-RT250, qty: 1}
+    - {part_no: "196958", name: Mounting system E, designation: MP3-M-TSE, qty: 1}
+    - {part_no: "196963", name: SensLink transmitter, designation: MP3-M-SLS, qty: 1}
+    - {part_no: "196965", name: Holder TM-BG, designation: MP3-M-HTM, qty: 1}
+    - {part_no: "196964", name: SensLink receiver, designation: MP3-M-SLE, qty: 1}
+    - {part_no: "526872", name: CP valve terminal, designation: MP3-CP-GMM, qty: 1}
+    - {part_no: "526212", name: Diffuse sensor, designation: MP3-M-RLT-BS, qty: 2}
+    - {part_no: "526215", name: PicAlfa module, designation: MP3-M-PA-B-BS, qty: 1}
+    - {part_no: "526866", name: Accessories, designation: MP3-M-KTPA, qty: 1}
+    - {part_no: "655633", name: Technical documentation, designation: MP3-TD-SH-DE/GB, qty: 1}
+
+sequence:
+  id: handling-reference
+  standard: GRAFCET to DIN EN 60848
+  status: documented
+  sources: ["cd-04-grafcet#3-4"]
+  note: >-
+    Festo's stand-alone sequence: pick at the upstream station, sort black workpieces onto the
+    slide at the middle position, pass the rest to the downstream station. The lab behaviour
+    follows the NxtStudio solution (see ../legacy/handling.yaml). "stored: true" marks actions
+    drawn with the stored-action arrow.
+  steps:
+    - {id: S1, initial: true, name: Start}
+    - {id: S2, name: Reset indicator light, actions: [{do: Turn on the "reset" indicator light, stored: false}]}
+    - {id: S3, name: Initial position, actions: [{do: Move the station to its initial position, stored: true}]}
+    - {id: S4, name: Reset OK, actions: [{do: Set flag "reset finished", stored: true}]}
+    - {id: S5, name: Cycle start (empty step)}
+    - {id: S6, name: Start indicator light, actions: [{do: Turn on the "start" indicator light, stored: false}]}
+    - {id: S7, name: Station not occupied, actions: [{do: Signal "station not occupied", stored: true}]}
+    - {id: S8, name: Station occupied, actions: [{do: Signal "station occupied", stored: true}]}
+    - id: S9
+      name: Pick up workpiece
+      actions:
+        - {do: Open gripper, stored: true}
+        - {do: Extend gripper, stored: true}
+    - {id: S10, name: Close gripper, actions: [{do: Close gripper, stored: true}]}
+    - {id: S11, name: Retract gripper, actions: [{do: Retract gripper, stored: true}]}
+    - {id: S12, name: Workpiece black, actions: [{do: Move the linear drive to position "slide black", stored: false}]}
+    - {id: S13, name: Workpiece red or silver, actions: [{do: Move the linear drive to position "slide red/silver" or "downstream station", stored: false}]}
+    - {id: S14, name: Wait until downstream station is free (empty step)}
+    - {id: S15, name: Extend gripper, actions: [{do: Extend gripper, stored: true}]}
+    - {id: S16, name: Open gripper, actions: [{do: Open gripper, stored: true}]}
+    - {id: S17, name: Retract gripper, actions: [{do: Retract gripper, stored: true}]}
+    - id: S18
+      name: Cycle end
+      actions:
+        - {do: Move the linear drive to position "upstream station", stored: true}
+        - {do: Set flag "cycle end", stored: false}
+  transitions:
+    - {from: S1, to: S5, condition: Station is reset and in initial position}
+    - {from: S1, to: S2, condition: Station is not reset}
+    - {from: S2, to: S3, condition: Reset button pressed}
+    - {from: S3, to: S4, condition: Station in initial position}
+    - {from: S4, to: S5, condition: Flag "reset finished" is set}
+    - {from: S5, to: S6, condition: Flag "start" is not set}
+    - {from: S5, to: S7, condition: Flag "start" is set}
+    - {from: S6, to: S7, condition: Flag "start" is set}
+    - {from: S7, to: S8, condition: Workpiece available}
+    - {from: S8, to: S9, condition: 3 s in step 8}
+    - {from: S9, to: S10, condition: Gripper opened and extended}
+    - {from: S10, to: S11, condition: Gripper closed}
+    - {from: S11, to: S12, condition: Gripper retracted and workpiece is black}
+    - {from: S11, to: S13, condition: Gripper retracted and workpiece is not black}
+    - {from: S12, to: S14, condition: Linear drive at position "slide black"}
+    - {from: S13, to: S14, condition: Linear drive at position "slide red/silver" or "downstream station"}
+    - {from: S14, to: S15, condition: Downstream station is free}
+    - {from: S15, to: S16, condition: Gripper extended}
+    - {from: S16, to: S17, condition: Gripper opened}
+    - {from: S17, to: S18, condition: Gripper retracted}
+    - {from: S18, to: S5, condition: Linear drive at position "upstream station"}

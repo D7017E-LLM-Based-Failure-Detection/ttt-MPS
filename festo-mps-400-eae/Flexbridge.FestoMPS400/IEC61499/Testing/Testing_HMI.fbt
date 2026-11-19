@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE FBType SYSTEM "../LibraryElement.dtd" >
+  <FBType Name="Testing_HMI" Namespace="Flexbridge.FestoMPS400" GUID="ae2ed839-16b6-4cc7-942b-586fcd604be0" Comment="Service Interface Function Block Type" >
+    <Identification Standard="61499-2" />
+    <VersionInfo Organization="Flexbridge AB" Version="0.0" Author="Sandeep Patil" Date="11/16/2026" Remarks="template" />
+    <InterfaceList>
+      <EventInputs>
+        <Event ID="8CB3F1E7BE40DC88" Name="INIT">
+          <With Var="QI" />
+        </Event>
+        <Event ID="6817121946151E8F" Name="REQ_ST">
+          <With Var="ModeText" />
+          <With Var="StepText" />
+          <With Var="Cycles" />
+          <With Var="Rejected" />
+          <With Var="StepNo" />
+          <With Var="TrayReleased" />
+        </Event>
+      </EventInputs>
+      <EventOutputs>
+        <Event ID="49254EA315AC5F96" Name="INITO">
+          <With Var="QO" />
+          <With Var="STATUS" />
+        </Event>
+        <Event ID="84A15209C48DE6B6" Name="HMI_EMPTY">
+          <With Var="TrayEmpty" />
+        </Event>
+        <Event ID="86E094A8402D3743" Name="HMI_FULL">
+          <With Var="TrayFull" />
+        </Event>
+      </EventOutputs>
+      <InputVars>
+        <VarDeclaration ID="1463B071E65CCB8D" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+        <VarDeclaration ID="23DC6B4E3A35846C" Name="ModeText" Type="STRING" Comment="Station mode" />
+        <VarDeclaration ID="8FB909C983F40E57" Name="StepText" Type="STRING" Comment="Current step (number and name)" />
+        <VarDeclaration ID="75166490DE7266B2" Name="Cycles" Type="UDINT" Comment="Workpieces put on a tray since start-up" />
+        <VarDeclaration ID="8DC372C93ADD95D0" Name="Rejected" Type="UDINT" Comment="Workpieces rejected since start-up" />
+        <VarDeclaration ID="48B551F48B4224FE" Name="StepNo" Type="INT" Comment="Current step number" />
+        <VarDeclaration ID="9CF60D9A4382C359" Name="TrayReleased" Type="BOOL" Comment="The tray has been released (until the next tray)" />
+      </InputVars>
+      <OutputVars>
+        <VarDeclaration ID="EC2F3B81E1ABEE62" Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+        <VarDeclaration ID="71A5DCFFE70BA3B8" Name="STATUS" Type="STRING" Comment="Service Status" />
+        <VarDeclaration ID="9B7CF3348031406D" Name="TrayEmpty" Type="BOOL" Comment="Stand-in button: an empty tray has arrived at interface 1" />
+        <VarDeclaration ID="EBE41309D00AD692" Name="TrayFull" Type="BOOL" Comment="Stand-in button: a tray with a workpiece has arrived at interface 1" />
+      </OutputVars>
+    </InterfaceList>
+    <Service RightInterface="" LeftInterface="">
+      <ServiceSequence Name= "" />
+    </Service>
+  </FBType>
+  

@@ -1,0 +1,15 @@
+{
+  "references": [
+    {
+      "diagramPath": "Physical Views",
+      "sourceSide": 2,
+      "destinationSide": 1
+    }
+  ],
+  "label": "Wire 93",
+  "identifier": "Wire 93",
+  "sourceEquipment": "29c905da-d3f8-4990-a95d-5b6c3ea19d32",
+  "sourcePortIdentifier": "Port2",
+  "destinationEquipment": "444acfdc-3a81-46db-991d-b2ad69f7ab9a",
+  "destinationPortIdentifier": "Ethernet1_1"
+}

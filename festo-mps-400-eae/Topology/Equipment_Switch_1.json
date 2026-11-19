@@ -1,0 +1,94 @@
+{
+  "catalogReference": "GenericL2UnmanagedSwitch16Ports_V01.00_01.00",
+  "uuid": "29c905da-d3f8-4990-a95d-5b6c3ea19d32",
+  "identifier": "Switch_1",
+  "path": "Topology",
+  "properties": [
+    {
+      "propertyName": "IsUnderConstruction",
+      "propertyValue": "False"
+    },
+    {
+      "propertyName": "DomainTag",
+      "propertyValue": "6b0b16e9-2e49-4309-a482-6249a292fee1"
+    }
+  ],
+  "references": [
+    {
+      "diagramPath": "Physical Views",
+      "x": -30.890625,
+      "y": -115
+    }
+  ],
+  "components": [
+    {
+      "ports": [
+        {
+          "identifier": "Port1",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port2",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port3",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port4",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port5",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port6",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port7",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port8",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port9",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port10",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port11",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port12",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port13",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port14",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port15",
+          "side": "Default"
+        },
+        {
+          "identifier": "Port16",
+          "side": "Default"
+        }
+      ],
+      "componentType": "EthernetDEO"
+    }
+  ]
+}

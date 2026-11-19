@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd" >
+<FBType Name="ConsoleIO" Namespace="Flexbridge.FestoMPS400" GUID="e444c1c3-6f28-4d62-aba4-37738d451d57" Comment="Basic Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Flexbridge AB" Version="0.0" Author="Sandeep Patil" Date="11/16/2026" Remarks="Template" />
+  <CompilerInfo />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="CF17A3A20C3B3F02" Name="INIT" Comment="Initialisation request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="11F7DB78522EBE48" Name="BTN" Comment="A console input changed">
+        <With Var="StartPv" />
+        <With Var="StopPv" />
+        <With Var="ResetPv" />
+        <With Var="AutoManPv" />
+      </Event>
+      <Event ID="A6CC5589F9FDD606" Name="LAMPS" Comment="START and RESET lamps (from StationMode)">
+        <With Var="StartLamp" />
+        <With Var="ResetLamp" />
+      </Event>
+      <Event ID="361D350505FDC329" Name="AUX_LAMPS" Comment="Lamps Q1 and Q2 (from the station sequence)">
+        <With Var="Q1Lamp" />
+        <With Var="Q2Lamp" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="FAC0516D4DAA96AF" Name="INITO" Comment="Initialisation confirm">
+        <With Var="QO" />
+      </Event>
+      <Event ID="84256DBB027645A5" Name="BUTTONS" Comment="Button states">
+        <With Var="Start" />
+        <With Var="Stop" />
+        <With Var="Reset" />
+        <With Var="AutoMan" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="B78E827A3A5C0580" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="3EE3AB50F3E8E96B" Name="StartPv" Type="VTQBOOL" Comment="S1 START button (normally open)" />
+      <VarDeclaration ID="0E66A1C0AB9B0669" Name="StopPv" Type="VTQBOOL" Comment="S2 STOP button (normally closed)" />
+      <VarDeclaration ID="3C53C6708AA7CF3D" Name="ResetPv" Type="VTQBOOL" Comment="S4 RESET button (normally open)" />
+      <VarDeclaration ID="8C710150FEABB6A9" Name="AutoManPv" Type="VTQBOOL" Comment="S3 AUTO/MAN key switch" />
+      <VarDeclaration ID="CCFF2AE6EE39DBC3" Name="StartLamp" Type="BOOL" Comment="P1 START lamp" />
+      <VarDeclaration ID="0B78BC6C9C6B8214" Name="ResetLamp" Type="BOOL" Comment="P2 RESET lamp" />
+      <VarDeclaration ID="75C5304D2789265E" Name="Q1Lamp" Type="BOOL" Comment="P3 lamp Q1" />
+      <VarDeclaration ID="34940EE5A0F46D47" Name="Q2Lamp" Type="BOOL" Comment="P4 lamp Q2" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="1817BF3EE88E62EB" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration ID="0B6D19BE58729877" Name="Start" Type="BOOL" Comment="START pressed" />
+      <VarDeclaration ID="9C54266DB970A6FF" Name="Stop" Type="BOOL" Comment="STOP pressed (the NC contact is inverted here)" />
+      <VarDeclaration ID="0804DB50531020CA" Name="Reset" Type="BOOL" Comment="RESET pressed" />
+      <VarDeclaration ID="DAFE9C0EFB2D6EA3" Name="AutoMan" Type="BOOL" Comment="Key switch position" />
+    </OutputVars>
+    <Plugs>
+      <AdapterDeclaration Name="IStartLamp" Type="IDevice" Namespace="SE.App2CommonProcess" />
+      <AdapterDeclaration Name="IResetLamp" Type="IDevice" Namespace="SE.App2CommonProcess" />
+      <AdapterDeclaration Name="IQ1Lamp" Type="IDevice" Namespace="SE.App2CommonProcess" />
+      <AdapterDeclaration Name="IQ2Lamp" Type="IDevice" Namespace="SE.App2CommonProcess" />
+    </Plugs>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="algInit,algStoreLamps,algStoreAux,algButtons,algLamps,algAuxLamps,algReadyStartLamp,algReadyResetLamp,algReadyQ1Lamp,algReadyQ2Lamp" />
+    <InternalVars>
+      <VarDeclaration Name="CurStartLamp" Type="BOOL" Comment="StartLamp as last commanded" />
+      <VarDeclaration Name="CurResetLamp" Type="BOOL" Comment="ResetLamp as last commanded" />
+      <VarDeclaration Name="CurQ1Lamp" Type="BOOL" Comment="Q1Lamp as last commanded" />
+      <VarDeclaration Name="CurQ2Lamp" Type="BOOL" Comment="Q2Lamp as last commanded" />
+      <VarDeclaration Name="ChStartLamp" Type="BOOL" Comment="StartLamp changed at this event" />
+      <VarDeclaration Name="ChResetLamp" Type="BOOL" Comment="ResetLamp changed at this event" />
+      <VarDeclaration Name="ChQ1Lamp" Type="BOOL" Comment="Q1Lamp changed at this event" />
+      <VarDeclaration Name="ChQ2Lamp" Type="BOOL" Comment="Q2Lamp changed at this event" />
+      <VarDeclaration Name="ReqStartLamp" Type="BOOL" Comment="StartLamp as requested before INIT" />
+      <VarDeclaration Name="ReqResetLamp" Type="BOOL" Comment="ResetLamp as requested before INIT" />
+      <VarDeclaration Name="ReqQ1Lamp" Type="BOOL" Comment="Q1Lamp as requested before INIT" />
+      <VarDeclaration Name="ReqQ2Lamp" Type="BOOL" Comment="Q2Lamp as requested before INIT" />
+      <VarDeclaration Name="SyncedStartLamp" Type="BOOL" Comment="StartLamp has received its state while program local" />
+      <VarDeclaration Name="SyncedResetLamp" Type="BOOL" Comment="ResetLamp has received its state while program local" />
+      <VarDeclaration Name="SyncedQ1Lamp" Type="BOOL" Comment="Q1Lamp has received its state while program local" />
+      <VarDeclaration Name="SyncedQ2Lamp" Type="BOOL" Comment="Q2Lamp has received its state while program local" />
+      <VarDeclaration Name="TriesStartLamp" Type="INT" Comment="Program-local requests sent to StartLamp after a ready report" />
+      <VarDeclaration Name="TriesResetLamp" Type="INT" Comment="Program-local requests sent to ResetLamp after a ready report" />
+      <VarDeclaration Name="TriesQ1Lamp" Type="INT" Comment="Program-local requests sent to Q1Lamp after a ready report" />
+      <VarDeclaration Name="TriesQ2Lamp" Type="INT" Comment="Program-local requests sent to Q2Lamp after a ready report" />
+      <VarDeclaration Name="NeedSel" Type="BOOL" Comment="The lamp that just reported ready must be switched to program local" />
+    </InternalVars>
+    <ECC>
+      <ECState Name="START" Comment="Initial state: not initialised yet, lamp requests are stored" x="300" y="300" />
+      <ECState Name="PRE_LMP" x="100" y="50">
+        <ECAction Algorithm="algStoreLamps" />
+      </ECState>
+      <ECState Name="PRE_AUX" x="550" y="50">
+        <ECAction Algorithm="algStoreAux" />
+      </ECState>
+      <ECState Name="INIT_S" x="1000" y="100">
+        <ECAction Algorithm="algInit" />
+        <ECAction Output="IStartLamp.REQ_CMD" />
+        <ECAction Output="IResetLamp.REQ_CMD" />
+        <ECAction Output="IQ1Lamp.REQ_CMD" />
+        <ECAction Output="IQ2Lamp.REQ_CMD" />
+        <ECAction Output="INITO" />
+      </ECState>
+      <ECState Name="READY" Comment="Initialised" x="1000" y="300" />
+      <ECState Name="BTN_S" x="1000" y="500">
+        <ECAction Algorithm="algButtons" Output="BUTTONS" />
+      </ECState>
+      <ECState Name="LMP_S" x="300" y="900">
+        <ECAction Algorithm="algLamps" />
+      </ECState>
+      <ECState Name="LMP_START" x="900" y="900">
+        <ECAction Output="IStartLamp.REQ_CMD" />
+      </ECState>
+      <ECState Name="LMP_C2" x="300" y="1300" />
+      <ECState Name="LMP_RESET" x="900" y="1300">
+        <ECAction Output="IResetLamp.REQ_CMD" />
+      </ECState>
+      <ECState Name="AUX_S" x="1700" y="900">
+        <ECAction Algorithm="algAuxLamps" />
+      </ECState>
+      <ECState Name="AUX_Q1" x="2300" y="900">
+        <ECAction Output="IQ1Lamp.REQ_CMD" />
+      </ECState>
+      <ECState Name="AUX_C2" x="1700" y="1300" />
+      <ECState Name="AUX_Q2" x="2300" y="1300">
+        <ECAction Output="IQ2Lamp.REQ_CMD" />
+      </ECState>
+      <ECState Name="RDY_StartLamp" x="300" y="1800">
+        <ECAction Algorithm="algReadyStartLamp" />
+      </ECState>
+      <ECState Name="SEL_StartLamp" x="300" y="2200">
+        <ECAction Output="IStartLamp.REQ_PROGLOCALSEL" />
+        <ECAction Output="IStartLamp.REQ_CMD" />
+      </ECState>
+      <ECState Name="RDY_ResetLamp" x="1000" y="1800">
+        <ECAction Algorithm="algReadyResetLamp" />
+      </ECState>
+      <ECState Name="SEL_ResetLamp" x="1000" y="2200">
+        <ECAction Output="IResetLamp.REQ_PROGLOCALSEL" />
+        <ECAction Output="IResetLamp.REQ_CMD" />
+      </ECState>
+      <ECState Name="RDY_Q1Lamp" x="1700" y="1800">
+        <ECAction Algorithm="algReadyQ1Lamp" />
+      </ECState>
+      <ECState Name="SEL_Q1Lamp" x="1700" y="2200">
+        <ECAction Output="IQ1Lamp.REQ_PROGLOCALSEL" />
+        <ECAction Output="IQ1Lamp.REQ_CMD" />
+      </ECState>
+      <ECState Name="RDY_Q2Lamp" x="2400" y="1800">
+        <ECAction Algorithm="algReadyQ2Lamp" />
+      </ECState>
+      <ECState Name="SEL_Q2Lamp" x="2400" y="2200">
+        <ECAction Output="IQ2Lamp.REQ_PROGLOCALSEL" />
+        <ECAction Output="IQ2Lamp.REQ_CMD" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT_S" Condition="INIT" x="650" y="150" />
+      <ECTransition Source="START" Destination="PRE_LMP" Condition="LAMPS" x="150" y="200" />
+      <ECTransition Source="PRE_LMP" Destination="START" Condition="1" x="250" y="150" />
+      <ECTransition Source="START" Destination="PRE_AUX" Condition="AUX_LAMPS" x="450" y="200" />
+      <ECTransition Source="PRE_AUX" Destination="START" Condition="1" x="500" y="150" />
+      <ECTransition Source="INIT_S" Destination="READY" Condition="1" x="1050" y="200" />
+      <ECTransition Source="READY" Destination="INIT_S" Condition="INIT" x="1200" y="200" />
+      <ECTransition Source="READY" Destination="BTN_S" Condition="BTN" x="1050" y="400" />
+      <ECTransition Source="BTN_S" Destination="READY" Condition="1" x="1150" y="400" />
+      <ECTransition Source="READY" Destination="LMP_S" Condition="LAMPS" x="650" y="600" />
+      <ECTransition Source="LMP_S" Destination="LMP_START" Condition="ChStartLamp" x="600" y="850" />
+      <ECTransition Source="LMP_S" Destination="LMP_C2" Condition="NOT ChStartLamp" x="250" y="1100" />
+      <ECTransition Source="LMP_START" Destination="LMP_C2" Condition="1" x="600" y="1100" />
+      <ECTransition Source="LMP_C2" Destination="LMP_RESET" Condition="ChResetLamp" x="600" y="1250" />
+      <ECTransition Source="LMP_C2" Destination="READY" Condition="NOT ChResetLamp" x="150" y="800" />
+      <ECTransition Source="LMP_RESET" Destination="READY" Condition="1" x="700" y="700" />
+      <ECTransition Source="READY" Destination="AUX_S" Condition="AUX_LAMPS" x="1300" y="700" />
+      <ECTransition Source="AUX_S" Destination="AUX_Q1" Condition="ChQ1Lamp" x="2000" y="850" />
+      <ECTransition Source="AUX_S" Destination="AUX_C2" Condition="NOT ChQ1Lamp" x="1700" y="1100" />
+      <ECTransition Source="AUX_Q1" Destination="AUX_C2" Condition="1" x="2000" y="1100" />
+      <ECTransition Source="AUX_C2" Destination="AUX_Q2" Condition="ChQ2Lamp" x="2000" y="1250" />
+      <ECTransition Source="AUX_C2" Destination="READY" Condition="NOT ChQ2Lamp" x="1300" y="1100" />
+      <ECTransition Source="AUX_Q2" Destination="READY" Condition="1" x="1500" y="750" />
+      <ECTransition Source="READY" Destination="RDY_StartLamp" Condition="IStartLamp.CNF_READY" x="500" y="1500" />
+      <ECTransition Source="RDY_StartLamp" Destination="SEL_StartLamp" Condition="NeedSel" x="350" y="2000" />
+      <ECTransition Source="RDY_StartLamp" Destination="READY" Condition="NOT NeedSel" x="650" y="1600" />
+      <ECTransition Source="SEL_StartLamp" Destination="READY" Condition="1" x="700" y="1700" />
+      <ECTransition Source="READY" Destination="RDY_ResetLamp" Condition="IResetLamp.CNF_READY" x="1200" y="1500" />
+      <ECTransition Source="RDY_ResetLamp" Destination="SEL_ResetLamp" Condition="NeedSel" x="1050" y="2000" />
+      <ECTransition Source="RDY_ResetLamp" Destination="READY" Condition="NOT NeedSel" x="1350" y="1600" />
+      <ECTransition Source="SEL_ResetLamp" Destination="READY" Condition="1" x="1400" y="1700" />
+      <ECTransition Source="READY" Destination="RDY_Q1Lamp" Condition="IQ1Lamp.CNF_READY" x="1900" y="1500" />
+      <ECTransition Source="RDY_Q1Lamp" Destination="SEL_Q1Lamp" Condition="NeedSel" x="1750" y="2000" />
+      <ECTransition Source="RDY_Q1Lamp" Destination="READY" Condition="NOT NeedSel" x="2050" y="1600" />
+      <ECTransition Source="SEL_Q1Lamp" Destination="READY" Condition="1" x="2100" y="1700" />
+      <ECTransition Source="READY" Destination="RDY_Q2Lamp" Condition="IQ2Lamp.CNF_READY" x="2600" y="1500" />
+      <ECTransition Source="RDY_Q2Lamp" Destination="SEL_Q2Lamp" Condition="NeedSel" x="2450" y="2000" />
+      <ECTransition Source="RDY_Q2Lamp" Destination="READY" Condition="NOT NeedSel" x="2750" y="1600" />
+      <ECTransition Source="SEL_Q2Lamp" Destination="READY" Condition="1" x="2800" y="1700" />
+    </ECC>
+    <Algorithm Name="algInit" Comment="Apply the lamp states requested so far (program local is selected on CNF_READY)">
+      <ST><![CDATA[QO := QI;
+IStartLamp.ProgLocalSel := TRUE;
+IF ReqStartLamp THEN IStartLamp.Lsp.value := 1; ELSE IStartLamp.Lsp.value := 0; END_IF;
+CurStartLamp := ReqStartLamp;
+IResetLamp.ProgLocalSel := TRUE;
+IF ReqResetLamp THEN IResetLamp.Lsp.value := 1; ELSE IResetLamp.Lsp.value := 0; END_IF;
+CurResetLamp := ReqResetLamp;
+IQ1Lamp.ProgLocalSel := TRUE;
+IF ReqQ1Lamp THEN IQ1Lamp.Lsp.value := 1; ELSE IQ1Lamp.Lsp.value := 0; END_IF;
+CurQ1Lamp := ReqQ1Lamp;
+IQ2Lamp.ProgLocalSel := TRUE;
+IF ReqQ2Lamp THEN IQ2Lamp.Lsp.value := 1; ELSE IQ2Lamp.Lsp.value := 0; END_IF;
+CurQ2Lamp := ReqQ2Lamp;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algStoreLamps" Comment="Before INIT: remember the START and RESET lamp request">
+      <ST><![CDATA[ReqStartLamp := StartLamp;
+ReqResetLamp := ResetLamp;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algStoreAux" Comment="Before INIT: remember the Q1 and Q2 lamp request">
+      <ST><![CDATA[ReqQ1Lamp := Q1Lamp;
+ReqQ2Lamp := Q2Lamp;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algButtons" Comment="Button states from the inputs; STOP is a normally closed contact">
+      <ST><![CDATA[Start := StartPv.value;
+Stop := NOT StopPv.value;
+Reset := ResetPv.value;
+AutoMan := AutoManPv.value;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algLamps" Comment="START and RESET lamps: command only those that changed">
+      <ST><![CDATA[ChStartLamp := StartLamp <> CurStartLamp;
+CurStartLamp := StartLamp;
+IF StartLamp THEN IStartLamp.Lsp.value := 1; ELSE IStartLamp.Lsp.value := 0; END_IF;
+ChResetLamp := ResetLamp <> CurResetLamp;
+CurResetLamp := ResetLamp;
+IF ResetLamp THEN IResetLamp.Lsp.value := 1; ELSE IResetLamp.Lsp.value := 0; END_IF;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algAuxLamps" Comment="Lamps Q1 and Q2: command only those that changed">
+      <ST><![CDATA[ChQ1Lamp := Q1Lamp <> CurQ1Lamp;
+CurQ1Lamp := Q1Lamp;
+IF Q1Lamp THEN IQ1Lamp.Lsp.value := 1; ELSE IQ1Lamp.Lsp.value := 0; END_IF;
+ChQ2Lamp := Q2Lamp <> CurQ2Lamp;
+CurQ2Lamp := Q2Lamp;
+IF Q2Lamp THEN IQ2Lamp.Lsp.value := 1; ELSE IQ2Lamp.Lsp.value := 0; END_IF;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algReadyStartLamp" Comment="StartLamp reported ready: send owner request and lamp state again until synchronised">
+      <ST><![CDATA[NeedSel := NOT SyncedStartLamp AND TriesStartLamp < 3;
+IF NeedSel THEN
+    TriesStartLamp := TriesStartLamp + 1;
+    IStartLamp.ProgLocalSel := TRUE;
+    IF CurStartLamp THEN IStartLamp.Lsp.value := 1; ELSE IStartLamp.Lsp.value := 0; END_IF;
+    SyncedStartLamp := IStartLamp.ProgLocal;
+END_IF;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algReadyResetLamp" Comment="ResetLamp reported ready: send owner request and lamp state again until synchronised">
+      <ST><![CDATA[NeedSel := NOT SyncedResetLamp AND TriesResetLamp < 3;
+IF NeedSel THEN
+    TriesResetLamp := TriesResetLamp + 1;
+    IResetLamp.ProgLocalSel := TRUE;
+    IF CurResetLamp THEN IResetLamp.Lsp.value := 1; ELSE IResetLamp.Lsp.value := 0; END_IF;
+    SyncedResetLamp := IResetLamp.ProgLocal;
+END_IF;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algReadyQ1Lamp" Comment="Q1Lamp reported ready: send owner request and lamp state again until synchronised">
+      <ST><![CDATA[NeedSel := NOT SyncedQ1Lamp AND TriesQ1Lamp < 3;
+IF NeedSel THEN
+    TriesQ1Lamp := TriesQ1Lamp + 1;
+    IQ1Lamp.ProgLocalSel := TRUE;
+    IF CurQ1Lamp THEN IQ1Lamp.Lsp.value := 1; ELSE IQ1Lamp.Lsp.value := 0; END_IF;
+    SyncedQ1Lamp := IQ1Lamp.ProgLocal;
+END_IF;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algReadyQ2Lamp" Comment="Q2Lamp reported ready: send owner request and lamp state again until synchronised">
+      <ST><![CDATA[NeedSel := NOT SyncedQ2Lamp AND TriesQ2Lamp < 3;
+IF NeedSel THEN
+    TriesQ2Lamp := TriesQ2Lamp + 1;
+    IQ2Lamp.ProgLocalSel := TRUE;
+    IF CurQ2Lamp THEN IQ2Lamp.Lsp.value := 1; ELSE IQ2Lamp.Lsp.value := 0; END_IF;
+    SyncedQ2Lamp := IQ2Lamp.ProgLocal;
+END_IF;
+]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

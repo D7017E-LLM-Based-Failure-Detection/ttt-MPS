@@ -1,0 +1,549 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{694249C0-81B8-4402-86D4-9DECAC2036AD}</ProjectGuid>
+    <ProjectTypeGuids>{EAD1E85F-CEF5-4861-AFF8-597F2DDE70FC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Windows</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Flexbridge.FestoMPS400</RootNamespace>
+    <AssemblyName>Flexbridge.FestoMPS400</AssemblyName>
+    <NxtVersion>25.0.1.0</NxtVersion>
+    <CheckConnectionsStrictly>TRUE</CheckConnectionsStrictly>
+    <HardwareConfigurationMigrationVersion>1</HardwareConfigurationMigrationVersion>
+    <MultiUserSupport>true</MultiUserSupport>
+    <IsConnectionIdModified>true</IsConnectionIdModified>
+    <ProjectType>IEC61499</ProjectType>
+    <CheckGenericInstances>False</CheckGenericInstances>
+    <ConvertStringValues>False</ConvertStringValues>
+    <HMIProject>Flexbridge.FestoMPS400.HMI</HMIProject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' " />
+  <PropertyGroup Condition=" '$(Platform)' == 'Windows' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Default\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <IntermediateOutputPath>obj\Default\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Default\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <IntermediateOutputPath>obj\Default\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Windows' ">
+    <Version>1.0</Version>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Verify' ">
+    <OutputPath>bin\Verify\</OutputPath>
+    <IntermediateOutputPath>obj\Verify\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\General\Folders.xml" />
+    <None Include="..\General\ProjectInfo.xml" />
+    <None Include="..\HMI\ControlConsole\ControlConsole_sDefault.doc.xml">
+      <DependentUpon>ControlConsole.fbt</DependentUpon>
+    </None>
+    <None Include="..\HMI\Distributing\Distributing_sDefault.doc.xml">
+      <DependentUpon>Distributing.fbt</DependentUpon>
+    </None>
+    <None Include="..\HMI\IOTest16\IOTest16_sDefault.doc.xml">
+      <DependentUpon>IOTest16.fbt</DependentUpon>
+    </None>
+    <None Include="..\HMI\Testing\Testing_sDefault.doc.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+    </None>
+    <None Include="Actuator2OpBaseExt\Actuator2OpBaseExt.cfg">
+      <DependentUpon>Actuator2OpBaseExt.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="Actuator2OpBaseExt\Actuator2OpBaseExt_HMI.offline.xml">
+      <DependentUpon>Actuator2OpBaseExt.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="Actuator2OpBaseExt\Actuator2OpBaseExt_HMI.opcua.xml">
+      <DependentUpon>Actuator2OpBaseExt.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="Actuator2OpBase\Actuator2OpBase.cfg">
+      <DependentUpon>Actuator2OpBase.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="Actuator2OpBase\Actuator2OpBase.doc.xml">
+      <DependentUpon>Actuator2OpBase.fbt</DependentUpon>
+    </None>
+    <None Include="Actuator2Op\Actuator2Op.cfg">
+      <DependentUpon>Actuator2Op.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="Actuator2Op\Actuator2Op_HMI.offline.xml">
+      <DependentUpon>Actuator2Op.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="Actuator2Op\Actuator2Op_HMI.opcua.xml">
+      <DependentUpon>Actuator2Op.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="ActuatorBaseExt\ActuatorBaseExt.cfg">
+      <DependentUpon>ActuatorBaseExt.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="ActuatorBaseExt\ActuatorBaseExt_HMI.offline.xml">
+      <DependentUpon>ActuatorBaseExt.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="ActuatorBaseExt\ActuatorBaseExt_HMI.opcua.xml">
+      <DependentUpon>ActuatorBaseExt.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="ActuatorBase\ActuatorBase.cfg">
+      <DependentUpon>ActuatorBase.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="ActuatorBase\ActuatorBase.doc.xml">
+      <DependentUpon>ActuatorBase.fbt</DependentUpon>
+    </None>
+    <None Include="Actuator\Actuator.cfg">
+      <DependentUpon>Actuator.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="Actuator\Actuator_HMI.offline.xml">
+      <DependentUpon>Actuator.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="Actuator\Actuator_HMI.opcua.xml">
+      <DependentUpon>Actuator.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="ConsoleIO.doc.xml">
+      <Parent>.Common</Parent>
+      <DependentUpon>ConsoleIO.fbt</DependentUpon>
+    </None>
+    <None Include="ConsoleIO.meta.xml">
+      <Parent>.Common</Parent>
+      <DependentUpon>ConsoleIO.fbt</DependentUpon>
+    </None>
+    <None Include="ControlConsole\ControlConsole.cfg">
+      <DependentUpon>ControlConsole.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="ControlConsole\ControlConsole.doc.xml">
+      <DependentUpon>ControlConsole.fbt</DependentUpon>
+    </None>
+    <None Include="ControlConsole\ControlConsole.meta.xml">
+      <DependentUpon>ControlConsole.fbt</DependentUpon>
+    </None>
+    <None Include="ControlConsole\ControlConsole_CAT.offline.xml">
+      <DependentUpon>ControlConsole.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="ControlConsole\ControlConsole_CAT.opcua.xml">
+      <DependentUpon>ControlConsole.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="ControlConsole\ControlConsole_HMI.doc.xml">
+      <DependentUpon>ControlConsole.fbt</DependentUpon>
+    </None>
+    <None Include="ControlConsole\ControlConsole_HMI.meta.xml">
+      <DependentUpon>ControlConsole.fbt</DependentUpon>
+    </None>
+    <None Include="ControlConsole\ControlConsole_HMI.offline.xml">
+      <DependentUpon>ControlConsole.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="ControlConsole\ControlConsole_HMI.opcua.xml">
+      <DependentUpon>ControlConsole.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="DistributingSequence.doc.xml">
+      <Parent>.Distributing</Parent>
+      <DependentUpon>DistributingSequence.fbt</DependentUpon>
+    </None>
+    <None Include="DistributingSequence.meta.xml">
+      <Parent>.Distributing</Parent>
+      <DependentUpon>DistributingSequence.fbt</DependentUpon>
+    </None>
+    <None Include="Distributing\Distributing.cfg">
+      <DependentUpon>Distributing.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="Distributing\Distributing.doc.xml">
+      <DependentUpon>Distributing.fbt</DependentUpon>
+    </None>
+    <None Include="Distributing\Distributing.meta.xml">
+      <DependentUpon>Distributing.fbt</DependentUpon>
+    </None>
+    <None Include="Distributing\Distributing_CAT.offline.xml">
+      <DependentUpon>Distributing.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="Distributing\Distributing_CAT.opcua.xml">
+      <DependentUpon>Distributing.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="Distributing\Distributing_HMI.doc.xml">
+      <DependentUpon>Distributing.fbt</DependentUpon>
+    </None>
+    <None Include="Distributing\Distributing_HMI.meta.xml">
+      <DependentUpon>Distributing.fbt</DependentUpon>
+    </None>
+    <None Include="Distributing\Distributing_HMI.offline.xml">
+      <DependentUpon>Distributing.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="Distributing\Distributing_HMI.opcua.xml">
+      <DependentUpon>Distributing.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="IOTest16Logic.doc.xml">
+      <Parent>.Testers</Parent>
+      <DependentUpon>IOTest16Logic.fbt</DependentUpon>
+    </None>
+    <None Include="IOTest16Logic.meta.xml">
+      <Parent>.Testers</Parent>
+      <DependentUpon>IOTest16Logic.fbt</DependentUpon>
+    </None>
+    <None Include="IOTest16\IOTest16.cfg">
+      <DependentUpon>IOTest16.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="IOTest16\IOTest16.doc.xml">
+      <DependentUpon>IOTest16.fbt</DependentUpon>
+    </None>
+    <None Include="IOTest16\IOTest16.meta.xml">
+      <DependentUpon>IOTest16.fbt</DependentUpon>
+    </None>
+    <None Include="IOTest16\IOTest16_CAT.offline.xml">
+      <DependentUpon>IOTest16.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="IOTest16\IOTest16_CAT.opcua.xml">
+      <DependentUpon>IOTest16.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="IOTest16\IOTest16_HMI.doc.xml">
+      <DependentUpon>IOTest16.fbt</DependentUpon>
+    </None>
+    <None Include="IOTest16\IOTest16_HMI.meta.xml">
+      <DependentUpon>IOTest16.fbt</DependentUpon>
+    </None>
+    <None Include="IOTest16\IOTest16_HMI.offline.xml">
+      <DependentUpon>IOTest16.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="IOTest16\IOTest16_HMI.opcua.xml">
+      <DependentUpon>IOTest16.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="IWaypoint.doc.xml">
+      <DependentUpon>IWaypoint.adp</DependentUpon>
+      <Parent>.Common</Parent>
+    </None>
+    <None Include="IWorkpieceSupply.doc.xml">
+      <DependentUpon>IWorkpieceSupply.adp</DependentUpon>
+      <Parent>.Common</Parent>
+    </None>
+    <none Include="Languages\neutral\Dictionary.Resources.xml" />
+    <None Include="Project.doc.xml" />
+    <None Include="StationMode.doc.xml">
+      <Parent>.Common</Parent>
+      <DependentUpon>StationMode.fbt</DependentUpon>
+    </None>
+    <None Include="StationMode.meta.xml">
+      <Parent>.Common</Parent>
+      <DependentUpon>StationMode.fbt</DependentUpon>
+    </None>
+    <None Include="TestingSequence.doc.xml">
+      <Parent>.Stations</Parent>
+      <DependentUpon>TestingSequence.fbt</DependentUpon>
+    </None>
+    <None Include="TestingSequence.meta.xml">
+      <Parent>.Stations</Parent>
+      <DependentUpon>TestingSequence.fbt</DependentUpon>
+    </None>
+    <None Include="Testing\Testing.cfg">
+      <DependentUpon>Testing.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="Testing\Testing.doc.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+    </None>
+    <None Include="Testing\Testing.meta.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+    </None>
+    <None Include="Testing\Testing_CAT.offline.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="Testing\Testing_CAT.opcua.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="Testing\Testing_HMI.doc.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+    </None>
+    <None Include="Testing\Testing_HMI.meta.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+    </None>
+    <None Include="Testing\Testing_HMI.offline.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="Testing\Testing_HMI.opcua.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Configuration" />
+    <Folder Include="License" />
+    <Folder Include="Log" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Runtime.Base">
+      <Version>25.0.1.2</Version>
+    </Reference>
+    <Reference Include="SE.App2Base">
+      <Version>25.0.1.5</Version>
+    </Reference>
+    <Reference Include="SE.App2CommonProcess">
+      <Version>25.0.1.5</Version>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actuator2OpBaseExt\Actuator2OpBaseExt.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Actuators.Actuator2OP</Parent>
+    </Compile>
+    <Compile Include="Actuator2OpBaseExt\Actuator2OpBaseExt_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>Actuator2OpBaseExt\Actuator2OpBaseExt.fbt</DependentUpon>
+      <Usage>Private</Usage>
+    </Compile>
+    <Compile Include="Actuator2OpBase\Actuator2OpBase.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Actuators.Actuator2OP</Parent>
+    </Compile>
+    <Compile Include="Actuator2OpBase\Actuator2OpBase_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>Actuator2OpBase\Actuator2OpBase.fbt</DependentUpon>
+      <Usage>Private</Usage>
+    </Compile>
+    <Compile Include="Actuator2Op\Actuator2Op.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Actuators.Actuator2OP</Parent>
+    </Compile>
+    <Compile Include="Actuator2Op\Actuator2Op_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>Actuator2Op\Actuator2Op.fbt</DependentUpon>
+      <Usage>Private</Usage>
+    </Compile>
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Actuators.Actuator</Parent>
+    </Compile>
+    <Compile Include="ActuatorBaseExt\ActuatorBaseExt_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>ActuatorBaseExt\ActuatorBaseExt.fbt</DependentUpon>
+      <Usage>Private</Usage>
+    </Compile>
+    <Compile Include="ActuatorBase\ActuatorBase.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Actuators.Actuator</Parent>
+    </Compile>
+    <Compile Include="ActuatorBase\ActuatorBase_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>ActuatorBase\ActuatorBase.fbt</DependentUpon>
+      <Usage>Private</Usage>
+    </Compile>
+    <Compile Include="Actuator\Actuator.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Actuators.Actuator</Parent>
+    </Compile>
+    <Compile Include="Actuator\Actuator_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <DependentUpon>Actuator\Actuator.fbt</DependentUpon>
+      <Usage>Private</Usage>
+    </Compile>
+    <Compile Include="ConsoleIO.fbt">
+      <Parent>.Common</Parent>
+      <IEC61499Type>Basic</IEC61499Type>
+    </Compile>
+    <Compile Include="ControlConsole\ControlConsole.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Common</Parent>
+    </Compile>
+    <Compile Include="ControlConsole\ControlConsole_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>ControlConsole.fbt</DependentUpon>
+      <HMI>..\HMI\ControlConsole\ControlConsole_sDefault.cnv.cs</HMI>
+    </Compile>
+    <Compile Include="DistributingSequence.fbt">
+      <Parent>.Stations</Parent>
+      <IEC61499Type>Basic</IEC61499Type>
+    </Compile>
+    <Compile Include="Distributing\Distributing.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Stations</Parent>
+    </Compile>
+    <Compile Include="Distributing\Distributing_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>Distributing.fbt</DependentUpon>
+      <HMI>..\HMI\Distributing\Distributing_sDefault.cnv.cs</HMI>
+    </Compile>
+    <Compile Include="IOTest16Logic.fbt">
+      <Parent>.Testers</Parent>
+      <IEC61499Type>Basic</IEC61499Type>
+    </Compile>
+    <Compile Include="IOTest16\IOTest16.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Testers</Parent>
+    </Compile>
+    <Compile Include="IOTest16\IOTest16_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>IOTest16.fbt</DependentUpon>
+      <HMI>..\HMI\IOTest16\IOTest16_sDefault.cnv.cs</HMI>
+    </Compile>
+    <Compile Include="IWaypoint.adp">
+      <IEC61499Type>Adapter</IEC61499Type>
+      <Parent>.Common</Parent>
+    </Compile>
+    <Compile Include="IWorkpieceSupply.adp">
+      <IEC61499Type>Adapter</IEC61499Type>
+      <Parent>.Common</Parent>
+    </Compile>
+    <Compile Include="StationMode.fbt">
+      <Parent>.Common</Parent>
+      <IEC61499Type>Basic</IEC61499Type>
+    </Compile>
+    <Compile Include="TestingSequence.fbt">
+      <Parent>.Stations</Parent>
+      <IEC61499Type>Basic</IEC61499Type>
+    </Compile>
+    <Compile Include="Testing\Testing.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Parent>.Stations</Parent>
+    </Compile>
+    <Compile Include="Testing\Testing_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>Testing.fbt</DependentUpon>
+      <HMI>..\HMI\Testing\Testing_sDefault.cnv.cs</HMI>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Actuator2OpBaseExt\Actuator2OpBaseExt_CAT.offline.xml">
+      <DependentUpon>Actuator2OpBaseExt.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </Content>
+    <Content Include="Actuator2OpBaseExt\Actuator2OpBaseExt_CAT.opcua.xml">
+      <DependentUpon>Actuator2OpBaseExt.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="Actuator2OpBase\Actuator2OpBase_CAT.offline.xml">
+      <DependentUpon>Actuator2OpBase.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </Content>
+    <Content Include="Actuator2OpBase\Actuator2OpBase_CAT.opcua.xml">
+      <DependentUpon>Actuator2OpBase.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="Actuator2OpBase\Actuator2OpBase_HMI.offline.xml">
+      <DependentUpon>Actuator2OpBase.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </Content>
+    <Content Include="Actuator2OpBase\Actuator2OpBase_HMI.opcua.xml">
+      <DependentUpon>Actuator2OpBase.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="Actuator2Op\Actuator2Op_CAT.offline.xml">
+      <DependentUpon>Actuator2Op.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </Content>
+    <Content Include="Actuator2Op\Actuator2Op_CAT.opcua.xml">
+      <DependentUpon>Actuator2Op.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="ActuatorBaseExt\ActuatorBaseExt_CAT.offline.xml">
+      <DependentUpon>ActuatorBaseExt.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </Content>
+    <Content Include="ActuatorBaseExt\ActuatorBaseExt_CAT.opcua.xml">
+      <DependentUpon>ActuatorBaseExt.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="ActuatorBase\ActuatorBase_CAT.offline.xml">
+      <DependentUpon>ActuatorBase.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </Content>
+    <Content Include="ActuatorBase\ActuatorBase_CAT.opcua.xml">
+      <DependentUpon>ActuatorBase.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="ActuatorBase\ActuatorBase_HMI.offline.xml">
+      <DependentUpon>ActuatorBase.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </Content>
+    <Content Include="ActuatorBase\ActuatorBase_HMI.opcua.xml">
+      <DependentUpon>ActuatorBase.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="Actuator\Actuator_CAT.offline.xml">
+      <DependentUpon>Actuator.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </Content>
+    <Content Include="Actuator\Actuator_CAT.opcua.xml">
+      <DependentUpon>Actuator.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(SharpDevelopBinPath)\NxtControl.Build.61499.Targets" />
+</Project>

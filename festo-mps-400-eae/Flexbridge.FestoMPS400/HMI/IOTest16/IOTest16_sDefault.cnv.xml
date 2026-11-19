@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Mapping>
+  <EventInputs>
+    <Event Name="REQ_LBL">LabelDI00;LabelDI01;LabelDI02;LabelDI03;LabelDI04;LabelDI05;LabelDI06;LabelDI07;LabelDI08;LabelDI09;LabelDI10;LabelDI11;LabelDI12;LabelDI13;LabelDI14;LabelDI15;LabelDO00;LabelDO01;LabelDO02;LabelDO03;LabelDO04;LabelDO05;LabelDO06;LabelDO07;LabelDO08;LabelDO09;LabelDO10;LabelDO11;LabelDO12;LabelDO13;LabelDO14;LabelDO15</Event>
+    <Event Name="REQ_DI">DI00;DI01;DI02;DI03;DI04;DI05;DI06;DI07;DI08;DI09;DI10;DI11;DI12;DI13;DI14;DI15</Event>
+    <Event Name="REQ_DO">DOSt00;DOSt01;DOSt02;DOSt03;DOSt04;DOSt05;DOSt06;DOSt07;DOSt08;DOSt09;DOSt10;DOSt11;DOSt12;DOSt13;DOSt14;DOSt15;EnDO00;EnDO01;EnDO02;EnDO03;EnDO04;EnDO05;EnDO06;EnDO07;EnDO08;EnDO09;EnDO10;EnDO11;EnDO12;EnDO13;EnDO14;EnDO15</Event>
+  </EventInputs>
+  <EventOutputs>
+    <Event Name="CMD">CmdDO00;CmdDO01;CmdDO02;CmdDO03;CmdDO04;CmdDO05;CmdDO06;CmdDO07;CmdDO08;CmdDO09;CmdDO10;CmdDO11;CmdDO12;CmdDO13;CmdDO14;CmdDO15</Event>
+    <Event Name="ALL_OFF">AllOff</Event>
+  </EventOutputs>
+  <Inputs>
+    <Input Name="LabelDI00" Type="STRING" />
+    <Input Name="LabelDI01" Type="STRING" />
+    <Input Name="LabelDI02" Type="STRING" />
+    <Input Name="LabelDI03" Type="STRING" />
+    <Input Name="LabelDI04" Type="STRING" />
+    <Input Name="LabelDI05" Type="STRING" />
+    <Input Name="LabelDI06" Type="STRING" />
+    <Input Name="LabelDI07" Type="STRING" />
+    <Input Name="LabelDI08" Type="STRING" />
+    <Input Name="LabelDI09" Type="STRING" />
+    <Input Name="LabelDI10" Type="STRING" />
+    <Input Name="LabelDI11" Type="STRING" />
+    <Input Name="LabelDI12" Type="STRING" />
+    <Input Name="LabelDI13" Type="STRING" />
+    <Input Name="LabelDI14" Type="STRING" />
+    <Input Name="LabelDI15" Type="STRING" />
+    <Input Name="LabelDO00" Type="STRING" />
+    <Input Name="LabelDO01" Type="STRING" />
+    <Input Name="LabelDO02" Type="STRING" />
+    <Input Name="LabelDO03" Type="STRING" />
+    <Input Name="LabelDO04" Type="STRING" />
+    <Input Name="LabelDO05" Type="STRING" />
+    <Input Name="LabelDO06" Type="STRING" />
+    <Input Name="LabelDO07" Type="STRING" />
+    <Input Name="LabelDO08" Type="STRING" />
+    <Input Name="LabelDO09" Type="STRING" />
+    <Input Name="LabelDO10" Type="STRING" />
+    <Input Name="LabelDO11" Type="STRING" />
+    <Input Name="LabelDO12" Type="STRING" />
+    <Input Name="LabelDO13" Type="STRING" />
+    <Input Name="LabelDO14" Type="STRING" />
+    <Input Name="LabelDO15" Type="STRING" />
+    <Input Name="DI00" Type="BOOL" />
+    <Input Name="DI01" Type="BOOL" />
+    <Input Name="DI02" Type="BOOL" />
+    <Input Name="DI03" Type="BOOL" />
+    <Input Name="DI04" Type="BOOL" />
+    <Input Name="DI05" Type="BOOL" />
+    <Input Name="DI06" Type="BOOL" />
+    <Input Name="DI07" Type="BOOL" />
+    <Input Name="DI08" Type="BOOL" />
+    <Input Name="DI09" Type="BOOL" />
+    <Input Name="DI10" Type="BOOL" />
+    <Input Name="DI11" Type="BOOL" />
+    <Input Name="DI12" Type="BOOL" />
+    <Input Name="DI13" Type="BOOL" />
+    <Input Name="DI14" Type="BOOL" />
+    <Input Name="DI15" Type="BOOL" />
+    <Input Name="DOSt00" Type="BOOL" />
+    <Input Name="DOSt01" Type="BOOL" />
+    <Input Name="DOSt02" Type="BOOL" />
+    <Input Name="DOSt03" Type="BOOL" />
+    <Input Name="DOSt04" Type="BOOL" />
+    <Input Name="DOSt05" Type="BOOL" />
+    <Input Name="DOSt06" Type="BOOL" />
+    <Input Name="DOSt07" Type="BOOL" />
+    <Input Name="DOSt08" Type="BOOL" />
+    <Input Name="DOSt09" Type="BOOL" />
+    <Input Name="DOSt10" Type="BOOL" />
+    <Input Name="DOSt11" Type="BOOL" />
+    <Input Name="DOSt12" Type="BOOL" />
+    <Input Name="DOSt13" Type="BOOL" />
+    <Input Name="DOSt14" Type="BOOL" />
+    <Input Name="DOSt15" Type="BOOL" />
+    <Input Name="EnDO00" Type="BOOL" />
+    <Input Name="EnDO01" Type="BOOL" />
+    <Input Name="EnDO02" Type="BOOL" />
+    <Input Name="EnDO03" Type="BOOL" />
+    <Input Name="EnDO04" Type="BOOL" />
+    <Input Name="EnDO05" Type="BOOL" />
+    <Input Name="EnDO06" Type="BOOL" />
+    <Input Name="EnDO07" Type="BOOL" />
+    <Input Name="EnDO08" Type="BOOL" />
+    <Input Name="EnDO09" Type="BOOL" />
+    <Input Name="EnDO10" Type="BOOL" />
+    <Input Name="EnDO11" Type="BOOL" />
+    <Input Name="EnDO12" Type="BOOL" />
+    <Input Name="EnDO13" Type="BOOL" />
+    <Input Name="EnDO14" Type="BOOL" />
+    <Input Name="EnDO15" Type="BOOL" />
+  </Inputs>
+  <Outputs>
+    <Output Name="CmdDO00" Type="BOOL" />
+    <Output Name="CmdDO01" Type="BOOL" />
+    <Output Name="CmdDO02" Type="BOOL" />
+    <Output Name="CmdDO03" Type="BOOL" />
+    <Output Name="CmdDO04" Type="BOOL" />
+    <Output Name="CmdDO05" Type="BOOL" />
+    <Output Name="CmdDO06" Type="BOOL" />
+    <Output Name="CmdDO07" Type="BOOL" />
+    <Output Name="CmdDO08" Type="BOOL" />
+    <Output Name="CmdDO09" Type="BOOL" />
+    <Output Name="CmdDO10" Type="BOOL" />
+    <Output Name="CmdDO11" Type="BOOL" />
+    <Output Name="CmdDO12" Type="BOOL" />
+    <Output Name="CmdDO13" Type="BOOL" />
+    <Output Name="CmdDO14" Type="BOOL" />
+    <Output Name="CmdDO15" Type="BOOL" />
+    <Output Name="AllOff" Type="BOOL" />
+  </Outputs>
+</Mapping>

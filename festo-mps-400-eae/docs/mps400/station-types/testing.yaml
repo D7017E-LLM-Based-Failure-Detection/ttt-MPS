@@ -1,0 +1,306 @@
+# MPS 400 knowledge graph: Festo station type "Testing".
+# Conventions (status values, sources, ids): see ../README.md.
+schema: mps400-kg/0.1
+updated: "2026-11-10"
+
+sources:
+  cd-02-el:
+    path: "resources/MPS documentation CD/02_Testing/Circuit diagrams/Electric_Circuit_Diagram_Testing.pdf"
+    title: "Circuit diagrams, MPS-C Testing station (drawing 195781 el.)"
+    date: "2006-04-05"
+  cd-02-pn:
+    path: "resources/MPS documentation CD/02_Testing/Circuit diagrams/Pneumatic_Circuit_Diagram_Testing.pdf"
+    title: "Pneumatic circuit diagram, MPS-C Testing station"
+    date: "2005-04-11"
+  cd-02-grafcet:
+    path: "resources/MPS documentation CD/02_Testing/Programming/02_Testing_GRAFCET.pdf"
+    title: "Testing station, function chart (GRAFCET to DIN EN 60848)"
+    date: "2004-01"
+  cd-02-parts:
+    path: "resources/MPS documentation CD/02_Testing/Parts lists/526881_Parts_list_Testing.pdf"
+    title: "Parts list Testing station, kit 526881"
+    date: "2002-11-11"
+  cd-02-datasheets:
+    path: "resources/MPS documentation CD/02_Testing/Data sheets/"
+    title: Component data sheets (matched by file name only; contents not read)
+  nxt:
+    path: "resources/Solution Archive/MPS_NxtStudio_2_1"
+    title: Legacy NxtStudio 2.1 solution (I/O binding of device Testing)
+
+station_type:
+  id: testing
+  name: Testing station
+  name_de: Station Prüfen
+  doc_series: MPS-C
+  status: documented
+  sources: [cd-02-el, cd-02-pn, cd-02-grafcet, cd-02-parts]
+  function: >-
+    Detects a workpiece and whether it is black, lifts it to the measuring module, checks its
+    height, and either passes it on down the air slide to the next station or ejects it at the
+    bottom.
+  function_status: inferred
+
+io_terminal:
+  id: XA2
+  part: "034035 I/O terminal (MP-B-AN-E/A-T)"
+  syslink_station: XMA2
+  syslink_console: XMG1
+  syslink_analog: XMA3
+  inputs: 8
+  outputs: 8
+  supply:
+    inputs: {plus: "24VB on XMA2 pins 21-22", minus: "0VB on XMA2 pins 23-24"}
+    outputs: {plus: "24VA on XMA2 pins 9-10", minus: "0VA on XMA2 pins 11-12"}
+  status: documented
+  sources: ["cd-02-el#3-6", cd-02-parts]
+
+valve_terminal:
+  id: "0V1"
+  kind: CPV valve terminal
+  part: "526227 CP valve terminal, testing (MP3-M-MCM)"
+  positions:
+    - {code: "C", valve: "1V1", coils: ["1M1", "1M2"]}
+    - {code: "M", valve: "2V1", coils: ["2M1"]}
+    - {code: "M", valve: "3V1", coils: ["3M1"]}
+  status: documented
+  sources: [cd-02-pn, "cd-02-el#3", "cd-02-el#5", cd-02-parts]
+  verify: >-
+    The valve function at each position has not been read from the data sheets (161414 CPV ..52,
+    161416 CPV ..32G).
+
+devices:
+  - id: "1A1"
+    kind: pneumatic linear drive
+    name: Lifting cylinder
+    name_de: Hebezylinder
+    valve: "1V1"
+    coils: ["1M1", "1M2"]
+    sensors: ["1B1", "1B2"]
+    flow_controls: ["1V2", "1V3"]
+    other_components: ["1V4", "1V5"]
+    data_sheet: {ref: "015221 Pneumatic linear drive DGO-12", status: inferred}
+    status: documented
+    sources: [cd-02-pn, "cd-02-el#4-5"]
+    note: "Two coils: 1M1 lowers, 1M2 raises. 1B1 = raised, 1B2 = lowered."
+  - id: "2A1"
+    kind: pneumatic cylinder
+    name: Ejecting cylinder
+    name_de: Auswerfzylinder
+    valve: "2V1"
+    coils: ["2M1"]
+    sensors: ["2B1"]
+    flow_controls: ["2V2"]
+    data_sheet: {ref: "156041 / 156508 Pneumatic cylinder ADVU-16", status: inferred}
+    status: documented
+    sources: [cd-02-pn, "cd-02-el#4-5"]
+    note: One coil (extend) and one sensor (retracted). There is no extended sensor.
+  - id: "3A1"
+    kind: air slide
+    name: Air slide (air cushion slide)
+    name_de: Luftkissenrutsche
+    valve: "3V1"
+    coils: ["3M1"]
+    sensors: []
+    flow_controls: ["3V2"]
+    part: {ref: "656859 Air slide module (MP3-M-LRT-B)", status: inferred}
+    status: documented
+    sources: [cd-02-pn, "cd-02-el#5"]
+    note: One coil, no feedback.
+  - id: "PART_AV"
+    kind: proximity sensor
+    name: Workpiece available
+    name_de: Werkstück vorhanden
+    data_sheet: {ref: "258172 Proximity sensor, capacitive", status: inferred}
+    status: documented
+    sources: ["cd-02-el#4"]
+  - id: "B2"
+    kind: optical sensor
+    name: Workpiece is not black
+    name_de: Werkstück nicht schwarz
+    data_sheet: {ref: "165342 Diffuse sensor SOEG-RT", status: inferred}
+    status: documented
+    sources: ["cd-02-el#4"]
+  - id: "B4"
+    kind: light barrier
+    name: Safety light barrier
+    name_de: Sicherheitslichtschranke
+    data_sheet: {ref: "165331 Retro-reflective sensor SOEG-RSP", status: inferred}
+    status: documented
+    sources: ["cd-02-el#4"]
+  - id: "COMP"
+    kind: comparator with analog height sensor
+    name: Workpiece height correct
+    name_de: Komparator Werkstückhöhe korrekt
+    data_sheet: {ref: "526214 Comparator; 326498 Displacement encoder", status: inferred}
+    status: documented
+    sources: ["cd-02-el#4", "cd-02-el#6"]
+    note: >-
+      The electrical drawing calls the comparator 3A1, the same code the pneumatic drawing uses
+      for the air slide; this file uses the id COMP for it. The analog height sensor R1 feeds
+      the comparator, whose OK output is input I3. The analog value is also available on the
+      analog SysLink XMA3 (UE1 on pin 8, AGNDE on pin 6); the lab PLCs have no analog module.
+  - id: "IP_FI"
+    kind: optical receiver
+    name: Downstream station free, receiver of the 1-bit link
+    name_de: Folgestation frei
+    part: {ref: "196964 SensLink receiver (MP3-M-SLE)", status: inferred}
+    status: documented
+    sources: ["cd-02-el#4", cd-02-parts]
+  - id: "IP_N_FO"
+    kind: optical transmitter
+    name: Station occupied, transmitter of the 1-bit link to the upstream station
+    name_de: Station belegt
+    part: {ref: "196963 SensLink transmitter (MP3-M-SLS)", status: inferred}
+    status: documented
+    sources: ["cd-02-el#5", cd-02-parts]
+
+signals:
+  status: documented
+  sources: ["cd-02-el#4-5", nxt]
+  note: >-
+    legacy = the signal name in the NxtStudio solution, which binds the same bit numbers
+    (DIN0-DIN6, DO0-DO3). Bits without a legacy name are not used there.
+  inputs:
+    - {address: I0, pin: 13, symbol: "PART_AV", device: "PART_AV", meaning: Workpiece available, meaning_de: Werkstück vorhanden, legacy: WP_AVA}
+    - {address: I1, pin: 14, symbol: "B2", device: "B2", meaning: Workpiece is not black, meaning_de: Werkstück nicht schwarz, legacy: WP_NOT_BLK}
+    - {address: I2, pin: 15, symbol: "B4", device: "B4", meaning: Safety light barrier, meaning_de: Sicherheitslichtschranke, legacy: LIGHT_CURTAIN}
+    - {address: I3, pin: 16, symbol: "COMP", device: "COMP", meaning: Workpiece height correct, meaning_de: Werkstückhöhe korrekt, legacy: HEIGHT_OK}
+    - {address: I4, pin: 17, symbol: "1B1", device: "1A1", meaning: Lifting cylinder raised, meaning_de: Hebezylinder oben, legacy: LIFT_AT_TOP}
+    - {address: I5, pin: 18, symbol: "1B2", device: "1A1", meaning: Lifting cylinder lowered, meaning_de: Hebezylinder unten, legacy: LIFT_AT_BOTTOM}
+    - {address: I6, pin: 19, symbol: "2B1", device: "2A1", meaning: Ejecting cylinder retracted, meaning_de: Auswerfzylinder eingefahren, legacy: EJECTOR_RET}
+    - {address: I7, pin: 20, symbol: "IP_FI", device: "IP_FI", meaning: Downstream station free, meaning_de: Folgestation frei, legacy: null}
+  outputs:
+    - {address: O0, pin: 1, symbol: "1M1", device: "1A1", meaning: Lower lifting cylinder, meaning_de: Hebezylinder nach unten, legacy: LOWER_LIFT}
+    - {address: O1, pin: 2, symbol: "1M2", device: "1A1", meaning: Raise lifting cylinder, meaning_de: Hebezylinder nach oben, legacy: RAISE_LIFT}
+    - {address: O2, pin: 3, symbol: "2M1", device: "2A1", meaning: Extend ejecting cylinder, meaning_de: Auswerfzylinder ausfahren, legacy: EXTEND_EJECTOR}
+    - {address: O3, pin: 4, symbol: "3M1", device: "3A1", meaning: Air slide on, meaning_de: Luftkissenrutsche ein, legacy: AIR_SLIDE}
+    - {address: O4, pin: 5, symbol: null, meaning: Not used}
+    - {address: O5, pin: 6, symbol: null, meaning: Not used}
+    - {address: O6, pin: 7, symbol: null, meaning: Not used}
+    - {address: O7, pin: 8, symbol: "IP_N_FO", device: "IP_N_FO", meaning: Station occupied, meaning_de: Station belegt, legacy: null}
+
+operator_panel:
+  syslink: XMG1
+  component_type: control-console
+  status: documented
+  sources: ["cd-02-el#3", "cd-02-grafcet#3-4"]
+  note: >-
+    The sequence uses the reset button, a start flag and indicator lights (reset, start and a
+    "material" light). These come from the station's control console
+    (component-types/control-console.yaml).
+
+parts:
+  kit: "526881 TEST.STAT. MP3-S-PR-BS"
+  status: documented
+  sources: [cd-02-parts]
+  note: >-
+    The parts list (2002, MP3 kit) is older than the circuit diagrams (2006, MPS-C); parts in
+    the lab may differ.
+  items:
+    - {part_no: "034035", name: I/O terminal, designation: MP-B-AN-E/A-T, qty: 1}
+    - {part_no: "152894", name: Service unit, designation: S-PVW-LFR, qty: 1}
+    - {part_no: "162228", name: Connector, designation: MP2-M-VB, qty: 2}
+    - {part_no: "170395", name: Profile plate, designation: DE-PP-350B, qty: 1}
+    - {part_no: "532954", name: Raising module, designation: MP3-M-MH, qty: 1}
+    - {part_no: "172939", name: Cable guide, designation: MP2-B-KF, qty: 1}
+    - {part_no: "195779", name: Measuring module, designation: MP2-M-M, qty: 1}
+    - {part_no: "526850", name: Recognition module, designation: MP3-M-ME, qty: 1}
+    - {part_no: "196958", name: Mounting system E, designation: MP3-M-TSE, qty: 1}
+    - {part_no: "196963", name: SensLink transmitter, designation: MP3-M-SLS, qty: 1}
+    - {part_no: "196965", name: Holder TM-BG, designation: MP3-M-HTM, qty: 1}
+    - {part_no: "196964", name: SensLink receiver, designation: MP3-M-SLE, qty: 1}
+    - {part_no: "526227", name: CP valve terminal, designation: MP3-M-MCM, qty: 1}
+    - {part_no: "196969", name: Retro-reflective sensor, designation: MP3-M-SOEG-RT-Q3, qty: 1}
+    - {part_no: "526865", name: Accessories, designation: MP3-M-KTPR, qty: 1}
+    - {part_no: "648812", name: Technical documentation, designation: MP-TD-SP-DE/GB, qty: 1}
+    - {part_no: "656858", name: Slide module 210, designation: MP3-M-R210, qty: 1}
+    - {part_no: "656859", name: Air slide module, designation: MP3-M-LRT-B, qty: 1}
+
+sequence:
+  id: testing-reference
+  standard: GRAFCET to DIN EN 60848
+  status: documented
+  sources: ["cd-02-grafcet#3-4"]
+  note: >-
+    Festo's reference sequence for a stand-alone station with a 1-bit link. The lab behaviour
+    follows the NxtStudio solution instead (see ../legacy/testing.yaml), which differs: it
+    rejects black workpieces and has no "material" light. "stored: true" marks actions drawn
+    with the stored-action arrow.
+  steps:
+    - {id: S1, initial: true, name: Start}
+    - id: S2
+      name: Reset indicator light
+      actions: [{do: Turn on the "reset" indicator light, stored: false}]
+    - id: S3
+      name: Initial position
+      actions: [{do: Move the station to its initial position, stored: true}]
+    - id: S4
+      name: Eject workpiece
+      actions: [{do: Eject workpiece, stored: false}]
+    - id: S5
+      name: Reset OK
+      actions: [{do: Set flag "reset finished", stored: true}]
+    - {id: S6, name: Cycle start (empty step)}
+    - id: S7
+      name: Start indicator light
+      actions: [{do: Turn on the "start" indicator light, stored: false}]
+    - id: S8
+      name: Station not occupied
+      actions: [{do: Signal "station not occupied", stored: true}]
+    - id: S9
+      name: Material indicator light on
+      actions:
+        - {do: Turn on the "material" indicator light, stored: true}
+        - {do: Signal "station occupied", stored: true}
+    - id: S10
+      name: Material indicator light off
+      actions:
+        - {do: Turn off the "material" indicator light, stored: true}
+        - {do: Signal "station occupied", stored: true}
+    - id: S11
+      name: Raise lifting cylinder
+      actions: [{do: Raise lifting cylinder, stored: true}]
+    - {id: S12, name: Measure height (empty step)}
+    - id: S13
+      name: Eject workpiece
+      actions:
+        - {do: Eject workpiece, stored: false}
+        - {do: Turn on air slide, stored: false}
+    - id: S14
+      name: Air slide on
+      actions: [{do: Turn on air slide, stored: false}]
+    - id: S15
+      name: Lower lifting cylinder
+      actions: [{do: Lower lifting cylinder, stored: true}]
+    - id: S16
+      name: Lower lifting cylinder (invalid height)
+      actions: [{do: Lower lifting cylinder, stored: true}]
+    - id: S17
+      name: Eject workpiece (invalid height)
+      actions: [{do: Eject workpiece, stored: false}]
+    - id: S18
+      name: Cycle end
+      actions: [{do: Set flag "cycle end", stored: false}]
+  transitions:
+    - {from: S1, to: S6, condition: Station is reset and in initial position}
+    - {from: S1, to: S2, condition: Station is not reset}
+    - {from: S2, to: S3, condition: Reset button pressed and safety light barrier unbroken}
+    - {from: S3, to: S4, condition: Station in initial position}
+    - {from: S4, to: S5, condition: Workpiece ejected}
+    - {from: S5, to: S6, condition: Flag "reset finished" is set}
+    - {from: S6, to: S7, condition: Flag "start" is not set}
+    - {from: S6, to: S8, condition: Flag "start" is set}
+    - {from: S7, to: S8, condition: Flag "start" is set}
+    - {from: S8, to: S9, condition: Workpiece available and black}
+    - {from: S8, to: S10, condition: Workpiece available and not black}
+    - {from: S9, to: S11, condition: 3 s in step 9 and workpiece black}
+    - {from: S10, to: S11, condition: 3 s in step 10 and workpiece not black}
+    - {from: S11, to: S12, condition: Lifting cylinder raised}
+    - {from: S12, to: S13, condition: 2 s in step 12 and height ok and downstream station free}
+    - {from: S12, to: S16, condition: 2 s in step 12 and invalid height}
+    - {from: S13, to: S14, condition: Workpiece ejected}
+    - {from: S14, to: S15, condition: 3 s in step 14 or downstream station occupied}
+    - {from: S15, to: S18, condition: Lifting cylinder lowered}
+    - {from: S16, to: S17, condition: Lifting cylinder lowered}
+    - {from: S17, to: S18, condition: Workpiece ejected}
+    - {from: S18, to: S6, condition: Flag "cycle end" is set}

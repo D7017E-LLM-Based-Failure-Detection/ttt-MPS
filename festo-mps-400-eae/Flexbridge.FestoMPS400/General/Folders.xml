@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Folders xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="Flexbridge.FestoMPS400" Version="1.6.0.0" xmlns="http://www.nxtcontrol.com/IEC61499.xsd">
+  <Folder Type="Basic" Name=".Common">
+    <Items />
+  </Folder>
+  <Folder Type="Basic" Name=".Stations">
+    <Items />
+  </Folder>
+  <Folder Type="Basic" Name=".Testers">
+    <Items />
+  </Folder>
+  <Folder Type="CAT" Name=".Actuators">
+    <Items />
+  </Folder>
+  <Folder Type="CAT" Name=".Actuators.Actuator">
+    <Items />
+  </Folder>
+  <Folder Type="CAT" Name=".Actuators.Actuator2OP">
+    <Items />
+  </Folder>
+  <Folder Type="CAT" Name=".Common">
+    <Items />
+  </Folder>
+  <Folder Type="CAT" Name=".Stations">
+    <Items />
+  </Folder>
+  <Folder Type="CAT" Name=".Testers">
+    <Items />
+  </Folder>
+  <Folder Type="Adapter" Name=".Common">
+    <Items />
+  </Folder>
+</Folders>

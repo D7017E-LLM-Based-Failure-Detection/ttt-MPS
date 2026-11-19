@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<article xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5.0" xml:id="Flexbridge.FestoMPS400.article_top" xmlns="http://docbook.org/ns/docbook">
+  <info>
+    <title xml:id="Flexbridge.FestoMPS400.article_top.title">Library: Flexbridge.FestoMPS400</title>
+    <authorgroup>
+      <author>
+        <email>sp@flexbridge.se</email>
+        <personname>
+          <firstname>Sandeep</firstname>
+          <surname>Patil</surname>
+        </personname>
+        <personblurb><para></para></personblurb>
+        <affiliation>
+          <jobtitle />
+          <org>
+            <orgname />
+            <orgdiv />
+            <address>
+              <street />
+              <city />
+              <country />
+              <postcode />
+              <phone />
+              <fax />
+            </address>
+          </org>
+        </affiliation>
+      </author>
+    </authorgroup>
+    <org>
+      <orgname>Flexbridge AB</orgname>
+      <orgdiv />
+      <address>
+        <street />
+        <city>Luleå</city>
+        <country>Sweden</country>
+        <postcode>97753</postcode>
+        <phone />
+        <fax />
+      </address>
+    </org>
+    <abstract>Festo MPS400 Library</abstract>
+  </info>
+</article>

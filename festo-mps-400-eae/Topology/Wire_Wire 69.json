@@ -1,0 +1,15 @@
+{
+  "references": [
+    {
+      "diagramPath": "Physical Views",
+      "sourceSide": 0,
+      "destinationSide": 1
+    }
+  ],
+  "label": "Wire 69",
+  "identifier": "Wire 69",
+  "sourceEquipment": "6308def2-7edb-42a2-91dd-9c35044c7b8a",
+  "sourcePortIdentifier": "Port1",
+  "destinationEquipment": "29c905da-d3f8-4990-a95d-5b6c3ea19d32",
+  "destinationPortIdentifier": "Port1"
+}

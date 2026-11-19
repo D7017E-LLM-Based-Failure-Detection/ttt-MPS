@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE FBType SYSTEM "../LibraryElement.dtd" >
+  <FBType Name="Distributing_HMI" Namespace="Flexbridge.FestoMPS400" GUID="7ddd3383-4d33-4f2f-ae06-3b69f8e39ba4" Comment="Service Interface Function Block Type" >
+    <Identification Standard="61499-2" />
+    <VersionInfo Organization="Flexbridge AB" Version="0.0" Author="Sandeep Patil" Date="11/16/2026" Remarks="template" />
+    <InterfaceList>
+      <EventInputs>
+        <Event ID="6737A09B7659076E" Name="INIT">
+          <With Var="QI" />
+        </Event>
+        <Event ID="62451D65A05BFC5F" Name="REQ_ST">
+          <With Var="ModeText" />
+          <With Var="StepText" />
+          <With Var="Waiting" />
+          <With Var="Cycles" />
+          <With Var="StepNo" />
+        </Event>
+      </EventInputs>
+      <EventOutputs>
+        <Event ID="83A5EB3F65229F75" Name="INITO">
+          <With Var="QO" />
+          <With Var="STATUS" />
+        </Event>
+        <Event ID="5A6DA96983B35B7F" Name="HMI_REQ">
+          <With Var="RequestWp" />
+        </Event>
+      </EventOutputs>
+      <InputVars>
+        <VarDeclaration ID="60D39011A5DC5435" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+        <VarDeclaration ID="80700C42CDD9CD3C" Name="ModeText" Type="STRING" Comment="Station mode" />
+        <VarDeclaration ID="495B3BAE541987B8" Name="StepText" Type="STRING" Comment="Current step (number and name)" />
+        <VarDeclaration ID="C5CD5B69C4A2A4B5" Name="Waiting" Type="BOOL" Comment="Waiting for workpieces (magazine empty)" />
+        <VarDeclaration ID="FDE1D18C3E8A9C7D" Name="Cycles" Type="UDINT" Comment="Workpieces handed over since start-up" />
+        <VarDeclaration ID="11DE9692A32E349B" Name="StepNo" Type="INT" Comment="Current step number" />
+      </InputVars>
+      <OutputVars>
+        <VarDeclaration ID="FE3B29F9F3F3321B" Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+        <VarDeclaration ID="26AF99453CABA2A0" Name="STATUS" Type="STRING" Comment="Service Status" />
+        <VarDeclaration ID="B10B0BD5911C86AB" Name="RequestWp" Type="BOOL" Comment="Button: request one workpiece (stands in for Testing)" />
+      </OutputVars>
+    </InterfaceList>
+    <Service RightInterface="" LeftInterface="">
+      <ServiceSequence Name= "" />
+    </Service>
+  </FBType>
+  

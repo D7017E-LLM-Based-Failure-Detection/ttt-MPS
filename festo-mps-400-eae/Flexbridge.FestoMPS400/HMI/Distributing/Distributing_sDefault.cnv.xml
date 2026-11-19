@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Mapping>
+  <EventInputs>
+    <Event Name="REQ_ST">ModeText;StepText;Waiting;Cycles;StepNo</Event>
+  </EventInputs>
+  <EventOutputs>
+    <Event Name="HMI_REQ">RequestWp</Event>
+  </EventOutputs>
+  <Inputs>
+    <Input Name="ModeText" Type="STRING" />
+    <Input Name="StepText" Type="STRING" />
+    <Input Name="Waiting" Type="BOOL" />
+    <Input Name="Cycles" Type="UDINT" />
+    <Input Name="StepNo" Type="INT" />
+  </Inputs>
+  <Outputs>
+    <Output Name="RequestWp" Type="BOOL" />
+  </Outputs>
+</Mapping>

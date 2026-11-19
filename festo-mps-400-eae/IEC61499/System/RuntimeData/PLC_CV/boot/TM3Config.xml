@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<TM3 xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <MASTER name="TM3Config" FirstReceiverModuleIndex="-1" busCycle="T#80ms" busTolerance="30" busActionMissedCycle="1">
+    <TASK Id="t1" slice="0" />
+  </MASTER>
+  <MODULE name="TM3DI16G" slotNr="0" powerConsumption5V="34" powerConsumption24V="0" powerSupply5V="0" powerSupply24V="0">
+    <KPI_DEVDESC_DEFINITION NbIdCode="1" IdCode1="128" IdCode2="0" TM2AnalogModuleType="0" ImplicitPageIndex="0" ImplicitReadSize="2" ImplicitReadAddr="0" ImplicitInOffset="-1" ImplicitWriteSize="0" ImplicitWriteAddr="0" ImplicitOutOffset="-1" ImplicitReadSize2="0" ImplicitWriteSize2="0" StatusInImplicit="0" StatusPageIndex="0" StatusSize="0" StatusAddr="0" ConfPageIndex="0" ConfForSpecialModuleSize="0" ConfForSpecialModuleAddr="0" InterByteDelayDC2="-1" />
+    <Parameters MinHWVersion="0" array="24242424242424242424242424242424" optionalModule="0" />
+  </MODULE>
+  <MODULE name="TM3DQ16R_G" slotNr="1" powerConsumption5V="37" powerConsumption24V="77" powerSupply5V="0" powerSupply24V="0">
+    <KPI_DEVDESC_DEFINITION NbIdCode="1" IdCode1="129" IdCode2="0" TM2AnalogModuleType="0" ImplicitPageIndex="0" ImplicitReadSize="0" ImplicitReadAddr="0" ImplicitInOffset="-1" ImplicitWriteSize="2" ImplicitWriteAddr="0" ImplicitOutOffset="-1" ImplicitReadSize2="0" ImplicitWriteSize2="0" StatusInImplicit="0" StatusPageIndex="0" StatusSize="0" StatusAddr="0" ConfPageIndex="0" ConfForSpecialModuleSize="0" ConfForSpecialModuleAddr="0" InterByteDelayDC2="-1" />
+    <Parameters MinHWVersion="0" array="" optionalModule="0" />
+  </MODULE>
+  <MODULE name="TM3DI16G" slotNr="2" powerConsumption5V="34" powerConsumption24V="0" powerSupply5V="0" powerSupply24V="0">
+    <KPI_DEVDESC_DEFINITION NbIdCode="1" IdCode1="128" IdCode2="0" TM2AnalogModuleType="0" ImplicitPageIndex="0" ImplicitReadSize="2" ImplicitReadAddr="0" ImplicitInOffset="-1" ImplicitWriteSize="0" ImplicitWriteAddr="0" ImplicitOutOffset="-1" ImplicitReadSize2="0" ImplicitWriteSize2="0" StatusInImplicit="0" StatusPageIndex="0" StatusSize="0" StatusAddr="0" ConfPageIndex="0" ConfForSpecialModuleSize="0" ConfForSpecialModuleAddr="0" InterByteDelayDC2="-1" />
+    <Parameters MinHWVersion="0" array="24242424242424242424242424242424" optionalModule="0" />
+  </MODULE>
+  <MODULE name="TM3DQ16R_G" slotNr="3" powerConsumption5V="37" powerConsumption24V="77" powerSupply5V="0" powerSupply24V="0">
+    <KPI_DEVDESC_DEFINITION NbIdCode="1" IdCode1="129" IdCode2="0" TM2AnalogModuleType="0" ImplicitPageIndex="0" ImplicitReadSize="0" ImplicitReadAddr="0" ImplicitInOffset="-1" ImplicitWriteSize="2" ImplicitWriteAddr="0" ImplicitOutOffset="-1" ImplicitReadSize2="0" ImplicitWriteSize2="0" StatusInImplicit="0" StatusPageIndex="0" StatusSize="0" StatusAddr="0" ConfPageIndex="0" ConfForSpecialModuleSize="0" ConfForSpecialModuleAddr="0" InterByteDelayDC2="-1" />
+    <Parameters MinHWVersion="0" array="" optionalModule="0" />
+  </MODULE>
+</TM3>
