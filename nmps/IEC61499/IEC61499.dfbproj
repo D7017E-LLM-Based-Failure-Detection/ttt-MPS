@@ -257,26 +257,6 @@
     <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.doc.xml">
       <DependentUpon>0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system</DependentUpon>
     </None>
-    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\00251bb5-91b6-4cb3-8f75-d660b9ee88f5.hcf">
-      <IEC61499Type>SystemDevice</IEC61499Type>
-      <DependentUpon>00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev</DependentUpon>
-    </None>
-    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\00251bb5-91b6-4cb3-8f75-d660b9ee88f5.Simulation.Binding.xml">
-      <IEC61499Type>SystemDevice</IEC61499Type>
-      <DependentUpon>00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev</DependentUpon>
-    </None>
-    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\00251bb5-91b6-4cb3-8f75-d660b9ee88f5.Simulation.Binding.xml">
-      <IEC61499Type>SystemDevice</IEC61499Type>
-      <DependentUpon>00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev</DependentUpon>
-    </None>
-    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\E0601B81-4A3A-4A96-B6C2-007BDC680D59.Properties.xml">
-      <IEC61499Type>SystemDevice</IEC61499Type>
-      <DependentUpon>00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev</DependentUpon>
-    </None>
-    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\F513CAE3-7194-4086-936C-02912EA0B352.Properties.xml">
-      <IEC61499Type>SystemDevice</IEC61499Type>
-      <DependentUpon>00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev</DependentUpon>
-    </None>
     <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18\0d5eb44a-26f1-468d-8caa-7f6bfe966b18.hcf">
       <IEC61499Type>SystemDevice</IEC61499Type>
       <DependentUpon>0d5eb44a-26f1-468d-8caa-7f6bfe966b18.sysdev</DependentUpon>
@@ -330,14 +310,6 @@
     <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system">
       <IEC61499Type>System</IEC61499Type>
     </Compile>
-    <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev">
-      <DependentUpon>0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system</DependentUpon>
-      <IEC61499Type>SystemDevice</IEC61499Type>
-    </Compile>
-    <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\94A9E705D870998C.sysres">
-      <DependentUpon>00251bb5-91b6-4cb3-8f75-d660b9ee88f5.sysdev</DependentUpon>
-      <IEC61499Type>SystemResource</IEC61499Type>
-    </Compile>
     <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18.sysdev">
       <IEC61499Type>SystemDevice</IEC61499Type>
       <DependentUpon>0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system</DependentUpon>
@@ -363,24 +335,6 @@
     <Folder Include="Log" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\94A9E705D870998C\offline.xml">
-      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
-      <Plugin>OfflineParametrizationEditor</Plugin>
-      <DependentUpon>94A9E705D870998C.sysres</DependentUpon>
-    </Content>
-    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\94A9E705D870998C\opcua.xml">
-      <DependentUpon>94A9E705D870998C.sysres</DependentUpon>
-      <Plugin>OPCUAConfigurator</Plugin>
-      <IEC61499Type>CAT_OPCUA</IEC61499Type>
-    </Content>
-    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\94A9E705D870998C\opcuaclient.xml">
-      <IEC61499Type>CAT_OPCUACLIENT</IEC61499Type>
-      <Plugin>OPCUAClientConfigurator</Plugin>
-      <DependentUpon>94A9E705D870998C.sysres</DependentUpon>
-    </Content>
-    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\00251bb5-91b6-4cb3-8f75-d660b9ee88f5\94A9E705D870998C\symlink.xml">
-      <DependentUpon>94A9E705D870998C.sysres</DependentUpon>
-    </Content>
     <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18\32BAD17BD48389\offline.xml">
       <IEC61499Type>CAT_OFFLINE</IEC61499Type>
       <DependentUpon>32BAD17BD48389.sysres</DependentUpon>

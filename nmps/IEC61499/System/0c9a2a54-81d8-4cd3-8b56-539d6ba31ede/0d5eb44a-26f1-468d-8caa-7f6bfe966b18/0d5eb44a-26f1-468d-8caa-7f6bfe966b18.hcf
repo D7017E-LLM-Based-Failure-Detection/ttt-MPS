@@ -29,21 +29,21 @@
         </ItemProperty>
         <ItemProperty>
           <Name>buscycletolerance</Name>
-          <Value xsi:type="xsd:unsignedInt">30</Value>
+          <Value xsi:type="xsd:string">30</Value>
           <HWParameters>
             <string>busCycleTolerance</string>
           </HWParameters>
         </ItemProperty>
         <ItemProperty>
           <Name>buscycleactionwhenmissed</Name>
-          <Value xsi:type="xsd:unsignedInt">1</Value>
+          <Value xsi:type="xsd:string">1</Value>
           <HWParameters>
             <string>busCycleActionWhenMissed</string>
           </HWParameters>
         </ItemProperty>
         <ItemProperty>
           <Name>enableSymlinkOC</Name>
-          <Value xsi:type="xsd:boolean">true</Value>
+          <Value xsi:type="xsd:string">TRUE</Value>
           <HWParameters>
             <string>enableSymlinkOC</string>
           </HWParameters>
@@ -217,7 +217,7 @@
             </ItemProperty>
           </ItemProperties>
           <ParameterValues>
-            <ParameterValue Name="DI00" Value="" IsSymlink="true" />
+            <ParameterValue Name="DI00" Value="&quot;" IsSymlink="true" />
             <ParameterValue Name="DI01" Value="" IsSymlink="true" />
             <ParameterValue Name="DI02" Value="" IsSymlink="true" />
             <ParameterValue Name="DI03" Value="" IsSymlink="true" />

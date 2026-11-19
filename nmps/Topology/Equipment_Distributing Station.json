@@ -88,7 +88,7 @@
     {
       "uuid": "d1a7650d-f496-4f9d-acd1-29a73a3bf149",
       "typeId": "6ff4ba70-02c6-4b8f-a716-f4bbd6b3d19e",
-      "logicalDeviceId": "00000000-0000-0000-0000-000000000000",
+      "logicalDeviceId": "0d5eb44a-26f1-468d-8caa-7f6bfe966b18",
       "runtimeServices": [
         {
           "identifier": "Deployment"
