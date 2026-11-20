@@ -34,6 +34,8 @@ namespace HMI.Main.Canvases
 			this.sDefault6 = new SE.App2CommonProcess.Symbols.DigitalInput.sDefault();
 			this.sHead1 = new SE.AppSequence.Symbols.SeqHead.sHead();
 			this.sHead2 = new SE.AppSequence.Symbols.SeqHead.sHead();
+			this.alarmGrid1 = new NxtControl.GuiFramework.AlarmGrid();
+			((System.ComponentModel.ISupportInitialize)(this.alarmGrid1)).BeginInit();
 			// 
 			// sDefault1
 			// 
@@ -155,9 +157,47 @@ namespace HMI.Main.Canvases
 			this.sHead2.TagName = "33A16FB4708913B3.Cycle.CycleSeq";
 			this.sHead2.EndInit();
 			// 
+			// alarmGrid1
+			// 
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.Shortcut, true, null, 32));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.Ack, true, null, 40));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.Origin, true, null, 200));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.Text, true, null, 100));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.CameTime, true, null, 130));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.GoneTime, true, null, 130));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.Present, true, null, 48));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.State, true, null, 0));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.Value, true, null, 80));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.InfoValue, true, null, 80));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.CameAckTime, false, null, 0));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.GoneAckTime, false, null, 0));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.Interval, false, null, 0));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.CameAckUser, false, null, 0));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.GoneAckUser, false, null, 0));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.Path, false, null, 0));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.Alias, false, null, 0));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.Time, false, null, 0));
+			this.alarmGrid1.AlarmColumns.Add(new NxtControl.GuiFramework.AlarmColumnInformation(NxtControl.GuiFramework.AlarmColumn.Selected, true, null, 25));
+			this.alarmGrid1.AlarmFilter = new NxtControl.GuiFramework.AlarmConfiguration("");
+			this.alarmGrid1.AlternatingRowColor = System.Drawing.Color.Empty;
+			this.alarmGrid1.BackColor = System.Drawing.SystemColors.AppWorkspace;
+			this.alarmGrid1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.alarmGrid1.Font = new NxtControl.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular);
+			this.alarmGrid1.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.alarmGrid1.GridCellBackColor = System.Drawing.SystemColors.Window;
+			this.alarmGrid1.HeaderBackColor = System.Drawing.SystemColors.Control;
+			this.alarmGrid1.HeaderForeColor = System.Drawing.SystemColors.WindowText;
+			this.alarmGrid1.Location = new System.Drawing.Point(872, 16);
+			this.alarmGrid1.Name = "alarmGrid1";
+			this.alarmGrid1.SecurityLevel = 3;
+			this.alarmGrid1.Size = new System.Drawing.Size(926, 414);
+			this.alarmGrid1.Text = "alarmGrid1";
+			this.alarmGrid1.ToolBarBackColor = System.Drawing.SystemColors.AppWorkspace;
+			this.alarmGrid1.ToolBarForeColor = System.Drawing.SystemColors.ControlText;
+			// 
 			// Distribution
 			// 
-			this.Bounds = new NxtControl.Drawing.RectF(((float)(0D)), ((float)(0D)), ((float)(1032D)), ((float)(600D)));
+			this.Bounds = new NxtControl.Drawing.RectF(((float)(0D)), ((float)(0D)), ((float)(1808D)), ((float)(704D)));
 			this.Brush = new NxtControl.Drawing.Brush("CanvasBrush");
 			this.Shapes.AddRange(new System.ComponentModel.IComponent[] {
 			this.sDefault1,
@@ -167,8 +207,10 @@ namespace HMI.Main.Canvases
 			this.sDefault5,
 			this.sDefault6,
 			this.sHead1,
-			this.sHead2});
-			this.Size = new System.Drawing.Size(1032, 600);
+			this.sHead2,
+			this.alarmGrid1});
+			this.Size = new System.Drawing.Size(1808, 704);
+			((System.ComponentModel.ISupportInitialize)(this.alarmGrid1)).EndInit();
 
 		}
 		private SE.App2CommonProcess.Symbols.Valve.sDefault sDefault1;
@@ -179,6 +221,7 @@ namespace HMI.Main.Canvases
 		private SE.App2CommonProcess.Symbols.DigitalInput.sDefault sDefault6;
 		private SE.AppSequence.Symbols.SeqHead.sHead sHead1;
 		private SE.AppSequence.Symbols.SeqHead.sHead sHead2;
+		private NxtControl.GuiFramework.AlarmGrid alarmGrid1;
 		#endregion
 	}
 }

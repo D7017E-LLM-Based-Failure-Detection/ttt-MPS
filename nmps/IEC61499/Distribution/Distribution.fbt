@@ -36,8 +36,8 @@
     <FB ID="46A6896A3BC8F000" Name="DownstreamFree" Type="DigitalInput" x="120" y="420" Namespace="SE.App2CommonProcess" />
     <FB ID="E97FD2E6D42C4155" Name="MagazineEmpty" Type="DigitalInput" x="3820" y="2580" Namespace="SE.App2CommonProcess" />
     <FB ID="F346BF531D8915E6" Name="EjectorPerm" Type="permCondItem" x="560" y="2300" Namespace="SE.App2CommonProcess">
-      <Parameter Name="$CondCause" Value="Active1" />
-      <Parameter Name="$CondName" Value="'Arm at Downstream'" />
+      <Parameter Name="$CondCause" Value="NotActive2" />
+      <Parameter Name="$CondName" Value="'Arm Clear of Magazine'" />
       <Parameter Name="$CondPos" Value="Active1" />
     </FB>
     <FB ID="66B66E593870410C" Name="SwivelPerm" Type="permCondItem" x="520" y="1320" Namespace="SE.App2CommonProcess">
@@ -105,14 +105,14 @@
     </EventConnections>
     <DataConnections>
       <Connection Source="$290E8CBB7083A708.FbClosed" Destination="$587ED4C7F6989425.60387A5202353395" dx1="60" />
-      <Connection Source="$DA014101550A683C.FbClosed" Destination="$587ED4C7F6989425.DDDAB227DF90F2E9" dx1="92.12524" />
+      <Connection Source="$DA014101550A683C.FbClosed" Destination="$587ED4C7F6989425.DDDAB227DF90F2E9" dx1="112.1252" />
       <Connection Source="$0FBBAF14BDC70C34.FbClosed" Destination="$587ED4C7F6989425.22FAB5CD31E08CC4" dx1="222.125">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$290E8CBB7083A708.FbOpened" Destination="$97DD9E0F686AACAA.102E354520A9B5EF" dx1="122.1252">
+      <Connection Source="$290E8CBB7083A708.FbOpened" Destination="$97DD9E0F686AACAA.102E354520A9B5EF" dx1="162.1252">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$290E8CBB7083A708.FbClosed" Destination="$97DD9E0F686AACAA.3E0D46D015AC4734" dx1="142.1252">
+      <Connection Source="$290E8CBB7083A708.FbClosed" Destination="$97DD9E0F686AACAA.3E0D46D015AC4734" dx1="262.1252">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
       <Connection Source="$0FBBAF14BDC70C34.FbClosed" Destination="$97DD9E0F686AACAA.F50145A9F34B3204" dx1="362.125">
@@ -127,6 +127,8 @@
       <Connection Source="$DA014101550A683C.FbOpen" Destination="$97DD9E0F686AACAA.279E4466CE606266" dx1="642.1252">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
+      <Connection Source="$DA014101550A683C.FbStopped" Destination="$587ED4C7F6989425.7A3C1E904B2D8F15" dx1="72.12524" />
+      <Connection Source="$DA014101550A683C.FbStopped" Destination="$97DD9E0F686AACAA.9F1C4E72A38D6B05" dx1="1192.125" />
       <Connection Source="$E97FD2E6D42C4155.Pv" Destination="$97DD9E0F686AACAA.795155DF007843B9" dx1="71.396" />
       <Connection Source="$46A6896A3BC8F000.Pv" Destination="$97DD9E0F686AACAA.041FFAAD79F17532">
         <Points>
@@ -148,11 +150,11 @@
           </Points>
           <Points>
             <X>930</X>
-            <Y>625</Y>
+            <Y>640</Y>
           </Points>
           <Points>
             <X>1225</X>
-            <Y>625</Y>
+            <Y>640</Y>
           </Points>
         </Points>
         <AvoidsNodes>false</AvoidsNodes>

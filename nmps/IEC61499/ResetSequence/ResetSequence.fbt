@@ -20,6 +20,7 @@
       </Event>
       <Event ID="A5069DC6B641011A" Name="SwivelFb">
         <With Var="SwivelClosed" />
+        <With Var="SwivelStopped" />
       </Event>
     </EventInputs>
     <EventOutputs>
@@ -35,6 +36,7 @@
       <VarDeclaration ID="60387A5202353395" Name="VacuumClosed" Type="BOOL" />
       <VarDeclaration ID="22FAB5CD31E08CC4" Name="EjectorClosed" Type="BOOL" />
       <VarDeclaration ID="DDDAB227DF90F2E9" Name="SwivelClosed" Type="BOOL" />
+      <VarDeclaration ID="7A3C1E904B2D8F15" Name="SwivelStopped" Type="BOOL" />
     </InputVars>
     <OutputVars>
       <VarDeclaration ID="B133354228B36B47" Name="QO" Type="BOOL" Comment="Output event qualifier" />
@@ -47,11 +49,13 @@
     <FB ID="B5E0BF5347962E31" Name="RS1_TakeOver" Type="SeqStep" x="1800" y="1980" Namespace="SE.AppSequence">
       <Parameter Name="$TransStepId" Value="2" />
     </FB>
-    <FB ID="102A8A1E000FD7EE" Name="RS_End" Type="SeqTerminate" x="6220" y="2300" Namespace="SE.AppSequence" />
-    <FB ID="E8B060603293B56D" UID="6FECAA455D74CBBA" Name="Consts" Type="ANY2ANY_56AF98AE16FC030" x="1120" y="280" Namespace="Main">
-      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=2;IN${CNT}:BOOL,INT;OUT${CNT}:VTQBOOL,VTQINT" />
+    <FB ID="102A8A1E000FD7EE" Name="RS_End" Type="SeqTerminate" x="8300" y="2300" Namespace="SE.AppSequence" />
+    <FB ID="E8B060603293B56D" UID="6FECAA455D74CBBA" Name="Consts" Type="ANY2ANY_25FC8D56FEEDC9B5" x="1120" y="280" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=4;IN${CNT}:BOOL,INT,INT,INT;OUT${CNT}:VTQBOOL,VTQINT,VTQINT,VTQINT" />
       <Parameter Name="$IN1" Value="TRUE" />
-      <Parameter Name="$IN2" Value="2" />
+      <Parameter Name="$IN2" Value="1" />
+      <Parameter Name="$IN3" Value="2" />
+      <Parameter Name="$IN4" Value="0" />
     </FB>
     <FB ID="EB8752CCEFA7B77F" Name="RS3_EjectorBack" Type="SeqStep" x="4140" y="1900" Namespace="SE.AppSequence">
       <Parameter Name="$TransStepId" Value="4" />
@@ -62,7 +66,13 @@
     <FB ID="989FC97A4AA4EE54" Name="RS4_SwivelHome" Type="SeqStep" x="5200" y="1980" Namespace="SE.AppSequence">
       <Parameter Name="$TransStepId" Value="5" />
     </FB>
-    <FB ID="1AADE139AB34F90D" UID="A3CDBE3CCD72128D" Name="OwnerFb" Type="SYMLINKMULTIVARDST_105A0442B8CC61A96" x="860" y="860" Namespace="Main">
+    <FB ID="5A2D8E41C7F39B60" Name="RS5_SwivelOffMag" Type="SeqStep" x="6220" y="1980" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="6" />
+    </FB>
+    <FB ID="9E7B1C34A85D2F10" Name="RS6_SwivelParkStop" Type="SeqStep" x="7260" y="1980" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="7" />
+    </FB>
+    <FB ID="1AADE139AB34F90D" UID="A3CDBE3CCD72128D" Name="OwnerFb" Type="SYMLINKMULTIVARDST_105A0442B8CC61A96" x="859.9999" y="859.9999" Namespace="Main">
       <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=3;VALUE${I}:VTQBOOL,VTQBOOL,VTQBOOL" />
       <Parameter Name="$NAME1" Value="'RES0.Distribution.Vacuum.sc.progLocal'" />
       <Parameter Name="$NAME2" Value="'RES0.Distribution.Ejector.sc.progLocal'" />
@@ -95,6 +105,19 @@
       <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=3;OUT:BOOL" />
       <Parameter Name="$IN3" Value="TRUE" />
     </FB>
+    <FB ID="8B4F2C19A37E5D01" Name="ArmOffMag" Type="NOT_42C76073DCEB1A7A" x="6000" y="1500" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=1;OUT${CNT}:BOOL" />
+    </FB>
+    <FB ID="6C9E4A12D50B83F7" Name="SwivelOutCmd" Type="SYMLINKMULTIVARSRC_18556BCA74EA878F1" x="7060" y="880" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQINT" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'RES0.Distribution.Swivel.sc.lsp'" />
+    </FB>
+    <FB ID="3F81B724E6C90A52" Name="SwivelStopCmd" Type="SYMLINKMULTIVARSRC_18556BCA74EA878F1" x="8020" y="880" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQINT" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'RES0.Distribution.Swivel.sc.lsp'" />
+    </FB>
     <Input ID="9D471DE3BB9549E0" Name="INIT" x="12" y="12" Type="Event" />
     <Input ID="3A6478CB8C29DBDE" Name="REQ" x="12" y="72" Type="Event" />
     <Input ID="62AE8B6350789422" Name="QI" x="12" y="132" Type="Data" />
@@ -104,6 +127,7 @@
     <Input ID="60387A5202353395" Name="VacuumClosed" x="60" y="3212" Type="Data" />
     <Input ID="22FAB5CD31E08CC4" Name="EjectorClosed" x="60" y="3272" Type="Data" />
     <Input ID="DDDAB227DF90F2E9" Name="SwivelClosed" x="60" y="3332" Type="Data" />
+    <Input ID="7A3C1E904B2D8F15" Name="SwivelStopped" x="60" y="3392" Type="Data" />
     <Output ID="2DBC3D4AFEE24AE1" Name="INITO" x="5940" y="91.99999" Type="Event" />
     <Output ID="620F99A55700D018" Name="CNF" x="5960" y="152" Type="Event" />
     <Output ID="B133354228B36B47" Name="QO" x="5840" y="212" Type="Data" />
@@ -114,14 +138,20 @@
       <Connection Source="$E8B060603293B56D.CNF" Destination="$F2EAB24A46F354C2.REQ_PERM" dx1="83.75" dx2="80" dy="460">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$E8B060603293B56D.CNF" Destination="$C6DD4B24A40F4F6C.INIT" dx1="83.75" />
+      <Connection Source="$E8B060603293B56D.CNF" Destination="$C6DD4B24A40F4F6C.INIT" dx1="123.75" />
       <Connection Source="$E8B060603293B56D.CNF" Destination="$0D0C14E146EC6205.INIT" dx1="1843.75" />
       <Connection Source="$E8B060603293B56D.CNF" Destination="$B5B188A17E40EADB.INIT" dx1="3103.75" />
       <Connection Source="$E8B060603293B56D.CNF" Destination="$2FDF516B8BF47FFE.INIT" dx1="4063.75" />
+      <Connection Source="$E8B060603293B56D.CNF" Destination="$6C9E4A12D50B83F7.INIT" dx1="5373.75">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$E8B060603293B56D.CNF" Destination="$3F81B724E6C90A52.INIT" dx1="6393.75">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
       <Connection Source="$E8B060603293B56D.CNF" Destination="$1AADE139AB34F90D.INIT" dx1="83.75" dx2="70.00012" dy="460">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$1AADE139AB34F90D.CNF" Destination="$CF546D7D34777455.REQ" dx1="81.62512" />
+      <Connection Source="$1AADE139AB34F90D.CNF" Destination="$CF546D7D34777455.REQ" dx1="81.625" />
       <Connection Source="$CF546D7D34777455.CNF" Destination="$B5E0BF5347962E31.TRANS_REQ" dx1="67.479" dx2="50" dy="500">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
@@ -131,9 +161,9 @@
       <Connection Source="$C6DD4B24A40F4F6C.CNF" Destination="$CF546D7D34777455.REQ" dx1="40" dx2="99.99988" dy="-170">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$4814D7CDF90C0A7F.STEP_ENTER" Destination="$0D0C14E146EC6205.REQ" dx1="50" />
+      <Connection Source="$4814D7CDF90C0A7F.STEP_ENTER" Destination="$0D0C14E146EC6205.REQ" dx1="55.146" dx2="90" dy="-170" />
       <Connection Source="$EB8752CCEFA7B77F.STEP_ENTER" Destination="$B5B188A17E40EADB.REQ" dx1="55.146" dx2="90" dy="-170" />
-      <Connection Source="$989FC97A4AA4EE54.STEP_ENTER" Destination="$2FDF516B8BF47FFE.REQ" dx1="55.146" dx2="90" dy="-169.9998" />
+      <Connection Source="$989FC97A4AA4EE54.STEP_ENTER" Destination="$2FDF516B8BF47FFE.REQ" dx1="55.146" dx2="130" dy="-170" />
       <Connection Source="$B5B188A17E40EADB.CNF" Destination="$EB8752CCEFA7B77F.TRANS_REQ" dx1="40" dx2="50" dy="470" />
       <Connection Source="$0D0C14E146EC6205.CNF" Destination="$4814D7CDF90C0A7F.TRANS_REQ" dx1="86.875" dx2="270" dy="730.0001">
         <AvoidsNodes>false</AvoidsNodes>
@@ -145,14 +175,14 @@
         <Points>
           <Points>
             <X>103.578125</X>
-            <Y>424.999939</Y>
+            <Y>424.999969</Y>
           </Points>
           <Points>
-            <X>113.578125</X>
-            <Y>424.999939</Y>
+            <X>112.5</X>
+            <Y>424.999969</Y>
           </Points>
           <Points>
-            <X>113.578125</X>
+            <X>112.5</X>
             <Y>427.5</Y>
           </Points>
           <Points>
@@ -164,7 +194,7 @@
             <Y>495</Y>
           </Points>
           <Points>
-            <X>764.999939</X>
+            <X>765</X>
             <Y>495</Y>
           </Points>
         </Points>
@@ -173,6 +203,72 @@
       <Connection Source="$A5069DC6B641011A" Destination="$989FC97A4AA4EE54.TRANS_REQ" dx1="4618.417">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
+      <Connection Source="$5A2D8E41C7F39B60.STEP_ENTER" Destination="$6C9E4A12D50B83F7.REQ" dx1="55.14648" dx2="90" dy="-170" />
+      <Connection Source="$6C9E4A12D50B83F7.CNF" Destination="$8B4F2C19A37E5D01.REQ" dx1="40" dx2="120" dy="-170">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$A5069DC6B641011A" Destination="$8B4F2C19A37E5D01.REQ" dx1="2928.417" />
+      <Connection Source="$8B4F2C19A37E5D01.CNF" Destination="$5A2D8E41C7F39B60.TRANS_REQ">
+        <Points>
+          <Points>
+            <X>1586.5625</X>
+            <Y>385</Y>
+          </Points>
+          <Points>
+            <X>1601.5625</X>
+            <Y>385</Y>
+          </Points>
+          <Points>
+            <X>1601.5625</X>
+            <Y>504.999969</Y>
+          </Points>
+          <Points>
+            <X>1549.99988</X>
+            <Y>504.999969</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$9E7B1C34A85D2F10.STEP_ENTER" Destination="$3F81B724E6C90A52.REQ">
+        <Points>
+          <Points>
+            <X>2013.7135</X>
+            <Y>520</Y>
+          </Points>
+          <Points>
+            <X>2026.2135</X>
+            <Y>520</Y>
+          </Points>
+          <Points>
+            <X>2026.2135</X>
+            <Y>245</Y>
+          </Points>
+          <Points>
+            <X>1999.99988</X>
+            <Y>245</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$3F81B724E6C90A52.CNF" Destination="$9E7B1C34A85D2F10.TRANS_REQ">
+        <Points>
+          <Points>
+            <X>2143.28125</X>
+            <Y>245</Y>
+          </Points>
+          <Points>
+            <X>2153.28125</X>
+            <Y>245</Y>
+          </Points>
+          <Points>
+            <X>2153.28125</X>
+            <Y>504.999969</Y>
+          </Points>
+          <Points>
+            <X>1810</X>
+            <Y>504.999969</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$A5069DC6B641011A" Destination="$9E7B1C34A85D2F10.TRANS_REQ" dx1="6668.417" />
     </EventConnections>
     <DataConnections>
       <Connection Source="$E8B060603293B56D.OUT1" Destination="$C6DD4B24A40F4F6C.VALUE1">
@@ -210,13 +306,19 @@
       <Connection Source="$E8B060603293B56D.OUT1" Destination="$C6DD4B24A40F4F6C.VALUE3" dx1="733.75">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$E8B060603293B56D.OUT2" Destination="$0D0C14E146EC6205.VALUE1" dx1="1843.75" />
-      <Connection Source="$E8B060603293B56D.OUT2" Destination="$B5B188A17E40EADB.VALUE1" dx1="3213.75">
+      <Connection Source="$E8B060603293B56D.OUT3" Destination="$0D0C14E146EC6205.VALUE1" dx1="1843.75" />
+      <Connection Source="$E8B060603293B56D.OUT3" Destination="$B5B188A17E40EADB.VALUE1" dx1="3213.75">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$E8B060603293B56D.OUT2" Destination="$2FDF516B8BF47FFE.VALUE1" dx1="4063.75" />
-      <Connection Source="$1AADE139AB34F90D.VALUE1" Destination="$CF546D7D34777455.IN1" dx1="61.62512" />
-      <Connection Source="$1AADE139AB34F90D.VALUE2" Destination="$CF546D7D34777455.IN2" dx1="41.62512" />
+      <Connection Source="$E8B060603293B56D.OUT3" Destination="$2FDF516B8BF47FFE.VALUE1" dx1="4063.75" />
+      <Connection Source="$E8B060603293B56D.OUT2" Destination="$6C9E4A12D50B83F7.VALUE1" dx1="5293.75">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$E8B060603293B56D.OUT4" Destination="$3F81B724E6C90A52.VALUE1" dx1="6233.75">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$1AADE139AB34F90D.VALUE1" Destination="$CF546D7D34777455.IN1" dx1="61.625" />
+      <Connection Source="$1AADE139AB34F90D.VALUE2" Destination="$CF546D7D34777455.IN2" dx1="41.625" />
       <Connection Source="$CF546D7D34777455.OUT" Destination="$B5E0BF5347962E31.Exceeded" dx1="47.479" dx2="260" dy="210">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
@@ -227,13 +329,18 @@
       <Connection Source="$DDDAB227DF90F2E9" Destination="$989FC97A4AA4EE54.Exceeded" dx1="4333.396">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
+      <Connection Source="$DDDAB227DF90F2E9" Destination="$8B4F2C19A37E5D01.IN1" dx1="43.39587" />
+      <Connection Source="$8B4F2C19A37E5D01.OUT1" Destination="$5A2D8E41C7F39B60.Exceeded" dx1="43.75" dx2="89.99951" dy="90" />
+      <Connection Source="$7A3C1E904B2D8F15" Destination="$9E7B1C34A85D2F10.Exceeded" dx1="6397.5" />
     </DataConnections>
     <AdapterConnections>
-      <Connection Source="$F2EAB24A46F354C2.ISeqChain" Destination="$B5E0BF5347962E31.ISeqChainIn" dx1="40" />
+      <Connection Source="$F2EAB24A46F354C2.ISeqChain" Destination="$B5E0BF5347962E31.ISeqChainIn" dx1="43.5" />
       <Connection Source="$B5E0BF5347962E31.ISeqChainOut" Destination="$4814D7CDF90C0A7F.ISeqChainIn" dx1="75.146" />
       <Connection Source="$4814D7CDF90C0A7F.ISeqChainOut" Destination="$EB8752CCEFA7B77F.ISeqChainIn" dx1="75.146" />
       <Connection Source="$EB8752CCEFA7B77F.ISeqChainOut" Destination="$989FC97A4AA4EE54.ISeqChainIn" dx1="75.146" />
-      <Connection Source="$989FC97A4AA4EE54.ISeqChainOut" Destination="$102A8A1E000FD7EE.ISeqChainIn" dx1="75.146" />
+      <Connection Source="$989FC97A4AA4EE54.ISeqChainOut" Destination="$5A2D8E41C7F39B60.ISeqChainIn" dx1="75.146" />
+      <Connection Source="$5A2D8E41C7F39B60.ISeqChainOut" Destination="$9E7B1C34A85D2F10.ISeqChainIn" dx1="75.14648" />
+      <Connection Source="$9E7B1C34A85D2F10.ISeqChainOut" Destination="$102A8A1E000FD7EE.ISeqChainIn" dx1="75.146" />
     </AdapterConnections>
   </FBNetwork>
 </FBType>
