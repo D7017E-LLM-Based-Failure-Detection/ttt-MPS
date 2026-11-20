@@ -1,0 +1,632 @@
+{
+    "received_at": "2026-11-19T17:15:22.405Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=2C6165B0-182F-ABF8-604B-07D5F0B6983F",
+    "signal": "TS01/IThis/TrayEmpty",
+    "value": true,
+    "mqtt_topic": "TS01/IThis/TrayEmpty"
+}
+{
+    "received_at": "2026-11-19T17:15:26.841Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=E18F16C9-CEE8-9546-FA87-21B10AE5AFA1",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": true,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:15:27.615Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=11333A85-CE98-757F-E8A7-39E74BBF44BF",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:15:27.766Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=D71407BE-2926-F2C5-EADB-14CC1325856E",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:15:27.847Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=DC754E51-A0C1-776C-28CA-9B08C50947D1",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": true,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:15:32.497Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=DC754E51-A0C1-776C-28CA-9B08C50947D1",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": false,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:15:32.497Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=E18F16C9-CEE8-9546-FA87-21B10AE5AFA1",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": false,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:15:32.5Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=D71407BE-2926-F2C5-EADB-14CC1325856E",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:15:32.5Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=11333A85-CE98-757F-E8A7-39E74BBF44BF",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:15:33.533Z",
+    "plc": "PLC_CV",
+    "node_id": "ns=2;g=52A851B9-A14F-3492-2C7A-C1F58DD80688",
+    "signal": "CV_AB/IThis/DI05",
+    "value": true,
+    "mqtt_topic": "CV_AB/IThis/DI05"
+}
+{
+    "received_at": "2026-11-19T17:15:35.936Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=DC754E51-A0C1-776C-28CA-9B08C50947D1",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": true,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:15:36.549Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=924C4A23-7D40-E528-18B1-2F8E46E05E14",
+    "signal": "TS01/IThis/TrayReleased",
+    "value": true,
+    "mqtt_topic": "TS01/IThis/TrayReleased"
+}
+{
+    "received_at": "2026-11-19T17:15:36.918Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=DC754E51-A0C1-776C-28CA-9B08C50947D1",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": false,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:15:37.632Z",
+    "plc": "PLC_CV",
+    "node_id": "ns=2;g=52A851B9-A14F-3492-2C7A-C1F58DD80688",
+    "signal": "CV_AB/IThis/DI05",
+    "value": false,
+    "mqtt_topic": "CV_AB/IThis/DI05"
+}
+{
+    "received_at": "2026-11-19T17:15:45.597Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=CBC4AE7F-6E11-D8B3-D873-AD2B45B20E4B",
+    "signal": "TS01/IThis/TrayFull",
+    "value": true,
+    "mqtt_topic": "TS01/IThis/TrayFull"
+}
+{
+    "received_at": "2026-11-19T17:15:46.108Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=CBC4AE7F-6E11-D8B3-D873-AD2B45B20E4B",
+    "signal": "TS01/IThis/TrayFull",
+    "value": false,
+    "mqtt_topic": "TS01/IThis/TrayFull"
+}
+{
+    "received_at": "2026-11-19T17:15:48.145Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=924C4A23-7D40-E528-18B1-2F8E46E05E14",
+    "signal": "TS01/IThis/TrayReleased",
+    "value": false,
+    "mqtt_topic": "TS01/IThis/TrayReleased"
+}
+{
+    "received_at": "2026-11-19T17:15:48.166Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=2C6165B0-182F-ABF8-604B-07D5F0B6983F",
+    "signal": "TS01/IThis/TrayEmpty",
+    "value": false,
+    "mqtt_topic": "TS01/IThis/TrayEmpty"
+}
+{
+    "received_at": "2026-11-19T17:15:53.059Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=DC754E51-A0C1-776C-28CA-9B08C50947D1",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": true,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:15:53.067Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=E18F16C9-CEE8-9546-FA87-21B10AE5AFA1",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": true,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:15:53.133Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=11333A85-CE98-757F-E8A7-39E74BBF44BF",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:15:53.72Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=D71407BE-2926-F2C5-EADB-14CC1325856E",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:15:57.149Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=DC754E51-A0C1-776C-28CA-9B08C50947D1",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": false,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:15:57.65Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=D71407BE-2926-F2C5-EADB-14CC1325856E",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:15:58.183Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=E18F16C9-CEE8-9546-FA87-21B10AE5AFA1",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": false,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:15:58.203Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=11333A85-CE98-757F-E8A7-39E74BBF44BF",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:15:59.105Z",
+    "plc": "PLC_CV",
+    "node_id": "ns=2;g=52A851B9-A14F-3492-2C7A-C1F58DD80688",
+    "signal": "CV_AB/IThis/DI05",
+    "value": true,
+    "mqtt_topic": "CV_AB/IThis/DI05"
+}
+{
+    "received_at": "2026-11-19T17:16:02.245Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=924C4A23-7D40-E528-18B1-2F8E46E05E14",
+    "signal": "TS01/IThis/TrayReleased",
+    "value": true,
+    "mqtt_topic": "TS01/IThis/TrayReleased"
+}
+{
+    "received_at": "2026-11-19T17:16:07.221Z",
+    "plc": "PLC_DS",
+    "node_id": "ns=2;g=EE156BCC-111A-32BB-92A1-33E2EEE25AF7",
+    "signal": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": true,
+    "mqtt_topic": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:07.292Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=924C4A23-7D40-E528-18B1-2F8E46E05E14",
+    "signal": "TS01/IThis/TrayReleased",
+    "value": false,
+    "mqtt_topic": "TS01/IThis/TrayReleased"
+}
+{
+    "received_at": "2026-11-19T17:16:07.292Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=2C6165B0-182F-ABF8-604B-07D5F0B6983F",
+    "signal": "TS01/IThis/TrayEmpty",
+    "value": true,
+    "mqtt_topic": "TS01/IThis/TrayEmpty"
+}
+{
+    "received_at": "2026-11-19T17:16:07.823Z",
+    "plc": "PLC_DS",
+    "node_id": "ns=2;g=553F43F2-12AF-A7B7-9AD6-9B2B0F6D52D7",
+    "signal": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:08.137Z",
+    "plc": "PLC_DS",
+    "node_id": "ns=2;g=553F43F2-12AF-A7B7-9AD6-9B2B0F6D52D7",
+    "signal": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:08.379Z",
+    "plc": "PLC_DS",
+    "node_id": "ns=2;g=EE156BCC-111A-32BB-92A1-33E2EEE25AF7",
+    "signal": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": false,
+    "mqtt_topic": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:09.139Z",
+    "plc": "PLC_DS",
+    "node_id": "ns=2;g=553F43F2-12AF-A7B7-9AD6-9B2B0F6D52D7",
+    "signal": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:09.169Z",
+    "plc": "PLC_DS",
+    "node_id": "ns=2;g=553F43F2-12AF-A7B7-9AD6-9B2B0F6D52D7",
+    "signal": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:12.619Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=DC754E51-A0C1-776C-28CA-9B08C50947D1",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": true,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:12.62Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=E18F16C9-CEE8-9546-FA87-21B10AE5AFA1",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": true,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:12.621Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=EC570081-5035-5679-04E8-EA52E4C351AD",
+    "signal": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:13.212Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=D71407BE-2926-F2C5-EADB-14CC1325856E",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:13.213Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=11333A85-CE98-757F-E8A7-39E74BBF44BF",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:13.223Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=EC570081-5035-5679-04E8-EA52E4C351AD",
+    "signal": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:13.483Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=796C382A-CF97-D5D1-AF30-64BE7DB7EB6C",
+    "signal": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": true,
+    "mqtt_topic": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:14.107Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=EC570081-5035-5679-04E8-EA52E4C351AD",
+    "signal": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:14.454Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=EC570081-5035-5679-04E8-EA52E4C351AD",
+    "signal": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:14.474Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=796C382A-CF97-D5D1-AF30-64BE7DB7EB6C",
+    "signal": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": false,
+    "mqtt_topic": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:16.667Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=DC754E51-A0C1-776C-28CA-9B08C50947D1",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": false,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:17.239Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=D71407BE-2926-F2C5-EADB-14CC1325856E",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:17.988Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=11333A85-CE98-757F-E8A7-39E74BBF44BF",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:17.989Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=7D247B1D-A611-00AA-2AB2-45D7DC2FEF89",
+    "signal": "TS01/HeightOk/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/HeightOk/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:18.026Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=E18F16C9-CEE8-9546-FA87-21B10AE5AFA1",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": false,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:18.977Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=7D247B1D-A611-00AA-2AB2-45D7DC2FEF89",
+    "signal": "TS01/HeightOk/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/HeightOk/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:20.99Z",
+    "plc": "PLC_CV",
+    "node_id": "ns=2;g=95E83DA1-0981-7124-55EF-2F6AB2EAF224",
+    "signal": "CV_AB/IThis/DI02",
+    "value": false,
+    "mqtt_topic": "CV_AB/IThis/DI02"
+}
+{
+    "received_at": "2026-11-19T17:16:21.945Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=924C4A23-7D40-E528-18B1-2F8E46E05E14",
+    "signal": "TS01/IThis/TrayReleased",
+    "value": true,
+    "mqtt_topic": "TS01/IThis/TrayReleased"
+}
+{
+    "received_at": "2026-11-19T17:16:24.688Z",
+    "plc": "PLC_CV",
+    "node_id": "ns=2;g=52A851B9-A14F-3492-2C7A-C1F58DD80688",
+    "signal": "CV_AB/IThis/DI05",
+    "value": false,
+    "mqtt_topic": "CV_AB/IThis/DI05"
+}
+{
+    "received_at": "2026-11-19T17:16:26.361Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=924C4A23-7D40-E528-18B1-2F8E46E05E14",
+    "signal": "TS01/IThis/TrayReleased",
+    "value": false,
+    "mqtt_topic": "TS01/IThis/TrayReleased"
+}
+{
+    "received_at": "2026-11-19T17:16:26.362Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=2C6165B0-182F-ABF8-604B-07D5F0B6983F",
+    "signal": "TS01/IThis/TrayEmpty",
+    "value": false,
+    "mqtt_topic": "TS01/IThis/TrayEmpty"
+}
+{
+    "received_at": "2026-11-19T17:16:26.446Z",
+    "plc": "PLC_DS",
+    "node_id": "ns=2;g=EE156BCC-111A-32BB-92A1-33E2EEE25AF7",
+    "signal": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": true,
+    "mqtt_topic": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:27.781Z",
+    "plc": "PLC_DS",
+    "node_id": "ns=2;g=553F43F2-12AF-A7B7-9AD6-9B2B0F6D52D7",
+    "signal": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:28.053Z",
+    "plc": "PLC_DS",
+    "node_id": "ns=2;g=553F43F2-12AF-A7B7-9AD6-9B2B0F6D52D7",
+    "signal": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:28.984Z",
+    "plc": "PLC_DS",
+    "node_id": "ns=2;g=EE156BCC-111A-32BB-92A1-33E2EEE25AF7",
+    "signal": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": false,
+    "mqtt_topic": "DS01/MagazineEmpty/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:31.397Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=DC754E51-A0C1-776C-28CA-9B08C50947D1",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": true,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:31.397Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=E18F16C9-CEE8-9546-FA87-21B10AE5AFA1",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": true,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:31.944Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=D71407BE-2926-F2C5-EADB-14CC1325856E",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:31.945Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=11333A85-CE98-757F-E8A7-39E74BBF44BF",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:32.48Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=796C382A-CF97-D5D1-AF30-64BE7DB7EB6C",
+    "signal": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": true,
+    "mqtt_topic": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:33.462Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=EC570081-5035-5679-04E8-EA52E4C351AD",
+    "signal": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:33.463Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=EC570081-5035-5679-04E8-EA52E4C351AD",
+    "signal": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:33.607Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=796C382A-CF97-D5D1-AF30-64BE7DB7EB6C",
+    "signal": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": false,
+    "mqtt_topic": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:35.448Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=DC754E51-A0C1-776C-28CA-9B08C50947D1",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": false,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:36.603Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=D71407BE-2926-F2C5-EADB-14CC1325856E",
+    "signal": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/PartAvailable/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:36.603Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=EC570081-5035-5679-04E8-EA52E4C351AD",
+    "signal": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:36.606Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=11333A85-CE98-757F-E8A7-39E74BBF44BF",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:36.606Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=EC570081-5035-5679-04E8-EA52E4C351AD",
+    "signal": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/LightBarrier/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:36.606Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=7D247B1D-A611-00AA-2AB2-45D7DC2FEF89",
+    "signal": "TS01/HeightOk/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": false,
+    "mqtt_topic": "TS01/HeightOk/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:36.611Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=E18F16C9-CEE8-9546-FA87-21B10AE5AFA1",
+    "signal": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue",
+    "value": false,
+    "mqtt_topic": "TS01/NotBlack/digitalInputBaseExt/digitalInputBase/IThis/InputValue"
+}
+{
+    "received_at": "2026-11-19T17:16:37.166Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=7D247B1D-A611-00AA-2AB2-45D7DC2FEF89",
+    "signal": "TS01/HeightOk/digitalInputBaseExt/digitalInputBase/IThis/Pv",
+    "value": true,
+    "mqtt_topic": "TS01/HeightOk/digitalInputBaseExt/digitalInputBase/IThis/Pv"
+}
+{
+    "received_at": "2026-11-19T17:16:37.809Z",
+    "plc": "PLC_CV",
+    "node_id": "ns=2;g=52A851B9-A14F-3492-2C7A-C1F58DD80688",
+    "signal": "CV_AB/IThis/DI05",
+    "value": true,
+    "mqtt_topic": "CV_AB/IThis/DI05"
+}
+{
+    "received_at": "2026-11-19T17:16:41.108Z",
+    "plc": "PLC_TS",
+    "node_id": "ns=2;g=924C4A23-7D40-E528-18B1-2F8E46E05E14",
+    "signal": "TS01/IThis/TrayReleased",
+    "value": true,
+    "mqtt_topic": "TS01/IThis/TrayReleased"
+}
