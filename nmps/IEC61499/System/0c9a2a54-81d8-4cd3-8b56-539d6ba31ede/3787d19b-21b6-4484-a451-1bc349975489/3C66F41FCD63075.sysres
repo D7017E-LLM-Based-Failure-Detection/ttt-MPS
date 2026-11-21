@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="3C66F41FCD63075" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management" Format="2.0" xmlns="https://www.se.com/LibraryElements">
+  <FBNetwork />
+</Resource>
