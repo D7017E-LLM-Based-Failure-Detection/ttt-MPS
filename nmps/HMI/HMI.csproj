@@ -203,6 +203,30 @@
     <Compile Include="StartCanvas_2.cnv.Designer.cs">
       <DependentUpon>StartCanvas_2.cnv.cs</DependentUpon>
     </Compile>
+    <Compile Include="Testing.cnv.cs">
+      <Canvas>true</Canvas>
+    </Compile>
+    <Compile Include="Testing.cnv.Designer.cs">
+      <DependentUpon>Testing.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Testing\Testing.def.cs" />
+    <Compile Include="Testing\Testing.event.cs" />
+    <Compile Include="Testing\Testing_sDefault.cnv.cs" />
+    <Compile Include="Testing\Testing_sDefault.cnv.Designer.cs">
+      <DependentUpon>Testing_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestingCycle\TestingCycle.def.cs" />
+    <Compile Include="TestingCycle\TestingCycle.event.cs" />
+    <Compile Include="TestingCycle\TestingCycle_sDefault.cnv.cs" />
+    <Compile Include="TestingCycle\TestingCycle_sDefault.cnv.Designer.cs">
+      <DependentUpon>TestingCycle_sDefault.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestingReset\TestingReset.def.cs" />
+    <Compile Include="TestingReset\TestingReset.event.cs" />
+    <Compile Include="TestingReset\TestingReset_sDefault.cnv.cs" />
+    <Compile Include="TestingReset\TestingReset_sDefault.cnv.Designer.cs">
+      <DependentUpon>TestingReset_sDefault.cnv.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Alarms\AlarmClasses.xml" />
@@ -251,6 +275,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StartCanvas_2.cnv.resx">
       <DependentUpon>StartCanvas_2.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Testing.cnv.resx">
+      <DependentUpon>Testing.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Testing\Testing.Design.resx" />
+    <EmbeddedResource Include="Testing\Testing_sDefault.cnv.resx">
+      <DependentUpon>Testing_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Testing\Testing_sDefault.cnv.xml">
+      <DependentUpon>Testing_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestingCycle\TestingCycle.Design.resx" />
+    <EmbeddedResource Include="TestingCycle\TestingCycle_sDefault.cnv.resx">
+      <DependentUpon>TestingCycle_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestingCycle\TestingCycle_sDefault.cnv.xml">
+      <DependentUpon>TestingCycle_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestingReset\TestingReset.Design.resx" />
+    <EmbeddedResource Include="TestingReset\TestingReset_sDefault.cnv.resx">
+      <DependentUpon>TestingReset_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestingReset\TestingReset_sDefault.cnv.xml">
+      <DependentUpon>TestingReset_sDefault.cnv.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />

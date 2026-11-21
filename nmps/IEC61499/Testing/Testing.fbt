@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="d6ab72be-4e55-4d03-8d10-368d48aed9f5" Name="Testing" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/20/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="65381F6BB52528F5" Name="INIT" Comment="Initialization Request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="B325BA8515AD40F2" Name="REQ" Comment="Normal Execution Request">
+        <With Var="QI" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="CE2C8D3CAF7F4E27" Name="INITO" Comment="Initialization Confirm">
+        <With Var="QO" />
+      </Event>
+      <Event ID="82CC77AFD74F3D0F" Name="CNF" Comment="Execution Confirmation">
+        <With Var="QO" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="38966DBCE8921E8F" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="E4C4E3EF868A560C" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="C100000000000001" Name="Lift" Type="Valve2Op" x="2920" y="500" Namespace="SE.App2CommonProcess" />
+    <FB ID="C100000000000002" Name="Ejector" Type="Valve" x="2440" y="2340" Namespace="SE.App2CommonProcess" />
+    <FB ID="C100000000000003" Name="AirSlide" Type="DigitalOutput" x="4200" y="2360" Namespace="SE.App2CommonProcess" />
+    <FB ID="C100000000000004" Name="PartAvailable" Type="DigitalInput" x="120" y="420" Namespace="SE.App2CommonProcess" />
+    <FB ID="C100000000000005" Name="NotBlack" Type="DigitalInput" x="120" y="1020" Namespace="SE.App2CommonProcess" />
+    <FB ID="C100000000000006" Name="LightBarrier" Type="DigitalInput" x="120" y="1620" Namespace="SE.App2CommonProcess" />
+    <FB ID="C100000000000007" Name="HeightOk" Type="DigitalInput" x="120" y="2220" Namespace="SE.App2CommonProcess" />
+    <FB ID="C100000000000008" Name="LiftPerm" Type="permCondItem" x="1560" y="1200" Namespace="SE.App2CommonProcess">
+      <Parameter Name="$CondCause" Value="Active2" />
+      <Parameter Name="$CondPos" Value="Active1" />
+      <Parameter Name="$CondName" Value="'Ejector Retracted'" />
+    </FB>
+    <FB ID="C100000000000009" Name="EjectorPerm" Type="permCondItem" x="1420" y="2300" Namespace="SE.App2CommonProcess">
+      <Parameter Name="$CondCause" Value="NotPassive" />
+      <Parameter Name="$CondPos" Value="Active1" />
+      <Parameter Name="$CondName" Value="'Lift Not Mid-Travel'" />
+    </FB>
+    <FB ID="C10000000000000A" Name="Reset" Type="TestingReset" x="5300" y="560" Namespace="Main" />
+    <FB ID="C10000000000000B" Name="Cycle" Type="TestingCycle" x="5320" y="1320" Namespace="Main" />
+    <Input ID="65381F6BB52528F5" Name="INIT" x="12" y="12" Type="Event" />
+    <Input ID="B325BA8515AD40F2" Name="REQ" x="12" y="72" Type="Event" />
+    <Input ID="38966DBCE8921E8F" Name="QI" x="12" y="132" Type="Data" />
+    <Output ID="CE2C8D3CAF7F4E27" Name="INITO" x="5560" y="91.99999" Type="Event" />
+    <Output ID="82CC77AFD74F3D0F" Name="CNF" x="5580" y="152" Type="Event" />
+    <Output ID="E4C4E3EF868A560C" Name="QO" x="5460" y="212" Type="Data" />
+    <EventConnections>
+      <Connection Source="$65381F6BB52528F5" Destination="$C10000000000000A.11A71DE3BB9549E0" dx1="3549.417" />
+      <Connection Source="$65381F6BB52528F5" Destination="$C10000000000000B.5129492442D0C9A1" dx1="2319.417">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$C100000000000001.CNF" Destination="$C10000000000000A.13C69DC6B641011A" dx1="100" />
+      <Connection Source="$C100000000000002.CNF" Destination="$C10000000000000A.14498683653FD650" dx1="512.125" />
+      <Connection Source="$C100000000000001.CNF" Destination="$C10000000000000B.53DF47D3663E6E3F" dx1="100" />
+      <Connection Source="$C100000000000002.CNF" Destination="$C10000000000000B.54025A14BE6C5638" dx1="52.125" />
+      <Connection Source="$C100000000000004.CNF" Destination="$C10000000000000B.5519241BD2443AA1">
+        <Points>
+          <Points>
+            <X>229.651031</X>
+            <Y>114.999992</Y>
+          </Points>
+          <Points>
+            <X>242.5</X>
+            <Y>114.999992</Y>
+          </Points>
+          <Points>
+            <X>242.5</X>
+            <Y>117.5</Y>
+          </Points>
+          <Points>
+            <X>660</X>
+            <Y>117.5</Y>
+          </Points>
+          <Points>
+            <X>660</X>
+            <Y>400</Y>
+          </Points>
+          <Points>
+            <X>1325</X>
+            <Y>400</Y>
+          </Points>
+        </Points>
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$C100000000000005.CNF" Destination="$C10000000000000B.5690AF8BD623FEB6" dx1="1591.396" />
+      <Connection Source="$C100000000000007.CNF" Destination="$C10000000000000B.5763E5C8B975CEB9">
+        <Points>
+          <Points>
+            <X>229.651031</X>
+            <Y>565</Y>
+          </Points>
+          <Points>
+            <X>372.5</X>
+            <Y>565</Y>
+          </Points>
+          <Points>
+            <X>372.5</X>
+            <Y>557.5</Y>
+          </Points>
+          <Points>
+            <X>627.5</X>
+            <Y>557.5</Y>
+          </Points>
+          <Points>
+            <X>627.5</X>
+            <Y>430</Y>
+          </Points>
+          <Points>
+            <X>1325</X>
+            <Y>430</Y>
+          </Points>
+        </Points>
+      </Connection>
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$C100000000000001.FbClosed" Destination="$C10000000000000A.32DAB227DF90F2E9" dx1="60" />
+      <Connection Source="$C100000000000002.FbClosed" Destination="$C10000000000000A.33FAB5CD31E08CC4" dx1="512.125" />
+      <Connection Source="$C100000000000001.FbOpen" Destination="$C10000000000000B.729E4466CE606266" dx1="80" />
+      <Connection Source="$C100000000000001.FbClosed" Destination="$C10000000000000B.738D0D4E12791418" dx1="60" />
+      <Connection Source="$C100000000000002.FbClosed" Destination="$C10000000000000B.740145A9F34B3204" dx1="72.125" />
+      <Connection Source="$C100000000000004.Pv" Destination="$C10000000000000B.755155DF007843B9" dx1="531.3959" />
+      <Connection Source="$C100000000000005.Pv" Destination="$C10000000000000B.761FFAAD79F17532" dx1="531.3959" />
+      <Connection Source="$C100000000000007.Pv" Destination="$C10000000000000B.772E354520A9B5EF">
+        <Points>
+          <Points>
+            <X>229.651031</X>
+            <Y>630</Y>
+          </Points>
+          <Points>
+            <X>372.5</X>
+            <Y>630</Y>
+          </Points>
+          <Points>
+            <X>372.5</X>
+            <Y>557.5</Y>
+          </Points>
+          <Points>
+            <X>632.5</X>
+            <Y>557.5</Y>
+          </Points>
+          <Points>
+            <X>632.5</X>
+            <Y>570</Y>
+          </Points>
+          <Points>
+            <X>1325</X>
+            <Y>570</Y>
+          </Points>
+        </Points>
+      </Connection>
+    </DataConnections>
+    <AdapterConnections>
+      <Connection Source="$C100000000000002.IFbState" Destination="$C100000000000008.ICondSignal" dx1="92.125" dx2="150" dy="-700">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$C100000000000008.ICondChainOut" Destination="$C100000000000001.IPerm" dx1="40" />
+      <Connection Source="$C100000000000001.IFbState" Destination="$C100000000000009.ICondSignal" dx1="40" dx2="110" dy="930" />
+      <Connection Source="$C100000000000009.ICondChainOut" Destination="$C100000000000002.IPerm" dx1="40" />
+    </AdapterConnections>
+  </FBNetwork>
+</FBType>

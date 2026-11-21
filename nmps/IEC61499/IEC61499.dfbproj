@@ -141,6 +141,15 @@
     <None Include="..\HMI\ResetSequence\ResetSequence_sDefault.doc.xml">
       <DependentUpon>ResetSequence.fbt</DependentUpon>
     </None>
+    <None Include="..\HMI\Testing\Testing_sDefault.doc.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+    </None>
+    <None Include="..\HMI\TestingCycle\TestingCycle_sDefault.doc.xml">
+      <DependentUpon>TestingCycle.fbt</DependentUpon>
+    </None>
+    <None Include="..\HMI\TestingReset\TestingReset_sDefault.doc.xml">
+      <DependentUpon>TestingReset.fbt</DependentUpon>
+    </None>
     <None Include="AutoCycle\AutoCycle.cfg">
       <DependentUpon>AutoCycle.fbt</DependentUpon>
       <IEC61499Type>CAT</IEC61499Type>
@@ -277,7 +286,135 @@
       <IEC61499Type>SystemDevice</IEC61499Type>
       <DependentUpon>0d5eb44a-26f1-468d-8caa-7f6bfe966b18.sysdev</DependentUpon>
     </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9b129585-0c86-45b1-8b59-a88961e02156\9b129585-0c86-45b1-8b59-a88961e02156.hcf">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>9b129585-0c86-45b1-8b59-a88961e02156.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9b129585-0c86-45b1-8b59-a88961e02156\9b129585-0c86-45b1-8b59-a88961e02156.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>9b129585-0c86-45b1-8b59-a88961e02156.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9b129585-0c86-45b1-8b59-a88961e02156\9b129585-0c86-45b1-8b59-a88961e02156.Simulation.Binding.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>9b129585-0c86-45b1-8b59-a88961e02156.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9b129585-0c86-45b1-8b59-a88961e02156\E0601B81-4A3A-4A96-B6C2-007BDC680D59.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>9b129585-0c86-45b1-8b59-a88961e02156.sysdev</DependentUpon>
+    </None>
+    <None Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9b129585-0c86-45b1-8b59-a88961e02156\F513CAE3-7194-4086-936C-02912EA0B352.Properties.xml">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>9b129585-0c86-45b1-8b59-a88961e02156.sysdev</DependentUpon>
+    </None>
     <None Include="System\OpenAdapter\OpenAdapter.Connections.xml" />
+    <None Include="Testing\Testing.cfg">
+      <DependentUpon>Testing.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="Testing\Testing.doc.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+    </None>
+    <None Include="Testing\Testing.meta.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+    </None>
+    <None Include="Testing\Testing_CAT.offline.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="Testing\Testing_CAT.opcua.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="Testing\Testing_HMI.doc.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+    </None>
+    <None Include="Testing\Testing_HMI.meta.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+    </None>
+    <None Include="Testing\Testing_HMI.offline.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="Testing\Testing_HMI.opcua.xml">
+      <DependentUpon>Testing.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="TestingCycle\TestingCycle.cfg">
+      <DependentUpon>TestingCycle.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="TestingCycle\TestingCycle.doc.xml">
+      <DependentUpon>TestingCycle.fbt</DependentUpon>
+    </None>
+    <None Include="TestingCycle\TestingCycle.meta.xml">
+      <DependentUpon>TestingCycle.fbt</DependentUpon>
+    </None>
+    <None Include="TestingCycle\TestingCycle_CAT.offline.xml">
+      <DependentUpon>TestingCycle.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="TestingCycle\TestingCycle_CAT.opcua.xml">
+      <DependentUpon>TestingCycle.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="TestingCycle\TestingCycle_HMI.doc.xml">
+      <DependentUpon>TestingCycle.fbt</DependentUpon>
+    </None>
+    <None Include="TestingCycle\TestingCycle_HMI.meta.xml">
+      <DependentUpon>TestingCycle.fbt</DependentUpon>
+    </None>
+    <None Include="TestingCycle\TestingCycle_HMI.offline.xml">
+      <DependentUpon>TestingCycle.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="TestingCycle\TestingCycle_HMI.opcua.xml">
+      <DependentUpon>TestingCycle.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="TestingReset\TestingReset.cfg">
+      <DependentUpon>TestingReset.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="TestingReset\TestingReset.doc.xml">
+      <DependentUpon>TestingReset.fbt</DependentUpon>
+    </None>
+    <None Include="TestingReset\TestingReset.meta.xml">
+      <DependentUpon>TestingReset.fbt</DependentUpon>
+    </None>
+    <None Include="TestingReset\TestingReset_CAT.offline.xml">
+      <DependentUpon>TestingReset.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="TestingReset\TestingReset_CAT.opcua.xml">
+      <DependentUpon>TestingReset.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="TestingReset\TestingReset_HMI.doc.xml">
+      <DependentUpon>TestingReset.fbt</DependentUpon>
+    </None>
+    <None Include="TestingReset\TestingReset_HMI.meta.xml">
+      <DependentUpon>TestingReset.fbt</DependentUpon>
+    </None>
+    <None Include="TestingReset\TestingReset_HMI.offline.xml">
+      <DependentUpon>TestingReset.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="TestingReset\TestingReset_HMI.opcua.xml">
+      <DependentUpon>TestingReset.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoCycle\AutoCycle.fbt">
@@ -318,6 +455,14 @@
       <IEC61499Type>SystemResource</IEC61499Type>
       <DependentUpon>0d5eb44a-26f1-468d-8caa-7f6bfe966b18.sysdev</DependentUpon>
     </Compile>
+    <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9b129585-0c86-45b1-8b59-a88961e02156.sysdev">
+      <IEC61499Type>SystemDevice</IEC61499Type>
+      <DependentUpon>0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system</DependentUpon>
+    </Compile>
+    <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9b129585-0c86-45b1-8b59-a88961e02156\454CB27F11C39A4C.sysres">
+      <IEC61499Type>SystemResource</IEC61499Type>
+      <DependentUpon>9b129585-0c86-45b1-8b59-a88961e02156.sysdev</DependentUpon>
+    </Compile>
     <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9bf3b433-92e3-4d31-8cff-c20036297fe9.sysapp">
       <DependentUpon>0c9a2a54-81d8-4cd3-8b56-539d6ba31ede.system</DependentUpon>
       <IEC61499Type>SystemApplication</IEC61499Type>
@@ -325,6 +470,33 @@
     <Compile Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9bf3b433-92e3-4d31-8cff-c20036297fe9\6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay">
       <DependentUpon>9bf3b433-92e3-4d31-8cff-c20036297fe9.sysapp</DependentUpon>
       <IEC61499Type>SystemLayer</IEC61499Type>
+    </Compile>
+    <Compile Include="Testing\Testing.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+    </Compile>
+    <Compile Include="Testing\Testing_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>Testing.fbt</DependentUpon>
+      <HMI>..\HMI\Testing\Testing_sDefault.cnv.cs</HMI>
+    </Compile>
+    <Compile Include="TestingCycle\TestingCycle.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+    </Compile>
+    <Compile Include="TestingCycle\TestingCycle_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>TestingCycle.fbt</DependentUpon>
+      <HMI>..\HMI\TestingCycle\TestingCycle_sDefault.cnv.cs</HMI>
+    </Compile>
+    <Compile Include="TestingReset\TestingReset.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+    </Compile>
+    <Compile Include="TestingReset\TestingReset_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>TestingReset.fbt</DependentUpon>
+      <HMI>..\HMI\TestingReset\TestingReset_sDefault.cnv.cs</HMI>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +524,24 @@
     </Content>
     <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\0d5eb44a-26f1-468d-8caa-7f6bfe966b18\32BAD17BD48389\symlink.xml">
       <DependentUpon>32BAD17BD48389.sysres</DependentUpon>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9b129585-0c86-45b1-8b59-a88961e02156\454CB27F11C39A4C\offline.xml">
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+      <DependentUpon>454CB27F11C39A4C.sysres</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9b129585-0c86-45b1-8b59-a88961e02156\454CB27F11C39A4C\opcua.xml">
+      <DependentUpon>454CB27F11C39A4C.sysres</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9b129585-0c86-45b1-8b59-a88961e02156\454CB27F11C39A4C\opcuaclient.xml">
+      <DependentUpon>454CB27F11C39A4C.sysres</DependentUpon>
+      <Plugin>OPCUAClientConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUACLIENT</IEC61499Type>
+    </Content>
+    <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9b129585-0c86-45b1-8b59-a88961e02156\454CB27F11C39A4C\symlink.xml">
+      <DependentUpon>454CB27F11C39A4C.sysres</DependentUpon>
     </Content>
     <Content Include="System\0c9a2a54-81d8-4cd3-8b56-539d6ba31ede\9bf3b433-92e3-4d31-8cff-c20036297fe9\6176bcc6-dc42-44e0-920e-ad204ed015ce\offline.xml">
       <IEC61499Type>CAT_OFFLINE</IEC61499Type>

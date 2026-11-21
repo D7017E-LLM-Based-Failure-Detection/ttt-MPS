@@ -6,5 +6,13 @@
         <sref snapshot="{1BB9F727-24B4-4895-BDA2-CF07EAE4E789}" state="ACTIVE" />
       </device>
     </network_profile>
+    <network_profile name="(Default)">
+      <device id="0d5eb44a-26f1-468d-8caa-7f6bfe966b18" CompileTime="2026-11-20 16:57:16Z">
+        <sref snapshot="{9CA4B240-1D51-44E0-A9BD-752DB2320E06}" state="ACTIVE" />
+      </device>
+      <device id="9b129585-0c86-45b1-8b59-a88961e02156" CompileTime="2026-11-20 17:07:21Z">
+        <sref snapshot="{925C8594-95AD-4F09-A4C0-0782BA54FBEE}" state="ACTIVE" />
+      </device>
+    </network_profile>
   </deployment>
 </baseline>

@@ -1,0 +1,15 @@
+{
+  "references": [
+    {
+      "diagramPath": "Physical Views",
+      "sourceSide": 2,
+      "destinationSide": 8
+    }
+  ],
+  "label": "Wire 122",
+  "identifier": "Wire 122",
+  "sourceEquipment": "c812e9ac-0b40-4bfa-b512-737553a507e5",
+  "sourcePortIdentifier": "Ethernet1_2",
+  "destinationEquipment": "f189695a-0af5-4442-aeb2-837923217ac4",
+  "destinationPortIdentifier": "Ethernet1_1"
+}

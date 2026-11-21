@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="a7b82c31-5d4e-4f91-8b23-6c9d1e4f2022" Name="TestingReset" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/20/2026" Remarks="template" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="11A71DE3BB9549E0" Name="INIT" Comment="Initialization Request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="12A478CB8C29DBDE" Name="REQ" Comment="Normal Execution Request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="13C69DC6B641011A" Name="LiftFb">
+        <With Var="LiftClosed" />
+      </Event>
+      <Event ID="14498683653FD650" Name="EjectorFb">
+        <With Var="EjectorClosed" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="21BC3D4AFEE24AE1" Name="INITO" Comment="Initialization Confirm">
+        <With Var="QO" />
+      </Event>
+      <Event ID="220F99A55700D018" Name="CNF" Comment="Execution Confirmation">
+        <With Var="QO" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="31AE8B6350789422" Name="QI" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration ID="32DAB227DF90F2E9" Name="LiftClosed" Type="BOOL" />
+      <VarDeclaration ID="33FAB5CD31E08CC4" Name="EjectorClosed" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="4133354228B36B47" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="A100000000000001" Name="ResetSeq" Type="SeqHead" x="800" y="1940" Namespace="SE.AppSequence">
+      <Parameter Name="$PermStart" Value="TRUE" />
+    </FB>
+    <FB ID="A100000000000002" Name="TR1_TakeOver" Type="SeqStep" x="1800" y="1980" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="2" />
+    </FB>
+    <FB ID="A100000000000003" Name="TR2_AirSlideOff" Type="SeqStep" x="2920" y="1980" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="3" />
+      <Parameter Name="$Exceeded" Value="TRUE" />
+    </FB>
+    <FB ID="A100000000000004" Name="TR3_LowerLift" Type="SeqStep" x="4040" y="1980" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="4" />
+    </FB>
+    <FB ID="A100000000000005" Name="TR4_ClearEject" Type="SeqStep" x="5160" y="1980" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="5" />
+    </FB>
+    <FB ID="A100000000000006" Name="TR5_EjectorBack" Type="SeqStep" x="6280" y="1980" Namespace="SE.AppSequence">
+      <Parameter Name="$TransStepId" Value="6" />
+    </FB>
+    <FB ID="A100000000000007" Name="TR_End" Type="SeqTerminate" x="7400" y="2300" Namespace="SE.AppSequence" />
+    <FB ID="A100000000000010" Name="Consts" Type="ANY2ANY_25FC8D56FEEDC9B5" x="1120" y="280" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=4;IN${CNT}:BOOL,INT,INT,INT;OUT${CNT}:VTQBOOL,VTQINT,VTQINT,VTQINT" />
+      <Parameter Name="$IN1" Value="TRUE" />
+      <Parameter Name="$IN2" Value="1" />
+      <Parameter Name="$IN3" Value="2" />
+      <Parameter Name="$IN4" Value="0" />
+    </FB>
+    <FB ID="A100000000000011" Name="OwnerFb" Type="SYMLINKMULTIVARDST_105A0442B8CC61A96" x="860" y="860" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=3;VALUE${I}:VTQBOOL,VTQBOOL,VTQBOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'RES0.Testing.Ejector.sc.progLocal'" />
+      <Parameter Name="$NAME2" Value="'RES0.Testing.AirSlide.sc.progLocal'" />
+      <Parameter Name="$NAME3" Value="'RES0.Testing.Lift.sc.progLocal'" />
+    </FB>
+    <FB ID="A100000000000012" Name="TakeOverCmd" Type="SYMLINKMULTIVARSRC_105A0442B8CC61A96" x="2720" y="920" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=3;VALUE${I}:VTQBOOL,VTQBOOL,VTQBOOL" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'RES0.Testing.Ejector.sc.progLocalSel'" />
+      <Parameter Name="$NAME2" Value="'RES0.Testing.AirSlide.sc.progLocalSel'" />
+      <Parameter Name="$NAME3" Value="'RES0.Testing.Lift.sc.progLocalSel'" />
+    </FB>
+    <FB ID="A100000000000013" Name="AllLocal" Type="AND_550FE6D62F509EB3" x="1640" y="1260" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=3;OUT:BOOL" />
+    </FB>
+    <FB ID="A100000000000014" Name="AirSlideOffCmd" Type="SYMLINKMULTIVARSRC_18556BCA74EA878F1" x="3800" y="900" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQINT" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'RES0.Testing.AirSlide.sc.lsp'" />
+    </FB>
+    <FB ID="A100000000000015" Name="LowerLiftCmd" Type="SYMLINKMULTIVARSRC_18556BCA74EA878F1" x="4800" y="900" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQINT" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'RES0.Testing.Lift.sc.lsp'" />
+    </FB>
+    <FB ID="A100000000000016" Name="ExtendEjectorCmd" Type="SYMLINKMULTIVARSRC_18556BCA74EA878F1" x="5800" y="900" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQINT" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'RES0.Testing.Ejector.sc.lsp'" />
+    </FB>
+    <FB ID="A100000000000017" Name="RetractEjectorCmd" Type="SYMLINKMULTIVARSRC_18556BCA74EA878F1" x="6800" y="900" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQINT" />
+      <Parameter Name="$QI" Value="TRUE" />
+      <Parameter Name="$NAME1" Value="'RES0.Testing.Ejector.sc.lsp'" />
+    </FB>
+    <FB ID="A100000000000018" Name="EjectTimer" Type="E_DELAY" x="5400" y="1420" Namespace="IEC61499.Standard">
+      <Parameter Name="$DT" Value="T#1s" />
+    </FB>
+    <FB ID="A100000000000019" Name="EjectLatch" Type="E_SR" x="6000" y="1420" Namespace="IEC61499.Standard" />
+    <Input ID="11A71DE3BB9549E0" Name="INIT" x="12" y="12" Type="Event" />
+    <Input ID="12A478CB8C29DBDE" Name="REQ" x="12" y="72" Type="Event" />
+    <Input ID="31AE8B6350789422" Name="QI" x="12" y="132" Type="Data" />
+    <Input ID="13C69DC6B641011A" Name="LiftFb" x="40" y="1672" Type="Event" />
+    <Input ID="14498683653FD650" Name="EjectorFb" x="40" y="1732" Type="Event" />
+    <Input ID="32DAB227DF90F2E9" Name="LiftClosed" x="60" y="3212" Type="Data" />
+    <Input ID="33FAB5CD31E08CC4" Name="EjectorClosed" x="60" y="3272" Type="Data" />
+    <Output ID="21BC3D4AFEE24AE1" Name="INITO" x="7800" y="92" Type="Event" />
+    <Output ID="220F99A55700D018" Name="CNF" x="7800" y="152" Type="Event" />
+    <Output ID="4133354228B36B47" Name="QO" x="7800" y="212" Type="Data" />
+    <EventConnections>
+      <Connection Source="$11A71DE3BB9549E0" Destination="$A100000000000010.REQ" />
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000001.REQ_PERM" />
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000011.INIT" />
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000012.INIT" />
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000014.INIT" />
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000015.INIT" />
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000016.INIT" />
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000017.INIT" />
+      <Connection Source="$A100000000000002.STEP_ENTER" Destination="$A100000000000012.REQ" />
+      <Connection Source="$A100000000000012.CNF" Destination="$A100000000000013.REQ" />
+      <Connection Source="$A100000000000011.CNF" Destination="$A100000000000013.REQ" />
+      <Connection Source="$A100000000000013.CNF" Destination="$A100000000000002.TRANS_REQ" />
+      <Connection Source="$A100000000000003.STEP_ENTER" Destination="$A100000000000014.REQ" />
+      <Connection Source="$A100000000000014.CNF" Destination="$A100000000000003.TRANS_REQ" />
+      <Connection Source="$A100000000000004.STEP_ENTER" Destination="$A100000000000015.REQ" />
+      <Connection Source="$A100000000000015.CNF" Destination="$A100000000000004.TRANS_REQ" />
+      <Connection Source="$13C69DC6B641011A" Destination="$A100000000000004.TRANS_REQ" />
+      <Connection Source="$A100000000000005.STEP_ENTER" Destination="$A100000000000019.R" />
+      <Connection Source="$A100000000000005.STEP_ENTER" Destination="$A100000000000016.REQ" />
+      <Connection Source="$A100000000000016.CNF" Destination="$A100000000000018.START" />
+      <Connection Source="$A100000000000018.EO" Destination="$A100000000000019.S" />
+      <Connection Source="$A100000000000019.EO" Destination="$A100000000000005.TRANS_REQ" />
+      <Connection Source="$A100000000000005.STEP_LEAVE" Destination="$A100000000000018.STOP" />
+      <Connection Source="$A100000000000005.STEP_LEAVE" Destination="$A100000000000019.R" />
+      <Connection Source="$A100000000000006.STEP_ENTER" Destination="$A100000000000017.REQ" />
+      <Connection Source="$A100000000000017.CNF" Destination="$A100000000000006.TRANS_REQ" />
+      <Connection Source="$14498683653FD650" Destination="$A100000000000006.TRANS_REQ" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$A100000000000010.OUT1" Destination="$A100000000000012.VALUE1" />
+      <Connection Source="$A100000000000010.OUT1" Destination="$A100000000000012.VALUE2" />
+      <Connection Source="$A100000000000010.OUT1" Destination="$A100000000000012.VALUE3" />
+      <Connection Source="$A100000000000010.OUT4" Destination="$A100000000000014.VALUE1" />
+      <Connection Source="$A100000000000010.OUT3" Destination="$A100000000000015.VALUE1" />
+      <Connection Source="$A100000000000010.OUT2" Destination="$A100000000000016.VALUE1" />
+      <Connection Source="$A100000000000010.OUT3" Destination="$A100000000000017.VALUE1" />
+      <Connection Source="$A100000000000011.VALUE1" Destination="$A100000000000013.IN1" />
+      <Connection Source="$A100000000000011.VALUE2" Destination="$A100000000000013.IN2" />
+      <Connection Source="$A100000000000011.VALUE3" Destination="$A100000000000013.IN3" />
+      <Connection Source="$A100000000000013.OUT" Destination="$A100000000000002.Exceeded" />
+      <Connection Source="$32DAB227DF90F2E9" Destination="$A100000000000004.Exceeded" />
+      <Connection Source="$A100000000000019.Q" Destination="$A100000000000005.Exceeded" />
+      <Connection Source="$33FAB5CD31E08CC4" Destination="$A100000000000006.Exceeded" />
+    </DataConnections>
+    <AdapterConnections>
+      <Connection Source="$A100000000000001.ISeqChain" Destination="$A100000000000002.ISeqChainIn" />
+      <Connection Source="$A100000000000002.ISeqChainOut" Destination="$A100000000000003.ISeqChainIn" />
+      <Connection Source="$A100000000000003.ISeqChainOut" Destination="$A100000000000004.ISeqChainIn" />
+      <Connection Source="$A100000000000004.ISeqChainOut" Destination="$A100000000000005.ISeqChainIn" />
+      <Connection Source="$A100000000000005.ISeqChainOut" Destination="$A100000000000006.ISeqChainIn" />
+      <Connection Source="$A100000000000006.ISeqChainOut" Destination="$A100000000000007.ISeqChainIn" />
+    </AdapterConnections>
+  </FBNetwork>
+</FBType>

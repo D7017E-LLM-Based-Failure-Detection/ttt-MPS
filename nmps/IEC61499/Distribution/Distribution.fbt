@@ -31,7 +31,7 @@
   <FBNetwork>
     <FB ID="0FBBAF14BDC70C34" Name="Ejector" Type="Valve" x="1640" y="2300" Namespace="SE.App2CommonProcess" />
     <FB ID="DA014101550A683C" Name="Swivel" Type="Valve2Op" x="1620" y="1320" Namespace="SE.App2CommonProcess" />
-    <FB ID="290E8CBB7083A708" Name="Vacuum" Type="Valve" x="1620" y="500" Namespace="SE.App2CommonProcess" />
+    <FB ID="290E8CBB7083A708" Name="Vacuum" Type="Valve" x="1560" y="400" Namespace="SE.App2CommonProcess" />
     <FB ID="B5A8A7975D57E904" Name="BlowOff" Type="DigitalOutput" x="2940" y="2460" Namespace="SE.App2CommonProcess" />
     <FB ID="46A6896A3BC8F000" Name="DownstreamFree" Type="DigitalInput" x="120" y="420" Namespace="SE.App2CommonProcess" />
     <FB ID="E97FD2E6D42C4155" Name="MagazineEmpty" Type="DigitalInput" x="3820" y="2580" Namespace="SE.App2CommonProcess" />
@@ -54,7 +54,7 @@
     <Output ID="D831D9667B305640" Name="CNF" x="5320" y="172" Type="Event" />
     <Output ID="6A24B6A6C58F75B8" Name="QO" x="5200" y="232" Type="Data" />
     <EventConnections>
-      <Connection Source="$290E8CBB7083A708.CNF" Destination="$587ED4C7F6989425.FECC89DB3D2A57FF" dx1="182.1252">
+      <Connection Source="$290E8CBB7083A708.CNF" Destination="$587ED4C7F6989425.FECC89DB3D2A57FF" dx1="242.125">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
       <Connection Source="$DA014101550A683C.CNF" Destination="$587ED4C7F6989425.A5069DC6B641011A" dx1="402.1252">
@@ -65,7 +65,7 @@
       </Connection>
       <Connection Source="$338BEC0F128D1425" Destination="$587ED4C7F6989425.9D471DE3BB9549E0" />
       <Connection Source="$338BEC0F128D1425" Destination="$97DD9E0F686AACAA.A729492442D0C9A1" dx1="41.41675" />
-      <Connection Source="$290E8CBB7083A708.CNF" Destination="$97DD9E0F686AACAA.5D63E5C8B975CEB9" dx1="182.1252">
+      <Connection Source="$290E8CBB7083A708.CNF" Destination="$97DD9E0F686AACAA.5D63E5C8B975CEB9" dx1="242.125">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
       <Connection Source="$DA014101550A683C.CNF" Destination="$97DD9E0F686AACAA.2CDF47D3663E6E3F" dx1="402.1252">
@@ -109,10 +109,10 @@
       <Connection Source="$0FBBAF14BDC70C34.FbClosed" Destination="$587ED4C7F6989425.22FAB5CD31E08CC4" dx1="222.125">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$290E8CBB7083A708.FbOpened" Destination="$97DD9E0F686AACAA.102E354520A9B5EF" dx1="162.1252">
+      <Connection Source="$290E8CBB7083A708.FbOpened" Destination="$97DD9E0F686AACAA.102E354520A9B5EF" dx1="222.125">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$290E8CBB7083A708.FbClosed" Destination="$97DD9E0F686AACAA.3E0D46D015AC4734" dx1="262.1252">
+      <Connection Source="$290E8CBB7083A708.FbClosed" Destination="$97DD9E0F686AACAA.3E0D46D015AC4734" dx1="322.125">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
       <Connection Source="$0FBBAF14BDC70C34.FbClosed" Destination="$97DD9E0F686AACAA.F50145A9F34B3204" dx1="362.125">

@@ -151,7 +151,7 @@
       <Connection Source="$E8B060603293B56D.CNF" Destination="$1AADE139AB34F90D.INIT" dx1="83.75" dx2="70.00012" dy="460">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$1AADE139AB34F90D.CNF" Destination="$CF546D7D34777455.REQ" dx1="81.625" />
+      <Connection Source="$1AADE139AB34F90D.CNF" Destination="$CF546D7D34777455.REQ" dx1="81.62512" />
       <Connection Source="$CF546D7D34777455.CNF" Destination="$B5E0BF5347962E31.TRANS_REQ" dx1="67.479" dx2="50" dy="500">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
@@ -317,8 +317,8 @@
       <Connection Source="$E8B060603293B56D.OUT4" Destination="$3F81B724E6C90A52.VALUE1" dx1="6233.75">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$1AADE139AB34F90D.VALUE1" Destination="$CF546D7D34777455.IN1" dx1="61.625" />
-      <Connection Source="$1AADE139AB34F90D.VALUE2" Destination="$CF546D7D34777455.IN2" dx1="41.625" />
+      <Connection Source="$1AADE139AB34F90D.VALUE1" Destination="$CF546D7D34777455.IN1" dx1="61.62512" />
+      <Connection Source="$1AADE139AB34F90D.VALUE2" Destination="$CF546D7D34777455.IN2" dx1="41.62512" />
       <Connection Source="$CF546D7D34777455.OUT" Destination="$B5E0BF5347962E31.Exceeded" dx1="47.479" dx2="260" dy="210">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
@@ -330,7 +330,9 @@
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
       <Connection Source="$DDDAB227DF90F2E9" Destination="$8B4F2C19A37E5D01.IN1" dx1="43.39587" />
-      <Connection Source="$8B4F2C19A37E5D01.OUT1" Destination="$5A2D8E41C7F39B60.Exceeded" dx1="43.75" dx2="89.99951" dy="90" />
+      <Connection Source="$8B4F2C19A37E5D01.OUT1" Destination="$5A2D8E41C7F39B60.Exceeded" dx1="43.75" dx2="89.99951" dy="140">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
       <Connection Source="$7A3C1E904B2D8F15" Destination="$9E7B1C34A85D2F10.Exceeded" dx1="6397.5" />
     </DataConnections>
     <AdapterConnections>

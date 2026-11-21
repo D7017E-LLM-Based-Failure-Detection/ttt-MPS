@@ -41,7 +41,7 @@ namespace HMI.Main.Canvases
 			// 
 			this.sDefault1.BeginInit();
 			this.sDefault1.DefaultInstanceName = null;
-			this.sDefault1.DesignMatrix = new NxtControl.Drawing.Matrix2D(2.3013698630136985D, 0D, 0D, 2D, 12.493150684931493D, 8D);
+			this.sDefault1.DesignMatrix = new NxtControl.Drawing.Matrix2D(2.3013698630136985D, 0D, 0D, 2D, 28.493150684931507D, 56D);
 			this.sDefault1.Instancelayer = SE.App2Base.SupportClasses.InstanceLayer.Base;
 			this.sDefault1.MyTagDisplayName = null;
 			this.sDefault1.Name = "sDefault1";
@@ -77,7 +77,7 @@ namespace HMI.Main.Canvases
 			// 
 			this.sDefault4.BeginInit();
 			this.sDefault4.DefaultInstanceName = null;
-			this.sDefault4.DesignMatrix = new NxtControl.Drawing.Matrix2D(1D, 0D, 0D, 1D, 0D, 256D);
+			this.sDefault4.DesignMatrix = new NxtControl.Drawing.Matrix2D(1D, 0D, 0D, 1D, 0D, 264D);
 			this.sDefault4.FalseColor = new NxtControl.Drawing.Color("SE.App2Base.aaLibSymBodyPassive");
 			this.sDefault4.FalseText = "TxtOFF";
 			this.sDefault4.Instancelayer = SE.App2Base.SupportClasses.InstanceLayer.Base;
@@ -93,7 +93,7 @@ namespace HMI.Main.Canvases
 			// 
 			this.sDefault5.BeginInit();
 			this.sDefault5.DefaultInstanceName = null;
-			this.sDefault5.DesignMatrix = new NxtControl.Drawing.Matrix2D(1D, 0D, 0D, 1D, 295D, 248D);
+			this.sDefault5.DesignMatrix = new NxtControl.Drawing.Matrix2D(1D, 0D, 0D, 1D, 287D, 272D);
 			this.sDefault5.FalseColor = new NxtControl.Drawing.Color("SE.App2Base.aaLibSymBodyPassive");
 			this.sDefault5.FalseText = "TxtOFF";
 			this.sDefault5.Instancelayer = SE.App2Base.SupportClasses.InstanceLayer.Base;
@@ -109,7 +109,7 @@ namespace HMI.Main.Canvases
 			// 
 			this.sDefault6.BeginInit();
 			this.sDefault6.DefaultInstanceName = null;
-			this.sDefault6.DesignMatrix = new NxtControl.Drawing.Matrix2D(1D, 0D, 0D, 1D, 583D, 248D);
+			this.sDefault6.DesignMatrix = new NxtControl.Drawing.Matrix2D(1D, 0D, 0D, 1D, 591D, 272D);
 			this.sDefault6.FalseColor = new NxtControl.Drawing.Color("SE.App2Base.aaLibSymBodyPassive");
 			this.sDefault6.FalseText = "TxtOFF";
 			this.sDefault6.Instancelayer = SE.App2Base.SupportClasses.InstanceLayer.Base;
@@ -187,7 +187,7 @@ namespace HMI.Main.Canvases
 			this.alarmGrid1.GridCellBackColor = System.Drawing.SystemColors.Window;
 			this.alarmGrid1.HeaderBackColor = System.Drawing.SystemColors.Control;
 			this.alarmGrid1.HeaderForeColor = System.Drawing.SystemColors.WindowText;
-			this.alarmGrid1.Location = new System.Drawing.Point(872, 16);
+			this.alarmGrid1.Location = new System.Drawing.Point(832, 16);
 			this.alarmGrid1.Name = "alarmGrid1";
 			this.alarmGrid1.SecurityLevel = 3;
 			this.alarmGrid1.Size = new System.Drawing.Size(926, 414);

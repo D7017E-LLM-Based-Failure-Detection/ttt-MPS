@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="454CB27F11C39A4C" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management" Format="2.0" xmlns="https://www.se.com/LibraryElements">
+  <FBNetwork>
+    <FB ID="E7DE371936110B8D" Name="Testing" Type="Testing" Namespace="Main" Mapping="248448E89426980E" x="3440" y="380" />
+    <FB ID="A7EF0C9E9C51E62F" Name="FB1" Type="DPAC_FULLINIT" Namespace="SE.DPAC" x="1100" y="140" Loaded="true" />
+    <FB ID="1000F42BEE6AA0D1" Name="SeqInit" Type="EVENTCHAINHEAD" Namespace="Runtime.Standard" x="2300" y="180" Loaded="true">
+      <Parameter Name="$NAME" Value="'SEQ_INIT'" />
+    </FB>
+    <EventConnections>
+      <Connection Source="$START.COLD" Destination="$A7EF0C9E9C51E62F.INIT" dx1="88.60419" />
+      <Connection Source="$START.WARM" Destination="$A7EF0C9E9C51E62F.INIT" dx1="70" />
+      <Connection Source="$START.ONLINECHANGE" Destination="$A7EF0C9E9C51E62F.OC_RETRIGGER" dx1="90" />
+      <Connection Source="$A7EF0C9E9C51E62F.INITO" Destination="$1000F42BEE6AA0D1.INIT" dx1="60" />
+      <Connection Source="$A7EF0C9E9C51E62F.OC_DONE" Destination="$1000F42BEE6AA0D1.RETRIGGER" dx1="40" />
+      <Connection Source="$1000F42BEE6AA0D1.INITO" Destination="$1000F42BEE6AA0D1.TRIGGER" dx1="61.875" dx2="70" dy="-110" />
+      <Connection Source="$1000F42BEE6AA0D1.FINISHED" Destination="$E7DE371936110B8D.65381F6BB52528F5" dx1="41.875" />
+    </EventConnections>
+  </FBNetwork>
+</Resource>

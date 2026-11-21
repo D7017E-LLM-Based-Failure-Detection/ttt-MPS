@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CanvasesResolutionList xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="nmps" Version="1.6.0.0" xmlns="http://www.nxtcontrol.com/IEC61499.xsd">
-  <CanvasResolution Name="800x480" StartCanvasClass="HMI.Main.Canvases.StartCanvas_2" Width="800" Height="480" WorkAreaWidth="800" WorkAreaHeight="480" Template="Default" Logger="true" Login="true" NavigationControl="1" CurrentUser="true" LanguageButton="true" RuntimeConnection="true" SideNavigationBar="true" NewVersionDeployed="true" IsCanvasTopologyPanel="true" ResizeBehaviour="Standard" CanvasButtonHeight="30">
+  <CanvasResolution Name="800x480" StartCanvasClass="HMI.Main.Canvases.StartCanvas_2" Width="800" Height="480" WorkAreaWidth="800" WorkAreaHeight="445" Template="Default" Logger="true" Login="true" NavigationControl="1" CurrentUser="true" LanguageButton="true" RuntimeConnection="true" NavigationBar="true" SideNavigationBar="true" NewVersionDeployed="true" IsCanvasTopologyPanel="true" ResizeBehaviour="Standard" CanvasButtonHeight="30">
     <Topology Name="Default">
       <Canvases>
         <Canvas Name="Distribution" Title="" Tooltip="" Instance="HMI.Main.Canvases.Distribution">
+          <Children />
+        </Canvas>
+        <Canvas Name="Testing" Title="" Tooltip="" Instance="HMI.Main.Canvases.Testing">
           <Children />
         </Canvas>
       </Canvases>

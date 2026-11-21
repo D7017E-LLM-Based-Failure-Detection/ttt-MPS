@@ -39,12 +39,22 @@ namespace HMI.Main.Canvases
       this.canvasTopologySeparator1 = new NxtControl.GuiFramework.CanvasTopologySeparator();      
       this.canvasTopologySeparator2 = new NxtControl.GuiFramework.CanvasTopologySeparator();      
       this.workArea = new NxtControl.GuiFramework.WorkAreaControl();
-            
+      
+      this.header1 = new NxtControl.GuiFramework.Rectangle();
+this.logo = new NxtControl.GuiFramework.Rectangle();
+this.login1 = new NxtControl.GuiFramework.Login();
+this.currentUser1 = new NxtControl.GuiFramework.CurrentUser();
+this.language1 = new NxtControl.GuiFramework.LanguageSwitcher();
+this.runtimeConnection1 = new NxtControl.GuiFramework.RuntimeConnection();
+this.newVersionDeployment1 = new NxtControl.GuiFramework.HMIDeployment();
+this.canvasTopologyNavigation = new NxtControl.GuiFramework.TopologyCurrentCanvas();
+this.logState1 = new NxtControl.GuiFramework.LogState();
+      
       // 
       // canvasTopologySeparator1
       //
       this.canvasTopologySeparator1.Anchor = NxtControl.Drawing.AnchorStyles.Left; 
-      this.canvasTopologySeparator1.Bounds = new NxtControl.Drawing.RectF(((float)(0)), ((float)(0)), ((float)(2)), ((float)(0)));
+      this.canvasTopologySeparator1.Bounds = new NxtControl.Drawing.RectF(((float)(52)), ((float)(0)), ((float)(2)), ((float)(35)));
       this.canvasTopologySeparator1.Name = "canvasTopologySeparator1";
       this.canvasTopologySeparator1.LookAndFeel = "Theme";
       this.canvasTopologySeparator1.Visible = true;
@@ -52,10 +62,10 @@ namespace HMI.Main.Canvases
       // canvasTopologySeparator2
       //
       this.canvasTopologySeparator2.Anchor = NxtControl.Drawing.AnchorStyles.Right; 
-      this.canvasTopologySeparator2.Bounds = new NxtControl.Drawing.RectF(((float)(800)), ((float)(0)), ((float)(2)), ((float)(0)));
+      this.canvasTopologySeparator2.Bounds = new NxtControl.Drawing.RectF(((float)(540)), ((float)(0)), ((float)(2)), ((float)(35)));
       this.canvasTopologySeparator2.Name = "canvasTopologySeparator2";
       this.canvasTopologySeparator2.LookAndFeel = "Theme";
-      this.canvasTopologySeparator2.Visible = false;      
+      this.canvasTopologySeparator2.Visible = true;      
       // 
       // workArea
       // 
@@ -64,27 +74,141 @@ namespace HMI.Main.Canvases
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.workArea.AutoScroll = true;
       this.workArea.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-      this.workArea.Location = new System.Drawing.Point(0, 0);
+      this.workArea.Location = new System.Drawing.Point(0, 35);
       this.workArea.Name = "workArea";
       this.workArea.RuntimeMode = true;
-      this.workArea.Size = new System.Drawing.Size(800, 480);
+      this.workArea.Size = new System.Drawing.Size(800, 445);
       this.workArea.TabIndex = 0;
       this.workArea.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
       
+      // 
+      // header1
+      // 
+      this.header1.Anchor = ((NxtControl.Drawing.AnchorStyles)((NxtControl.Drawing.AnchorStyles.Left | NxtControl.Drawing.AnchorStyles.Right)));
+      this.header1.Bounds = new NxtControl.Drawing.RectF(((float)(0)), ((float)(0)), ((float)(800)), ((float)(35)));
+      this.header1.Name = "header1";
+      this.header1.Brush = NxtControl.Drawing.Brush.FromName("CanvasTopologyHeaderBrush");
+      this.header1.Pen = new NxtControl.Drawing.Pen(new NxtControl.Drawing.Color("Transparent"), 0F, NxtControl.Drawing.DashStyle.Solid);
+			// 
+      // logo
+      // 
+      this.logo.Anchor = NxtControl.Drawing.AnchorStyles.Left; 
+      this.logo.Bounds = new NxtControl.Drawing.RectF(((float)(0)), ((float)(0)), ((float)(52)), ((float)(35)));
+      this.logo.Brush = new NxtControl.Drawing.Brush(new NxtControl.Drawing.Color("Transparent"));
+      this.logo.Font = new NxtControl.Drawing.Font("HeaderFont");
+      this.logo.ImageBytes = resources.GetString("logo.ImageBytes");
+      this.logo.Name = "logo";
+      this.logo.Pen = new NxtControl.Drawing.Pen(new NxtControl.Drawing.Color("Transparent"), 1F, NxtControl.Drawing.DashStyle.Solid);
+      this.logo.TextColor = new NxtControl.Drawing.Color("Black");
+			// 
+      // login1
+      // 
+      this.login1.Anchor = NxtControl.Drawing.AnchorStyles.Right;
+      this.login1.Bounds = new NxtControl.Drawing.RectF(((float)(728)), ((float)(0)), ((float)(36)), ((float)(36)));
+      this.login1.Text = "";
+      this.login1.Radius = 0;
+      this.login1.LookAndFeel = "Theme";
+      this.login1.Pen = NxtControl.Drawing.Pen.FromName("Transparent");
+      this.login1.Name = "login1";
+			// 
+      // currentUser1
+      // 
+      this.currentUser1.Anchor = NxtControl.Drawing.AnchorStyles.Right;
+      this.currentUser1.AngleIgnore = true;
+      this.currentUser1.Bounds = new NxtControl.Drawing.RectF(((float)(540)), ((float)(0)), ((float)(80)), ((float)(36)));
+      this.currentUser1.Brush = new NxtControl.Drawing.Brush();
+      this.currentUser1.Font = new NxtControl.Drawing.Font("HeaderFont");
+      this.currentUser1.LookAndFeel = "Theme";
+      this.currentUser1.Name = "currentUser1";
+      this.currentUser1.Pen =  new NxtControl.Drawing.Pen("CanvasTopologyButtonPen");
+      this.currentUser1.Text = "currentUser1";
+      this.currentUser1.TextAlignment = NxtControl.Drawing.ContentAlignment.MiddleCenter;
+      this.currentUser1.TextColor = new NxtControl.Drawing.Color("LabelTextColor");
+			// 
+      // language1
+      // 
+      this.language1.Anchor = NxtControl.Drawing.AnchorStyles.Right;
+      this.language1.Bounds = new NxtControl.Drawing.RectF(((float)(764)), ((float)(0)), ((float)(36)), ((float)(36)));
+      this.language1.LookAndFeel = "Theme";
+      this.language1.Name = "language1";
+      this.language1.TextColor = new NxtControl.Drawing.Color("LabelTextColor");
+      this.language1.Font = new NxtControl.Drawing.Font("HeaderFont");
+			// 
+      // runtimeConnection1
+      // 
+      this.runtimeConnection1.Anchor = NxtControl.Drawing.AnchorStyles.Right;
+      this.runtimeConnection1.Bounds = new NxtControl.Drawing.RectF(((float)(692)), ((float)(0)), ((float)(36)), ((float)(36)));
+      this.runtimeConnection1.Text = "";
+      this.runtimeConnection1.Radius = 0;     
+      this.runtimeConnection1.Name = "runtimeConnection1";
+      this.runtimeConnection1.Brush = new NxtControl.Drawing.Brush("CanvasTopologyButtonBrush");
+      this.runtimeConnection1.Pen = NxtControl.Drawing.Pen.FromName("Transparent");
+			// 
+      // newVersionDeployment1
+      // 
+      this.newVersionDeployment1.Anchor = NxtControl.Drawing.AnchorStyles.Right;
+      this.newVersionDeployment1.Bounds = new NxtControl.Drawing.RectF(((float)(656)), ((float)(0)), ((float)(36)), ((float)(36)));
+      this.newVersionDeployment1.Text = "";
+      this.newVersionDeployment1.Radius = 0;
+      this.newVersionDeployment1.LookAndFeel = "Theme";
+      this.newVersionDeployment1.Name = "newVersionDeployment1";
+      this.newVersionDeployment1.Pen = NxtControl.Drawing.Pen.FromName("Transparent");
+    // 
+      // canvasTopologyNavigation
+      // 
+      this.canvasTopologyNavigation.BeginInit();
+      this.canvasTopologyNavigation.Bounds = new NxtControl.Drawing.RectF(((float)(52)), ((float)(0)), ((float)(140)), ((float)(36)));
+      this.canvasTopologyNavigation.Name = "canvasTopologyBreadcrumb";
+      this.canvasTopologyNavigation.LookAndFeel = "Theme";
+      this.canvasTopologyNavigation.ButtonHeight = 30;
+      this.canvasTopologyNavigation.WorkArea = workArea;
+      this.canvasTopologyNavigation.DisplayMode = NxtControl.GuiFramework.BreadcrumbDisplayMode.Normal;
+      this.canvasTopologyNavigation.EndInit();
+			// 
+      // logger
+      //      
+      this.logState1.Bounds = new NxtControl.Drawing.RectF(((float)(620)), ((float)(0)), ((float)(36)), ((float)(36)));
+      this.logState1.Anchor = NxtControl.Drawing.AnchorStyles.Right;
+      this.logState1.Text = "";
+      this.logState1.Radius = 0;    
+      this.logState1.Brush = new NxtControl.Drawing.Brush("CanvasTopologyButtonBrush");
+      this.logState1.Pen = NxtControl.Drawing.Pen.FromName("Transparent");
+      this.logState1.Name = "logState1";
+
       // 
       // StartCanvas_2
       // 
       this.Bounds = new NxtControl.Drawing.RectF(((float)(0)), ((float)(0)), ((float)(800)), ((float)(480)));
       this.Name = "StartCanvas_2";
       this.ResizeBehavior = NxtControl.GuiFramework.ResizeBehavior.Standard;
-      this.Shapes.AddRange(new System.ComponentModel.IComponent[] {                 
-                  
+      this.Shapes.AddRange(new System.ComponentModel.IComponent[] {
+                  this.header1,
+                 
+                        this.logo,
+      login1,
+      currentUser1,
+      language1,
+      runtimeConnection1,
+      newVersionDeployment1,
+      this.canvasTopologyNavigation,
+      logState1,
+
                   this.canvasTopologySeparator1,
 				  this.canvasTopologySeparator2,
 				  this.workArea});
       this.Size = new System.Drawing.Size(800, 480);
     }
     
+    private NxtControl.GuiFramework.Rectangle header1;
+private NxtControl.GuiFramework.Rectangle logo;
+private NxtControl.GuiFramework.Login login1;
+private NxtControl.GuiFramework.CurrentUser currentUser1;
+private NxtControl.GuiFramework.LanguageSwitcher language1;
+private NxtControl.GuiFramework.RuntimeConnection runtimeConnection1;
+private NxtControl.GuiFramework.HMIDeployment newVersionDeployment1;
+ private NxtControl.GuiFramework.TopologyCurrentCanvas canvasTopologyNavigation;
+private NxtControl.GuiFramework.LogState logState1;
+
     private NxtControl.GuiFramework.WorkAreaControl workArea;    
     private NxtControl.GuiFramework.CanvasTopologySeparator canvasTopologySeparator1;
     private NxtControl.GuiFramework.CanvasTopologySeparator canvasTopologySeparator2; 

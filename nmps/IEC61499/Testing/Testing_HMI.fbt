@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE FBType SYSTEM "../LibraryElement.dtd" >
+  <FBType Name="Testing_HMI" Namespace="Main" GUID="152a93d4-ef27-4a1e-b4ce-50d4ef3fcd88" Comment="Service Interface Function Block Type" >
+    <Identification Standard="61499-2" />
+    <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/20/2026" Remarks="template" />
+    <InterfaceList>
+      <EventInputs>
+        <Event ID="D6E861A0F26F5FF0" Name="INIT">
+          <With Var="QI" />
+        </Event>
+      </EventInputs>
+      <EventOutputs>
+        <Event ID="DFDBD263C9EF2960" Name="INITO">
+          <With Var="QO" />
+          <With Var="STATUS" />
+        </Event>
+      </EventOutputs>
+      <InputVars>
+        <VarDeclaration ID="9B446A1CA6ADFAC1" Name="QI" Type="BOOL" />
+      </InputVars>
+      <OutputVars>
+        <VarDeclaration ID="2447A28345E845B4" Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+        <VarDeclaration ID="BCA61E2675A25FA5" Name="STATUS" Type="STRING" Comment="Service Status" />
+      </OutputVars>
+    </InterfaceList>
+    <Service RightInterface="" LeftInterface="">
+      <ServiceSequence Name= "" />
+    </Service>
+  </FBType>
+  
