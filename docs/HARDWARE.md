@@ -10,38 +10,7 @@ The Festo MPS 400 installation in EISLAB is over 10 years old and originally ran
 
 ---
 
-## 2. Plant Layout & Controller Inventory
-
-The main transport system consists of **four conveyors (`A`, `B`, `C`, `D`)** arranged in an **anticlockwise** closed loop with six tray stopper interfaces (`IF1`–`IF6`). Only interfaces `1`, `2`, and `6` host stations today (the legacy robot cell at `IF4` is removed); `IF3`, `IF4`, and `IF5` retain stoppers for tray traffic control.
-
-```mermaid
-%%{init: {"theme": "neutral", "flowchart": {"curve": "linear"}}}%%
-flowchart TB
-    subgraph Loop["Main Conveyor Loop (Anticlockwise, PLC_CV 10.10.215.19)"]
-        direction LR
-        subgraph Top["Conveyor C (Top)"]
-            IF6["IF6 (Top Left)<br/>Handling-2 + Sorting-1"]
-            IF5["IF5 (Top Middle)<br/>Stopper only"]
-            IF4["IF4 (Top Right)<br/>Stopper only"]
-            IF4 --> IF5 --> IF6
-        end
-        subgraph Bottom["Conveyor A (Bottom)"]
-            IF1["IF1 (Bottom Left)<br/>Distributing-1 + Testing-1"]
-            IF2["IF2 (Bottom Middle)<br/>Processing-1 + Handling-1"]
-            IF3["IF3 (Bottom Right)<br/>Stopper only"]
-            IF1 --> IF2 --> IF3
-        end
-        IF6 -->|"Conveyor D (Left)"| IF1
-        IF3 -->|"Conveyor B (Right)"| IF4
-    end
-
-    IF1 --- PLC_DS["PLC_DS<br/>10.10.215.133"]
-    IF1 --- PLC_TS["PLC_TS<br/>10.10.215.25"]
-    IF2 --- PLC_HP["PLC_HP<br/>10.10.215.21"]
-    IF6 --- PLC_HS["PLC_HS<br/>10.10.214.251"]
-```
-
-*Figure 1. EISLAB Festo MPS 400 loop layout and controller allocation.*
+## 2. Controller Inventory
 
 ### M251 dPAC Controller Table
 
