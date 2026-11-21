@@ -1,0 +1,104 @@
+{
+  "catalogReference": "M050_V01.00_01.00",
+  "uuid": "f189695a-0af5-4442-aeb2-837923217ac4",
+  "identifier": "Testing",
+  "path": "Topology",
+  "partNumber": "TM251MDESE",
+  "properties": [
+    {
+      "propertyName": "IsUnderConstruction",
+      "propertyValue": "False"
+    },
+    {
+      "propertyName": "DomainTag",
+      "propertyValue": "1bf87c9c-2a73-4176-9028-707d6be5c30d"
+    }
+  ],
+  "references": [
+    {
+      "diagramPath": "Physical Views",
+      "x": 73.703125,
+      "y": -47.412011718750023
+    }
+  ],
+  "components": [
+    {
+      "interfaces": [
+        {
+          "identifier": "MDESE_ETH1",
+          "disabled": false,
+          "internal": false,
+          "physicalAddress": "",
+          "endpoints": [
+            {
+              "identifier": "IP Address",
+              "isReadOnly": false,
+              "domainReadOnly": false,
+              "ipAddress": "10.10.215.25",
+              "domain": "00000000-0000-0000-0000-000000000000"
+            }
+          ]
+        },
+        {
+          "identifier": "MDESE_ETH2",
+          "disabled": false,
+          "internal": false,
+          "physicalAddress": "",
+          "endpoints": [
+            {
+              "identifier": "IP Address",
+              "isReadOnly": false,
+              "domainReadOnly": false,
+              "ipAddress": "0.0.0.0",
+              "domain": "00000000-0000-0000-0000-000000000000"
+            }
+          ]
+        }
+      ],
+      "ports": [
+        {
+          "identifier": "Ethernet1_1",
+          "side": "Default"
+        },
+        {
+          "identifier": "Ethernet1_2",
+          "side": "Default"
+        },
+        {
+          "identifier": "Ethernet2",
+          "side": "Default"
+        }
+      ],
+      "componentType": "EthernetDEO"
+    },
+    {
+      "endpoint": "MDESE_ETH2\\IP Address",
+      "connectionTypes": "None",
+      "componentType": "EthernetMasterDEO"
+    },
+    {
+      "enabled": false,
+      "securityMode": 0,
+      "componentType": "SysLogClientDEO"
+    },
+    {
+      "mode": 0,
+      "componentType": "CyberSecurityDEO"
+    },
+    {
+      "uuid": "c1185e5e-5923-46a0-943a-ad2b89e5598e",
+      "typeId": "6ff4ba70-02c6-4b8f-a716-f4bbd6b3d19e",
+      "logicalDeviceId": "9b129585-0c86-45b1-8b59-a88961e02156",
+      "runtimeServices": [
+        {
+          "identifier": "Deployment"
+        },
+        {
+          "identifier": "Archive Service",
+          "logicalPortSecured": "0"
+        }
+      ],
+      "componentType": "RuntimeDEO"
+    }
+  ]
+}
