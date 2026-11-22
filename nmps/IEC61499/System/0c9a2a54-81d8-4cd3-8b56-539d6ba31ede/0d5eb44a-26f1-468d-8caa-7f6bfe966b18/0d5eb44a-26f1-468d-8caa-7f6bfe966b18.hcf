@@ -224,7 +224,7 @@
             <ParameterValue Name="DI04" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.DA014101550A683C.15.DIn" IsSymlink="true" />
             <ParameterValue Name="DI05" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.DA014101550A683C.9.DIn" IsSymlink="true" />
             <ParameterValue Name="DI06" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.E97FD2E6D42C4155.6.DIn" IsSymlink="true" />
-            <ParameterValue Name="DI07" Value="32BAD17BD48389.2D5F5D6FEBF54AE6.46A6896A3BC8F000.6.DIn" IsSymlink="true" />
+            <ParameterValue Name="DI07" Value="" IsSymlink="true" />
             <ParameterValue Name="DI08" Value="" IsSymlink="true" />
             <ParameterValue Name="DI09" Value="" IsSymlink="true" />
             <ParameterValue Name="DI10" Value="" IsSymlink="true" />
