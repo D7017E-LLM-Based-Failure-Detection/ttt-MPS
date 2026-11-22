@@ -8,7 +8,7 @@
 | **Controller & IP** | `PLC_TS` (`10.10.215.25`, `TM3DI16_G` + `TM3DQ16R_G`) — see [HARDWARE.md](HARDWARE.md) |
 | **Reference GRAFCET** | [02_Testing_GRAFCET.pdf](grafcets/02_Testing_GRAFCET.pdf) |
 | **Libraries** | `SE.App2CommonProcess`, `SE.App2Base`, `SE.AppSequence` (`25.0.1.5`); `Runtime.Base` (`25.0.1.2`); `SE.IoTMx` (`25.0.1.4`); `SE.DPAC` (`25.0.1.10`) |
-| **Status** | Implemented, bound to `PLC_TS` TM3 I/O, compiled in EAE, and running in Local Simulation (full simulation & physical `PLC_TS` verification pending) |
+| **Status** | Implemented, bound to `PLC_TS` TM3 I/O, wired to `Distribution`, and verified in EAE Local Simulation (physical `PLC_TS` verification pending) |
 
 ---
 
@@ -16,7 +16,7 @@
 
 This document describes the modular rebuild of the Festo MPS 400 Testing station control software in EcoStruxure Automation Expert (EAE) 25, following the standard-library architecture established for [Distribution](DISTRIBUTION.md). Instead of porting custom basic function blocks from the legacy nxtStudio program, the `Testing` Composite Automation Type (CAT) assembles unmodified Schneider Electric `SE.App2CommonProcess` and `SE.AppSequence` library blocks with built-in HMI faceplates, alarm handling, owner management, feedback monitoring, and OPC UA support.
 
-Starting with Testing, sequence sub-CATs are prefixed with the machine name (`TestingReset` and `TestingCycle`) so the pattern scales cleanly across all remaining stations. The station's seven device blocks, two `permCondItem` permissives, 5-step `TestingReset`, 14-step branching `TestingCycle`, `Testing.RES0` startup chain, `TM3DI16_G`/`TM3DQ16R_G` I/O bindings, Topology logical-device link (`10.10.215.25`), and `Testing` HMI canvas are implemented and compile cleanly in EAE. Full sequence testing in Local Simulation and physical commissioning on `PLC_TS` remain to be completed.
+Starting with Testing, sequence sub-CATs are prefixed with the machine name (`TestingReset` and `TestingCycle`) so the pattern scales cleanly across all remaining stations. The station's seven device blocks, two `permCondItem` permissives, 5-step `TestingReset`, 14-step branching `TestingCycle` (with the `Valve2Op` `AllLocal` `$IN3 = TRUE` fix applied), `Testing.RES0` startup chain, `TM3DI16_G`/`TM3DQ16R_G` I/O bindings, Topology logical-device link (`10.10.215.25`), OPC UA port `4841` for dual-device local simulation, and `Testing` HMI canvas are implemented and verified in EAE Local Simulation alongside [Distribution](DISTRIBUTION.md) (`FreeForPart` → `Distribution.DownstreamFree` and `Distribution.ArmAtTesting` → `ArmClear` gating `TC3_WaitPart`), monitored via [`nmps_opcua_listener.py`](../nmps_opcua_listener.py). Physical commissioning on `PLC_TS` remains to be completed.
 
 ---
 
@@ -71,19 +71,22 @@ flowchart TB
     end
 
     PLC["PLC_TS Hardware (TM251MDESE 10.10.215.25)<br/>TM3DI16_G (DI00-DI06) + TM3DQ16R_G (DO00-DO03)"]
-    Distribution["Distribution (PLC_DS) & Conveyor (PLC_CV)<br/>Station 1 handover (planned)"]
-    OPCUA["OPC UA values for UaExpert (planned)"]
+    Distribution["Distribution (PLC_DS)<br/>Bidirectional Station 1 handover"]
+    Conveyor["Conveyor (PLC_CV)<br/>Tray & Stopper 1 handover (planned)"]
+    OPCUA["OPC UA listener (nmps_opcua_listener.py)<br/>Port 4841 in local sim / 4840 on PLC_TS"]
 
     Actuators <-->|TM3 symbolic links| PLC
     PLC -->|TM3 symbolic links| Sensors
-    Distribution -.-> Testing
-    Testing -.-> OPCUA
+    Testing -->|FreeForPart| Distribution
+    Distribution -->|"ArmAtTesting -> ArmClear"| Cycle
+    Testing -.-> Conveyor
+    Testing --> OPCUA
 
     classDef planned fill:#fff,stroke:#666,stroke-dasharray:5 5
-    class StationState,Distribution,OPCUA planned
+    class StationState,Conveyor planned
 ```
 
-*Figure 1. Architecture of the `Testing` CAT. Solid blocks are implemented, bound to `PLC_TS` TM3 I/O, and compiled; dashed blocks represent planned console/supervisory, cross-station, and OPC UA extensions.*
+*Figure 1. Architecture of the `Testing` CAT. Solid blocks are implemented, bound to `PLC_TS` I/O, and wired for bidirectional `Distribution` handover + OPC UA monitoring; dashed blocks represent planned console/supervisory and Conveyor (`PLC_CV`) extensions.*
 
 - **Resource startup chain (`RES0`):** Inside [`454CB27F11C39A4C.sysres`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/9b129585-0c86-45b1-8b59-a88961e02156/454CB27F11C39A4C.sysres), `START.COLD` and `START.WARM` initialize `FB1` (`DPAC_FULLINIT`), whose `INITO` initializes and triggers `SeqInit` (`EVENTCHAINHEAD` named `'SEQ_INIT'`); `SeqInit.FINISHED` initializes the `Testing` instance (`Testing.INIT`). `START.ONLINECHANGE` re-triggers the same chain via `OC_RETRIGGER` / `OC_DONE`.
 - **Instance naming requirement:** Because `TestingReset` and `TestingCycle` address actuators via `'RES0.Testing.<Device>.sc.*'`, the `Testing` CAT instance mapped onto `Testing.RES0` must be named `Testing`.
@@ -148,7 +151,7 @@ Both sequences use `SE.AppSequence` (`SeqHead`, `SeqStep`, `SeqTransition`, `Seq
 
 | Step ID | Action (`SYMLINKMULTIVARSRC`) | Transition Condition (`Exceeded`) | Notes |
 | --- | --- | --- | --- |
-| `TR1_TakeOver` | `Ejector`, `AirSlide`, `Lift` → `sc.progLocalSel := TRUE` | `AllLocal` (`Ejector AND AirSlide AND Lift` `sc.progLocal`) | Switches actuators to `Program Local`. *(See Section 6 #2 regarding `Valve2Op` `sc.progLocal`.)* |
+| `TR1_TakeOver` | `Ejector`, `AirSlide`, `Lift` → `sc.progLocalSel := TRUE` | `AllLocal` (`Ejector AND AirSlide AND TRUE`) | Switches actuators to `Program Local`; `Lift` (`Valve2Op`) `sc.progLocal` input is bypassed (`$IN3 = TRUE`, see Section 6 #2). |
 | `TR2_AirSlideOff` | `AirSlide.sc.lsp := 0` (`Off`) | `$Exceeded = TRUE` | Immediately disables the air slide on `AirSlideOffCmd.CNF`. |
 | `TR3_LowerLift` | `Lift.sc.lsp := 2` (`Close` / Lower) | `LiftClosed` (`1B2`) | Lowers the lifting cylinder to the bottom position. |
 | `TR4_ClearEject` | `Ejector.sc.lsp := 1` (`Open` / Extend) | `EjectLatch.Q` (`EjectTimer` `T#1s`) | Pulses the ejector at the bottom to clear any leftover workpiece off the lift. |
@@ -181,9 +184,9 @@ flowchart TD
 
 | Step ID | Action (`SYMLINKMULTIVARSRC`) | Transition Condition (`Exceeded`) | Next Step |
 | --- | --- | --- | --- |
-| `TC1_TakeOver` | `Ejector`, `AirSlide`, `Lift` → `sc.progLocalSel := TRUE` | `AllLocal` (`Ejector AND AirSlide AND Lift` `sc.progLocal`) | `2` (`TC2_EnsureBottom`) |
+| `TC1_TakeOver` | `Ejector`, `AirSlide`, `Lift` → `sc.progLocalSel := TRUE` | `AllLocal` (`Ejector AND AirSlide AND TRUE`) | `2` (`TC2_EnsureBottom`) |
 | `TC2_EnsureBottom` | `Lift.sc.lsp := 2`, `Ejector.sc.lsp := 2` | `AtBottomReady` (`LiftClosed AND EjectorClosed`) | `3` (`TC3_WaitPart`) |
-| `TC3_WaitPart` | None (wait step) | `PartAvailable` (`PART_AV`) | `4` (`TC4_CheckColor`) |
+| `TC3_WaitPart` | None (wait step) | `PartAndArmClear` (`PartAvailable AND ArmClear`, where `ArmClear = NOT ArmAtTesting` from `Distribution`; defaults `TRUE` standalone) | `4` (`TC4_CheckColor`) |
 | `TC4_CheckColor` | None (decision step) | Pass: `NotBlack` (`B2`) / Reject (`TC4_RejectBranch`): `IsBlack` (`NOT NotBlack`) | Pass: `5` (`TC5_RaiseLift`) / Reject: `11` (`TC11_RejectLower`) |
 | `TC5_RaiseLift` | `Lift.sc.lsp := 1` (`Open` / Raise) | `LiftOpen` (`1B1`) | `6` (`TC6_CheckHeight`) |
 | `TC6_CheckHeight` | None (decision step) | Pass: `HeightOk` (`COMP`) / Reject (`TC6_RejectBranch`): `BadHeight` (`NOT HeightOk`) | Pass: `7` (`TC7_PassEject`) / Reject: `11` (`TC11_RejectLower`) |
@@ -219,7 +222,7 @@ flowchart TD
     CycleHead --> TC1
     TC1 -->|AllLocal| TC2
     TC2 -->|LiftClosed AND EjectorClosed| TC3
-    TC3 -->|PartAvailable| TC4
+    TC3 -->|PartAvailable AND ArmClear| TC4
     TC4 -->|NotBlack = TRUE| TC5
     TC4 -->|TC4_RejectBranch: NOT NotBlack| TC11
     TC5 -->|LiftOpen: 1B1| TC6
@@ -248,25 +251,27 @@ flowchart TD
 ### 5.1 Local Simulation Test Plan
 
 1. Open `nmps/nmps.sln` in EAE 25, ensure **Navigation Bar** is enabled on the `800x480` HMI resolution (or launch the `Testing` canvas directly), and run **Build** and **Build HMI**.
-2. In **Deploy and Diagnostic**, set **Active Network Profile** to `Local Test`, start Runtime Simulation for `Testing` (ports `Deploy = 51499`, `Archive = 51496`), log in (`aic3`), and run **Deploy**.
-3. Open the `Testing` HMI canvas, enable **Simulation** on `Lift`, `Ejector`, and `AirSlide` faceplates, and press **Rearm** if a startup feedback alarm appeared before Simulation was enabled.
+2. In **Deploy and Diagnostic**, set **Active Network Profile** to `Local Test`, start Runtime Simulation for `Testing` (`Deploy = 51499`, `Archive = 51496`, OPC UA port `4841` so it can run alongside `Distribution` on `4840`), log in (`aic3`), and run **Deploy**.
+3. Open the `Testing` HMI canvas, enable **Simulation** on `Lift` and `Ejector` faceplates, and press **Rearm** if startup feedback alarms appeared before Simulation was enabled. Optionally run [`nmps_opcua_listener.py`](../nmps_opcua_listener.py) (`python nmps_opcua_listener.py --csv sim_test.csv`) to trace both stations concurrently.
 
 | # | Test Scenario | Expected Outcome | Status |
 | --- | --- | --- | --- |
-| 1 | **Manual actuator control.** Switch Owner to `Operator` on `Lift`, `Ejector`, and `AirSlide`; test `Open` / `Close` (`Stop` on `Lift`). | `Lift` transitions `Opening → Open → Closing → Closed` (`Stopped` mid-travel); `Ejector` and `AirSlide` respond on HMI. | Pending |
+| 1 | **Manual actuator control.** Switch Owner to `Operator` on `Lift`, `Ejector`, and `AirSlide`; test `Open` / `Close` (`Stop` on `Lift`). | `Lift` transitions `Opening → Open → Closing → Closed` (`Stopped` mid-travel); `Ejector` and `AirSlide` respond on HMI. | Passed |
 | 2 | **`LiftPerm` (`Ejector Retracted`).** Extend `Ejector` (`Open`), then try to raise `Lift`; retract `Ejector` and retry. | `Lift` raise is blocked (`⊘` badge, `Ejector Retracted` red) until `Ejector` is confirmed retracted (`2B1`). | Pending |
 | 3 | **`EjectorPerm` (`Lift Not Mid-Travel`).** Stop `Lift` mid-travel (`FbStopped = TRUE`) and try to extend `Ejector`; move `Lift` to `Open` or `Closed` and retry. | `Ejector` extend is blocked while `Lift` is `Passive` (stopped mid-travel), and allowed at both top (`1B1`) and bottom (`1B2`). | Pending |
-| 4 | **5-step `ResetSeq`.** Return device owners to `Program`, start `ResetSeq` in `Operator` mode. | `AirSlide` turns off, `Lift` lowers (`1B2`), `Ejector` pulses `1 s`, retracts (`2B1`), and `ResetSeq` completes. | Pending |
-| 5 | **Pass cycle (`TestingCycle`).** Override `PartAvailable = True`, `NotBlack = True`, `HeightOk = True`, run `CycleSeq`. | Executes `TC1`–`TC10` → `TC14` (skips `TC11`–`TC13`): lifts, turns on `AirSlide` + `Ejector` (`1 s`), retracts `Ejector`, holds `AirSlide` (`2 s`), lowers `Lift`, completes. | Pending |
-| 6 | **Color-reject branch.** Override `PartAvailable = True`, `NotBlack = False`, run `CycleSeq`. | Branches at `TC4_RejectBranch` directly to `TC11_RejectLower` (never raises lift), pulses `Ejector` (`1 s`), retracts, completes. | Pending |
-| 7 | **Height-reject branch.** Override `PartAvailable = True`, `NotBlack = True`, `HeightOk = False`, run `CycleSeq`. | Raises lift (`TC5`), branches at `TC6_RejectBranch` to `TC11_RejectLower` (lowers lift first), pulses `Ejector` (`1 s`), retracts, completes. | Pending |
+| 4 | **5-step `ResetSeq`.** Return device owners to `Program`, start `ResetSeq` in `Operator` mode. | `AirSlide` turns off, `Lift` lowers (`1B2`), `Ejector` pulses `1 s`, retracts (`2B1`), and `ResetSeq` completes. | Passed |
+| 5 | **Pass cycle (`TestingCycle`).** Override `PartAvailable = True`, `NotBlack = True`, `HeightOk = True`, run `CycleSeq`. | Executes `TC1`–`TC10` → `TC14` (skips `TC11`–`TC13`): lifts, turns on `AirSlide` + `Ejector` (`1 s`), retracts `Ejector`, holds `AirSlide` (`2 s`), lowers `Lift`, completes. | Passed |
+| 6 | **Color-reject branch.** Override `PartAvailable = True`, `NotBlack = False`, run `CycleSeq`. | Branches at `TC4_RejectBranch` directly to `TC11_RejectLower` (never raises lift), pulses `Ejector` (`1 s`), retracts, completes. | Passed |
+| 7 | **Height-reject branch.** Override `PartAvailable = True`, `NotBlack = True`, `HeightOk = False`, run `CycleSeq`. | Raises lift (`TC5`), branches at `TC6_RejectBranch` to `TC11_RejectLower` (lowers lift first), pulses `Ejector` (`1 s`), retracts, completes. | Passed |
+| 8 | **Cross-station handover with `Distribution`.** Run both stations; toggle `PartAvailable = True` while `Distribution.Swivel` is still at `3B2` (`AC9_DropOff`), then step `Distribution` to `AC10`. | `FreeForPart` sets `Distribution.DownstreamFree = False`, `Distribution` still completes `AC10`–`AC12` mid-park, and `ArmAtTesting` holds `TC3_WaitPart` until `Swivel` leaves `3B2`. | Passed |
 
 ### 5.2 Physical PLC Deployment Checklist (`PLC_TS`, `10.10.215.25`)
 
 1. Ensure the engineering PC Ethernet adapter is on `10.10.0.20` / `255.255.0.0` (no gateway) and **Active Network Profile** in EAE is `(Default)`.
 2. Verify `Testing` (`10.10.215.25`) in [`Equipment_Testing.json`](../nmps/Topology/Equipment_Testing.json) is bound to logical device `Testing` (`9b129585-0c86-45b1-8b59-a88961e02156`) and [`9b129585-0c86-45b1-8b59-a88961e02156.hcf`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/9b129585-0c86-45b1-8b59-a88961e02156/9b129585-0c86-45b1-8b59-a88961e02156.hcf) uses **`TM3DQ16R_G`** with `DI00`–`DI06` and `DO00`–`DO03` bound.
-3. If the M251 dPAC shield icon is empty red (*Security Not Set*), run **Configure Security** first with factory default credentials (`User: installer`, `Password: Inst@ller1`), click **Trust**, then log in as `aic3`.
-4. Run **Deploy**, ensure **Simulation** is off on all `Testing` actuator faceplates, verify compressed air is connected, and test manual actuation followed by `ResetSeq` and `CycleSeq` with black, non-black pass, and wrong-height workpieces.
+3. **OPC UA port check:** `Testing` device properties currently set `endpoints/0/bind_port = 4841` for dual-device local simulation. When deploying to physical `PLC_TS`, either revert `bind_port` to `4840` or pass `--mode lab --test-url opc.tcp://10.10.215.25:4841` to [`nmps_opcua_listener.py`](../nmps_opcua_listener.py).
+4. If the M251 dPAC shield icon is empty red (*Security Not Set*), run **Configure Security** first with factory default credentials (`User: installer`, `Password: Inst@ller1`), click **Trust**, then log in as `aic3`.
+5. Run **Deploy**, ensure **Simulation** is off on all `Testing` actuator faceplates, verify compressed air is connected, and test manual actuation followed by `ResetSeq` and `CycleSeq` with black, non-black pass, and wrong-height workpieces.
 
 ---
 
@@ -277,22 +282,25 @@ flowchart TD
    *Solution:* Keep default `FbMode = 16#0` so `2B1` stays monitored on retract, and time each extend pulse (`T#1s`) with dedicated `E_DELAY` + `E_SR` pairs (`EjectTimer`, `PassEjectTimer`, `RejEjectTimer`) triggered from each step's `STEP_ENTER` (not a shared command `CNF`) to prevent timer cross-talk.
 2. **`Valve2Op` (`Lift`) `sc.progLocal` library bug (`SE.App2CommonProcess` 25.0.1.5).**
    As discovered on `Distribution.Swivel` ([DISTRIBUTION.md](DISTRIBUTION.md#6-problems--solutions)), `Valve2Op`'s internal `sc.progLocal` reader leaves `$QI` unset and never publishes `progLocal = TRUE` back to sequences.
-   *Status / action needed:* `TestingReset.fbt` and `TestingCycle.fbt` currently wire `OwnerFb.VALUE3` (`RES0.Testing.Lift.sc.progLocal`) into `AllLocal.IN3`. If `TR1_TakeOver` / `TC1_TakeOver` hangs waiting for `AllLocal`, replace that wire with `<Parameter Name="$IN3" Value="TRUE" />` (matching `Distribution`'s `Swivel` workaround) while still writing `Lift.sc.progLocalSel := TRUE`.
-3. **`Lift` startup `Detected Feedback Failure` in Local Simulation.**
-   Observed in the HMI Alarm Grid on initial simulation start (`Testing.RES0.Testing.Lift.valve2OpBase.feedbackFailure`) because `DI04`/`DI05` start `FALSE` while `Lift` is not yet in faceplate Simulation mode.
-   *Solution:* Enable **Simulation** on the `Lift` faceplate and click **Rearm** during local simulation tests.
+   *Resolved:* Replaced `OwnerFb.VALUE3` with `<Parameter Name="$IN3" Value="TRUE" />` on `AllLocal` in both [`TestingReset.fbt`](../nmps/IEC61499/TestingReset/TestingReset.fbt) and [`TestingCycle.fbt`](../nmps/IEC61499/TestingCycle/TestingCycle.fbt), while continuing to write `Lift.sc.progLocalSel := TRUE`. Ensure `Lift`'s HMI owner switch is set to `Program` before running sequences (`sc.progLocalSel` cannot override `Operator` mode).
+3. **Startup `Detected Feedback Failure` on `Lift` and `Ejector` in Local Simulation.**
+   Observed in the HMI Alarm Grid on initial simulation start because `DI04`–`DI06` start `FALSE` while actuators are not yet in faceplate Simulation mode.
+   *Solution:* Enable **Simulation** on the `Lift` and `Ejector` faceplates, click **Rearm**, and run `ResetSeq`.
 4. **HMI navigation between `Distribution` and `Testing` (`Start Local HMI`).**
    In [`CanvasesResolutionList.xml`](../nmps/HMI/CanvasesResolutionList.xml), the `800x480` resolution had `NavigationBar="false"`, causing `StartCanvas_2` to omit the top navigation header and show only the first canvas (`Distribution`).
    *Solution:* Enable **Navigation Bar** in `800x480` properties in EAE (and rebuild HMI) so operators can switch between `Distribution` and `Testing` from the navigation bar.
 5. **Height checker (`COMP`) hardware uncertainty.**
    If the physical analog height sensor/comparator on the EISLAB Testing rig is out of calibration or faulty, `TC6_CheckHeight` will route every lifted workpiece to `TC6_RejectBranch` (`HeightOk = FALSE`).
    *Workaround:* Use the `HeightOk` HMI faceplate **Override** to force `True`/`False` during commissioning until the physical comparator threshold is verified.
+6. **Handover collision guard (`ArmAtTesting` / `ArmClear`) & EAE `.syslay` reload caveat.**
+   At `AC9_DropOff`, the falling workpiece can assert `PartAvailable` while `Distribution`'s swivel arm is still over `Testing`'s lift at `3B2`. `TestingCycle` now gates `TC3_WaitPart` on `PartAvailable AND ArmClear` (with `ArmAtTesting` defaulting to `FALSE` standalone, and without wiring `ArmClear.CNF` back to `REQ_ARM_POS` to avoid an infinite cross-PLC loop). Note that an Operator manually switching `Lift` to `Operator` and pressing `Open` is not yet blocked by a `permCondItem` for `ArmClear`. Also, after editing cross-device wires externally in [`6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/9bf3b433-92e3-4d31-8cff-c20036297fe9/6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay), close and reopen `nmps.sln` and run **Rebuild** in EAE so the cross-PLC communication descriptors (`commdesc.xml`) are regenerated.
+7. **Dual-station local simulation OPC UA port (`4840` collision).**
+   When simulating both `Distribution` and `Testing` on `127.0.0.1`, whichever device starts first binds OPC UA port `4840`. Setting `Testing` device property `endpoints/0/bind_port = 4841` separates the two servers so [`nmps_opcua_listener.py`](../nmps_opcua_listener.py) can stream both concurrently (`127.0.0.1:4840` and `127.0.0.1:4841`).
 
 ---
 
 ## 7. Remaining Work
 
-- **Bypass `Lift.sc.progLocal` in `AllLocal`:** Apply the `Valve2Op` `$IN3 = TRUE` workaround in [`TestingReset.fbt`](../nmps/IEC61499/TestingReset/TestingReset.fbt) and [`TestingCycle.fbt`](../nmps/IEC61499/TestingCycle/TestingCycle.fbt) if `TR1_TakeOver`/`TC1_TakeOver` hangs on `AllLocal`.
-- **Simulation & hardware verification:** Run through Sections 5.1 and 5.2 and record verified results (including checking physical `COMP` height comparator behavior).
-- **Station 1 integration (`Distribution` + `Testing` + `Conveyor`):** Connect `Testing` status/handover with `Distribution` (`PLC_DS`, `10.10.215.133`) and `Conveyor` (`PLC_CV`, `10.10.215.19`) at Stopper 1.
+- **Permissive & physical hardware verification:** Verify `LiftPerm` and `EjectorPerm` in simulation/lab, optionally add a `permCondItem` on `Lift.IPerm` blocking manual `Operator` raises while `ArmAtTesting = TRUE`, and run physical `PLC_TS` + `PLC_DS` commissioning (including verifying `COMP` height comparator settle timing).
+- **Conveyor (`PLC_CV`) / tray integration:** Wire `Conveyor` (`PLC_CV`, `10.10.215.19`) Stopper 1 / empty-tray status into Station 1 handover logic.
 - **Console I/O & OPC UA:** Bind `DI08`–`DI11` / `DO08`–`DO11` console channels when the supervisory state layer is added, and verify OPC UA variable exposure within the M251 dPAC node budget.
