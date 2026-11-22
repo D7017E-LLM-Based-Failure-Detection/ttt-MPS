@@ -28,6 +28,9 @@
       <Event ID="5763E5C8B975CEB9" Name="HeightOkFb">
         <With Var="HeightOk" />
       </Event>
+      <Event ID="58A1000000000001" Name="ArmClearFb">
+        <With Var="ArmClear" />
+      </Event>
     </EventInputs>
     <EventOutputs>
       <Event ID="61BDC515AA56D21F" Name="INITO" Comment="Initialization Confirm">
@@ -45,6 +48,7 @@
       <VarDeclaration ID="755155DF007843B9" Name="PartAvailable" Type="BOOL" />
       <VarDeclaration ID="761FFAAD79F17532" Name="NotBlack" Type="BOOL" />
       <VarDeclaration ID="772E354520A9B5EF" Name="HeightOk" Type="BOOL" />
+      <VarDeclaration ID="78A1000000000001" Name="ArmClear" Type="BOOL" />
     </InputVars>
     <OutputVars>
       <VarDeclaration ID="81FDAA7AB8B002A3" Name="QO" Type="BOOL" Comment="Output event qualifier" />
@@ -181,6 +185,10 @@
       <Parameter Name="$DT" Value="T#1s" />
     </FB>
     <FB ID="B100000000000032" Name="RejEjectLatch" Type="E_SR" x="6340" y="4220" Namespace="IEC61499.Standard" />
+    <FB ID="B100000000000033" Name="PartAndArmClear" Type="AND_550FE6D62F509EB3" x="3480" y="2160" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=3;OUT:BOOL" />
+      <Parameter Name="$IN3" Value="TRUE" />
+    </FB>
     <Input ID="5129492442D0C9A1" Name="INIT" x="12" y="12" Type="Event" />
     <Input ID="523D26CDA5B2F9E1" Name="REQ" x="12" y="72" Type="Event" />
     <Input ID="719B97CEDA367CC8" Name="QI" x="12" y="132" Type="Data" />
@@ -189,12 +197,14 @@
     <Input ID="5519241BD2443AA1" Name="PartAvailableFb" x="12" y="372" Type="Event" />
     <Input ID="5690AF8BD623FEB6" Name="NotBlackFb" x="12" y="432" Type="Event" />
     <Input ID="5763E5C8B975CEB9" Name="HeightOkFb" x="12" y="492" Type="Event" />
+    <Input ID="58A1000000000001" Name="ArmClearFb" x="12" y="552" Type="Event" />
     <Input ID="729E4466CE606266" Name="LiftOpen" x="12" y="612" Type="Data" />
     <Input ID="738D0D4E12791418" Name="LiftClosed" x="12" y="672" Type="Data" />
     <Input ID="740145A9F34B3204" Name="EjectorClosed" x="12" y="732" Type="Data" />
     <Input ID="755155DF007843B9" Name="PartAvailable" x="12" y="791.9999" Type="Data" />
     <Input ID="761FFAAD79F17532" Name="NotBlack" x="12" y="851.9999" Type="Data" />
     <Input ID="772E354520A9B5EF" Name="HeightOk" x="12" y="912" Type="Data" />
+    <Input ID="78A1000000000001" Name="ArmClear" x="12" y="972" Type="Data" />
     <Output ID="61BDC515AA56D21F" Name="INITO" x="8800" y="172" Type="Event" />
     <Output ID="626AB8861ADCF17C" Name="CNF" x="8800" y="232" Type="Event" />
     <Output ID="81FDAA7AB8B002A3" Name="QO" x="8800" y="292" Type="Data" />
@@ -388,35 +398,10 @@
       <Connection Source="$53DF47D3663E6E3F" Destination="$B100000000000024.REQ" dx1="2383.042" />
       <Connection Source="$54025A14BE6C5638" Destination="$B100000000000024.REQ" dx1="2307.167" />
       <Connection Source="$B100000000000024.CNF" Destination="$B100000000000003.TRANS_REQ" dx1="67.47925" dx2="50" dy="410" />
-      <Connection Source="$B100000000000004.STEP_ENTER" Destination="$B100000000000004.TRANS_REQ" dx1="55.146" dx2="90" dy="-170" />
-      <Connection Source="$5519241BD2443AA1" Destination="$B100000000000004.TRANS_REQ">
-        <Points>
-          <Points>
-            <X>120.484367</X>
-            <Y>100</Y>
-          </Points>
-          <Points>
-            <X>552.5</X>
-            <Y>100</Y>
-          </Points>
-          <Points>
-            <X>552.5</X>
-            <Y>532.5</Y>
-          </Points>
-          <Points>
-            <X>782.5</X>
-            <Y>532.5</Y>
-          </Points>
-          <Points>
-            <X>782.5</X>
-            <Y>715</Y>
-          </Points>
-          <Points>
-            <X>820</X>
-            <Y>715</Y>
-          </Points>
-        </Points>
-      </Connection>
+      <Connection Source="$B100000000000004.STEP_ENTER" Destination="$B100000000000033.REQ" dx1="40" />
+      <Connection Source="$5519241BD2443AA1" Destination="$B100000000000033.REQ" dx1="40" />
+      <Connection Source="$58A1000000000001" Destination="$B100000000000033.REQ" dx1="40" />
+      <Connection Source="$B100000000000033.CNF" Destination="$B100000000000004.TRANS_REQ" dx1="40" />
       <Connection Source="$B100000000000005.STEP_ENTER" Destination="$B100000000000005.TRANS_REQ" dx1="55.146" dx2="90" dy="-170" />
       <Connection Source="$5690AF8BD623FEB6" Destination="$B100000000000005.TRANS_REQ">
         <Points>
@@ -1126,42 +1111,9 @@
           </Points>
         </Points>
       </Connection>
-      <Connection Source="$755155DF007843B9" Destination="$B100000000000004.Exceeded">
-        <Points>
-          <Points>
-            <X>143.473938</X>
-            <Y>204.999969</Y>
-          </Points>
-          <Points>
-            <X>153.473938</X>
-            <Y>204.999969</Y>
-          </Points>
-          <Points>
-            <X>153.473938</X>
-            <Y>292.5</Y>
-          </Points>
-          <Points>
-            <X>552.5</X>
-            <Y>292.5</Y>
-          </Points>
-          <Points>
-            <X>552.5</X>
-            <Y>532.5</Y>
-          </Points>
-          <Points>
-            <X>782.5</X>
-            <Y>532.5</Y>
-          </Points>
-          <Points>
-            <X>782.5</X>
-            <Y>900</Y>
-          </Points>
-          <Points>
-            <X>820</X>
-            <Y>900</Y>
-          </Points>
-        </Points>
-      </Connection>
+      <Connection Source="$755155DF007843B9" Destination="$B100000000000033.IN1" dx1="40" />
+      <Connection Source="$78A1000000000001" Destination="$B100000000000033.IN2" dx1="40" />
+      <Connection Source="$B100000000000033.OUT" Destination="$B100000000000004.Exceeded" dx1="40" />
       <Connection Source="$761FFAAD79F17532" Destination="$B100000000000005.Exceeded">
         <Points>
           <Points>

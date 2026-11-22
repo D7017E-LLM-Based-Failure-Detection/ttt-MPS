@@ -4,11 +4,16 @@
     <FB ID="33A16FB4708913B3" Name="Distribution" Type="Distribution" Namespace="Main" x="760" y="500" />
     <FB ID="248448E89426980E" Name="Testing" Type="Testing" Namespace="Main" x="1800" y="520" />
     <EventConnections>
-      <Connection Source="$248448E89426980E.C2A2000000000001" Destination="$33A16FB4708913B3.D2A1000000000001" />
-      <Connection Source="$33A16FB4708913B3.D2A2000000000001" Destination="$248448E89426980E.C2A1000000000001" />
+      <Connection Source="$248448E89426980E.C2A2000000000001" Destination="$33A16FB4708913B3.D2A1000000000001" dx1="50" dx2="70" dy="-250" />
+      <Connection Source="$33A16FB4708913B3.D2A2000000000001" Destination="$248448E89426980E.C2A1000000000001" dx1="87.5" />
+      <Connection Source="$33A16FB4708913B3.D2A5000000000001" Destination="$248448E89426980E.C2A4000000000001" dx1="67.5" />
+      <Connection Source="$248448E89426980E.C2A5000000000001" Destination="$33A16FB4708913B3.D2A4000000000001" dx1="70" dx2="140" dy="-360">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
     </EventConnections>
     <DataConnections>
-      <Connection Source="$248448E89426980E.C2A3000000000001" Destination="$33A16FB4708913B3.D2A3000000000001" />
+      <Connection Source="$248448E89426980E.C2A3000000000001" Destination="$33A16FB4708913B3.D2A3000000000001" dx1="90" dx2="30" dy="90" />
+      <Connection Source="$33A16FB4708913B3.D2A6000000000001" Destination="$248448E89426980E.C2A6000000000001" dx1="47.5" />
     </DataConnections>
   </SubAppNetwork>
 </Layer>

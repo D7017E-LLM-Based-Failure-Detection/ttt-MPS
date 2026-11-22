@@ -2,11 +2,11 @@
 <baseline xmlns:xsd="http://www.nxtControl.com/Snapshot" xmlns="http://tempuri.org/XMLSchema1.xsd">
   <deployment>
     <network_profile name="(Local Test)">
-      <device id="0d5eb44a-26f1-468d-8caa-7f6bfe966b18" CompileTime="2026-11-22 16:52:30Z">
-        <sref snapshot="{A7360A86-DC16-4344-A1D6-76CAE1E849D5}" state="ACTIVE" />
+      <device id="0d5eb44a-26f1-468d-8caa-7f6bfe966b18" CompileTime="2026-11-22 19:34:57Z">
+        <sref snapshot="{F712A0DC-C99E-44E3-B4E5-3BF35E7D2895}" state="ACTIVE" />
       </device>
-      <device id="9b129585-0c86-45b1-8b59-a88961e02156" CompileTime="2026-11-22 16:51:00Z">
-        <sref snapshot="{7D56C5AD-D98F-45AF-9516-8A42F0AAAB64}" state="ACTIVE" />
+      <device id="9b129585-0c86-45b1-8b59-a88961e02156" CompileTime="2026-11-22 19:34:57Z">
+        <sref snapshot="{56421B23-18E3-4565-BB22-8AEF09FA1617}" state="ACTIVE" />
       </device>
     </network_profile>
     <network_profile name="(Default)">
