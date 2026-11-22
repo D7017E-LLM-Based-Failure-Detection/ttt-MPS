@@ -75,11 +75,13 @@ flowchart TB
     end
 
     PLC["PLC_DS Hardware (TM251MDESE 10.10.215.133)<br/>TM3DI16_G (DI01-DI07) + TM3DQ16R_G (DO00-DO04)"]
-    Actuators <-->|TM3 symbolic links| PLC
-    Sensors <--|TM3 symbolic links| PLC
+    Testing["Testing (PLC_TS) handover trigger (planned)"]
+    OPCUA["OPC UA values for UaExpert (planned)"]
 
-    DownstreamFree -.-> Testing["Testing (PLC_TS) handover trigger (planned)"]
-    Distribution -.-> OPCUA["OPC UA values for UaExpert (planned)"]
+    Actuators <-->|TM3 symbolic links| PLC
+    PLC -->|TM3 symbolic links| Sensors
+    DownstreamFree -.-> Testing
+    Distribution -.-> OPCUA
 
     classDef planned fill:#fff,stroke:#666,stroke-dasharray:5 5
     class StationState,Testing,OPCUA planned
@@ -87,7 +89,7 @@ flowchart TB
 
 *Figure 1. Architecture of the `Distribution` CAT. Solid blocks are implemented, bound to physical `PLC_DS` I/O, and deployed; dashed blocks represent planned console/supervisory, cross-station, and OPC UA extensions.*
 
-- **Resource startup chain (`RES0`):** Inside [`32BAD17BD48389.sysres`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/0d5eb44a-26f1-468d-8caa-7f6bfe966b18/32BAD17BD48389.sysres), `START.COLD` and `START.WARM` initialize `DPAC_FULLINIT`, whose `INITO` initializes and triggers `SeqInit` (`EVENTCHAINHEAD` named `'SEQ_INIT'`); `SeqInit.FINISHED` initializes the `Distribution` instance (`Distribution.INIT`). `START.ONLINECHANGE` re-triggers the same chain via `OC_RETRIGGER` / `OC_DONE`.
+- **Resource startup chain (`RES0`):** `START.COLD` and `START.WARM` initialize `DPAC_FULLINIT`, whose `INITO` initializes and triggers `SeqInit` (`EVENTCHAINHEAD` named `'SEQ_INIT'`); `SeqInit.FINISHED` initializes the `Distribution` instance (`Distribution.INIT`). `START.ONLINECHANGE` re-triggers the same chain via `OC_RETRIGGER` / `OC_DONE`.
 - **HMI canvas (`Distribution`):** [`Distribution.cnv.Designer.cs`](../nmps/HMI/Distribution.cnv.Designer.cs) hosts faceplates/symbols for all six devices (`Ejector`, `Swivel`, `Vacuum`, `BlowOff`, `MagazineEmpty`, `DownstreamFree`), both sequence heads (`ResetSeq` and `CycleSeq` via `SE.AppSequence.Symbols.SeqHead.sHead`), and an `AlarmGrid` control for live alarm diagnostics.
 
 ---

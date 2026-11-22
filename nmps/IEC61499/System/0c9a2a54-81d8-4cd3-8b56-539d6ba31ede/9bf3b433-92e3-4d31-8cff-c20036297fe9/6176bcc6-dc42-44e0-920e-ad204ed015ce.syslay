@@ -2,6 +2,6 @@
 <Layer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="6176bcc6-dc42-44e0-920e-ad204ed015ce" Name="Default" Comment="" IsDefault="true" Format="2.0" xmlns="https://www.se.com/LibraryElements">
   <SubAppNetwork>
     <FB ID="33A16FB4708913B3" Name="Distribution" Type="Distribution" Namespace="Main" x="760" y="500" />
-    <FB ID="248448E89426980E" Name="Testing" Type="Testing" Namespace="Main" x="1800" y="520" />
+    <FB ID="248448E89426980E" Name="Testing" Type="Testing" Namespace="Main" x="1720" y="520" />
   </SubAppNetwork>
 </Layer>
