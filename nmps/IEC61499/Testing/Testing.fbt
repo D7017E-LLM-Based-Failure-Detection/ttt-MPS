@@ -12,6 +12,7 @@
       <Event ID="B325BA8515AD40F2" Name="REQ" Comment="Normal Execution Request">
         <With Var="QI" />
       </Event>
+      <Event ID="C2A1000000000001" Name="REQ_FREE" Comment="Request current downstream-free status" />
     </EventInputs>
     <EventOutputs>
       <Event ID="CE2C8D3CAF7F4E27" Name="INITO" Comment="Initialization Confirm">
@@ -20,12 +21,16 @@
       <Event ID="82CC77AFD74F3D0F" Name="CNF" Comment="Execution Confirmation">
         <With Var="QO" />
       </Event>
+      <Event ID="C2A2000000000001" Name="FREE_CNF" Comment="Downstream-free status changed">
+        <With Var="FreeForPart" />
+      </Event>
     </EventOutputs>
     <InputVars>
       <VarDeclaration ID="38966DBCE8921E8F" Name="QI" Type="BOOL" Comment="Input event qualifier" />
     </InputVars>
     <OutputVars>
       <VarDeclaration ID="E4C4E3EF868A560C" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration ID="C2A3000000000001" Name="FreeForPart" Type="BOOL" Comment="TRUE when lift is lowered, ejector retracted, and no workpiece is present" />
     </OutputVars>
   </InterfaceList>
   <FBNetwork>
@@ -48,18 +53,56 @@
     </FB>
     <FB ID="C10000000000000A" Name="Reset" Type="TestingReset" x="5420" y="480" Namespace="Main" />
     <FB ID="C10000000000000B" Name="Cycle" Type="TestingCycle" x="5320" y="1320" Namespace="Main" />
+    <FB ID="C10000000000000C" Name="NoPart" Type="NOT_42C76073DCEB1A7A" x="1520" y="380" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=1;OUT${CNT}:BOOL" />
+    </FB>
+    <FB ID="C10000000000000D" Name="ReadyForPart" Type="AND_550FE6D62F509EB3" x="4000" y="340" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=3;OUT:BOOL" />
+    </FB>
     <Input ID="65381F6BB52528F5" Name="INIT" x="12" y="12" Type="Event" />
     <Input ID="B325BA8515AD40F2" Name="REQ" x="12" y="72" Type="Event" />
     <Input ID="38966DBCE8921E8F" Name="QI" x="12" y="132" Type="Data" />
-    <Output ID="CE2C8D3CAF7F4E27" Name="INITO" x="5560" y="91.99999" Type="Event" />
-    <Output ID="82CC77AFD74F3D0F" Name="CNF" x="5580" y="152" Type="Event" />
-    <Output ID="E4C4E3EF868A560C" Name="QO" x="5460" y="212" Type="Data" />
+    <Input ID="C2A1000000000001" Name="REQ_FREE" x="12" y="252" Type="Event" />
+    <Output ID="CE2C8D3CAF7F4E27" Name="INITO" x="5280" y="92" Type="Event" />
+    <Output ID="82CC77AFD74F3D0F" Name="CNF" x="5300" y="152" Type="Event" />
+    <Output ID="E4C4E3EF868A560C" Name="QO" x="5180" y="212" Type="Data" />
+    <Output ID="C2A2000000000001" Name="FREE_CNF" x="5300" y="272" Type="Event" />
+    <Output ID="C2A3000000000001" Name="FreeForPart" x="5180" y="332" Type="Data" />
     <EventConnections>
-      <Connection Source="$65381F6BB52528F5" Destination="$C10000000000000A.11A71DE3BB9549E0" dx1="3429.417" />
+      <Connection Source="$65381F6BB52528F5" Destination="$C10000000000000A.11A71DE3BB9549E0" dx1="4679.417">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
       <Connection Source="$65381F6BB52528F5" Destination="$C10000000000000B.5129492442D0C9A1" dx1="2319.417">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$C100000000000001.CNF" Destination="$C10000000000000A.13C69DC6B641011A" />
+      <Connection Source="$C100000000000001.CNF" Destination="$C10000000000000A.13C69DC6B641011A">
+        <Points>
+          <Points>
+            <X>904.4686</X>
+            <Y>160</Y>
+          </Points>
+          <Points>
+            <X>914.4686</X>
+            <Y>160</Y>
+          </Points>
+          <Points>
+            <X>914.4686</X>
+            <Y>197.5</Y>
+          </Points>
+          <Points>
+            <X>1092.5</X>
+            <Y>197.5</Y>
+          </Points>
+          <Points>
+            <X>1092.5</X>
+            <Y>160</Y>
+          </Points>
+          <Points>
+            <X>1349.99988</X>
+            <Y>160</Y>
+          </Points>
+        </Points>
+      </Connection>
       <Connection Source="$C100000000000002.CNF" Destination="$C10000000000000A.14498683653FD650" dx1="1542.125">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
@@ -102,9 +145,20 @@
       <Connection Source="$C100000000000007.CNF" Destination="$C10000000000000B.5763E5C8B975CEB9" dx1="101.3959">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
+      <Connection Source="$65381F6BB52528F5" Destination="$C10000000000000C.REQ" dx1="1019.417">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$C2A1000000000001" Destination="$C10000000000000C.REQ" dx1="870.2084">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$C100000000000004.CNF" Destination="$C10000000000000C.REQ" dx1="51.39587" />
+      <Connection Source="$C10000000000000C.CNF" Destination="$C10000000000000D.REQ" dx1="50" />
+      <Connection Source="$C100000000000001.CNF" Destination="$C10000000000000D.REQ" dx1="52.12549" />
+      <Connection Source="$C100000000000002.CNF" Destination="$C10000000000000D.REQ" dx1="172.125" />
+      <Connection Source="$C10000000000000D.CNF" Destination="$C2A2000000000001" dx1="50" />
     </EventConnections>
     <DataConnections>
-      <Connection Source="$C100000000000001.FbClosed" Destination="$C10000000000000A.32DAB227DF90F2E9" dx1="92.125" />
+      <Connection Source="$C100000000000001.FbClosed" Destination="$C10000000000000A.32DAB227DF90F2E9" dx1="92.12549" />
       <Connection Source="$C100000000000002.FbClosed" Destination="$C10000000000000A.33FAB5CD31E08CC4" dx1="1362.125">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
@@ -148,6 +202,38 @@
         </Points>
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
+      <Connection Source="$C100000000000004.Pv" Destination="$C10000000000000C.IN1" dx1="71.39587" />
+      <Connection Source="$C100000000000001.FbClosed" Destination="$C10000000000000D.IN1" dx1="92.12549" />
+      <Connection Source="$C100000000000002.FbClosed" Destination="$C10000000000000D.IN2" dx1="212.125" />
+      <Connection Source="$C10000000000000C.OUT1" Destination="$C10000000000000D.IN3">
+        <Points>
+          <Points>
+            <X>466.5625</X>
+            <Y>155</Y>
+          </Points>
+          <Points>
+            <X>477.5</X>
+            <Y>155</Y>
+          </Points>
+          <Points>
+            <X>477.5</X>
+            <Y>132.5</Y>
+          </Points>
+          <Points>
+            <X>912.5</X>
+            <Y>132.5</Y>
+          </Points>
+          <Points>
+            <X>912.5</X>
+            <Y>175</Y>
+          </Points>
+          <Points>
+            <X>995</X>
+            <Y>175</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$C10000000000000D.OUT" Destination="$C2A3000000000001" dx1="70" />
     </DataConnections>
     <AdapterConnections>
       <Connection Source="$C100000000000002.IFbState" Destination="$C100000000000008.ICondSignal" dx1="182.125" dx2="260" dy="280">

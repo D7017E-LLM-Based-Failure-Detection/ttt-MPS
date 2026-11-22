@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <SystemDeviceProperties xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.nxtControl.com/DeviceProperties">
   <ComplexProperty Name="DeployPlugin" Expanded="true">
     <Property Name="ClearBeforeDeploy" Value="True" IsPassword="false" />
@@ -9,6 +9,11 @@
     </GroupProperty>
     <GroupProperty Name="Boot" Expanded="true" Enabled="true">
       <Property Name="BootMode" Value="Run" IsPassword="false" />
+    </GroupProperty>
+  </GroupProperty>
+  <GroupProperty Name="OPCUASettings" Expanded="true" Enabled="true">
+    <GroupProperty Name="endpoint" Expanded="true" Enabled="true">
+      <Property Name="endpoints/0/bind_port" Value="4841" IsPassword="false" />
     </GroupProperty>
   </GroupProperty>
 </SystemDeviceProperties>
