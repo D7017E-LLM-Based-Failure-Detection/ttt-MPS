@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
-<FBType GUID="8d6ec440-0568-4582-b375-9fcad1b15667" Name="AutoCycle" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+<FBType GUID="8d6ec440-0568-4582-b375-9fcad1b15667" Comment="CAT Function Block Type" Name="AutoCycle" Format="2.0" Namespace="Main">
   <Attribute Name="HMI.Alias" Value="" />
   <Identification Standard="61499-2" />
   <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/1/2026" Remarks="template" />

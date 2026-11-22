@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
-<FBType GUID="a7b82c31-5d4e-4f91-8b23-6c9d1e4f2022" Name="TestingReset" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+<FBType GUID="a7b82c31-5d4e-4f91-8b23-6c9d1e4f2022" Comment="CAT Function Block Type" Name="TestingReset" Format="2.0" Namespace="Main">
   <Attribute Name="HMI.Alias" Value="" />
   <Identification Standard="61499-2" />
   <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/20/2026" Remarks="template" />
@@ -64,7 +64,7 @@
       <Parameter Name="$IN3" Value="2" />
       <Parameter Name="$IN4" Value="0" />
     </FB>
-    <FB ID="A100000000000011" Name="OwnerFb" Type="SYMLINKMULTIVARDST_105A0442B8CC61A96" x="860" y="860" Namespace="Main">
+    <FB ID="A100000000000011" Name="OwnerFb" Type="SYMLINKMULTIVARDST_105A0442B8CC61A96" x="859.9999" y="859.9999" Namespace="Main">
       <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=3;VALUE${I}:VTQBOOL,VTQBOOL,VTQBOOL" />
       <Parameter Name="$QI" Value="TRUE" />
       <Parameter Name="$NAME1" Value="'RES0.Testing.Ejector.sc.progLocal'" />
@@ -80,6 +80,7 @@
     </FB>
     <FB ID="A100000000000013" Name="AllLocal" Type="AND_550FE6D62F509EB3" x="1640" y="1260" Namespace="Main">
       <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=3;OUT:BOOL" />
+      <Parameter Name="$IN3" Value="TRUE" />
     </FB>
     <FB ID="A100000000000014" Name="AirSlideOffCmd" Type="SYMLINKMULTIVARSRC_18556BCA74EA878F1" x="3800" y="900" Namespace="Main">
       <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.System#I:=1;VALUE${I}:VTQINT" />
@@ -112,61 +113,196 @@
     <Input ID="14498683653FD650" Name="EjectorFb" x="40" y="1732" Type="Event" />
     <Input ID="32DAB227DF90F2E9" Name="LiftClosed" x="60" y="3212" Type="Data" />
     <Input ID="33FAB5CD31E08CC4" Name="EjectorClosed" x="60" y="3272" Type="Data" />
-    <Output ID="21BC3D4AFEE24AE1" Name="INITO" x="7800" y="92" Type="Event" />
+    <Output ID="21BC3D4AFEE24AE1" Name="INITO" x="7800" y="91.99999" Type="Event" />
     <Output ID="220F99A55700D018" Name="CNF" x="7800" y="152" Type="Event" />
     <Output ID="4133354228B36B47" Name="QO" x="7800" y="212" Type="Data" />
     <EventConnections>
-      <Connection Source="$11A71DE3BB9549E0" Destination="$A100000000000010.REQ" />
-      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000001.REQ_PERM" />
-      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000011.INIT" />
-      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000012.INIT" />
-      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000014.INIT" />
-      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000015.INIT" />
-      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000016.INIT" />
-      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000017.INIT" />
-      <Connection Source="$A100000000000002.STEP_ENTER" Destination="$A100000000000012.REQ" />
-      <Connection Source="$A100000000000012.CNF" Destination="$A100000000000013.REQ" />
-      <Connection Source="$A100000000000011.CNF" Destination="$A100000000000013.REQ" />
-      <Connection Source="$A100000000000013.CNF" Destination="$A100000000000002.TRANS_REQ" />
-      <Connection Source="$A100000000000003.STEP_ENTER" Destination="$A100000000000014.REQ" />
-      <Connection Source="$A100000000000014.CNF" Destination="$A100000000000003.TRANS_REQ" />
-      <Connection Source="$A100000000000004.STEP_ENTER" Destination="$A100000000000015.REQ" />
-      <Connection Source="$A100000000000015.CNF" Destination="$A100000000000004.TRANS_REQ" />
-      <Connection Source="$13C69DC6B641011A" Destination="$A100000000000004.TRANS_REQ" />
-      <Connection Source="$A100000000000005.STEP_ENTER" Destination="$A100000000000019.R" />
-      <Connection Source="$A100000000000005.STEP_ENTER" Destination="$A100000000000016.REQ" />
-      <Connection Source="$A100000000000016.CNF" Destination="$A100000000000018.START" />
+      <Connection Source="$11A71DE3BB9549E0" Destination="$A100000000000010.REQ" dx1="89.41669" />
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000001.REQ_PERM" dx1="73.75" dx2="50" dy="470">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000011.INIT" dx1="40" dx2="19.99994" dy="-140">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000012.INIT" dx1="73.75">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000014.INIT" dx1="1843.75" />
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000015.INIT" dx1="2923.75" />
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000016.INIT" dx1="3923.75" />
+      <Connection Source="$A100000000000010.CNF" Destination="$A100000000000017.INIT" dx1="4923.75" />
+      <Connection Source="$A100000000000002.STEP_ENTER" Destination="$A100000000000012.REQ" dx1="55.146" dx2="170" dy="-170" />
+      <Connection Source="$A100000000000012.CNF" Destination="$A100000000000013.REQ" dx1="40" dx2="50" dy="-170" />
+      <Connection Source="$A100000000000011.CNF" Destination="$A100000000000013.REQ" dx1="101.625" />
+      <Connection Source="$A100000000000013.CNF" Destination="$A100000000000002.TRANS_REQ">
+        <Points>
+          <Points>
+            <X>490.6302</X>
+            <Y>325</Y>
+          </Points>
+          <Points>
+            <X>505.6302</X>
+            <Y>325</Y>
+          </Points>
+          <Points>
+            <X>505.6302</X>
+            <Y>504.999969</Y>
+          </Points>
+          <Points>
+            <X>445</X>
+            <Y>504.999969</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$A100000000000003.STEP_ENTER" Destination="$A100000000000014.REQ" dx1="55.146" dx2="90" dy="-170" />
+      <Connection Source="$A100000000000014.CNF" Destination="$A100000000000003.TRANS_REQ">
+        <Points>
+          <Points>
+            <X>1088.28125</X>
+            <Y>250</Y>
+          </Points>
+          <Points>
+            <X>1098.28125</X>
+            <Y>250</Y>
+          </Points>
+          <Points>
+            <X>1098.28125</X>
+            <Y>504.999969</Y>
+          </Points>
+          <Points>
+            <X>725</X>
+            <Y>504.999969</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$A100000000000004.STEP_ENTER" Destination="$A100000000000015.REQ" dx1="55.146" dx2="90" dy="-170" />
+      <Connection Source="$A100000000000015.CNF" Destination="$A100000000000004.TRANS_REQ">
+        <Points>
+          <Points>
+            <X>1338.28125</X>
+            <Y>250</Y>
+          </Points>
+          <Points>
+            <X>1348.28125</X>
+            <Y>250</Y>
+          </Points>
+          <Points>
+            <X>1348.28125</X>
+            <Y>504.999969</Y>
+          </Points>
+          <Points>
+            <X>1004.99994</X>
+            <Y>504.999969</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$13C69DC6B641011A" Destination="$A100000000000004.TRANS_REQ" dx1="3435.042" />
+      <Connection Source="$A100000000000005.STEP_ENTER" Destination="$A100000000000019.R" dx1="55.146" dx2="30" dy="-170" />
+      <Connection Source="$A100000000000005.STEP_ENTER" Destination="$A100000000000016.REQ">
+        <Points>
+          <Points>
+            <X>1488.7135</X>
+            <Y>520</Y>
+          </Points>
+          <Points>
+            <X>1502.5</X>
+            <Y>520</Y>
+          </Points>
+          <Points>
+            <X>1502.5</X>
+            <Y>477.5</Y>
+          </Points>
+          <Points>
+            <X>1597.5</X>
+            <Y>477.5</Y>
+          </Points>
+          <Points>
+            <X>1597.5</X>
+            <Y>207.5</Y>
+          </Points>
+          <Points>
+            <X>1422.5</X>
+            <Y>207.5</Y>
+          </Points>
+          <Points>
+            <X>1422.5</X>
+            <Y>250</Y>
+          </Points>
+          <Points>
+            <X>1445</X>
+            <Y>250</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$A100000000000016.CNF" Destination="$A100000000000018.START" dx1="40" dx2="50" dy="810" />
       <Connection Source="$A100000000000018.EO" Destination="$A100000000000019.S" />
-      <Connection Source="$A100000000000019.EO" Destination="$A100000000000005.TRANS_REQ" />
-      <Connection Source="$A100000000000005.STEP_LEAVE" Destination="$A100000000000018.STOP" />
-      <Connection Source="$A100000000000005.STEP_LEAVE" Destination="$A100000000000019.R" />
-      <Connection Source="$A100000000000006.STEP_ENTER" Destination="$A100000000000017.REQ" />
-      <Connection Source="$A100000000000017.CNF" Destination="$A100000000000006.TRANS_REQ" />
-      <Connection Source="$14498683653FD650" Destination="$A100000000000006.TRANS_REQ" />
+      <Connection Source="$A100000000000019.EO" Destination="$A100000000000005.TRANS_REQ">
+        <Points>
+          <Points>
+            <X>1560.4115</X>
+            <Y>365</Y>
+          </Points>
+          <Points>
+            <X>1575.4115</X>
+            <Y>365</Y>
+          </Points>
+          <Points>
+            <X>1575.4115</X>
+            <Y>504.999969</Y>
+          </Points>
+          <Points>
+            <X>1285</X>
+            <Y>504.999969</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$A100000000000005.STEP_LEAVE" Destination="$A100000000000018.STOP" dx1="75.146" dx2="50" dy="-290" />
+      <Connection Source="$A100000000000005.STEP_LEAVE" Destination="$A100000000000019.R" dx1="75.146" dx2="30" dy="-290" />
+      <Connection Source="$A100000000000006.STEP_ENTER" Destination="$A100000000000017.REQ" dx1="55.146" dx2="90" dy="-170" />
+      <Connection Source="$A100000000000017.CNF" Destination="$A100000000000006.TRANS_REQ">
+        <Points>
+          <Points>
+            <X>1838.28125</X>
+            <Y>250</Y>
+          </Points>
+          <Points>
+            <X>1848.28125</X>
+            <Y>250</Y>
+          </Points>
+          <Points>
+            <X>1848.28125</X>
+            <Y>504.999969</Y>
+          </Points>
+          <Points>
+            <X>1565</X>
+            <Y>504.999969</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$14498683653FD650" Destination="$A100000000000006.TRANS_REQ" dx1="5599.167" />
     </EventConnections>
     <DataConnections>
-      <Connection Source="$A100000000000010.OUT1" Destination="$A100000000000012.VALUE1" />
-      <Connection Source="$A100000000000010.OUT1" Destination="$A100000000000012.VALUE2" />
-      <Connection Source="$A100000000000010.OUT1" Destination="$A100000000000012.VALUE3" />
-      <Connection Source="$A100000000000010.OUT4" Destination="$A100000000000014.VALUE1" />
-      <Connection Source="$A100000000000010.OUT3" Destination="$A100000000000015.VALUE1" />
-      <Connection Source="$A100000000000010.OUT2" Destination="$A100000000000016.VALUE1" />
-      <Connection Source="$A100000000000010.OUT3" Destination="$A100000000000017.VALUE1" />
-      <Connection Source="$A100000000000011.VALUE1" Destination="$A100000000000013.IN1" />
-      <Connection Source="$A100000000000011.VALUE2" Destination="$A100000000000013.IN2" />
-      <Connection Source="$A100000000000011.VALUE3" Destination="$A100000000000013.IN3" />
-      <Connection Source="$A100000000000013.OUT" Destination="$A100000000000002.Exceeded" />
-      <Connection Source="$32DAB227DF90F2E9" Destination="$A100000000000004.Exceeded" />
-      <Connection Source="$A100000000000019.Q" Destination="$A100000000000005.Exceeded" />
-      <Connection Source="$33FAB5CD31E08CC4" Destination="$A100000000000006.Exceeded" />
+      <Connection Source="$A100000000000010.OUT1" Destination="$A100000000000012.VALUE1" dx1="543.75" />
+      <Connection Source="$A100000000000010.OUT1" Destination="$A100000000000012.VALUE2" dx1="543.75" />
+      <Connection Source="$A100000000000010.OUT1" Destination="$A100000000000012.VALUE3" dx1="543.75" />
+      <Connection Source="$A100000000000010.OUT4" Destination="$A100000000000014.VALUE1" dx1="1843.75" />
+      <Connection Source="$A100000000000010.OUT3" Destination="$A100000000000015.VALUE1" dx1="2923.75" />
+      <Connection Source="$A100000000000010.OUT2" Destination="$A100000000000016.VALUE1" dx1="2923.75" />
+      <Connection Source="$A100000000000010.OUT3" Destination="$A100000000000017.VALUE1" dx1="4923.75" />
+      <Connection Source="$A100000000000011.VALUE1" Destination="$A100000000000013.IN1" dx1="81.625" />
+      <Connection Source="$A100000000000011.VALUE2" Destination="$A100000000000013.IN2" dx1="61.625" />
+      <Connection Source="$A100000000000013.OUT" Destination="$A100000000000002.Exceeded" dx1="47.47925" dx2="90" dy="210" />
+      <Connection Source="$32DAB227DF90F2E9" Destination="$A100000000000004.Exceeded" dx1="40" />
+      <Connection Source="$A100000000000019.Q" Destination="$A100000000000005.Exceeded" dx1="48.354" dx2="90" dy="90" />
+      <Connection Source="$33FAB5CD31E08CC4" Destination="$A100000000000006.Exceeded" dx1="5354.146" />
     </DataConnections>
     <AdapterConnections>
-      <Connection Source="$A100000000000001.ISeqChain" Destination="$A100000000000002.ISeqChainIn" />
-      <Connection Source="$A100000000000002.ISeqChainOut" Destination="$A100000000000003.ISeqChainIn" />
-      <Connection Source="$A100000000000003.ISeqChainOut" Destination="$A100000000000004.ISeqChainIn" />
-      <Connection Source="$A100000000000004.ISeqChainOut" Destination="$A100000000000005.ISeqChainIn" />
-      <Connection Source="$A100000000000005.ISeqChainOut" Destination="$A100000000000006.ISeqChainIn" />
-      <Connection Source="$A100000000000006.ISeqChainOut" Destination="$A100000000000007.ISeqChainIn" />
+      <Connection Source="$A100000000000001.ISeqChain" Destination="$A100000000000002.ISeqChainIn" dx1="43.5" />
+      <Connection Source="$A100000000000002.ISeqChainOut" Destination="$A100000000000003.ISeqChainIn" dx1="75.146" />
+      <Connection Source="$A100000000000003.ISeqChainOut" Destination="$A100000000000004.ISeqChainIn" dx1="70" />
+      <Connection Source="$A100000000000004.ISeqChainOut" Destination="$A100000000000005.ISeqChainIn" dx1="75.146" />
+      <Connection Source="$A100000000000005.ISeqChainOut" Destination="$A100000000000006.ISeqChainIn" dx1="95.146" />
+      <Connection Source="$A100000000000006.ISeqChainOut" Destination="$A100000000000007.ISeqChainIn" dx1="75.146" />
     </AdapterConnections>
   </FBNetwork>
 </FBType>

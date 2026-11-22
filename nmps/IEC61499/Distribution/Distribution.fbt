@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
-<FBType GUID="d9edb2a2-ab3a-4f92-8dea-e7f69e07f7a8" Name="Distribution" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+<FBType GUID="d9edb2a2-ab3a-4f92-8dea-e7f69e07f7a8" Comment="CAT Function Block Type" Name="Distribution" Format="2.0" Namespace="Main">
   <Attribute Name="HMI.Alias" Value="" />
   <Identification Standard="61499-2" />
   <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="10/19/2026" Remarks="template" />
@@ -34,7 +34,7 @@
     <FB ID="290E8CBB7083A708" Name="Vacuum" Type="Valve" x="1560" y="400" Namespace="SE.App2CommonProcess" />
     <FB ID="B5A8A7975D57E904" Name="BlowOff" Type="DigitalOutput" x="2940" y="2460" Namespace="SE.App2CommonProcess" />
     <FB ID="46A6896A3BC8F000" Name="DownstreamFree" Type="DigitalInput" x="120" y="420" Namespace="SE.App2CommonProcess" />
-    <FB ID="E97FD2E6D42C4155" Name="MagazineEmpty" Type="DigitalInput" x="3820" y="2580" Namespace="SE.App2CommonProcess" />
+    <FB ID="E97FD2E6D42C4155" Name="MagazineEmpty" Type="DigitalInput" x="3840" y="2660" Namespace="SE.App2CommonProcess" />
     <FB ID="F346BF531D8915E6" Name="EjectorPerm" Type="permCondItem" x="560" y="2300" Namespace="SE.App2CommonProcess">
       <Parameter Name="$CondCause" Value="NotActive2" />
       <Parameter Name="$CondName" Value="'Arm Clear of Magazine'" />
@@ -72,7 +72,7 @@
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
       <Connection Source="$0FBBAF14BDC70C34.CNF" Destination="$97DD9E0F686AACAA.FB025A14BE6C5638" dx1="52.125" />
-      <Connection Source="$E97FD2E6D42C4155.CNF" Destination="$97DD9E0F686AACAA.7119241BD2443AA1" dx1="51.396" />
+      <Connection Source="$E97FD2E6D42C4155.CNF" Destination="$97DD9E0F686AACAA.7119241BD2443AA1" dx1="31.396" />
       <Connection Source="$46A6896A3BC8F000.CNF" Destination="$97DD9E0F686AACAA.6490AF8BD623FEB6">
         <Points>
           <Points>

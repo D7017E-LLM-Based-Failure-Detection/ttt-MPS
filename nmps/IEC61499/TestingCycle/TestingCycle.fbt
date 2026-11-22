@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
-<FBType GUID="b8c93d42-6e5f-4a02-9c34-7d0e2f5a4044" Name="TestingCycle" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+<FBType GUID="b8c93d42-6e5f-4a02-9c34-7d0e2f5a4044" Comment="CAT Function Block Type" Name="TestingCycle" Format="2.0" Namespace="Main">
   <Attribute Name="HMI.Alias" Value="" />
   <Identification Standard="61499-2" />
   <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/20/2026" Remarks="template" />
@@ -127,6 +127,7 @@
     </FB>
     <FB ID="B100000000000023" Name="AllLocal" Type="AND_550FE6D62F509EB3" x="2300" y="660" Namespace="Main">
       <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=3;OUT:BOOL" />
+      <Parameter Name="$IN3" Value="TRUE" />
     </FB>
     <FB ID="B100000000000024" Name="AtBottomReady" Type="AND_550FE6D62F509EB3" x="3000" y="660" Namespace="Main">
       <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=3;OUT:BOOL" />
@@ -541,14 +542,14 @@
           </Points>
         </Points>
       </Connection>
-      <Connection Source="$B10000000000000A.STEP_ENTER" Destination="$B10000000000002E.R" dx1="55.14551" dx2="30" dy="-170" />
-      <Connection Source="$B10000000000000A.STEP_ENTER" Destination="$B10000000000002B.REQ" dx1="55.14551" dx2="90" dy="-170" />
-      <Connection Source="$B10000000000000A.STEP_ENTER" Destination="$B100000000000029.REQ" dx1="55.14551" dx2="90" dy="-170" />
-      <Connection Source="$B10000000000000A.STEP_ENTER" Destination="$B10000000000002D.START" dx1="55.14551" dx2="70" dy="-170" />
+      <Connection Source="$B10000000000000A.STEP_ENTER" Destination="$B10000000000002E.R" dx1="55.14551" dx2="30" dy="-169.9998" />
+      <Connection Source="$B10000000000000A.STEP_ENTER" Destination="$B10000000000002B.REQ" dx1="55.14551" dx2="90" dy="-169.9998" />
+      <Connection Source="$B10000000000000A.STEP_ENTER" Destination="$B100000000000029.REQ" dx1="55.14551" dx2="90" dy="-169.9998" />
+      <Connection Source="$B10000000000000A.STEP_ENTER" Destination="$B10000000000002D.START" dx1="55.14551" dx2="70" dy="-169.9998" />
       <Connection Source="$B10000000000002D.EO" Destination="$B10000000000002E.S" />
       <Connection Source="$B10000000000002E.EO" Destination="$B10000000000000A.TRANS_REQ" dx1="68.35449" />
-      <Connection Source="$B10000000000000A.STEP_LEAVE" Destination="$B10000000000002D.STOP" dx1="75.14551" dx2="50" dy="-290" />
-      <Connection Source="$B10000000000000A.STEP_LEAVE" Destination="$B10000000000002E.R" dx1="75.14551" dx2="30" dy="-290" />
+      <Connection Source="$B10000000000000A.STEP_LEAVE" Destination="$B10000000000002D.STOP" dx1="75.14551" dx2="50" dy="-289.9998" />
+      <Connection Source="$B10000000000000A.STEP_LEAVE" Destination="$B10000000000002E.R" dx1="75.14551" dx2="30" dy="-289.9998" />
       <Connection Source="$B10000000000000B.STEP_ENTER" Destination="$B10000000000002A.REQ">
         <Points>
           <Points>
@@ -590,16 +591,24 @@
             <Y>1125</Y>
           </Points>
           <Points>
-            <X>797.5</X>
+            <X>792.5</X>
             <Y>1125</Y>
           </Points>
           <Points>
-            <X>797.5</X>
-            <Y>687.5</Y>
+            <X>792.5</X>
+            <Y>1052.5</Y>
+          </Points>
+          <Points>
+            <X>1807.5</X>
+            <Y>1052.5</Y>
+          </Points>
+          <Points>
+            <X>1807.5</X>
+            <Y>737.5</Y>
           </Points>
           <Points>
             <X>1972.5</X>
-            <Y>687.5</Y>
+            <Y>737.5</Y>
           </Points>
           <Points>
             <X>1972.5</X>
@@ -951,34 +960,6 @@
           </Points>
         </Points>
       </Connection>
-      <Connection Source="$B100000000000021.VALUE3" Destination="$B100000000000023.IN3">
-        <Points>
-          <Points>
-            <X>262.09375</X>
-            <Y>494.999969</Y>
-          </Points>
-          <Points>
-            <X>289.59375</X>
-            <Y>494.999969</Y>
-          </Points>
-          <Points>
-            <X>289.59375</X>
-            <Y>392.5</Y>
-          </Points>
-          <Points>
-            <X>427.5</X>
-            <Y>392.5</Y>
-          </Points>
-          <Points>
-            <X>427.5</X>
-            <Y>255</Y>
-          </Points>
-          <Points>
-            <X>570</X>
-            <Y>255</Y>
-          </Points>
-        </Points>
-      </Connection>
       <Connection Source="$B100000000000023.OUT" Destination="$B100000000000002.Exceeded" dx1="47.47925" dx2="90" dy="270" />
       <Connection Source="$738D0D4E12791418" Destination="$B100000000000024.IN1">
         <Points>
@@ -1076,11 +1057,11 @@
         <Points>
           <Points>
             <X>143.473938</X>
-            <Y>204.999985</Y>
+            <Y>204.999969</Y>
           </Points>
           <Points>
             <X>153.473938</X>
-            <Y>204.999985</Y>
+            <Y>204.999969</Y>
           </Points>
           <Points>
             <X>153.473938</X>
@@ -1112,11 +1093,11 @@
         <Points>
           <Points>
             <X>123.182281</X>
-            <Y>219.999985</Y>
+            <Y>219.999969</Y>
           </Points>
           <Points>
             <X>133.182281</X>
-            <Y>219.999985</Y>
+            <Y>219.999969</Y>
           </Points>
           <Points>
             <X>133.182281</X>
@@ -1148,11 +1129,11 @@
         <Points>
           <Points>
             <X>123.182281</X>
-            <Y>219.999985</Y>
+            <Y>219.999969</Y>
           </Points>
           <Points>
             <X>133.182281</X>
-            <Y>219.999985</Y>
+            <Y>219.999969</Y>
           </Points>
           <Points>
             <X>133.182281</X>
@@ -1417,9 +1398,9 @@
         </Points>
       </Connection>
       <Connection Source="$B100000000000007.ISeqChainOut" Destination="$B100000000000008.ISeqChainIn" dx1="75.146" />
-      <Connection Source="$B100000000000008.ISeqChainOut" Destination="$B10000000000000A.ISeqChainIn" dx1="475.146" />
+      <Connection Source="$B100000000000008.ISeqChainOut" Destination="$B10000000000000A.ISeqChainIn" dx1="75.146" />
       <Connection Source="$B100000000000008.ITransChainOut" Destination="$B100000000000009.ITransChainIn" dx1="95.146" />
-      <Connection Source="$B10000000000000A.ISeqChainOut" Destination="$B10000000000000B.ISeqChainIn" dx1="40" dx2="110" dy="350" />
+      <Connection Source="$B10000000000000A.ISeqChainOut" Destination="$B10000000000000B.ISeqChainIn" dx1="40" dx2="110" dy="350.0002" />
       <Connection Source="$B10000000000000B.ISeqChainOut" Destination="$B10000000000000C.ISeqChainIn" dx1="75.146" />
       <Connection Source="$B10000000000000C.ISeqChainOut" Destination="$B10000000000000D.ISeqChainIn" dx1="95.146" />
       <Connection Source="$B10000000000000D.ISeqChainOut" Destination="$B10000000000000E.ISeqChainIn" dx1="75.146" />

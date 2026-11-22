@@ -11,7 +11,7 @@
         <sref snapshot="{9CA4B240-1D51-44E0-A9BD-752DB2320E06}" state="ACTIVE" />
       </device>
       <device id="9b129585-0c86-45b1-8b59-a88961e02156" CompileTime="2026-11-20 17:07:21Z">
-        <sref snapshot="{925C8594-95AD-4F09-A4C0-0782BA54FBEE}" state="ACTIVE" />
+        <sref snapshot="{925C8594-95AD-4F09-A4C0-0782BA54FBEE}" state="ACTIVE_MODIFIED" />
       </device>
     </network_profile>
   </deployment>
