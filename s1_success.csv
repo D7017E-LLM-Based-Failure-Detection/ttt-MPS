@@ -1,0 +1,98 @@
+plc_time,host_time,station,value_name,value
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,BlowOff.Out,0 (off)
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,CycleSeq.MsgCurrentStepId,(none)
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,CycleSeq.SeqState,8 (Completed)
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,DownstreamFree.Pv,True (Testing free)
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,Ejector.CurrentOwner,16#4 (Program local)
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,Ejector.FbFail,False (OK)
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,Ejector.FbStatus,"2 (Closed, retracted (1B2))"
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,MagazineEmpty.Pv,False (workpieces left)
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,ResetSeq.MsgCurrentStepId,(none)
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,ResetSeq.SeqState,8 (Completed)
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,Swivel.CurrentOwner,16#4 (Program local)
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,Swivel.FbFail,False (OK)
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,Swivel.FbStatus,"0 (Stopped, mid-parked)"
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,Vacuum.CurrentOwner,16#4 (Program local)
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,Vacuum.FbFail,False (OK)
+2022-10-28T21:21:36.480000+02:00,2026-11-23T09:56:21.535964+01:00,Distribution,Vacuum.FbStatus,"2 (Closed, suction off)"
+2022-10-25T18:45:28.719000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,AirSlide.Out,0 (air slide off)
+2022-10-25T18:45:28.719000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,CycleSeq.MsgCurrentStepId,(none)
+2022-10-25T18:45:28.719000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,CycleSeq.SeqState,1 (Stopped)
+2022-10-25T18:45:28.719000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,Ejector.CurrentOwner,16#4 (Program local)
+2022-10-25T18:45:28.719000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,Ejector.FbFail,False (OK)
+2022-10-25T18:45:28.719000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,Ejector.FbStatus,"2 (Closed, retracted (2B1))"
+2022-10-25T18:45:28.719000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,HeightOk.Pv,True (height OK)
+2022-10-25T18:45:28.719000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,Lift.CurrentOwner,16#4 (Program local)
+2022-10-25T18:13:43.871000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,Lift.FbFail,False (OK)
+2022-10-25T18:45:28.719000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,Lift.FbStatus,"2 (Closed, lowered (1B2))"
+2022-10-25T18:45:28.719000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,LightBarrier.Pv,False (light barrier clear)
+2022-10-25T18:45:28.719000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,NotBlack.Pv,False (black or no reflection)
+2022-10-25T18:45:28.719000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,PartAvailable.Pv,False (no workpiece)
+2022-10-25T18:45:28.720000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,ResetSeq.MsgCurrentStepId,(none)
+2022-10-25T18:45:28.720000+02:00,2026-11-23T09:56:21.527167+01:00,Testing,ResetSeq.SeqState,8 (Completed)
+2022-10-28T21:22:06.043000+02:00,2026-11-23T09:56:51.096624+01:00,Distribution,DownstreamFree.Pv,False (Testing busy)
+2022-10-25T18:45:58.285000+02:00,2026-11-23T09:56:51.080621+01:00,Testing,Ejector.FbStatus,253 (Unknown)
+2022-10-25T18:45:58.285000+02:00,2026-11-23T09:56:51.080621+01:00,Testing,ResetSeq.MsgCurrentStepId,4 (TR4 Clear eject (1 s))
+2022-10-25T18:45:58.285000+02:00,2026-11-23T09:56:51.080621+01:00,Testing,ResetSeq.SeqState,2 (Running)
+2022-10-25T18:45:59.287000+02:00,2026-11-23T09:56:52.095598+01:00,Testing,ResetSeq.MsgCurrentStepId,5 (TR5 Ejector back)
+2022-10-25T18:46:00.290000+02:00,2026-11-23T09:56:53.087607+01:00,Testing,Ejector.FbStatus,"2 (Closed, retracted (2B1))"
+2022-10-25T18:46:00.290000+02:00,2026-11-23T09:56:53.087607+01:00,Testing,ResetSeq.MsgCurrentStepId,(none)
+2022-10-25T18:46:00.290000+02:00,2026-11-23T09:56:53.087607+01:00,Testing,ResetSeq.SeqState,8 (Completed)
+2022-10-28T21:22:08.047000+02:00,2026-11-23T09:56:53.101609+01:00,Distribution,DownstreamFree.Pv,True (Testing free)
+2022-10-28T21:22:15.090000+02:00,2026-11-23T09:57:00.170600+01:00,Distribution,ResetSeq.MsgCurrentStepId,4 (RS4 Swivel home (3B1))
+2022-10-28T21:22:15.090000+02:00,2026-11-23T09:57:00.170600+01:00,Distribution,ResetSeq.SeqState,2 (Running)
+2022-10-28T21:22:15.541000+02:00,2026-11-23T09:57:00.664902+01:00,Distribution,ResetSeq.MsgCurrentStepId,5 (RS5 Swivel off mag)
+2022-10-28T21:22:15.541000+02:00,2026-11-23T09:57:00.664902+01:00,Distribution,Swivel.FbStatus,"2 (Closed, arm at magazine (3B1))"
+2022-10-28T21:22:16.593000+02:00,2026-11-23T09:57:01.663459+01:00,Distribution,ResetSeq.MsgCurrentStepId,(none)
+2022-10-28T21:22:16.593000+02:00,2026-11-23T09:57:01.663459+01:00,Distribution,ResetSeq.SeqState,8 (Completed)
+2022-10-28T21:22:16.593000+02:00,2026-11-23T09:57:01.663459+01:00,Distribution,Swivel.FbStatus,"0 (Stopped, mid-parked)"
+2022-10-25T18:46:15.381000+02:00,2026-11-23T09:57:08.123818+01:00,Testing,CycleSeq.MsgCurrentStepId,3 (TC3 Wait part)
+2022-10-25T18:46:15.381000+02:00,2026-11-23T09:57:08.123818+01:00,Testing,CycleSeq.SeqState,2 (Running)
+2022-10-28T21:22:32.074000+02:00,2026-11-23T09:57:17.205185+01:00,Distribution,CycleSeq.MsgCurrentStepId,4 (AC4 Eject)
+2022-10-28T21:22:32.074000+02:00,2026-11-23T09:57:17.205185+01:00,Distribution,CycleSeq.SeqState,2 (Running)
+2022-10-28T21:22:32.576000+02:00,2026-11-23T09:57:17.702493+01:00,Distribution,Ejector.FbStatus,253 (Unknown)
+2022-10-28T21:22:33.077000+02:00,2026-11-23T09:57:18.203276+01:00,Distribution,CycleSeq.MsgCurrentStepId,5 (AC5 Ejector back)
+2022-10-28T21:22:33.077000+02:00,2026-11-23T09:57:18.203276+01:00,Distribution,Ejector.FbStatus,"1 (Opened, pushed out (1B1))"
+2022-10-28T21:22:33.578000+02:00,2026-11-23T09:57:18.704672+01:00,Distribution,Ejector.FbStatus,253 (Unknown)
+2022-10-28T21:22:34.078000+02:00,2026-11-23T09:57:19.210964+01:00,Distribution,CycleSeq.MsgCurrentStepId,7 (AC7 Pick up)
+2022-10-28T21:22:34.078000+02:00,2026-11-23T09:57:19.210964+01:00,Distribution,Ejector.FbStatus,"2 (Closed, retracted (1B2))"
+2022-10-28T21:22:34.078000+02:00,2026-11-23T09:57:19.210964+01:00,Distribution,MagazineEmpty.Pv,True (magazine empty (B4))
+2022-10-28T21:22:34.079000+02:00,2026-11-23T09:57:19.210964+01:00,Distribution,Swivel.FbStatus,"2 (Closed, arm at magazine (3B1))"
+2022-10-28T21:22:34.079000+02:00,2026-11-23T09:57:19.210964+01:00,Distribution,Vacuum.FbStatus,253 (Unknown)
+2022-10-28T21:22:34.579000+02:00,2026-11-23T09:57:19.699521+01:00,Distribution,CycleSeq.MsgCurrentStepId,8 (AC8 Carry)
+2022-10-28T21:22:34.580000+02:00,2026-11-23T09:57:19.699521+01:00,Distribution,Vacuum.FbStatus,"1 (Opened, suction on (2B1))"
+2022-10-28T21:22:36.133000+02:00,2026-11-23T09:57:21.203273+01:00,Distribution,Swivel.FbStatus,"0 (Stopped, mid-parked)"
+2022-10-25T18:46:29.411000+02:00,2026-11-23T09:57:22.164240+01:00,Testing,LightBarrier.Pv,True (light barrier triggered)
+2022-10-25T18:46:29.912000+02:00,2026-11-23T09:57:22.661891+01:00,Testing,LightBarrier.Pv,False (light barrier clear)
+2022-10-25T18:46:29.912000+02:00,2026-11-23T09:57:22.661891+01:00,Testing,NotBlack.Pv,True (red/metallic (pass color))
+2022-10-25T18:46:29.912000+02:00,2026-11-23T09:57:22.661891+01:00,Testing,PartAvailable.Pv,True (workpiece present)
+2022-10-28T21:22:37.636000+02:00,2026-11-23T09:57:22.725729+01:00,Distribution,CycleSeq.MsgCurrentStepId,10 (AC10 Park to mag)
+2022-10-28T21:22:37.636000+02:00,2026-11-23T09:57:22.725729+01:00,Distribution,DownstreamFree.Pv,False (Testing busy)
+2022-10-28T21:22:37.636000+02:00,2026-11-23T09:57:22.725729+01:00,Distribution,Swivel.FbStatus,"1 (Opened, arm at Testing (3B2))"
+2022-10-28T21:22:37.636000+02:00,2026-11-23T09:57:22.725729+01:00,Distribution,Vacuum.FbStatus,"2 (Closed, suction off)"
+2022-10-28T21:22:38.093000+02:00,2026-11-23T09:57:23.221530+01:00,Distribution,Swivel.FbStatus,"0 (Stopped, mid-parked)"
+2022-10-25T18:46:30.414000+02:00,2026-11-23T09:57:23.156177+01:00,Testing,CycleSeq.MsgCurrentStepId,5 (TC5 Raise lift)
+2022-10-25T18:46:30.414000+02:00,2026-11-23T09:57:23.156177+01:00,Testing,LightBarrier.Pv,True (light barrier triggered)
+2022-10-25T18:46:30.914000+02:00,2026-11-23T09:57:23.666880+01:00,Testing,Lift.FbStatus,"0 (Stopped, stopped mid-travel)"
+2022-10-25T18:46:30.914000+02:00,2026-11-23T09:57:23.666880+01:00,Testing,LightBarrier.Pv,False (light barrier clear)
+2022-10-25T18:46:30.914000+02:00,2026-11-23T09:57:23.666880+01:00,Testing,PartAvailable.Pv,False (no workpiece)
+2022-10-25T18:46:31.415000+02:00,2026-11-23T09:57:24.167918+01:00,Testing,AirSlide.Out,1 (air slide on)
+2022-10-25T18:46:31.415000+02:00,2026-11-23T09:57:24.167918+01:00,Testing,CycleSeq.MsgCurrentStepId,7 (TC7 Pass eject (1 s))
+2022-10-25T18:46:31.415000+02:00,2026-11-23T09:57:24.167918+01:00,Testing,Lift.FbStatus,"1 (Opened, raised (1B1))"
+2022-10-28T21:22:39.646000+02:00,2026-11-23T09:57:24.721958+01:00,Distribution,CycleSeq.MsgCurrentStepId,11 (AC11 Park off mag)
+2022-10-28T21:22:39.646000+02:00,2026-11-23T09:57:24.721958+01:00,Distribution,Swivel.FbStatus,"2 (Closed, arm at magazine (3B1))"
+2022-10-25T18:46:31.916000+02:00,2026-11-23T09:57:24.664973+01:00,Testing,Ejector.FbStatus,253 (Unknown)
+2022-10-25T18:46:31.916000+02:00,2026-11-23T09:57:24.664973+01:00,Testing,NotBlack.Pv,False (black or no reflection)
+2022-10-25T18:46:32.417000+02:00,2026-11-23T09:57:25.161954+01:00,Testing,CycleSeq.MsgCurrentStepId,8 (TC8 Pass retract)
+2022-10-25T18:46:32.917000+02:00,2026-11-23T09:57:25.668788+01:00,Testing,CycleSeq.MsgCurrentStepId,9 (TC9 Slide wait (2 s))
+2022-10-25T18:46:32.917000+02:00,2026-11-23T09:57:25.668788+01:00,Testing,Ejector.FbStatus,"2 (Closed, retracted (2B1))"
+2022-10-28T21:22:40.648000+02:00,2026-11-23T09:57:25.728547+01:00,Distribution,CycleSeq.MsgCurrentStepId,(none)
+2022-10-28T21:22:40.648000+02:00,2026-11-23T09:57:25.728547+01:00,Distribution,CycleSeq.SeqState,8 (Completed)
+2022-10-28T21:22:40.648000+02:00,2026-11-23T09:57:25.728547+01:00,Distribution,Swivel.FbStatus,"0 (Stopped, mid-parked)"
+2022-10-25T18:46:34.926000+02:00,2026-11-23T09:57:27.675344+01:00,Testing,AirSlide.Out,0 (air slide off)
+2022-10-25T18:46:34.926000+02:00,2026-11-23T09:57:27.675344+01:00,Testing,CycleSeq.MsgCurrentStepId,10 (TC10 Lower lift)
+2022-10-25T18:46:35.426000+02:00,2026-11-23T09:57:28.176210+01:00,Testing,Lift.FbStatus,"0 (Stopped, stopped mid-travel)"
+2022-10-28T21:22:43.654000+02:00,2026-11-23T09:57:28.723535+01:00,Distribution,DownstreamFree.Pv,True (Testing free)
+2022-10-25T18:46:35.927000+02:00,2026-11-23T09:57:28.676620+01:00,Testing,CycleSeq.MsgCurrentStepId,(none)
+2022-10-25T18:46:35.927000+02:00,2026-11-23T09:57:28.676620+01:00,Testing,CycleSeq.SeqState,8 (Completed)
+2022-10-25T18:46:35.927000+02:00,2026-11-23T09:57:28.676620+01:00,Testing,Lift.FbStatus,"2 (Closed, lowered (1B2))"

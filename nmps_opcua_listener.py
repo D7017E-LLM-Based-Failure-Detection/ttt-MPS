@@ -279,6 +279,8 @@ async def values_from_deploy_file(client, path):
 
 # --- security and authentication (for live lab PLCs) ------------------------------
 
+CLIENT_APP_URI = "urn:eislab:nmps-opcua-listener"
+
 async def ensure_client_cert(cert_dir: Path) -> tuple[Path, Path]:
     """Create a reusable self-signed OPC UA client certificate outside git."""
     cert_dir.mkdir(parents=True, exist_ok=True)
@@ -291,7 +293,7 @@ async def ensure_client_cert(cert_dir: Path) -> tuple[Path, Path]:
         await setup_self_signed_certificate(
             key_file=key_file,
             cert_file=cert_file,
-            app_uri="urn:eislab:nmps-opcua-listener",
+            app_uri=CLIENT_APP_URI,
             host_name=socket.gethostname(),
             cert_use=[ExtendedKeyUsageOID.CLIENT_AUTH],
             subject_attrs={"commonName": "nmps_opcua_listener", "organizationName": "EISLAB"},
@@ -334,6 +336,7 @@ async def build_client(url, security, user, password, cert_dir, station):
         log.info("[%s] auto-selected OPC UA security %s (%s)", station, policy, mode.name)
 
     client = Client(url=url, timeout=10)
+    client.application_uri = CLIENT_APP_URI
     cert_file = None
     if policy == "basic256sha256":
         from asyncua.crypto.security_policies import SecurityPolicyBasic256Sha256
