@@ -181,6 +181,18 @@
     </Compile>
     <Compile Include="Colors\ProjectColors.cs" />
     <Compile Include="Colors\ProjectDrawingObjects.cs" />
+    <Compile Include="Conveyor.cnv.cs">
+      <Canvas>true</Canvas>
+    </Compile>
+    <Compile Include="Conveyor.cnv.Designer.cs">
+      <DependentUpon>Conveyor.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Conveyor\Conveyor.def.cs" />
+    <Compile Include="Conveyor\Conveyor.event.cs" />
+    <Compile Include="Conveyor\Conveyor_sDefault.cnv.cs" />
+    <Compile Include="Conveyor\Conveyor_sDefault.cnv.Designer.cs">
+      <DependentUpon>Conveyor_sDefault.cnv.cs</DependentUpon>
+    </Compile>
     <Compile Include="Distribution.cnv.cs">
       <Canvas>true</Canvas>
     </Compile>
@@ -202,6 +214,12 @@
     <Compile Include="StartCanvas_2.cnv.cs" />
     <Compile Include="StartCanvas_2.cnv.Designer.cs">
       <DependentUpon>StartCanvas_2.cnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StopPoint\StopPoint.def.cs" />
+    <Compile Include="StopPoint\StopPoint.event.cs" />
+    <Compile Include="StopPoint\StopPoint_sDefault.cnv.cs" />
+    <Compile Include="StopPoint\StopPoint_sDefault.cnv.Designer.cs">
+      <DependentUpon>StopPoint_sDefault.cnv.cs</DependentUpon>
     </Compile>
     <Compile Include="Testing.cnv.cs">
       <Canvas>true</Canvas>
@@ -256,6 +274,16 @@
     <EmbeddedResource Include="Configurations\HistoryTrend.xml" />
     <EmbeddedResource Include="Configurations\Journalling.xml" />
     <EmbeddedResource Include="Configurations\TagValueEditor.xml" />
+    <EmbeddedResource Include="Conveyor.cnv.resx">
+      <DependentUpon>Conveyor.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Conveyor\Conveyor.Design.resx" />
+    <EmbeddedResource Include="Conveyor\Conveyor_sDefault.cnv.resx">
+      <DependentUpon>Conveyor_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Conveyor\Conveyor_sDefault.cnv.xml">
+      <DependentUpon>Conveyor_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Distribution.cnv.resx">
       <DependentUpon>Distribution.cnv.cs</DependentUpon>
     </EmbeddedResource>
@@ -275,6 +303,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StartCanvas_2.cnv.resx">
       <DependentUpon>StartCanvas_2.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StopPoint\StopPoint.Design.resx" />
+    <EmbeddedResource Include="StopPoint\StopPoint_sDefault.cnv.resx">
+      <DependentUpon>StopPoint_sDefault.cnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StopPoint\StopPoint_sDefault.cnv.xml">
+      <DependentUpon>StopPoint_sDefault.cnv.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Testing.cnv.resx">
       <DependentUpon>Testing.cnv.cs</DependentUpon>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="e1a20003-4c10-4b80-9a10-000000000003" Name="StopPoint" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/22/2026" Remarks="Lightweight stop point CAT" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="A110000000000001" Name="INIT" Comment="Initialization Request">
+        <With Var="QI" />
+        <With Var="DefaultPassThrough" />
+        <With Var="Release" />
+      </Event>
+      <Event ID="A110000000000002" Name="REQ_REL" Comment="External release command update">
+        <With Var="Release" />
+      </Event>
+      <Event ID="A110000000000003" Name="REQ_SNS" Comment="Request current tray and workpiece sensor states" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="A120000000000001" Name="INITO" Comment="Initialization Confirm">
+        <With Var="QO" />
+        <With Var="PassState" />
+        <With Var="Tray" />
+        <With Var="Workpiece" />
+      </Event>
+      <Event ID="A120000000000002" Name="CNF" Comment="Pass-through state confirmation">
+        <With Var="PassState" />
+      </Event>
+      <Event ID="A120000000000003" Name="SNS_CNF" Comment="Tray or workpiece sensor update">
+        <With Var="Tray" />
+        <With Var="Workpiece" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="A130000000000001" Name="QI" Type="BOOL" InitialValue="TRUE" Comment="Input event qualifier" />
+      <VarDeclaration ID="A130000000000002" Name="DefaultPassThrough" Type="BOOL" InitialValue="FALSE" Comment="Startup mode (FALSE=Blocking/Up, TRUE=Pass-Through/Down)" />
+      <VarDeclaration ID="A130000000000003" Name="Release" Type="BOOL" InitialValue="FALSE" Comment="External temporary release input" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="A140000000000001" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration ID="A140000000000002" Name="PassState" Type="BOOL" Comment="Effective pass-through state (TRUE=Down, FALSE=Up)" />
+      <VarDeclaration ID="A140000000000003" Name="Tray" Type="BOOL" Comment="Tray present sensor state" />
+      <VarDeclaration ID="A140000000000004" Name="Workpiece" Type="BOOL" Comment="Workpiece present sensor state" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="B100000000000001" Name="Stopper" Type="DigitalOutput" x="2500" y="1700" Namespace="SE.App2CommonProcess" />
+    <FB ID="B100000000000002" Name="TrayPresent" Type="DigitalInput" x="260" y="1380" Namespace="SE.App2CommonProcess" />
+    <FB ID="B100000000000003" Name="WorkpiecePresent" Type="DigitalInput" x="260" y="2060" Namespace="SE.App2CommonProcess" />
+    <FB ID="B100000000000004" Name="PassThrough" Type="SetBool" x="160" y="639.9999" Namespace="SE.App2Base" />
+    <FB ID="B100000000000005" Name="Logic" Type="StopPointLogic" x="1420" y="680" Namespace="Main" />
+    <Input ID="A110000000000001" Name="INIT" x="12" y="12" Type="Event" />
+    <Input ID="A110000000000002" Name="REQ_REL" x="12" y="72" Type="Event" />
+    <Input ID="A110000000000003" Name="REQ_SNS" x="120" y="132" Type="Event" />
+    <Input ID="A130000000000001" Name="QI" x="20" y="212" Type="Data" />
+    <Input ID="A130000000000002" Name="DefaultPassThrough" x="20" y="272" Type="Data" />
+    <Input ID="A130000000000003" Name="Release" x="20" y="352" Type="Data" />
+    <Output ID="A120000000000001" Name="INITO" x="2600" y="12" Type="Event" />
+    <Output ID="A120000000000002" Name="CNF" x="2600" y="72" Type="Event" />
+    <Output ID="A120000000000003" Name="SNS_CNF" x="2600" y="132" Type="Event" />
+    <Output ID="A140000000000001" Name="QO" x="2600" y="192" Type="Data" />
+    <Output ID="A140000000000002" Name="PassState" x="2600" y="252" Type="Data" />
+    <Output ID="A140000000000003" Name="Tray" x="2600" y="1400" Type="Data" />
+    <Output ID="A140000000000004" Name="Workpiece" x="2600" y="1460" Type="Data" />
+    <EventConnections>
+      <Connection Source="$A110000000000001" Destination="$B100000000000005.INIT" dx1="429.4167" />
+      <Connection Source="$A110000000000002" Destination="$B100000000000005.REQ_REL" dx1="311" />
+      <Connection Source="$A110000000000003" Destination="$B100000000000005.REQ_SNS" dx1="198.2709" />
+      <Connection Source="$B100000000000004.IND" Destination="$B100000000000005.REQ_HMI" dx1="67.66669" />
+      <Connection Source="$B100000000000002.CNF" Destination="$B100000000000005.REQ_SNS" dx1="51.39587" />
+      <Connection Source="$B100000000000003.CNF" Destination="$B100000000000005.REQ_SNS" dx1="51.39587" />
+      <Connection Source="$B100000000000005.INITO" Destination="$A120000000000001" dx1="50" />
+      <Connection Source="$B100000000000005.CNF" Destination="$A120000000000002" dx1="70" />
+      <Connection Source="$B100000000000005.SNS_CNF" Destination="$A120000000000003" dx1="90" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$A130000000000001" Destination="$B100000000000005.QI" dx1="315.2084" />
+      <Connection Source="$A130000000000002" Destination="$B100000000000005.DefaultPass" dx1="40" />
+      <Connection Source="$A130000000000003" Destination="$B100000000000005.Release" dx1="63.45837" />
+      <Connection Source="$B100000000000004.Out" Destination="$B100000000000005.HmiPass" dx1="47.66669" />
+      <Connection Source="$B100000000000002.Pv" Destination="$B100000000000005.TrayPv" dx1="71.39587" />
+      <Connection Source="$B100000000000003.Pv" Destination="$B100000000000005.WorkpiecePv" dx1="71.39587" />
+      <Connection Source="$B100000000000005.QO" Destination="$A140000000000001" dx1="110" />
+      <Connection Source="$B100000000000005.PassState" Destination="$A140000000000002" dx1="130" />
+      <Connection Source="$B100000000000005.Tray" Destination="$A140000000000003" dx1="87.29175" />
+      <Connection Source="$B100000000000005.Workpiece" Destination="$A140000000000004" dx1="67.29175" />
+    </DataConnections>
+    <AdapterConnections>
+      <Connection Source="$B100000000000005.IStopper" Destination="$B100000000000001.IRsp" dx1="47.29175" />
+    </AdapterConnections>
+  </FBNetwork>
+</FBType>

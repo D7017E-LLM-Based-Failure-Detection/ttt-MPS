@@ -44,12 +44,14 @@
   <ItemGroup>
     <None Include="1bf87c9c-2a73-4176-9028-707d6be5c30d.solutionData" />
     <None Include="BroadcastDomain_Default Network.json" />
+    <None Include="Equipment_Conveyor Sys.json" />
     <None Include="Equipment_Distributing Station.json" />
     <None Include="Equipment_Switch_3.json" />
     <None Include="Equipment_Testing.json" />
     <None Include="Equipment_Workstation_1.json" />
     <None Include="Wire_Wire 115.json" />
     <None Include="Wire_Wire 122.json" />
+    <None Include="Wire_Wire 144.json" />
     <None Include="Wire_Wire 167.json" />
   </ItemGroup>
   <Import Project="$(SharpDevelopBinPath)\Plugins\TopologyManagerPlugin\TopologyManager.targets" />

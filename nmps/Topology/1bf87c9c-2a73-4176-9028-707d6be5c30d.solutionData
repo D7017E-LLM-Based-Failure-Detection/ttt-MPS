@@ -9,5 +9,5 @@
   "anonymousUserInformation": "{\u0022users_list\u0022:[{\u0022user_name\u0022:\u0022Anonymous\u0022,\u0022password\u0022:\u0022cb366a250499db16cfa075932fd153c2baf2dfdda46a14082b7ddf3eab1118d5\u0022,\u0022state\u0022:\u0022Active\u0022,\u0022AccountStartDate\u0022:null,\u0022assigned_role\u0022:[\u0022Anonymous\u0022]}],\u0022version\u0022:\u00221\u0022}",
   "anonymousRoleInformation": "{\u0022roles_list\u0022:[{\u0022name\u0022:\u0022Anonymous\u0022,\u0022permission_name\u0022:[\u0022Security Management\u0022,\u0022File Transfer\u0022,\u0022IP Configuration\u0022,\u0022Firmware Management\u0022,\u0022LaunchCanvas\u0022,\u0022OpenFacePlate\u0022,\u0022EditSymbol\u0022,\u0022Level_15\u0022]}],\u0022version\u0022:\u00221\u0022}",
   "solutionName": "nmps",
-  "certThumbprint": "4505CDD7E25B335A63184A8A90511B9CC7E1B412;70441F423BEFA761D988BF71918CB3E28419C5BA;"
+  "certThumbprint": "4505CDD7E25B335A63184A8A90511B9CC7E1B412;70441F423BEFA761D988BF71918CB3E28419C5BA;1BB0CF5678790AD9BE018C1501A1A82253D72999;"
 }

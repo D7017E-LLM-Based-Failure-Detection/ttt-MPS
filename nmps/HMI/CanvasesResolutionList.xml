@@ -9,6 +9,9 @@
         <Canvas Name="Testing" Title="" Tooltip="" Instance="HMI.Main.Canvases.Testing">
           <Children />
         </Canvas>
+        <Canvas Name="Conveyor" Title="Conveyor" Tooltip="" Instance="HMI.Main.Canvases.Conveyor">
+          <Children />
+        </Canvas>
       </Canvases>
     </Topology>
   </CanvasResolution>

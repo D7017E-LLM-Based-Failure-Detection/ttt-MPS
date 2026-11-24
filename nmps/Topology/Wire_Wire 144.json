@@ -1,0 +1,15 @@
+{
+  "references": [
+    {
+      "diagramPath": "Physical Views",
+      "sourceSide": 0,
+      "destinationSide": 8
+    }
+  ],
+  "label": "Wire 144",
+  "identifier": "Wire 144",
+  "sourceEquipment": "f27aee43-3a02-436d-855f-0e28ed47b028",
+  "sourcePortIdentifier": "Ethernet1_1",
+  "destinationEquipment": "2ced2b7e-5aa6-4e44-a92c-635b42faa66a",
+  "destinationPortIdentifier": "Port3"
+}

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="e1a20002-4c10-4b80-9a10-000000000002" Name="StopPointLogic" Comment="Basic Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/22/2026" Remarks="First version" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request">
+        <With Var="QI" />
+        <With Var="DefaultPass" />
+        <With Var="HmiPass" />
+        <With Var="Release" />
+        <With Var="TrayPv" />
+        <With Var="WorkpiecePv" />
+      </Event>
+      <Event Name="REQ_HMI" Comment="Update pass-through command from HMI SetBool">
+        <With Var="HmiPass" />
+      </Event>
+      <Event Name="REQ_REL" Comment="Update external release request">
+        <With Var="Release" />
+      </Event>
+      <Event Name="REQ_SNS" Comment="Update tray and workpiece sensor values">
+        <With Var="TrayPv" />
+        <With Var="WorkpiecePv" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm">
+        <With Var="QO" />
+        <With Var="PassState" />
+        <With Var="Tray" />
+        <With Var="Workpiece" />
+      </Event>
+      <Event Name="CNF" Comment="Pass-through state confirmation">
+        <With Var="PassState" />
+      </Event>
+      <Event Name="SNS_CNF" Comment="Sensor confirmation">
+        <With Var="Tray" />
+        <With Var="Workpiece" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="QI" Type="BOOL" InitialValue="TRUE" Comment="Input event qualifier" />
+      <VarDeclaration Name="DefaultPass" Type="BOOL" InitialValue="FALSE" Comment="Startup pass-through state (FALSE=Block, TRUE=Pass)" />
+      <VarDeclaration Name="HmiPass" Type="BOOL" InitialValue="FALSE" Comment="HMI pass-through command" />
+      <VarDeclaration Name="Release" Type="BOOL" InitialValue="FALSE" Comment="External temporary release input" />
+      <VarDeclaration Name="TrayPv" Type="VTQBOOL" Comment="Tray-present digital input process value" />
+      <VarDeclaration Name="WorkpiecePv" Type="VTQBOOL" Comment="Workpiece-present digital input process value" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration Name="PassState" Type="BOOL" Comment="Effective pass-through state (TRUE=stopper down, FALSE=stopper up)" />
+      <VarDeclaration Name="Tray" Type="BOOL" Comment="Tray present at stop point" />
+      <VarDeclaration Name="Workpiece" Type="BOOL" Comment="Workpiece present on tray" />
+    </OutputVars>
+    <Plugs>
+      <AdapterDeclaration Name="IStopper" Type="IDigital" Namespace="SE.App2Base" Comment="Remote setpoint adapter for Stopper DigitalOutput" />
+    </Plugs>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="algInit,algHmi,algRel,algSns,algFb" />
+    <InternalVars>
+      <VarDeclaration Name="cmdPass" Type="BOOL" InitialValue="FALSE" Comment="Latched pass-through command" />
+      <VarDeclaration Name="firstFbDone" Type="BOOL" InitialValue="FALSE" Comment="Initial REQ_FB sync completed" />
+      <VarDeclaration Name="prevTrack" Type="BOOL" InitialValue="FALSE" Comment="Previous Track state from Stopper" />
+      <VarDeclaration Name="targetInt" Type="INT" InitialValue="0" Comment="Target integer setpoint (0=Block/Up, 1=Pass/Down)" />
+    </InternalVars>
+    <ECC>
+      <ECState Name="START" Comment="Initial State" x="1000" y="800" />
+      <ECState Name="DO_INIT" x="1000" y="200">
+        <ECAction Algorithm="algInit" Output="INITO" />
+        <ECAction Output="CNF" />
+        <ECAction Output="SNS_CNF" />
+        <ECAction Output="IStopper.REQ" />
+      </ECState>
+      <ECState Name="DO_HMI" x="2000" y="400">
+        <ECAction Algorithm="algHmi" Output="CNF" />
+        <ECAction Output="IStopper.REQ" />
+      </ECState>
+      <ECState Name="DO_REL" x="2000" y="800">
+        <ECAction Algorithm="algRel" Output="CNF" />
+        <ECAction Output="IStopper.REQ" />
+      </ECState>
+      <ECState Name="DO_SNS" x="2000" y="1200">
+        <ECAction Algorithm="algSns" Output="SNS_CNF" />
+      </ECState>
+      <ECState Name="FB_STOPPER" x="300" y="1200">
+        <ECAction Algorithm="algFb" Output="IStopper.REQ" />
+      </ECState>
+      <ECTransition Source="START" Destination="DO_INIT" Condition="INIT" x="1000" y="500" />
+      <ECTransition Source="DO_INIT" Destination="START" Condition="1" x="1150" y="500" />
+      <ECTransition Source="START" Destination="DO_HMI" Condition="REQ_HMI" x="1500" y="550" />
+      <ECTransition Source="DO_HMI" Destination="START" Condition="1" x="1500" y="650" />
+      <ECTransition Source="START" Destination="DO_REL" Condition="REQ_REL" x="1500" y="750" />
+      <ECTransition Source="DO_REL" Destination="START" Condition="1" x="1500" y="850" />
+      <ECTransition Source="START" Destination="DO_SNS" Condition="REQ_SNS" x="1500" y="1000" />
+      <ECTransition Source="DO_SNS" Destination="START" Condition="1" x="1500" y="1100" />
+      <ECTransition Source="START" Destination="FB_STOPPER" Condition="IStopper.REQ_FB" x="650" y="1000" />
+      <ECTransition Source="FB_STOPPER" Destination="START" Condition="1" x="650" y="1120" />
+    </ECC>
+    <Algorithm Name="algInit" Comment="Initialize stop point state from DefaultPass and current sensors">
+      <ST><![CDATA[QO := QI;
+cmdPass := DefaultPass;
+PassState := cmdPass OR Release;
+IF PassState THEN
+	targetInt := 1;
+ELSE
+	targetInt := 0;
+END_IF;
+
+IStopper.Value.value := targetInt;
+IStopper.Value.quality := 16#0;
+
+Tray := TrayPv.value;
+Workpiece := WorkpiecePv.value;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algHmi" Comment="Update pass-through setpoint from HMI command">
+      <ST><![CDATA[cmdPass := HmiPass;
+PassState := cmdPass OR Release;
+IF PassState THEN
+	targetInt := 1;
+ELSE
+	targetInt := 0;
+END_IF;
+
+IStopper.Value.value := targetInt;
+IStopper.Value.quality := 16#0;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algRel" Comment="Update pass-through setpoint from external release signal">
+      <ST><![CDATA[PassState := cmdPass OR Release;
+IF PassState THEN
+	targetInt := 1;
+ELSE
+	targetInt := 0;
+END_IF;
+
+IStopper.Value.value := targetInt;
+IStopper.Value.quality := 16#0;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algSns" Comment="Forward VTQBOOL sensor values as clean BOOL outputs">
+      <ST><![CDATA[Tray := TrayPv.value;
+Workpiece := WorkpiecePv.value;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algFb" Comment="Sync Stopper remote setpoint on first feedback or return to Program Remote">
+      <ST><![CDATA[IStopper.REQ := FALSE;
+IF (NOT IStopper.Track) AND ((NOT firstFbDone) OR prevTrack) THEN
+	firstFbDone := TRUE;
+	PassState := cmdPass OR Release;
+	IF PassState THEN
+		targetInt := 1;
+	ELSE
+		targetInt := 0;
+	END_IF;
+	IStopper.Value.value := targetInt;
+	IStopper.Value.quality := 16#0;
+	IStopper.REQ := TRUE;
+END_IF;
+prevTrack := IStopper.Track;
+]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

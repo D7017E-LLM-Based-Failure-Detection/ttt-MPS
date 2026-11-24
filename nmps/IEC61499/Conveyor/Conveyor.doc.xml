@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+  <info>
+    <author>
+      <personname>
+        <firstname>Firstname</firstname>
+        <surname>Surname</surname>
+      </personname>
+      <email>name@company.com</email>
+    </author>
+    <abstract>
+      <para>Conveyor CAT controlling 4 belt DigitalOutputs via BeltMaster and 6 StopPoint CATs (Stop1 blocking, Stop2..Stop6 pass-through at startup).</para>
+    </abstract>
+  </info>
+  <para></para>
+</section>

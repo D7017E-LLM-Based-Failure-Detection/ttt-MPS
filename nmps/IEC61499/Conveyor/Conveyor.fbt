@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="e1a20005-4c10-4b80-9a10-000000000005" Name="Conveyor" Format="2.0" Comment="CAT Function Block Type" Namespace="Main">
+  <Attribute Name="HMI.Alias" Value="" />
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/22/2026" Remarks="Conveyor CAT with 4 belt outputs and 6 lightweight StopPoints" />
+  <InterfaceList>
+    <EventInputs>
+      <Event ID="D110000000000001" Name="INIT" Comment="Initialization Request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="D110000000000002" Name="REQ" Comment="Normal Execution Request">
+        <With Var="QI" />
+      </Event>
+      <Event ID="D110000000000003" Name="STOP1_RELEASE" Comment="Update Station 1 stop point release input">
+        <With Var="Stop1Release" />
+      </Event>
+      <Event ID="D110000000000004" Name="STOP1_REQ_TRAY" Comment="Request current Station 1 tray and workpiece sensor states" />
+    </EventInputs>
+    <EventOutputs>
+      <Event ID="D120000000000001" Name="INITO" Comment="Initialization Confirm">
+        <With Var="QO" />
+      </Event>
+      <Event ID="D120000000000002" Name="CNF" Comment="Execution Confirmation">
+        <With Var="QO" />
+      </Event>
+      <Event ID="D120000000000003" Name="STOP1_TRAY_CNF" Comment="Station 1 tray and workpiece sensor update">
+        <With Var="Stop1Tray" />
+        <With Var="Stop1Workpiece" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration ID="D130000000000001" Name="QI" Type="BOOL" InitialValue="TRUE" Comment="Input event qualifier" />
+      <VarDeclaration ID="D130000000000002" Name="Stop1Release" Type="BOOL" InitialValue="FALSE" Comment="External Station 1 temporary release command" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration ID="D140000000000001" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration ID="D140000000000002" Name="Stop1Tray" Type="BOOL" Comment="Tray present at Stop 1 (Station 1)" />
+      <VarDeclaration ID="D140000000000003" Name="Stop1Workpiece" Type="BOOL" Comment="Workpiece present on tray at Stop 1 (Station 1)" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork>
+    <FB ID="C200000000000001" Name="BeltA" Type="DigitalOutput" x="2000" y="200" Namespace="SE.App2CommonProcess" />
+    <FB ID="C200000000000002" Name="BeltB" Type="DigitalOutput" x="2000" y="760" Namespace="SE.App2CommonProcess" />
+    <FB ID="C200000000000003" Name="BeltC" Type="DigitalOutput" x="2000" y="1320" Namespace="SE.App2CommonProcess" />
+    <FB ID="C200000000000004" Name="BeltD" Type="DigitalOutput" x="2000" y="1880" Namespace="SE.App2CommonProcess" />
+    <FB ID="C200000000000005" Name="RunBelts" Type="SetBool" x="260" y="640" Namespace="SE.App2Base" />
+    <FB ID="C200000000000006" Name="BeltMaster" Type="BeltMaster" x="1080" y="640" Namespace="Main" />
+    <FB ID="C200000000000007" Name="Stop1" Type="StopPoint" x="3400" y="200" Namespace="Main">
+      <Parameter Name="$A130000000000001" Value="TRUE" />
+      <Parameter Name="$A130000000000002" Value="FALSE" />
+    </FB>
+    <FB ID="C200000000000008" Name="Stop2" Type="StopPoint" x="3400" y="880" Namespace="Main">
+      <Parameter Name="$A130000000000001" Value="TRUE" />
+      <Parameter Name="$A130000000000002" Value="TRUE" />
+    </FB>
+    <FB ID="C200000000000009" Name="Stop3" Type="StopPoint" x="3400" y="1560" Namespace="Main">
+      <Parameter Name="$A130000000000001" Value="TRUE" />
+      <Parameter Name="$A130000000000002" Value="TRUE" />
+    </FB>
+    <FB ID="C20000000000000A" Name="Stop4" Type="StopPoint" x="4520" y="200" Namespace="Main">
+      <Parameter Name="$A130000000000001" Value="TRUE" />
+      <Parameter Name="$A130000000000002" Value="TRUE" />
+    </FB>
+    <FB ID="C20000000000000B" Name="Stop5" Type="StopPoint" x="4520" y="880" Namespace="Main">
+      <Parameter Name="$A130000000000001" Value="TRUE" />
+      <Parameter Name="$A130000000000002" Value="TRUE" />
+    </FB>
+    <FB ID="C20000000000000C" Name="Stop6" Type="StopPoint" x="4520" y="1560" Namespace="Main">
+      <Parameter Name="$A130000000000001" Value="TRUE" />
+      <Parameter Name="$A130000000000002" Value="TRUE" />
+    </FB>
+    <Input ID="D110000000000001" Name="INIT" x="12" y="12" Type="Event" />
+    <Input ID="D110000000000002" Name="REQ" x="12" y="72" Type="Event" />
+    <Input ID="D110000000000003" Name="STOP1_RELEASE" x="12" y="132" Type="Event" />
+    <Input ID="D110000000000004" Name="STOP1_REQ_TRAY" x="12" y="192" Type="Event" />
+    <Input ID="D130000000000001" Name="QI" x="12" y="252" Type="Data" />
+    <Input ID="D130000000000002" Name="Stop1Release" x="12" y="312" Type="Data" />
+    <Output ID="D120000000000001" Name="INITO" x="5560" y="12" Type="Event" />
+    <Output ID="D120000000000002" Name="CNF" x="5560" y="72" Type="Event" />
+    <Output ID="D120000000000003" Name="STOP1_TRAY_CNF" x="5560" y="132" Type="Event" />
+    <Output ID="D140000000000001" Name="QO" x="5560" y="192" Type="Data" />
+    <Output ID="D140000000000002" Name="Stop1Tray" x="5560" y="252" Type="Data" />
+    <Output ID="D140000000000003" Name="Stop1Workpiece" x="5560" y="312" Type="Data" />
+    <EventConnections>
+      <Connection Source="$D110000000000001" Destination="$C200000000000006.INIT" />
+      <Connection Source="$C200000000000006.INITO" Destination="$C200000000000007.A110000000000001" />
+      <Connection Source="$C200000000000007.A120000000000001" Destination="$C200000000000008.A110000000000001" />
+      <Connection Source="$C200000000000008.A120000000000001" Destination="$C200000000000009.A110000000000001" />
+      <Connection Source="$C200000000000009.A120000000000001" Destination="$C20000000000000A.A110000000000001" />
+      <Connection Source="$C20000000000000A.A120000000000001" Destination="$C20000000000000B.A110000000000001" />
+      <Connection Source="$C20000000000000B.A120000000000001" Destination="$C20000000000000C.A110000000000001" />
+      <Connection Source="$C20000000000000C.A120000000000001" Destination="$D120000000000001" />
+      <Connection Source="$C200000000000005.IND" Destination="$C200000000000006.REQ" />
+      <Connection Source="$D110000000000002" Destination="$C200000000000006.REQ" />
+      <Connection Source="$C200000000000006.CNF" Destination="$D120000000000002" />
+      <Connection Source="$D110000000000003" Destination="$C200000000000007.A110000000000002" />
+      <Connection Source="$D110000000000004" Destination="$C200000000000007.A110000000000003" />
+      <Connection Source="$C200000000000007.A120000000000003" Destination="$D120000000000003" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="$D130000000000001" Destination="$C200000000000006.QI" />
+      <Connection Source="$C200000000000005.Out" Destination="$C200000000000006.RunCmd" />
+      <Connection Source="$C20000000000000C.A140000000000001" Destination="$D140000000000001" />
+      <Connection Source="$D130000000000002" Destination="$C200000000000007.A130000000000003" />
+      <Connection Source="$C200000000000007.A140000000000003" Destination="$D140000000000002" />
+      <Connection Source="$C200000000000007.A140000000000004" Destination="$D140000000000003" />
+    </DataConnections>
+    <AdapterConnections>
+      <Connection Source="$C200000000000006.IBeltA" Destination="$C200000000000001.IRsp" />
+      <Connection Source="$C200000000000006.IBeltB" Destination="$C200000000000002.IRsp" />
+      <Connection Source="$C200000000000006.IBeltC" Destination="$C200000000000003.IRsp" />
+      <Connection Source="$C200000000000006.IBeltD" Destination="$C200000000000004.IRsp" />
+    </AdapterConnections>
+  </FBNetwork>
+</FBType>

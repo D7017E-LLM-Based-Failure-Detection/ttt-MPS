@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="e1a20001-4c10-4b80-9a10-000000000001" Name="BeltMaster" Comment="Basic Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/22/2026" Remarks="First version" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request">
+        <With Var="QI" />
+        <With Var="RunCmd" />
+        <With Var="Permissive" />
+      </Event>
+      <Event Name="REQ" Comment="Update belt master setpoint">
+        <With Var="RunCmd" />
+        <With Var="Permissive" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm">
+        <With Var="QO" />
+        <With Var="ActiveOut" />
+      </Event>
+      <Event Name="CNF" Comment="Execution Confirmation">
+        <With Var="ActiveOut" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="QI" Type="BOOL" InitialValue="TRUE" Comment="Input event qualifier" />
+      <VarDeclaration Name="RunCmd" Type="BOOL" InitialValue="FALSE" Comment="Master belt run command from HMI SetBool" />
+      <VarDeclaration Name="Permissive" Type="BOOL" InitialValue="TRUE" Comment="Master belt permissive" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration Name="ActiveOut" Type="BOOL" Comment="Effective belt run command" />
+    </OutputVars>
+    <Plugs>
+      <AdapterDeclaration Name="IBeltA" Type="IDigital" Namespace="SE.App2Base" Comment="Remote setpoint adapter for BeltA" />
+      <AdapterDeclaration Name="IBeltB" Type="IDigital" Namespace="SE.App2Base" Comment="Remote setpoint adapter for BeltB" />
+      <AdapterDeclaration Name="IBeltC" Type="IDigital" Namespace="SE.App2Base" Comment="Remote setpoint adapter for BeltC" />
+      <AdapterDeclaration Name="IBeltD" Type="IDigital" Namespace="SE.App2Base" Comment="Remote setpoint adapter for BeltD" />
+    </Plugs>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="algInit,algCalc,algFbA,algFbB,algFbC,algFbD" />
+    <InternalVars>
+      <VarDeclaration Name="firstFbDoneA" Type="BOOL" InitialValue="FALSE" Comment="Initial REQ_FB sync completed for BeltA" />
+      <VarDeclaration Name="firstFbDoneB" Type="BOOL" InitialValue="FALSE" Comment="Initial REQ_FB sync completed for BeltB" />
+      <VarDeclaration Name="firstFbDoneC" Type="BOOL" InitialValue="FALSE" Comment="Initial REQ_FB sync completed for BeltC" />
+      <VarDeclaration Name="firstFbDoneD" Type="BOOL" InitialValue="FALSE" Comment="Initial REQ_FB sync completed for BeltD" />
+      <VarDeclaration Name="prevTrackA" Type="BOOL" InitialValue="FALSE" Comment="Previous Track state for BeltA" />
+      <VarDeclaration Name="prevTrackB" Type="BOOL" InitialValue="FALSE" Comment="Previous Track state for BeltB" />
+      <VarDeclaration Name="prevTrackC" Type="BOOL" InitialValue="FALSE" Comment="Previous Track state for BeltC" />
+      <VarDeclaration Name="prevTrackD" Type="BOOL" InitialValue="FALSE" Comment="Previous Track state for BeltD" />
+      <VarDeclaration Name="targetInt" Type="INT" InitialValue="0" Comment="Target integer setpoint (0=Stop, 1=Run)" />
+    </InternalVars>
+    <ECC>
+      <ECState Name="START" Comment="Initial State" x="1200" y="900" />
+      <ECState Name="DO_INIT" x="1200" y="200">
+        <ECAction Algorithm="algInit" Output="INITO" />
+        <ECAction Output="CNF" />
+        <ECAction Output="IBeltA.REQ" />
+        <ECAction Output="IBeltB.REQ" />
+        <ECAction Output="IBeltC.REQ" />
+        <ECAction Output="IBeltD.REQ" />
+      </ECState>
+      <ECState Name="DO_REQ" x="2200" y="900">
+        <ECAction Algorithm="algCalc" Output="CNF" />
+        <ECAction Output="IBeltA.REQ" />
+        <ECAction Output="IBeltB.REQ" />
+        <ECAction Output="IBeltC.REQ" />
+        <ECAction Output="IBeltD.REQ" />
+      </ECState>
+      <ECState Name="FB_A" x="300" y="300">
+        <ECAction Algorithm="algFbA" Output="IBeltA.REQ" />
+      </ECState>
+      <ECState Name="FB_B" x="300" y="1300">
+        <ECAction Algorithm="algFbB" Output="IBeltB.REQ" />
+      </ECState>
+      <ECState Name="FB_C" x="1200" y="1500">
+        <ECAction Algorithm="algFbC" Output="IBeltC.REQ" />
+      </ECState>
+      <ECState Name="FB_D" x="2100" y="300">
+        <ECAction Algorithm="algFbD" Output="IBeltD.REQ" />
+      </ECState>
+      <ECTransition Source="START" Destination="DO_INIT" Condition="INIT" x="1200" y="550" />
+      <ECTransition Source="DO_INIT" Destination="START" Condition="1" x="1350" y="550" />
+      <ECTransition Source="START" Destination="DO_REQ" Condition="REQ" x="1700" y="820" />
+      <ECTransition Source="DO_REQ" Destination="START" Condition="1" x="1700" y="980" />
+      <ECTransition Source="START" Destination="FB_A" Condition="IBeltA.REQ_FB" x="750" y="550" />
+      <ECTransition Source="FB_A" Destination="START" Condition="1" x="750" y="680" />
+      <ECTransition Source="START" Destination="FB_B" Condition="IBeltB.REQ_FB" x="750" y="1050" />
+      <ECTransition Source="FB_B" Destination="START" Condition="1" x="750" y="1180" />
+      <ECTransition Source="START" Destination="FB_C" Condition="IBeltC.REQ_FB" x="1200" y="1200" />
+      <ECTransition Source="FB_C" Destination="START" Condition="1" x="1350" y="1200" />
+      <ECTransition Source="START" Destination="FB_D" Condition="IBeltD.REQ_FB" x="1650" y="550" />
+      <ECTransition Source="FB_D" Destination="START" Condition="1" x="1650" y="680" />
+    </ECC>
+    <Algorithm Name="algInit" Comment="Initialize outputs and push startup setpoints to all 4 belts">
+      <ST><![CDATA[QO := QI;
+ActiveOut := RunCmd AND Permissive;
+IF ActiveOut THEN
+	targetInt := 1;
+ELSE
+	targetInt := 0;
+END_IF;
+
+IBeltA.Value.value := targetInt;
+IBeltA.Value.quality := 16#0;
+IBeltB.Value.value := targetInt;
+IBeltB.Value.quality := 16#0;
+IBeltC.Value.value := targetInt;
+IBeltC.Value.quality := 16#0;
+IBeltD.Value.value := targetInt;
+IBeltD.Value.quality := 16#0;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algCalc" Comment="Compute master belt command and write all 4 belt plugs">
+      <ST><![CDATA[ActiveOut := RunCmd AND Permissive;
+IF ActiveOut THEN
+	targetInt := 1;
+ELSE
+	targetInt := 0;
+END_IF;
+
+IBeltA.Value.value := targetInt;
+IBeltA.Value.quality := 16#0;
+IBeltB.Value.value := targetInt;
+IBeltB.Value.quality := 16#0;
+IBeltC.Value.value := targetInt;
+IBeltC.Value.quality := 16#0;
+IBeltD.Value.value := targetInt;
+IBeltD.Value.quality := 16#0;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algFbA" Comment="Sync BeltA remote setpoint on first feedback or return to Program Remote">
+      <ST><![CDATA[IBeltA.REQ := FALSE;
+IF (NOT IBeltA.Track) AND ((NOT firstFbDoneA) OR prevTrackA) THEN
+	firstFbDoneA := TRUE;
+	IBeltA.Value.value := targetInt;
+	IBeltA.Value.quality := 16#0;
+	IBeltA.REQ := TRUE;
+END_IF;
+prevTrackA := IBeltA.Track;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algFbB" Comment="Sync BeltB remote setpoint on first feedback or return to Program Remote">
+      <ST><![CDATA[IBeltB.REQ := FALSE;
+IF (NOT IBeltB.Track) AND ((NOT firstFbDoneB) OR prevTrackB) THEN
+	firstFbDoneB := TRUE;
+	IBeltB.Value.value := targetInt;
+	IBeltB.Value.quality := 16#0;
+	IBeltB.REQ := TRUE;
+END_IF;
+prevTrackB := IBeltB.Track;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algFbC" Comment="Sync BeltC remote setpoint on first feedback or return to Program Remote">
+      <ST><![CDATA[IBeltC.REQ := FALSE;
+IF (NOT IBeltC.Track) AND ((NOT firstFbDoneC) OR prevTrackC) THEN
+	firstFbDoneC := TRUE;
+	IBeltC.Value.value := targetInt;
+	IBeltC.Value.quality := 16#0;
+	IBeltC.REQ := TRUE;
+END_IF;
+prevTrackC := IBeltC.Track;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algFbD" Comment="Sync BeltD remote setpoint on first feedback or return to Program Remote">
+      <ST><![CDATA[IBeltD.REQ := FALSE;
+IF (NOT IBeltD.Track) AND ((NOT firstFbDoneD) OR prevTrackD) THEN
+	firstFbDoneD := TRUE;
+	IBeltD.Value.value := targetInt;
+	IBeltD.Value.quality := 16#0;
+	IBeltD.REQ := TRUE;
+END_IF;
+prevTrackD := IBeltD.Track;
+]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

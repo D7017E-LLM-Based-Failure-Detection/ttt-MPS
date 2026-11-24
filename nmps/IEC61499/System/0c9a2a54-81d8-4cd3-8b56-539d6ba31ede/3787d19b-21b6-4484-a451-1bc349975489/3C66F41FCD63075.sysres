@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="3C66F41FCD63075" Name="RES0" Type="EMB_RES_ECO" Namespace="Runtime.Management" Format="2.0" xmlns="https://www.se.com/LibraryElements">
-  <FBNetwork />
+  <FBNetwork>
+    <FB ID="41B2000000000002" Name="Conveyor" Type="Conveyor" Namespace="Main" Mapping="41B2000000000001" x="3440" y="380" />
+    <FB ID="41B2000000000003" Name="FB1" Type="DPAC_FULLINIT" Namespace="SE.DPAC" x="1100" y="140" Loaded="true" />
+    <FB ID="41B2000000000004" Name="SeqInit" Type="EVENTCHAINHEAD" Namespace="Runtime.Standard" x="2300" y="180" Loaded="true">
+      <Parameter Name="$NAME" Value="'SEQ_INIT'" />
+    </FB>
+    <EventConnections>
+      <Connection Source="$START.COLD" Destination="$41B2000000000003.INIT" dx1="88.60419" />
+      <Connection Source="$START.WARM" Destination="$41B2000000000003.INIT" dx1="70" />
+      <Connection Source="$START.ONLINECHANGE" Destination="$41B2000000000003.OC_RETRIGGER" dx1="90" />
+      <Connection Source="$41B2000000000003.INITO" Destination="$41B2000000000004.INIT" dx1="60" />
+      <Connection Source="$41B2000000000003.OC_DONE" Destination="$41B2000000000004.RETRIGGER" dx1="40" />
+      <Connection Source="$41B2000000000004.INITO" Destination="$41B2000000000004.TRIGGER" dx1="61.875" dx2="70" dy="-110" />
+      <Connection Source="$41B2000000000004.FINISHED" Destination="$41B2000000000002.D110000000000001" dx1="41.875" />
+    </EventConnections>
+  </FBNetwork>
 </Resource>
