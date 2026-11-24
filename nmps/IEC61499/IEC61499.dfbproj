@@ -150,6 +150,30 @@
     <None Include="..\HMI\TestingReset\TestingReset_sDefault.doc.xml">
       <DependentUpon>TestingReset.fbt</DependentUpon>
     </None>
+    <None Include="..\HMI\Conveyor\Conveyor_sDefault.doc.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
+    </None>
+    <None Include="..\HMI\StopPoint\StopPoint_sDefault.doc.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+    </None>
+    <None Include="BeltMaster.doc.xml">
+      <DependentUpon>BeltMaster.fbt</DependentUpon>
+    </None>
+    <None Include="BeltMaster.meta.xml">
+      <DependentUpon>BeltMaster.fbt</DependentUpon>
+    </None>
+    <None Include="Station1Coord.doc.xml">
+      <DependentUpon>Station1Coord.fbt</DependentUpon>
+    </None>
+    <None Include="Station1Coord.meta.xml">
+      <DependentUpon>Station1Coord.fbt</DependentUpon>
+    </None>
+    <None Include="StopPointLogic.doc.xml">
+      <DependentUpon>StopPointLogic.fbt</DependentUpon>
+    </None>
+    <None Include="StopPointLogic.meta.xml">
+      <DependentUpon>StopPointLogic.fbt</DependentUpon>
+    </None>
     <None Include="AutoCycle\AutoCycle.cfg">
       <DependentUpon>AutoCycle.fbt</DependentUpon>
       <IEC61499Type>CAT</IEC61499Type>
@@ -257,6 +281,78 @@
     </None>
     <None Include="ResetSequence\ResetSequence_HMI.opcua.xml">
       <DependentUpon>ResetSequence.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="Conveyor\Conveyor.cfg">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="Conveyor\Conveyor.doc.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
+    </None>
+    <None Include="Conveyor\Conveyor.meta.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
+    </None>
+    <None Include="Conveyor\Conveyor_CAT.offline.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="Conveyor\Conveyor_CAT.opcua.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="Conveyor\Conveyor_HMI.doc.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
+    </None>
+    <None Include="Conveyor\Conveyor_HMI.meta.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
+    </None>
+    <None Include="Conveyor\Conveyor_HMI.offline.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="Conveyor\Conveyor_HMI.opcua.xml">
+      <DependentUpon>Conveyor.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="StopPoint\StopPoint.cfg">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+      <IEC61499Type>CAT</IEC61499Type>
+    </None>
+    <None Include="StopPoint\StopPoint.doc.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+    </None>
+    <None Include="StopPoint\StopPoint.meta.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+    </None>
+    <None Include="StopPoint\StopPoint_CAT.offline.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="StopPoint\StopPoint_CAT.opcua.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+      <Plugin>OPCUAConfigurator</Plugin>
+      <IEC61499Type>CAT_OPCUA</IEC61499Type>
+    </None>
+    <None Include="StopPoint\StopPoint_HMI.doc.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+    </None>
+    <None Include="StopPoint\StopPoint_HMI.meta.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+    </None>
+    <None Include="StopPoint\StopPoint_HMI.offline.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+      <Plugin>OfflineParametrizationEditor</Plugin>
+      <IEC61499Type>CAT_OFFLINE</IEC61499Type>
+    </None>
+    <None Include="StopPoint\StopPoint_HMI.opcua.xml">
+      <DependentUpon>StopPoint.fbt</DependentUpon>
       <Plugin>OPCUAConfigurator</Plugin>
       <IEC61499Type>CAT_OPCUA</IEC61499Type>
     </None>
@@ -525,6 +621,33 @@
       <Usage>Private</Usage>
       <DependentUpon>TestingReset.fbt</DependentUpon>
       <HMI>..\HMI\TestingReset\TestingReset_sDefault.cnv.cs</HMI>
+    </Compile>
+    <Compile Include="BeltMaster.fbt">
+      <IEC61499Type>Basic</IEC61499Type>
+    </Compile>
+    <Compile Include="Station1Coord.fbt">
+      <IEC61499Type>Basic</IEC61499Type>
+    </Compile>
+    <Compile Include="StopPointLogic.fbt">
+      <IEC61499Type>Basic</IEC61499Type>
+    </Compile>
+    <Compile Include="Conveyor\Conveyor.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+    </Compile>
+    <Compile Include="Conveyor\Conveyor_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>Conveyor.fbt</DependentUpon>
+      <HMI>..\HMI\Conveyor\Conveyor_sDefault.cnv.cs</HMI>
+    </Compile>
+    <Compile Include="StopPoint\StopPoint.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+    </Compile>
+    <Compile Include="StopPoint\StopPoint_HMI.fbt">
+      <IEC61499Type>CAT</IEC61499Type>
+      <Usage>Private</Usage>
+      <DependentUpon>StopPoint.fbt</DependentUpon>
+      <HMI>..\HMI\StopPoint\StopPoint_sDefault.cnv.cs</HMI>
     </Compile>
   </ItemGroup>
   <ItemGroup>

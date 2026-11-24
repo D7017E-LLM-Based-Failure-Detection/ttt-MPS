@@ -31,6 +31,7 @@
       <Event ID="6490AF8BD623FEB6" Name="DownstreamFb">
         <With Var="DownstreamFree" />
       </Event>
+      <Event ID="A1B2000000000001" Name="PROG_START" Comment="Programmatic cycle start request" />
     </EventInputs>
     <EventOutputs>
       <Event ID="B2BDC515AA56D21F" Name="INITO" Comment="Initialization Confirm">
@@ -38,6 +39,10 @@
       </Event>
       <Event ID="016AB8861ADCF17C" Name="CNF" Comment="Execution Confirmation">
         <With Var="QO" />
+      </Event>
+      <Event ID="A1B2000000000002" Name="CYCLE_STATE" Comment="Sequence stopped/completed state update">
+        <With Var="CycleStopped" />
+        <With Var="CycleComplete" />
       </Event>
     </EventOutputs>
     <InputVars>
@@ -54,6 +59,8 @@
     </InputVars>
     <OutputVars>
       <VarDeclaration ID="95FDAA7AB8B002A3" Name="QO" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration ID="A1B2000000000003" Name="CycleStopped" Type="BOOL" Comment="TRUE when CycleSeq is Stopped" />
+      <VarDeclaration ID="A1B2000000000004" Name="CycleComplete" Type="BOOL" Comment="TRUE when CycleSeq is Completed" />
     </OutputVars>
   </InterfaceList>
   <FBNetwork>
@@ -190,9 +197,13 @@
     <Input ID="9F1C4E72A38D6B05" Name="SwivelStopped" x="20" y="2532" Type="Data" />
     <Input ID="795155DF007843B9" Name="MagazineEmpty" x="12" y="851.9999" Type="Data" />
     <Input ID="041FFAAD79F17532" Name="DownstreamFree" x="12" y="912" Type="Data" />
+    <Input ID="A1B2000000000001" Name="PROG_START" x="12" y="972" Type="Event" />
     <Output ID="B2BDC515AA56D21F" Name="INITO" x="4840" y="172" Type="Event" />
     <Output ID="016AB8861ADCF17C" Name="CNF" x="4860" y="232" Type="Event" />
     <Output ID="95FDAA7AB8B002A3" Name="QO" x="4740" y="292" Type="Data" />
+    <Output ID="A1B2000000000002" Name="CYCLE_STATE" x="4840" y="352" Type="Event" />
+    <Output ID="A1B2000000000003" Name="CycleStopped" x="4740" y="412" Type="Data" />
+    <Output ID="A1B2000000000004" Name="CycleComplete" x="4740" y="472" Type="Data" />
     <EventConnections>
       <Connection Source="$A729492442D0C9A1" Destination="$5507FBEF7968FDF0.REQ">
         <Points>
@@ -818,6 +829,8 @@
           </Points>
         </Points>
       </Connection>
+      <Connection Source="$A1B2000000000001" Destination="$978EA92A35647172.START" dx1="40" />
+      <Connection Source="$978EA92A35647172.STATE_IND" Destination="$A1B2000000000002" dx1="40" />
     </EventConnections>
     <DataConnections>
       <Connection Source="$5507FBEF7968FDF0.OUT1" Destination="$0E743C03E5588992.VALUE1" dx1="103.75" dx2="129.9999" dy="270" />
@@ -1345,6 +1358,8 @@
       </Connection>
       <Connection Source="$D7A39E14B62C8F05.OUT1" Destination="$C1E58A29F47B3D02.Exceeded" dx1="43.75" dx2="170" dy="190" />
       <Connection Source="$9F1C4E72A38D6B05" Destination="$E4B26C81D93A5F08.Exceeded" dx1="6957.5" />
+      <Connection Source="$978EA92A35647172.SeqStopped" Destination="$A1B2000000000003" dx1="40" />
+      <Connection Source="$978EA92A35647172.SeqComplete" Destination="$A1B2000000000004" dx1="40" />
     </DataConnections>
     <AdapterConnections>
       <Connection Source="$978EA92A35647172.ISeqChain" Destination="$42FE37BCA7B9AB46.ISeqChainIn" dx1="43.50006" />

@@ -147,6 +147,21 @@
   <metadata name="alarmGrid1.Name" xml:space="preserve">
     <value>alarmGrid1</value>
   </metadata>
+  <metadata name="autoPanel.Name" xml:space="preserve">
+    <value>autoPanel</value>
+  </metadata>
+  <metadata name="lblAutoHeader.Name" xml:space="preserve">
+    <value>lblAutoHeader</value>
+  </metadata>
+  <metadata name="lblAutoHint.Name" xml:space="preserve">
+    <value>lblAutoHint</value>
+  </metadata>
+  <metadata name="symAutoMode.Name" xml:space="preserve">
+    <value>symAutoMode</value>
+  </metadata>
+  <metadata name="symAutoRelease.Name" xml:space="preserve">
+    <value>symAutoRelease</value>
+  </metadata>
   <metadata name="$this.ShowGrid" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

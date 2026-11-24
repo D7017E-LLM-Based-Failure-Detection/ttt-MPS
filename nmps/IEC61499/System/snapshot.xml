@@ -3,18 +3,21 @@
   <deployment>
     <network_profile name="(Local Test)">
       <device id="0d5eb44a-26f1-468d-8caa-7f6bfe966b18" CompileTime="2026-11-22 19:34:57Z">
-        <sref snapshot="{F712A0DC-C99E-44E3-B4E5-3BF35E7D2895}" state="ACTIVE" />
+        <sref snapshot="{F712A0DC-C99E-44E3-B4E5-3BF35E7D2895}" state="ACTIVE_MODIFIED" />
       </device>
       <device id="9b129585-0c86-45b1-8b59-a88961e02156" CompileTime="2026-11-22 19:34:57Z">
-        <sref snapshot="{56421B23-18E3-4565-BB22-8AEF09FA1617}" state="ACTIVE" />
+        <sref snapshot="{56421B23-18E3-4565-BB22-8AEF09FA1617}" state="ACTIVE_MODIFIED" />
       </device>
     </network_profile>
     <network_profile name="(Default)">
-      <device id="0d5eb44a-26f1-468d-8caa-7f6bfe966b18" CompileTime="2026-11-20 16:57:16Z">
-        <sref snapshot="{9CA4B240-1D51-44E0-A9BD-752DB2320E06}" state="ACTIVE_MODIFIED" />
+      <device id="0d5eb44a-26f1-468d-8caa-7f6bfe966b18" CompileTime="2026-11-24 11:30:31Z">
+        <sref snapshot="{BD04E256-F121-4B2C-9F29-5D5B359464BD}" state="ACTIVE" />
       </device>
-      <device id="9b129585-0c86-45b1-8b59-a88961e02156" CompileTime="2026-11-20 17:07:21Z">
-        <sref snapshot="{925C8594-95AD-4F09-A4C0-0782BA54FBEE}" state="ACTIVE_MODIFIED" />
+      <device id="9b129585-0c86-45b1-8b59-a88961e02156" CompileTime="2026-11-24 11:31:33Z">
+        <sref snapshot="{AAA31F0F-E971-4571-9772-1108CFDE35F2}" state="ACTIVE" />
+      </device>
+      <device id="3787d19b-21b6-4484-a451-1bc349975489" CompileTime="2026-11-24 11:28:53Z">
+        <sref snapshot="{AEDA9925-4FFE-49BC-A399-E7F95CC03B66}" state="ACTIVE" />
       </device>
     </network_profile>
   </deployment>

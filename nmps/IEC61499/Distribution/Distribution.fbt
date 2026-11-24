@@ -16,6 +16,8 @@
         <With Var="DownstreamReady" />
       </Event>
       <Event ID="D2A4000000000001" Name="REQ_ARM_POS" Comment="Request current swivel arm-at-Testing status" />
+      <Event ID="D2A7000000000001" Name="START_CYCLE" Comment="Start AutoCycle programmatically" />
+      <Event ID="D2A8000000000001" Name="REQ_DIST_READY" Comment="Request current Distribution ready status" />
     </EventInputs>
     <EventOutputs>
       <Event ID="2FA668E55A108808" Name="INITO" Comment="Initialization Confirm">
@@ -28,6 +30,9 @@
       <Event ID="D2A5000000000001" Name="ARM_POS_CNF" Comment="Swivel arm-at-Testing status changed">
         <With Var="ArmAtTesting" />
       </Event>
+      <Event ID="D2A9000000000001" Name="DIST_READY_CNF" Comment="Distribution ready state update">
+        <With Var="DistReady" />
+      </Event>
     </EventOutputs>
     <InputVars>
       <VarDeclaration ID="463C2FB702C7EF3A" Name="QI" Type="BOOL" Comment="Input event qualifier" />
@@ -36,6 +41,7 @@
     <OutputVars>
       <VarDeclaration ID="6A24B6A6C58F75B8" Name="QO" Type="BOOL" Comment="Output event qualifier" />
       <VarDeclaration ID="D2A6000000000001" Name="ArmAtTesting" Type="BOOL" Comment="TRUE when swivel arm is at Testing (3B2)" />
+      <VarDeclaration ID="D2AA000000000001" Name="DistReady" Type="BOOL" Comment="TRUE when AutoCycle CycleSeq is Stopped or Completed" />
     </OutputVars>
   </InterfaceList>
   <FBNetwork>
@@ -65,18 +71,35 @@
       <Parameter Name="$IN2" Value="TRUE" />
       <Parameter Name="$IN3" Value="TRUE" />
     </FB>
+    <FB ID="D100000000000004" Name="NotDistStop" Type="NOT_42C76073DCEB1A7A" x="5960" y="1280" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=1;OUT${CNT}:BOOL" />
+    </FB>
+    <FB ID="D100000000000005" Name="NotDistComp" Type="NOT_42C76073DCEB1A7A" x="5960" y="1560" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=1;OUT${CNT}:BOOL" />
+    </FB>
+    <FB ID="D100000000000006" Name="DistBusyAnd" Type="AND_550FE6D62F509EB3" x="6460" y="1400" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=3;OUT:BOOL" />
+      <Parameter Name="$IN3" Value="TRUE" />
+    </FB>
+    <FB ID="D100000000000007" Name="DistReadyOut" Type="NOT_42C76073DCEB1A7A" x="7020" y="1400" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=1;OUT${CNT}:BOOL" />
+    </FB>
     <Input ID="338BEC0F128D1425" Name="INIT" x="4520" y="592" Type="Event" />
     <Input ID="4860A08F4D58E09F" Name="REQ" x="12" y="72" Type="Event" />
     <Input ID="463C2FB702C7EF3A" Name="QI" x="12" y="132" Type="Data" />
     <Input ID="D2A1000000000001" Name="DS_FREE_UPD" x="60" y="1052" Type="Event" />
     <Input ID="D2A3000000000001" Name="DownstreamReady" x="40" y="1152" Type="Data" />
     <Input ID="D2A4000000000001" Name="REQ_ARM_POS" x="60" y="1252" Type="Event" />
+    <Input ID="D2A7000000000001" Name="START_CYCLE" x="60" y="1312" Type="Event" />
+    <Input ID="D2A8000000000001" Name="REQ_DIST_READY" x="60" y="1372" Type="Event" />
     <Output ID="2FA668E55A108808" Name="INITO" x="5300" y="112" Type="Event" />
     <Output ID="D831D9667B305640" Name="CNF" x="5320" y="172" Type="Event" />
     <Output ID="6A24B6A6C58F75B8" Name="QO" x="5200" y="232" Type="Data" />
     <Output ID="D2A2000000000001" Name="REQ_DS_FREE" x="5140" y="332" Type="Event" />
     <Output ID="D2A5000000000001" Name="ARM_POS_CNF" x="5140" y="412" Type="Event" />
     <Output ID="D2A6000000000001" Name="ArmAtTesting" x="5140" y="492" Type="Data" />
+    <Output ID="D2A9000000000001" Name="DIST_READY_CNF" x="7480" y="1400" Type="Event" />
+    <Output ID="D2AA000000000001" Name="DistReady" x="7480" y="1460" Type="Data" />
     <EventConnections>
       <Connection Source="$290E8CBB7083A708.CNF" Destination="$587ED4C7F6989425.FECC89DB3D2A57FF" dx1="80" />
       <Connection Source="$DA014101550A683C.CNF" Destination="$587ED4C7F6989425.A5069DC6B641011A" dx1="352.125" />
@@ -203,6 +226,14 @@
       <Connection Source="$D2A4000000000001" Destination="$D100000000000003.REQ" dx1="40" />
       <Connection Source="$DA014101550A683C.CNF" Destination="$D100000000000003.REQ" dx1="40" />
       <Connection Source="$D100000000000003.CNF" Destination="$D2A5000000000001" dx1="40" />
+      <Connection Source="$D2A7000000000001" Destination="$97DD9E0F686AACAA.A1B2000000000001" dx1="40" />
+      <Connection Source="$338BEC0F128D1425" Destination="$D100000000000004.REQ" dx1="40" />
+      <Connection Source="$D2A8000000000001" Destination="$D100000000000004.REQ" dx1="40" />
+      <Connection Source="$97DD9E0F686AACAA.A1B2000000000002" Destination="$D100000000000004.REQ" dx1="40" />
+      <Connection Source="$D100000000000004.CNF" Destination="$D100000000000005.REQ" dx1="40" />
+      <Connection Source="$D100000000000005.CNF" Destination="$D100000000000006.REQ" dx1="40" />
+      <Connection Source="$D100000000000006.CNF" Destination="$D100000000000007.REQ" dx1="40" />
+      <Connection Source="$D100000000000007.CNF" Destination="$D2A9000000000001" dx1="40" />
     </EventConnections>
     <DataConnections>
       <Connection Source="$290E8CBB7083A708.FbClosed" Destination="$587ED4C7F6989425.60387A5202353395" dx1="60" />
@@ -254,6 +285,12 @@
       <Connection Source="$A833C3B96CD54792.OUT1" Destination="$D100000000000002.VALUE1" dx1="43.75" />
       <Connection Source="$DA014101550A683C.FbOpen" Destination="$D100000000000003.IN1" dx1="40" />
       <Connection Source="$D100000000000003.OUT" Destination="$D2A6000000000001" dx1="40" />
+      <Connection Source="$97DD9E0F686AACAA.A1B2000000000003" Destination="$D100000000000004.IN1" dx1="40" />
+      <Connection Source="$97DD9E0F686AACAA.A1B2000000000004" Destination="$D100000000000005.IN1" dx1="40" />
+      <Connection Source="$D100000000000004.OUT1" Destination="$D100000000000006.IN1" dx1="40" />
+      <Connection Source="$D100000000000005.OUT1" Destination="$D100000000000006.IN2" dx1="40" />
+      <Connection Source="$D100000000000006.OUT" Destination="$D100000000000007.IN1" dx1="40" />
+      <Connection Source="$D100000000000007.OUT1" Destination="$D2AA000000000001" dx1="40" />
     </DataConnections>
     <AdapterConnections>
       <Connection Source="$DA014101550A683C.IFbState" Destination="$F346BF531D8915E6.ICondSignal" dx1="40" dx2="110" dy="240">

@@ -36,6 +36,11 @@ namespace HMI.Main.Canvases
 			this.sHead1 = new SE.AppSequence.Symbols.SeqHead.sHead();
 			this.sHead2 = new SE.AppSequence.Symbols.SeqHead.sHead();
 			this.alarmGrid1 = new NxtControl.GuiFramework.AlarmGrid();
+			this.autoPanel = new NxtControl.GuiFramework.Rectangle();
+			this.lblAutoHeader = new NxtControl.GuiFramework.Label();
+			this.lblAutoHint = new NxtControl.GuiFramework.Label();
+			this.symAutoMode = new SE.App2Base.Symbols.SetBool.sButton();
+			this.symAutoRelease = new SE.App2Base.Symbols.SetBool.sButton();
 			((System.ComponentModel.ISupportInitialize)(this.alarmGrid1)).BeginInit();
 			// 
 			// sDefault1
@@ -216,6 +221,86 @@ namespace HMI.Main.Canvases
 			this.alarmGrid1.ToolBarBackColor = System.Drawing.SystemColors.AppWorkspace;
 			this.alarmGrid1.ToolBarForeColor = System.Drawing.SystemColors.ControlText;
 			// 
+			// autoPanel
+			// 
+			this.autoPanel.Bounds = new NxtControl.Drawing.RectF(((float)(832D)), ((float)(456D)), ((float)(520D)), ((float)(152D)));
+			this.autoPanel.Brush = new NxtControl.Drawing.Brush(new NxtControl.Drawing.Color(((byte)(248)), ((byte)(250)), ((byte)(252))));
+			this.autoPanel.Font = new NxtControl.Drawing.Font("HMI Sans Serif", 9F, System.Drawing.FontStyle.Regular);
+			this.autoPanel.Name = "autoPanel";
+			this.autoPanel.Pen = new NxtControl.Drawing.Pen(new NxtControl.Drawing.Color(((byte)(188)), ((byte)(198)), ((byte)(212))), 1.5F, NxtControl.Drawing.DashStyle.Solid);
+			// 
+			// lblAutoHeader
+			// 
+			this.lblAutoHeader.AngleIgnore = true;
+			this.lblAutoHeader.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lblAutoHeader.Bounds = new NxtControl.Drawing.RectF(((float)(848D)), ((float)(464D)), ((float)(488D)), ((float)(22D)));
+			this.lblAutoHeader.Brush = new NxtControl.Drawing.Brush("LabelBrush");
+			this.lblAutoHeader.Font = new NxtControl.Drawing.Font("HMI Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+			this.lblAutoHeader.FontScale = true;
+			this.lblAutoHeader.Name = "lblAutoHeader";
+			this.lblAutoHeader.Pen = new NxtControl.Drawing.Pen("LabelPen");
+			this.lblAutoHeader.Text = "Station 1 <-> Conveyor Auto Mode";
+			this.lblAutoHeader.TextAlignment = NxtControl.Drawing.ContentAlignment.MiddleLeft;
+			this.lblAutoHeader.TextAutoSizeHorizontalOffset = 10;
+			this.lblAutoHeader.TextColor = new NxtControl.Drawing.Color(((byte)(30)), ((byte)(42)), ((byte)(58)));
+			this.lblAutoHeader.TextPadding = new NxtControl.Drawing.Padding(2);
+			// 
+			// lblAutoHint
+			// 
+			this.lblAutoHint.AngleIgnore = true;
+			this.lblAutoHint.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lblAutoHint.Bounds = new NxtControl.Drawing.RectF(((float)(848D)), ((float)(488D)), ((float)(488D)), ((float)(18D)));
+			this.lblAutoHint.Brush = new NxtControl.Drawing.Brush("LabelBrush");
+			this.lblAutoHint.Font = new NxtControl.Drawing.Font("HMI Sans Serif", 8.5F, System.Drawing.FontStyle.Regular);
+			this.lblAutoHint.FontScale = true;
+			this.lblAutoHint.Name = "lblAutoHint";
+			this.lblAutoHint.Pen = new NxtControl.Drawing.Pen("LabelPen");
+			this.lblAutoHint.Text = "Keep Distribution & Testing CycleSeq in Program / Auto";
+			this.lblAutoHint.TextAlignment = NxtControl.Drawing.ContentAlignment.MiddleLeft;
+			this.lblAutoHint.TextAutoSizeHorizontalOffset = 10;
+			this.lblAutoHint.TextColor = new NxtControl.Drawing.Color(((byte)(85)), ((byte)(96)), ((byte)(112)));
+			this.lblAutoHint.TextPadding = new NxtControl.Drawing.Padding(2);
+			// 
+			// symAutoMode
+			// 
+			this.symAutoMode.BeginInit();
+			this.symAutoMode.ButtonMode = SE.App2Base.Symbols.SetBool.btnMode_.Toggle;
+			this.symAutoMode.DefaultInstanceName = null;
+			this.symAutoMode.DesignMatrix = new NxtControl.Drawing.Matrix2D(1.15D, 0D, 0D, 1D, 856D, 514D);
+			this.symAutoMode.Direct = "$key:SE.App2Base.TxtDirect";
+			this.symAutoMode.Font = new NxtControl.Drawing.Font("ButtonFont");
+			this.symAutoMode.Instancelayer = SE.App2Base.SupportClasses.InstanceLayer.Base;
+			this.symAutoMode.MyTagDisplayName = null;
+			this.symAutoMode.Name = "symAutoMode";
+			this.symAutoMode.SecSetpoint = 0;
+			this.symAutoMode.SecurityToken = ((uint)(4294967175u));
+			this.symAutoMode.TagName = "248448E89426980E.AutoMode";
+			this.symAutoMode.TextColorOff = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			this.symAutoMode.TextColorOn = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			this.symAutoMode.TextOff = "Auto S1: OFF";
+			this.symAutoMode.TextOn = "Auto S1: ON";
+			this.symAutoMode.EndInit();
+			// 
+			// symAutoRelease
+			// 
+			this.symAutoRelease.BeginInit();
+			this.symAutoRelease.ButtonMode = SE.App2Base.Symbols.SetBool.btnMode_.Toggle;
+			this.symAutoRelease.DefaultInstanceName = null;
+			this.symAutoRelease.DesignMatrix = new NxtControl.Drawing.Matrix2D(1.15D, 0D, 0D, 1D, 1072D, 514D);
+			this.symAutoRelease.Direct = "$key:SE.App2Base.TxtDirect";
+			this.symAutoRelease.Font = new NxtControl.Drawing.Font("ButtonFont");
+			this.symAutoRelease.Instancelayer = SE.App2Base.SupportClasses.InstanceLayer.Base;
+			this.symAutoRelease.MyTagDisplayName = null;
+			this.symAutoRelease.Name = "symAutoRelease";
+			this.symAutoRelease.SecSetpoint = 0;
+			this.symAutoRelease.SecurityToken = ((uint)(4294967175u));
+			this.symAutoRelease.TagName = "248448E89426980E.AutoRelease";
+			this.symAutoRelease.TextColorOff = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			this.symAutoRelease.TextColorOn = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			this.symAutoRelease.TextOff = "Auto-Rel: OFF";
+			this.symAutoRelease.TextOn = "Auto-Rel: ON";
+			this.symAutoRelease.EndInit();
+			// 
 			// Testing
 			// 
 			this.Bounds = new NxtControl.Drawing.RectF(((float)(0D)), ((float)(0D)), ((float)(1808D)), ((float)(704D)));
@@ -230,7 +315,12 @@ namespace HMI.Main.Canvases
 			this.sDefault7,
 			this.sHead1,
 			this.sHead2,
-			this.alarmGrid1});
+			this.alarmGrid1,
+			this.autoPanel,
+			this.lblAutoHeader,
+			this.lblAutoHint,
+			this.symAutoMode,
+			this.symAutoRelease});
 			this.Size = new System.Drawing.Size(1808, 704);
 			((System.ComponentModel.ISupportInitialize)(this.alarmGrid1)).EndInit();
 
@@ -245,6 +335,11 @@ namespace HMI.Main.Canvases
 		private SE.AppSequence.Symbols.SeqHead.sHead sHead1;
 		private SE.AppSequence.Symbols.SeqHead.sHead sHead2;
 		private NxtControl.GuiFramework.AlarmGrid alarmGrid1;
+		private NxtControl.GuiFramework.Rectangle autoPanel;
+		private NxtControl.GuiFramework.Label lblAutoHeader;
+		private NxtControl.GuiFramework.Label lblAutoHint;
+		private SE.App2Base.Symbols.SetBool.sButton symAutoMode;
+		private SE.App2Base.Symbols.SetBool.sButton symAutoRelease;
 		#endregion
 	}
 }

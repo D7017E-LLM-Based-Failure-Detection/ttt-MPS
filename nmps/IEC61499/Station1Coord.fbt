@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="e1a20006-4c10-4b80-9a10-000000000006" Name="Station1Coord" Comment="Basic Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/24/2026" Remarks="Station 1 (Distribution + Testing) to Conveyor Stop 1 coordinator" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request">
+        <With Var="QI" />
+        <With Var="AutoEnable" />
+        <With Var="AutoRelease" />
+        <With Var="TrayAtStop1" />
+        <With Var="PartAtStop1" />
+        <With Var="DistReady" />
+        <With Var="TestStopped" />
+        <With Var="TestComplete" />
+        <With Var="LastPass" />
+      </Event>
+      <Event Name="REQ_CFG" Comment="AutoEnable or AutoRelease toggle update">
+        <With Var="AutoEnable" />
+        <With Var="AutoRelease" />
+      </Event>
+      <Event Name="REQ_TRAY" Comment="Stop 1 tray and workpiece sensor update">
+        <With Var="TrayAtStop1" />
+        <With Var="PartAtStop1" />
+      </Event>
+      <Event Name="REQ_DIST" Comment="Distribution ready state update">
+        <With Var="DistReady" />
+      </Event>
+      <Event Name="REQ_TEST" Comment="Testing cycle state and pass/reject result update">
+        <With Var="TestStopped" />
+        <With Var="TestComplete" />
+        <With Var="LastPass" />
+      </Event>
+      <Event Name="ARR_TMR_DONE" Comment="Tray arrival settle timer elapsed" />
+      <Event Name="REL_TMR_DONE" Comment="Tray departure stopper clear delay elapsed" />
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm">
+        <With Var="QO" />
+        <With Var="Stop1Release" />
+        <With Var="CoordState" />
+      </Event>
+      <Event Name="START_BOTH" Comment="Start Distribution and Testing automatic cycles" />
+      <Event Name="REL_CNF" Comment="Stop 1 release command update">
+        <With Var="Stop1Release" />
+      </Event>
+      <Event Name="ARR_TMR_START" Comment="Start tray arrival settle debounce timer" />
+      <Event Name="ARR_TMR_STOP" Comment="Cancel tray arrival settle debounce timer" />
+      <Event Name="REL_TMR_START" Comment="Start post-departure release clear timer" />
+      <Event Name="REL_TMR_STOP" Comment="Cancel post-departure release clear timer" />
+      <Event Name="STATE_CNF" Comment="Coordinator state update">
+        <With Var="CoordState" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="QI" Type="BOOL" InitialValue="TRUE" Comment="Input event qualifier" />
+      <VarDeclaration Name="AutoEnable" Type="BOOL" InitialValue="FALSE" Comment="Automatic Station 1 mode enable" />
+      <VarDeclaration Name="AutoRelease" Type="BOOL" InitialValue="TRUE" Comment="Auto-release Stop 1 when filled/passing" />
+      <VarDeclaration Name="TrayAtStop1" Type="BOOL" InitialValue="FALSE" Comment="Tray present at Stop 1 (M1.DI02)" />
+      <VarDeclaration Name="PartAtStop1" Type="BOOL" InitialValue="FALSE" Comment="Workpiece in Station 1 tray pocket (M1.DI05)" />
+      <VarDeclaration Name="DistReady" Type="BOOL" InitialValue="FALSE" Comment="Distribution CycleSeq Stopped or Completed" />
+      <VarDeclaration Name="TestStopped" Type="BOOL" InitialValue="TRUE" Comment="Testing CycleSeq Stopped state" />
+      <VarDeclaration Name="TestComplete" Type="BOOL" InitialValue="FALSE" Comment="Testing CycleSeq Completed state" />
+      <VarDeclaration Name="LastPass" Type="BOOL" InitialValue="FALSE" Comment="TRUE if last Testing cycle took the pass branch" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration Name="Stop1Release" Type="BOOL" InitialValue="FALSE" Comment="Temporary release command to Conveyor Stop1" />
+      <VarDeclaration Name="CoordState" Type="INT" InitialValue="0" Comment="0=Idle,1=SettleWait,2=Running,3=WaitPartSettle,4=Releasing,5=RelClearWait" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="algInit,algArrTmr,algRelTmr,algEval,algClrStart,algClrRel,algClrArrStart,algClrArrStop,algClrRelStart,algClrRelStop" />
+    <InternalVars>
+      <VarDeclaration Name="state" Type="INT" InitialValue="0" Comment="Internal state machine value" />
+      <VarDeclaration Name="traySettled" Type="BOOL" InitialValue="FALSE" Comment="Tray debounce settled at Stop 1" />
+      <VarDeclaration Name="seenTestRun" Type="BOOL" InitialValue="FALSE" Comment="Observed Testing CycleSeq Running since START_BOTH" />
+      <VarDeclaration Name="skipIdle" Type="BOOL" InitialValue="FALSE" Comment="Prevent same-scan restart after manual Stop" />
+      <VarDeclaration Name="wantStartBoth" Type="BOOL" InitialValue="FALSE" Comment="Pending START_BOTH event flag" />
+      <VarDeclaration Name="wantRelCnf" Type="BOOL" InitialValue="FALSE" Comment="Pending REL_CNF event flag" />
+      <VarDeclaration Name="wantArrStart" Type="BOOL" InitialValue="FALSE" Comment="Pending ARR_TMR_START event flag" />
+      <VarDeclaration Name="wantArrStop" Type="BOOL" InitialValue="FALSE" Comment="Pending ARR_TMR_STOP event flag" />
+      <VarDeclaration Name="wantRelStart" Type="BOOL" InitialValue="FALSE" Comment="Pending REL_TMR_START event flag" />
+      <VarDeclaration Name="wantRelStop" Type="BOOL" InitialValue="FALSE" Comment="Pending REL_TMR_STOP event flag" />
+    </InternalVars>
+    <ECC>
+      <ECState Name="START" Comment="Initial State" x="1200" y="900" />
+      <ECState Name="DO_INIT" x="1200" y="200">
+        <ECAction Algorithm="algInit" Output="INITO" />
+        <ECAction Output="REL_CNF" />
+        <ECAction Output="STATE_CNF" />
+      </ECState>
+      <ECState Name="DO_EVAL" x="2200" y="900">
+        <ECAction Algorithm="algEval" Output="STATE_CNF" />
+      </ECState>
+      <ECState Name="DO_ARR_TMR" x="2200" y="300">
+        <ECAction Algorithm="algArrTmr" />
+        <ECAction Algorithm="algEval" Output="STATE_CNF" />
+      </ECState>
+      <ECState Name="DO_REL_TMR" x="2200" y="1500">
+        <ECAction Algorithm="algRelTmr" />
+        <ECAction Algorithm="algEval" Output="STATE_CNF" />
+      </ECState>
+      <ECState Name="DISPATCH" x="3300" y="900" />
+      <ECState Name="EMIT_START" x="4500" y="200">
+        <ECAction Algorithm="algClrStart" Output="START_BOTH" />
+      </ECState>
+      <ECState Name="EMIT_REL" x="4500" y="500">
+        <ECAction Algorithm="algClrRel" Output="REL_CNF" />
+      </ECState>
+      <ECState Name="EMIT_ARR_START" x="4500" y="800">
+        <ECAction Algorithm="algClrArrStart" Output="ARR_TMR_START" />
+      </ECState>
+      <ECState Name="EMIT_ARR_STOP" x="4500" y="1100">
+        <ECAction Algorithm="algClrArrStop" Output="ARR_TMR_STOP" />
+      </ECState>
+      <ECState Name="EMIT_REL_START" x="4500" y="1400">
+        <ECAction Algorithm="algClrRelStart" Output="REL_TMR_START" />
+      </ECState>
+      <ECState Name="EMIT_REL_STOP" x="4500" y="1700">
+        <ECAction Algorithm="algClrRelStop" Output="REL_TMR_STOP" />
+      </ECState>
+      <ECTransition Source="START" Destination="DO_INIT" Condition="INIT" x="1200" y="550" />
+      <ECTransition Source="DO_INIT" Destination="START" Condition="1" x="1350" y="550" />
+      <ECTransition Source="START" Destination="DO_EVAL" Condition="REQ_CFG" x="1700" y="700" />
+      <ECTransition Source="START" Destination="DO_EVAL" Condition="REQ_TRAY" x="1700" y="820" />
+      <ECTransition Source="START" Destination="DO_EVAL" Condition="REQ_DIST" x="1700" y="940" />
+      <ECTransition Source="START" Destination="DO_EVAL" Condition="REQ_TEST" x="1700" y="1060" />
+      <ECTransition Source="START" Destination="DO_ARR_TMR" Condition="ARR_TMR_DONE" x="1700" y="500" />
+      <ECTransition Source="START" Destination="DO_REL_TMR" Condition="REL_TMR_DONE" x="1700" y="1280" />
+      <ECTransition Source="DO_EVAL" Destination="DISPATCH" Condition="1" x="2750" y="900" />
+      <ECTransition Source="DO_ARR_TMR" Destination="DISPATCH" Condition="1" x="2750" y="600" />
+      <ECTransition Source="DO_REL_TMR" Destination="DISPATCH" Condition="1" x="2750" y="1200" />
+      <ECTransition Source="DISPATCH" Destination="EMIT_START" Condition="wantStartBoth" x="3900" y="500" />
+      <ECTransition Source="EMIT_START" Destination="DISPATCH" Condition="1" x="3900" y="600" />
+      <ECTransition Source="DISPATCH" Destination="EMIT_REL" Condition="wantRelCnf" x="3900" y="680" />
+      <ECTransition Source="EMIT_REL" Destination="DISPATCH" Condition="1" x="3900" y="740" />
+      <ECTransition Source="DISPATCH" Destination="EMIT_ARR_START" Condition="wantArrStart" x="3900" y="830" />
+      <ECTransition Source="EMIT_ARR_START" Destination="DISPATCH" Condition="1" x="3900" y="880" />
+      <ECTransition Source="DISPATCH" Destination="EMIT_ARR_STOP" Condition="wantArrStop" x="3900" y="980" />
+      <ECTransition Source="EMIT_ARR_STOP" Destination="DISPATCH" Condition="1" x="3900" y="1030" />
+      <ECTransition Source="DISPATCH" Destination="EMIT_REL_START" Condition="wantRelStart" x="3900" y="1140" />
+      <ECTransition Source="EMIT_REL_START" Destination="DISPATCH" Condition="1" x="3900" y="1200" />
+      <ECTransition Source="DISPATCH" Destination="EMIT_REL_STOP" Condition="wantRelStop" x="3900" y="1320" />
+      <ECTransition Source="EMIT_REL_STOP" Destination="DISPATCH" Condition="1" x="3900" y="1380" />
+      <ECTransition Source="DISPATCH" Destination="START" Condition="1" x="2250" y="1280" />
+    </ECC>
+    <Algorithm Name="algInit" Comment="Initialize coordinator state and outputs">
+      <ST><![CDATA[QO := QI;
+state := 0;
+traySettled := FALSE;
+seenTestRun := FALSE;
+skipIdle := FALSE;
+Stop1Release := FALSE;
+CoordState := 0;
+wantStartBoth := FALSE;
+wantRelCnf := FALSE;
+wantArrStart := FALSE;
+wantArrStop := FALSE;
+wantRelStart := FALSE;
+wantRelStop := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algArrTmr" Comment="Mark tray arrival settled when debounce timer expires">
+      <ST><![CDATA[IF state = 1 THEN
+	traySettled := TrayAtStop1;
+	state := 0;
+END_IF;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algRelTmr" Comment="Clear Stop1Release after tray clears Stopper 1">
+      <ST><![CDATA[IF state = 5 THEN
+	IF Stop1Release THEN
+		Stop1Release := FALSE;
+		wantRelCnf := TRUE;
+	END_IF;
+	state := 0;
+END_IF;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algEval" Comment="Evaluate Station 1 and Stop 1 coordination state machine">
+      <ST><![CDATA[skipIdle := FALSE;
+
+IF NOT AutoEnable THEN
+	IF state = 1 THEN
+		wantArrStop := TRUE;
+	END_IF;
+	IF state = 5 THEN
+		wantRelStop := TRUE;
+	END_IF;
+	IF Stop1Release THEN
+		Stop1Release := FALSE;
+		wantRelCnf := TRUE;
+	END_IF;
+	seenTestRun := FALSE;
+	state := 0;
+ELSE
+	IF NOT TrayAtStop1 THEN
+		traySettled := FALSE;
+		IF state = 1 THEN
+			wantArrStop := TRUE;
+			state := 0;
+		ELSIF state = 3 THEN
+			state := 0;
+		ELSIF state = 4 THEN
+			wantRelStart := TRUE;
+			state := 5;
+		END_IF;
+	END_IF;
+
+	IF state = 2 THEN
+		IF (NOT TestStopped) AND (NOT TestComplete) THEN
+			seenTestRun := TRUE;
+		ELSIF seenTestRun AND TestComplete THEN
+			seenTestRun := FALSE;
+			IF LastPass THEN
+				IF NOT TrayAtStop1 THEN
+					state := 0;
+				ELSIF PartAtStop1 THEN
+					IF AutoRelease THEN
+						IF NOT Stop1Release THEN
+							Stop1Release := TRUE;
+							wantRelCnf := TRUE;
+						END_IF;
+						state := 4;
+					ELSE
+						state := 0;
+					END_IF;
+				ELSE
+					state := 3;
+				END_IF;
+			ELSE
+				state := 0;
+			END_IF;
+		ELSIF seenTestRun AND TestStopped THEN
+			seenTestRun := FALSE;
+			state := 0;
+			skipIdle := TRUE;
+		END_IF;
+	ELSIF state = 3 THEN
+		IF PartAtStop1 THEN
+			IF AutoRelease THEN
+				IF NOT Stop1Release THEN
+					Stop1Release := TRUE;
+					wantRelCnf := TRUE;
+				END_IF;
+				state := 4;
+			ELSE
+				state := 0;
+			END_IF;
+		END_IF;
+	END_IF;
+
+	IF (state = 0) AND (NOT skipIdle) AND TrayAtStop1 THEN
+		IF NOT traySettled THEN
+			wantArrStart := TRUE;
+			state := 1;
+		ELSIF PartAtStop1 THEN
+			IF AutoRelease THEN
+				IF NOT Stop1Release THEN
+					Stop1Release := TRUE;
+					wantRelCnf := TRUE;
+				END_IF;
+				state := 4;
+			END_IF;
+		ELSIF DistReady AND (TestStopped OR TestComplete) THEN
+			seenTestRun := FALSE;
+			wantStartBoth := TRUE;
+			state := 2;
+		END_IF;
+	END_IF;
+END_IF;
+
+CoordState := state;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algClrStart" Comment="Clear START_BOTH emit flag">
+      <ST><![CDATA[wantStartBoth := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algClrRel" Comment="Clear REL_CNF emit flag">
+      <ST><![CDATA[wantRelCnf := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algClrArrStart" Comment="Clear ARR_TMR_START emit flag">
+      <ST><![CDATA[wantArrStart := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algClrArrStop" Comment="Clear ARR_TMR_STOP emit flag">
+      <ST><![CDATA[wantArrStop := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algClrRelStart" Comment="Clear REL_TMR_START emit flag">
+      <ST><![CDATA[wantRelStart := FALSE;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algClrRelStop" Comment="Clear REL_TMR_STOP emit flag">
+      <ST><![CDATA[wantRelStop := FALSE;
+]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>
