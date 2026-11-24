@@ -2,13 +2,14 @@ r"""
 NMPS OPC UA listener
 ====================
 
-Prints every change of the values that the Distribution and Testing stations'
-library blocks expose over OPC UA (the IThis interface of each block), for example:
+Prints every change of the values that the Distribution, Testing, and Conveyor
+stations' library blocks expose over OPC UA (the IThis interface of each block), for example:
 
     20:41:07.512  Distribution.Ejector.FbStatus           1 (Opened, pushed out (1B1))
     20:41:07.530  Distribution.CycleSeq.MsgCurrentStepId  6 (AC6 Arm to magazine)
     20:41:08.110  Testing.Lift.FbStatus                   1 (Opened, raised (1B1))
     20:41:08.125  Testing.CycleSeq.MsgCurrentStepId       5 (TC5 Raise lift)
+    20:41:09.005  Conveyor.Stop1.TrayPresent.Pv           True (tray at Stop 1 (DI02))
 
 The first lines after connecting show the current value of everything that is
 ticked; after that, one line per change.
@@ -17,23 +18,24 @@ The script takes the addresses of the ticked values from the files EAE writes wh
 you deploy (IEC61499\bin\Deploy\<controller>\System.<Station>.opcua.xml), so it
 does not have to search the controller for them. Run it from the solution folder
 (the one with the .sln file), or pass --deploy-file / --dist-deploy-file /
---test-deploy-file. Deploy again after changing ticks.
+--test-deploy-file / --conv-deploy-file. Deploy again after changing ticks.
 
     pip install asyncua
-    python nmps_opcua_listener.py                            # sim mode, watch both stations
+    python nmps_opcua_listener.py                            # sim mode, watch all 3 stations
+    python nmps_opcua_listener.py --station conveyor         # watch Conveyor only
     python nmps_opcua_listener.py --station testing --url opc.tcp://127.0.0.1:4840
-    python nmps_opcua_listener.py --mode lab                 # lab PLCs (PLC_DS & PLC_TS)
+    python nmps_opcua_listener.py --mode lab                 # lab PLCs (PLC_DS, PLC_TS, PLC_CV)
     python nmps_opcua_listener.py --mode lab --user opcuser  # lab PLCs with auth & auto security
     python nmps_opcua_listener.py --all                      # print changes of every exposed value
     python nmps_opcua_listener.py --list                     # list every exposed value (* = watched) and exit
     python nmps_opcua_listener.py --csv log.csv              # also append every change to a CSV file
     python nmps_opcua_listener.py --browse                   # dump each server's whole address space
 
-Default simulation ports expect Distribution on opc.tcp://127.0.0.1:4840 and
-Testing on opc.tcp://127.0.0.1:4841 (if only Testing is simulated on the default
-port, pass `--station testing --url opc.tcp://127.0.0.1:4840`). In `--mode lab`,
-the defaults point to PLC_DS (10.10.215.133:4840) and PLC_TS (10.10.215.25:4840).
-Stop with Ctrl+C.
+Default simulation ports expect Distribution on opc.tcp://127.0.0.1:4840, Testing
+on opc.tcp://127.0.0.1:4841, and Conveyor on opc.tcp://127.0.0.1:4842 (if only one
+station is simulated on the default port, pass `--station <name> --url opc.tcp://127.0.0.1:4840`).
+In `--mode lab`, the defaults point to PLC_DS (10.10.215.133:4840), PLC_TS (10.10.215.25:4840),
+and PLC_CV (10.10.215.19:4840). Stop with Ctrl+C.
 """
 
 from pathlib import Path
@@ -121,6 +123,7 @@ STATIONS = {
             "Ejector.FbStatus", "Ejector.CurrentOwner", "Ejector.FbFail",
             "AirSlide.Out",
             "PartAvailable.Pv", "NotBlack.Pv", "HeightOk.Pv", "LightBarrier.Pv",
+            "AutoMode.bitState", "AutoRelease.bitState",
             "ResetSeq.SeqState", "ResetSeq.MsgCurrentStepId",
             "CycleSeq.SeqState", "CycleSeq.MsgCurrentStepId",
         },
@@ -132,6 +135,8 @@ STATIONS = {
             "NotBlack.Pv": {True: "red/metallic (pass color)", False: "black or no reflection"},
             "HeightOk.Pv": {True: "height OK", False: "height bad"},
             "LightBarrier.Pv": {True: "light barrier triggered", False: "light barrier clear"},
+            "AutoMode.bitState": {True: "Auto Station 1 ON", False: "Auto Station 1 OFF"},
+            "AutoRelease.bitState": {True: "Auto-Release ON", False: "Auto-Release OFF"},
         },
         "steps": {
             "ResetSeq": {
@@ -148,8 +153,39 @@ STATIONS = {
             },
         },
     },
+    "Conveyor": {
+        "sim_url": "opc.tcp://127.0.0.1:4842",
+        "lab_url": "opc.tcp://10.10.215.19:4840",
+        "deploy_filename": "System.Conveyor.opcua.xml",
+        "watch": {
+            "RunBelts.bitState",
+            "BeltA.Out", "BeltB.Out", "BeltC.Out", "BeltD.Out",
+            "Stop1.TrayPresent.Pv", "Stop1.WorkpiecePresent.Pv",
+            *(f"Stop{i}.Stopper.Out" for i in range(1, 7)),
+            *(f"Stop{i}.PassThrough.bitState" for i in range(1, 7)),
+        },
+        "meanings": {
+            "RunBelts.bitState": {True: "master belts ON", False: "master belts OFF"},
+            "BeltA.Out": {1: "Belt A running (pre-S1)", 0: "Belt A stopped"},
+            "BeltB.Out": {1: "Belt B running (S1-3)", 0: "Belt B stopped"},
+            "BeltC.Out": {1: "Belt C running (pre-S4)", 0: "Belt C stopped"},
+            "BeltD.Out": {1: "Belt D running (S4-6)", 0: "Belt D stopped"},
+            "Stop1.TrayPresent.Pv": {True: "tray at Stop 1 (DI02)", False: "no tray at Stop 1"},
+            "Stop1.WorkpiecePresent.Pv": {True: "workpiece in S1 pocket (DI05)", False: "S1 pocket empty"},
+            **{
+                f"Stop{i}.Stopper.Out": {1: f"Stop {i} lowered (pass)", 0: f"Stop {i} raised (blocking)"}
+                for i in range(1, 7)
+            },
+            **{
+                f"Stop{i}.PassThrough.bitState": {True: "Pass mode", False: "Block mode"}
+                for i in range(1, 7)
+            },
+        },
+        "steps": {},
+    },
 }
-STATION_ALIASES = {"distribution": "Distribution", "testing": "Testing"}
+STATION_ALIASES = {"distribution": "Distribution", "testing": "Testing", "conveyor": "Conveyor"}
+CONTAINER_ROOTS = {"RES0", "Distribution", "Testing", "Conveyor", "Reset", "Cycle"}
 
 # ---------------------------------------------------------------------------
 import argparse
@@ -171,11 +207,16 @@ log = logging.getLogger("nmps")
 def owner_of(path):
     """The station block a value belongs to. The library keeps a block's IThis a few
     levels down (Ejector > valveBaseExt > valveBase > IThis), and its inner parts have
-    lower-case names, so take the nearest name above IThis that starts upper-case."""
+    lower-case names, so take the nearest name above IThis that starts upper-case
+    (plus its sub-CAT prefix like Stop1.Stopper when nested inside a sub-CAT)."""
     i = len(path) - 1 - path[::-1].index(HMI_INTERFACE)
-    for name in reversed(path[:i]):
-        if name[:1].isupper():
-            return name
+    for k in range(i - 1, -1, -1):
+        leaf = path[k]
+        if leaf[:1].isupper():
+            parent = path[k - 1] if k > 0 else ""
+            if parent[:1].isupper() and parent not in CONTAINER_ROOTS:
+                return f"{parent}.{leaf}"
+            return leaf
     return path[i - 1] if i > 0 else "?"
 
 
@@ -192,7 +233,8 @@ def name_values(found):
         counts[(block, var)] = counts.get((block, var), 0) + 1
     names = {}
     for node, (block, part, var) in parts.items():
-        main_part = part == block or part[:1].isupper() or part.endswith("Base")
+        leaf = block.rsplit(".", 1)[-1]
+        main_part = part == leaf or part[:1].isupper() or part.endswith("Base")
         if counts[(block, var)] > 1 and not main_part:
             names[node] = f"{block}.{part}.{var}"
         else:
@@ -600,19 +642,30 @@ async def run_station(station, url, writer, list_only, browse, show_all, deploy_
 
 def resolve_targets(args, parser):
     """Build per-station connection/deploy settings from CLI arguments."""
-    if args.url and args.station == "both":
-        parser.error("--url applies to a single station; pass --station distribution or --station testing, "
-                     "or use --dist-url / --test-url")
-    if args.deploy_file and args.station == "both":
-        parser.error("--deploy-file applies to a single station; pass --station distribution or --station testing, "
-                     "or use --dist-deploy-file / --test-deploy-file")
+    if args.station == "all":
+        selected = ["Distribution", "Testing", "Conveyor"]
+    elif args.station == "both":
+        selected = ["Distribution", "Testing"]
+    else:
+        selected = [STATION_ALIASES[args.station]]
 
-    selected = ["Distribution", "Testing"] if args.station == "both" else [STATION_ALIASES[args.station]]
+    if args.url and len(selected) > 1:
+        parser.error("--url applies to a single station; pass --station distribution, testing, or conveyor, "
+                     "or use --dist-url / --test-url / --conv-url")
+    if args.deploy_file and len(selected) > 1:
+        parser.error("--deploy-file applies to a single station; pass --station distribution, testing, or conveyor, "
+                     "or use --dist-deploy-file / --test-deploy-file / --conv-deploy-file")
+
     url_key = "sim_url" if args.mode == "sim" else "lab_url"
-    url_overrides = {"Distribution": args.dist_url or args.url, "Testing": args.test_url or args.url}
+    url_overrides = {
+        "Distribution": args.dist_url or args.url,
+        "Testing": args.test_url or args.url,
+        "Conveyor": args.conv_url or args.url,
+    }
     deploy_overrides = {
         "Distribution": args.dist_deploy_file or args.deploy_file,
         "Testing": args.test_deploy_file or args.deploy_file,
+        "Conveyor": args.conv_deploy_file or args.deploy_file,
     }
 
     targets = []
@@ -631,11 +684,12 @@ async def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--mode", choices=["sim", "lab"], default="sim",
                         help="target environment: local EAE simulation ('sim') or live lab PLCs ('lab')")
-    parser.add_argument("--station", choices=["both", "distribution", "testing"], default="both",
-                        help="which station(s) to watch (default both)")
+    parser.add_argument("--station", choices=["all", "both", "distribution", "testing", "conveyor"], default="all",
+                        help="which station(s) to watch (default all; 'both' watches Distribution and Testing)")
     parser.add_argument("--url", help="explicit OPC UA URL for a single --station")
     parser.add_argument("--dist-url", help="override Distribution OPC UA URL")
     parser.add_argument("--test-url", help="override Testing OPC UA URL")
+    parser.add_argument("--conv-url", help="override Conveyor OPC UA URL")
     parser.add_argument("--list", action="store_true", help="list the exposed values and exit")
     parser.add_argument("--browse", action="store_true", help="print every node the server exposes and exit")
     parser.add_argument("--csv", metavar="FILE", help="also append every change to this CSV file")
@@ -646,6 +700,8 @@ async def main():
                         help="override Distribution System.Distribution.opcua.xml path")
     parser.add_argument("--test-deploy-file", metavar="FILE",
                         help="override Testing System.Testing.opcua.xml path")
+    parser.add_argument("--conv-deploy-file", metavar="FILE",
+                        help="override Conveyor System.Conveyor.opcua.xml path")
     parser.add_argument("--security", choices=["auto", "none", "basic256sha256"], default=None,
                         help="OPC UA security policy (default: none in sim mode, auto in lab mode)")
     parser.add_argument("--user", default=os.environ.get("OPCUA_USER"),
