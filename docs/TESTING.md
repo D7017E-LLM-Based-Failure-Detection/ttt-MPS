@@ -8,7 +8,7 @@
 | **Controller & IP** | `PLC_TS` (`10.10.215.25`, `TM3DI16_G` + `TM3DQ16R_G`) — see [HARDWARE.md](HARDWARE.md) |
 | **Reference GRAFCET** | [02_Testing_GRAFCET.pdf](grafcets/02_Testing_GRAFCET.pdf) |
 | **Libraries** | `SE.App2CommonProcess`, `SE.App2Base`, `SE.AppSequence` (`25.0.1.5`); `Runtime.Base` (`25.0.1.2`); `SE.IoTMx` (`25.0.1.4`); `SE.DPAC` (`25.0.1.10`) |
-| **Status** | Implemented, bound to `PLC_TS` TM3 I/O, wired to `Distribution`, and verified in EAE Local Simulation (physical `PLC_TS` verification pending) |
+| **Status** | Implemented, bound to `PLC_TS` TM3 I/O, wired to `Distribution` and `Conveyor` (with `Station1Coord` + HMI `Auto S1` / `Auto-Rel`), and verified standalone/with `Distribution` in EAE Local Simulation (3-PLC commissioning with `PLC_CV` pending) |
 
 ---
 
@@ -71,26 +71,31 @@ flowchart TB
     end
 
     PLC["PLC_TS Hardware (TM251MDESE 10.10.215.25)<br/>TM3DI16_G (DI00-DI06) + TM3DQ16R_G (DO00-DO03)"]
-    Distribution["Distribution (PLC_DS)<br/>Bidirectional Station 1 handover"]
-    Conveyor["Conveyor (PLC_CV)<br/>Tray & Stopper 1 handover (planned)"]
+    Distribution["Distribution (PLC_DS)<br/>Bidirectional Station 1 handover + START_CYCLE / DistReady"]
+    Conveyor["Conveyor (PLC_CV)<br/>Stop 1 tray/workpiece handover + Stop1Release"]
     OPCUA["OPC UA listener (nmps_opcua_listener.py)<br/>Port 4841 in local sim / 4840 on PLC_TS"]
 
     Actuators <-->|TM3 symbolic links| PLC
     PLC -->|TM3 symbolic links| Sensors
     Testing -->|FreeForPart| Distribution
     Distribution -->|"ArmAtTesting -> ArmClear"| Cycle
-    Testing -.-> Conveyor
+    Testing <-->|"Stop1Tray, Stop1Workpiece / Stop1Release"| Conveyor
     Testing --> OPCUA
 
     classDef planned fill:#fff,stroke:#666,stroke-dasharray:5 5
-    class StationState,Conveyor planned
+    class StationState planned
 ```
 
-*Figure 1. Architecture of the `Testing` CAT. Solid blocks are implemented, bound to `PLC_TS` I/O, and wired for bidirectional `Distribution` handover + OPC UA monitoring; dashed blocks represent planned console/supervisory and Conveyor (`PLC_CV`) extensions.*
+*Figure 1. Architecture of the `Testing` CAT. Solid blocks are implemented, bound to `PLC_TS` I/O, and wired for bidirectional `Distribution` handover, `Conveyor` Stop 1 coordination, and OPC UA monitoring; the dashed block represents the planned console/supervisory extension.*
 
 - **Resource startup chain (`RES0`):** Inside [`454CB27F11C39A4C.sysres`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/9b129585-0c86-45b1-8b59-a88961e02156/454CB27F11C39A4C.sysres), `START.COLD` and `START.WARM` initialize `FB1` (`DPAC_FULLINIT`), whose `INITO` initializes and triggers `SeqInit` (`EVENTCHAINHEAD` named `'SEQ_INIT'`); `SeqInit.FINISHED` initializes the `Testing` instance (`Testing.INIT`). `START.ONLINECHANGE` re-triggers the same chain via `OC_RETRIGGER` / `OC_DONE`.
 - **Instance naming requirement:** Because `TestingReset` and `TestingCycle` address actuators via `'RES0.Testing.<Device>.sc.*'`, the `Testing` CAT instance mapped onto `Testing.RES0` must be named `Testing`.
-- **HMI canvas (`Testing`):** [`Testing.cnv.Designer.cs`](../nmps/HMI/Testing.cnv.Designer.cs) (`1808 x 704`) hosts faceplates/symbols for all seven devices (`Lift`, `Ejector`, `AirSlide`, `PartAvailable`, `NotBlack`, `HeightOk`, `LightBarrier`), both sequence heads (`ResetSeq` and `CycleSeq` via `SE.AppSequence.Symbols.SeqHead.sHead`), and an `AlarmGrid` control.
+- **Station 1 ↔ Conveyor Coordinator ([`Station1Coord`](../nmps/IEC61499/Station1Coord.fbt)):** [`Testing.fbt`](../nmps/IEC61499/Testing/Testing.fbt) also hosts `Coord` (`Station1Coord`), two `SetBool` toggles (`AutoMode` default `OFF`, `AutoRelease` offline default `TRUE` in [`Testing_CAT.offline.xml`](../nmps/IEC61499/Testing/Testing_CAT.offline.xml)), and two `T#500ms` `E_DELAY` timers (`TraySettleTimer` and `RelClearTimer`). `TestingCycle` exposes `PROG_START`, `CYCLE_STATE` (`TestStopped`, `TestComplete`), and `LastPass` (`PassResultLatch` `E_SR`: set at `TC10_LowerLift`, reset at `TC1_TakeOver` and `TC11_RejectLower`). When `Auto S1` is `ON` and `CycleSeq` on both `Distribution` and `Testing` are in `Program / Auto` mode:
+  1. An arriving tray (`Stop1Tray = TRUE`) waits `500 ms` (`TraySettleTimer`) so `M1.DI05` (`Stop1Workpiece`) has settled before deciding.
+  2. If the Station 1 pocket is empty (`NOT Stop1Workpiece`) and `Distribution` reports `DistReady = TRUE`, `Coord` fires `START_BOTH` (`Cycle.PROG_START` + `START_DIST`).
+  3. If `Testing` takes a reject branch (`LastPass = FALSE`), Stopper 1 stays UP (`Stop1Release = FALSE`) and `Coord` immediately loops to serve another workpiece once `DistReady = TRUE`.
+  4. When `Testing` passes (`LastPass = TRUE` and `Stop1Workpiece = TRUE`)—or a tray arrives with `Stop1Workpiece` already `TRUE`—and `AutoRelease` is `ON`, `Coord` sets `Stop1Release := TRUE` until `Stop1Tray` clears plus `500 ms` (`RelClearTimer`), then returns `Stop1Release := FALSE`.
+- **HMI canvas (`Testing`):** [`Testing.cnv.Designer.cs`](../nmps/HMI/Testing.cnv.Designer.cs) (`1808 x 704`) hosts faceplates/symbols for all seven devices (`Lift`, `Ejector`, `AirSlide`, `PartAvailable`, `NotBlack`, `HeightOk`, `LightBarrier`), both sequence heads (`ResetSeq` and `CycleSeq` via `SE.AppSequence.Symbols.SeqHead.sHead`), an `AlarmGrid` control, and the `Station 1 <-> Conveyor Auto Mode` panel (`Auto S1: OFF/ON`, `Auto-Rel: ON/OFF`).
 
 ---
 
@@ -252,7 +257,7 @@ flowchart TD
 
 1. Open `nmps/nmps.sln` in EAE 25, ensure **Navigation Bar** is enabled on the `800x480` HMI resolution (or launch the `Testing` canvas directly), and run **Build** and **Build HMI**.
 2. In **Deploy and Diagnostic**, set **Active Network Profile** to `Local Test`, start Runtime Simulation for `Testing` (`Deploy = 51499`, `Archive = 51496`, OPC UA port `4841` so it can run alongside `Distribution` on `4840`), log in (`aic3`), and run **Deploy**.
-3. Open the `Testing` HMI canvas, enable **Simulation** on `Lift` and `Ejector` faceplates, and press **Rearm** if startup feedback alarms appeared before Simulation was enabled. Optionally run [`nmps_opcua_listener.py`](../nmps_opcua_listener.py) (`python nmps_opcua_listener.py --csv sim_test.csv`) to trace both stations concurrently.
+3. Open the `Testing` HMI canvas, enable **Simulation** on `Lift` and `Ejector` faceplates, and press **Rearm** if startup feedback alarms appeared before Simulation was enabled. Optionally run [`nmps_opcua_listener.py`](../nmps_opcua_listener.py) (`python nmps_opcua_listener.py --csv sim_test.csv`) to trace all three stations (`Distribution`, `Testing`, and `Conveyor`, including `Testing.AutoMode.bitState` and `Testing.AutoRelease.bitState`) concurrently.
 
 | # | Test Scenario | Expected Outcome | Status |
 | --- | --- | --- | --- |
@@ -302,5 +307,5 @@ flowchart TD
 ## 7. Remaining Work
 
 - **Permissive & physical hardware verification:** Verify `LiftPerm` and `EjectorPerm` in simulation/lab, optionally add a `permCondItem` on `Lift.IPerm` blocking manual `Operator` raises while `ArmAtTesting = TRUE`, and run physical `PLC_TS` + `PLC_DS` commissioning (including verifying `COMP` height comparator settle timing).
-- **Conveyor (`PLC_CV`) / tray integration:** Wire `Conveyor` (`PLC_CV`, `10.10.215.19`) Stopper 1 / empty-tray status into Station 1 handover logic.
+- **Conveyor (`PLC_CV`) / tray integration (`Station1Coord`):** Handover wiring between `Conveyor` (`PLC_CV`, `10.10.215.19`) Stop 1 (`Stop1Tray`, `Stop1Workpiece`, `Stop1Release`), `Distribution` (`START_CYCLE`, `DIST_READY_CNF`), and `Testing` ([`Station1Coord`](../nmps/IEC61499/Station1Coord.fbt) + HMI `AutoMode` / `AutoRelease`) is implemented in [`6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/9bf3b433-92e3-4d31-8cff-c20036297fe9/6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay); run **Rebuild** + **Deploy** across all three PLCs and test with `CycleSeq` in `Program / Auto` mode.
 - **Console I/O & OPC UA:** Bind `DI08`–`DI11` / `DO08`–`DO11` console channels when the supervisory state layer is added, and verify OPC UA variable exposure within the M251 dPAC node budget.
