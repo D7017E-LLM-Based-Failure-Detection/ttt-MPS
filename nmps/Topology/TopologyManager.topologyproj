@@ -46,6 +46,7 @@
     <None Include="BroadcastDomain_Default Network.json" />
     <None Include="Equipment_Conveyor Sys.json" />
     <None Include="Equipment_Distributing Station.json" />
+    <None Include="Equipment_HProcessing.json" />
     <None Include="Equipment_Switch_3.json" />
     <None Include="Equipment_Testing.json" />
     <None Include="Equipment_Workstation_1.json" />
@@ -53,6 +54,7 @@
     <None Include="Wire_Wire 122.json" />
     <None Include="Wire_Wire 144.json" />
     <None Include="Wire_Wire 167.json" />
+    <None Include="Wire_Wire 168.json" />
   </ItemGroup>
   <Import Project="$(SharpDevelopBinPath)\Plugins\TopologyManagerPlugin\TopologyManager.targets" />
 </Project>
