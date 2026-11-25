@@ -1,2 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<OPCUAComplexObject xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<OPCUAComplexObject xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C200000000000001.3" />
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C200000000000001.2" />
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C200000000000002.2" />
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C200000000000002.3" />
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C200000000000003.2" />
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C200000000000003.3" />
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C200000000000004.2" />
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C200000000000004.3" />
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C200000000000009.B100000000000002" />
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C200000000000009.B100000000000003" />
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C20000000000000A.B100000000000003" />
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C20000000000000A.B100000000000002" />
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C20000000000000B.B100000000000002" />
+  <OPCUAAttribute Name="Exposed" Value="False" Locked="false" AttributeMask="True;True|False;True" Context="C20000000000000B.B100000000000003" />
+</OPCUAComplexObject>
