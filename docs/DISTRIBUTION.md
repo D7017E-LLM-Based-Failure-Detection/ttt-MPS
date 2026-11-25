@@ -16,7 +16,7 @@
 
 This document describes the modular rebuild of the Festo MPS 400 Distributing station control software in EcoStruxure Automation Expert (EAE) 25. Instead of porting hand-written IEC 61499 function blocks from the legacy nxtStudio program, the `Distribution` Composite Automation Type (CAT) assembles Schneider Electric's standard library blocks (`SE.App2CommonProcess` and `SE.AppSequence`), which provide built-in HMI faceplates, alarm handling, owner management, feedback monitoring, and OPC UA variables out of the box.
 
-The station's six device blocks, the `EjectorPerm` permissive, 6-step `ResetSequence`, and 12-step `AutoCycle` are implemented, bound to the physical `PLC_DS` TM3 I/O channels, and verified on both EAE's simulated controller and the physical Festo Distributing rig in EISLAB (including 3-step mid-air swivel parking and the updated HMI canvas with Alarm Grid). Bidirectional Station 1 handover with [Testing](TESTING.md) (`Testing.FreeForPart` → `Distribution.DownstreamFree` and `Distribution.ArmAtTesting` → `Testing.ArmClear`) is implemented and verified in EAE Local Simulation (`SwivelPerm` was removed so mid-parking is never blocked when `Testing` receives a workpiece); physical `PLC_DS` + `PLC_TS` handover, `Conveyor` (`PLC_CV`), and physical console integration remain to be completed.
+The station's six device blocks, the `EjectorPerm` permissive, 6-step `ResetSequence`, and 12-step `AutoCycle` are implemented, bound to the physical `PLC_DS` TM3 I/O channels, and verified on both EAE's simulated controller and the physical Festo Distributing rig in EISLAB (including 3-step mid-air swivel parking and the updated HMI canvas with Alarm Grid). Bidirectional Station 1 handover with [Testing](TESTING.md) (`Testing.FreeForPart` → `Distribution.DownstreamFree`, `Distribution.ArmAtTesting` + `DistReady` → `Testing.ArmClear`, and sequential `START_CYCLE` / `DIST_READY_CNF` coordination so `Testing` waits until `Distribution` finishes parking before raising its lift) is implemented (`SwivelPerm` was removed so mid-parking is never blocked when `Testing` receives a workpiece); full 3-PLC commissioning with `PLC_TS` + `PLC_CV` and physical console integration remain to be completed.
 
 ### Background & Project History
 
@@ -79,6 +79,7 @@ flowchart TB
     PLC -->|TM3 symbolic links| Sensors
     Testing -->|"FreeForPart -> DS_FREE_UPD"| DownstreamFree
     Swivel -->|"FbOpen -> ArmPosOut -> ArmAtTesting"| Testing
+    Cycle -->|"DistReady (AC12 parked) / START_CYCLE"| Testing
     Distribution --> OPCUA
 
     classDef planned fill:#fff,stroke:#666,stroke-dasharray:5 5
@@ -326,13 +327,13 @@ stateDiagram-v2
    Editing EAE `.fbt`/`.hcf`/`.xml` files on disk while `nmps.sln` is open (`nmps/.lock_sln` exists) risks crashes or overwritten edits.
    *Solution:* Always close EAE before external XML edits, or edit directly in the EAE IDE when open.
 9. **`SwivelPerm` deadlocked `AC11_ParkOffMag` / `RS5_SwivelOffMag`, and lift/arm handover collision risk.**
-   Once `Distribution` was wired to `Testing.FreeForPart`, dropping a workpiece at `AC9_DropOff` set `DownstreamFree = FALSE`, so `SwivelPerm` (`$CondPos = Active1`) blocked `AC11_ParkOffMag` (`Swivel := 1 / Open`) from stepping off `3B1` to mid-park (and likewise blocked `RS5_SwivelOffMag` whenever `Testing` was occupied). Meanwhile, an already-waiting `Testing` cycle could raise `Lift` while `Distribution`'s swivel arm was still over the lift at `3B2`.
-   *Solution:* Removed `SwivelPerm` (downstream readiness is already checked at `AC2_WaitDownstream`) and exposed `Distribution.ArmAtTesting` (`Swivel.FbOpen` via `ArmPosOut`) → `Testing.ArmClear` so `TestingCycle` holds at `TC3_WaitPart` until the swivel arm leaves `3B2`.
+   Once `Distribution` was wired to `Testing.FreeForPart`, dropping a workpiece at `AC9_DropOff` set `DownstreamFree = FALSE`, so `SwivelPerm` (`$CondPos = Active1`) blocked `AC11_ParkOffMag` (`Swivel := 1 / Open`) from stepping off `3B1` to mid-park (and likewise blocked `RS5_SwivelOffMag` whenever `Testing` was occupied). Meanwhile, `Testing` could raise `Lift` as soon as `3B2` (`ArmAtTesting`) turned `FALSE`, while the swivel arm was still swinging back toward the magazine—causing a physical arm-to-lift collision.
+   *Solution:* Removed `SwivelPerm` (downstream availability is already enforced at `AC2_WaitDownstream`), and updated [Testing](TESTING.md) so `ArmClear` requires **`(NOT ArmAtTesting) AND DistReady`** (`ArmSafeAnd`), while `Station1Coord` runs `Distribution` first (`START_CYCLE`) and only starts `Testing` once `DistReady` returns `TRUE` after `AC12_ParkStop`.
 
 ---
 
 ## 7. Remaining Work
 
-- **Station 1 integration (`Testing` + `Conveyor`):** Bidirectional `Distribution` ↔ `Testing` handover (`FreeForPart` / `ArmAtTesting`) and automatic Station 1 cycle coordination with [`Conveyor`](CONVEYOR.md) (`START_CYCLE` and `DIST_READY_CNF` / `DistReady` exposed on [`AutoCycle.fbt`](../nmps/IEC61499/AutoCycle/AutoCycle.fbt) and [`Distribution.fbt`](../nmps/IEC61499/Distribution/Distribution.fbt)) are implemented in [`6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/9bf3b433-92e3-4d31-8cff-c20036297fe9/6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay); integrated 3-PLC commissioning (`PLC_DS` + `PLC_TS` + `PLC_CV`) remains to be completed.
+- **Station 1 integration (`Testing` + `Conveyor`):** Bidirectional `Distribution` ↔ `Testing` handover (`FreeForPart` / `ArmAtTesting`) and sequential `Station1Coord` + `Stop1Coord` coordination with [`Conveyor`](CONVEYOR.md) (`START_CYCLE` and `DIST_READY_CNF` / `DistReady` exposed on [`AutoCycle.fbt`](../nmps/IEC61499/AutoCycle/AutoCycle.fbt) and [`Distribution.fbt`](../nmps/IEC61499/Distribution/Distribution.fbt)) are implemented in [`6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/9bf3b433-92e3-4d31-8cff-c20036297fe9/6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay); integrated 3-PLC rebuild/commissioning (`PLC_DS` + `PLC_TS` + `PLC_CV`) remains to be completed.
 - **Console I/O & state layer:** Bind physical console channels (`DI08`–`DI11`, `DO08`–`DO11`) and decide between `SE.App2StateManagement.StateManager` or a compact 4-state `StationMode` FB (also releasing actuators back to `Operator` when stopped).
 - **OPC UA exposure check:** [`nmps_opcua_listener.py`](../nmps_opcua_listener.py) now monitors all three stations (`Distribution`, `Testing`, and `Conveyor`) by default in `--mode sim` and `--mode lab`; verify published OPC UA nodes on physical hardware while staying within each M251 dPAC's node budget (`MaxVariableNodes = 500`, ~100 KB `ecort_opcua_ns2.bin`).

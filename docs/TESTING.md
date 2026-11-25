@@ -3,12 +3,12 @@
 | Property | Value |
 | --- | --- |
 | **Station** | Testing (Station 1, Interface 1 — receives workpieces from Distributing, checks color & height, passes to air slide or rejects at bottom) |
-| **Station CAT** | `Testing` (contains `TestingReset` and `TestingCycle` sub-CATs) |
+| **CATs & Basic FBs** | `Testing` CAT (`TestingReset`, `TestingCycle` sub-CATs), [`Station1Coord`](../nmps/IEC61499/Station1Coord.fbt), [`LiftBootSync`](../nmps/IEC61499/LiftBootSync.fbt) |
 | **Solution / Device** | `nmps/nmps.sln` → `Testing` (`M251_dPAC` / `TM251MDESE`, resource `RES0`) |
 | **Controller & IP** | `PLC_TS` (`10.10.215.25`, `TM3DI16_G` + `TM3DQ16R_G`) — see [HARDWARE.md](HARDWARE.md) |
 | **Reference GRAFCET** | [02_Testing_GRAFCET.pdf](grafcets/02_Testing_GRAFCET.pdf) |
 | **Libraries** | `SE.App2CommonProcess`, `SE.App2Base`, `SE.AppSequence` (`25.0.1.5`); `Runtime.Base` (`25.0.1.2`); `SE.IoTMx` (`25.0.1.4`); `SE.DPAC` (`25.0.1.10`) |
-| **Status** | Implemented, bound to `PLC_TS` TM3 I/O, wired to `Distribution` and `Conveyor` (with `Station1Coord` + HMI `Auto S1` / `Auto-Rel`), and verified standalone/with `Distribution` in EAE Local Simulation (3-PLC commissioning with `PLC_CV` pending) |
+| **Status** | Lab-verified on `PLC_TS` / `PLC_DS` / `PLC_CV`: `LiftBootSync` (no startup Rearm), sequential `DistReady` Dist→Test handshake, `STOP1_TEST_DONE` + `M1.DI05` release, pre-filled tray bypass (`WaitTrayLeave` + `Stop1Pass` + `1000 ms` `Stop1ArrTimer`), and live 3-PLC OPC UA logging |
 
 ---
 
@@ -53,33 +53,43 @@ flowchart TB
             LightBarrier["LightBarrier: DigitalInput<br/>B4 (safety light barrier)"]
         end
 
-        subgraph Permissives["Permissives: permCondItem"]
+        subgraph Permissives["Permissives & Boot / Safety Glue"]
             LiftPerm["LiftPerm (Active2)<br/>Ejector Retracted (2B1)"]
             EjectorPerm["EjectorPerm (NotPassive)<br/>Lift Not Mid-Travel (1B1 OR 1B2)"]
+            LiftSync["LiftSync (LiftBootSync)<br/>Matches Lift.IRsp to 1B1/1B2 on boot"]
+            ArmSafe["ArmSafeAnd (AND)<br/>NOT ArmAtTesting AND DistReady"]
+            Coord["Coord (Station1Coord) + AutoMode / AutoRelease"]
         end
 
         StationState -.->|Run reset| Reset
         StationState -.->|Run cycle| Cycle
         Sequences <-->|Symbolic-link commands / wired feedback| Actuators
         PartAvailable -->|Part present| Cycle
+        PartAvailable -->|TestPartPv| Coord
         NotBlack -->|Color OK / reject| Cycle
         HeightOk -->|Height OK / reject| Cycle
         Ejector -->|IFbState| LiftPerm
         LiftPerm -->|IPerm| Lift
         Lift -->|IFbState| EjectorPerm
         EjectorPerm -->|IPerm| Ejector
+        LiftSync -->|"IRsp (IDigital)"| Lift
+        Lift -->|FbOpen / FbClosed| LiftSync
+        ArmSafe -->|"ArmClear"| Cycle
+        Coord -->|START_TEST / LastPass| Cycle
     end
 
     PLC["PLC_TS Hardware (TM251MDESE 10.10.215.25)<br/>TM3DI16_G (DI00-DI06) + TM3DQ16R_G (DO00-DO03)"]
     Distribution["Distribution (PLC_DS)<br/>Bidirectional Station 1 handover + START_CYCLE / DistReady"]
-    Conveyor["Conveyor (PLC_CV)<br/>Stop 1 tray/workpiece handover + Stop1Release"]
+    Conveyor["Conveyor (PLC_CV)<br/>Stop 1 sensors + Stop1Coord primary/secondary release"]
     OPCUA["OPC UA listener (nmps_opcua_listener.py)<br/>Port 4841 in local sim / 4840 on PLC_TS"]
 
     Actuators <-->|TM3 symbolic links| PLC
     PLC -->|TM3 symbolic links| Sensors
     Testing -->|FreeForPart| Distribution
-    Distribution -->|"ArmAtTesting -> ArmClear"| Cycle
-    Testing <-->|"Stop1Tray, Stop1Workpiece / Stop1Release"| Conveyor
+    Coord -->|START_DIST| Distribution
+    Distribution -->|"ArmAtTesting, DistReady"| ArmSafe
+    Distribution -->|DistReady| Coord
+    Testing <-->|"Stop1Tray, Stop1Workpiece, Stop1Pass / STOP1_TEST_DONE, Stop1AutoRelease"| Conveyor
     Testing --> OPCUA
 
     classDef planned fill:#fff,stroke:#666,stroke-dasharray:5 5
@@ -90,11 +100,13 @@ flowchart TB
 
 - **Resource startup chain (`RES0`):** Inside [`454CB27F11C39A4C.sysres`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/9b129585-0c86-45b1-8b59-a88961e02156/454CB27F11C39A4C.sysres), `START.COLD` and `START.WARM` initialize `FB1` (`DPAC_FULLINIT`), whose `INITO` initializes and triggers `SeqInit` (`EVENTCHAINHEAD` named `'SEQ_INIT'`); `SeqInit.FINISHED` initializes the `Testing` instance (`Testing.INIT`). `START.ONLINECHANGE` re-triggers the same chain via `OC_RETRIGGER` / `OC_DONE`.
 - **Instance naming requirement:** Because `TestingReset` and `TestingCycle` address actuators via `'RES0.Testing.<Device>.sc.*'`, the `Testing` CAT instance mapped onto `Testing.RES0` must be named `Testing`.
-- **Station 1 ↔ Conveyor Coordinator ([`Station1Coord`](../nmps/IEC61499/Station1Coord.fbt)):** [`Testing.fbt`](../nmps/IEC61499/Testing/Testing.fbt) also hosts `Coord` (`Station1Coord`), two `SetBool` toggles (`AutoMode` default `OFF`, `AutoRelease` offline default `TRUE` in [`Testing_CAT.offline.xml`](../nmps/IEC61499/Testing/Testing_CAT.offline.xml)), and two `T#500ms` `E_DELAY` timers (`TraySettleTimer` and `RelClearTimer`). `TestingCycle` exposes `PROG_START`, `CYCLE_STATE` (`TestStopped`, `TestComplete`), and `LastPass` (`PassResultLatch` `E_SR`: set at `TC10_LowerLift`, reset at `TC1_TakeOver` and `TC11_RejectLower`). When `Auto S1` is `ON` and `CycleSeq` on both `Distribution` and `Testing` are in `Program / Auto` mode:
-  1. An arriving tray (`Stop1Tray = TRUE`) waits `500 ms` (`TraySettleTimer`) so `M1.DI05` (`Stop1Workpiece`) has settled before deciding.
-  2. If the Station 1 pocket is empty (`NOT Stop1Workpiece`) and `Distribution` reports `DistReady = TRUE`, `Coord` fires `START_BOTH` (`Cycle.PROG_START` + `START_DIST`).
-  3. If `Testing` takes a reject branch (`LastPass = FALSE`), Stopper 1 stays UP (`Stop1Release = FALSE`) and `Coord` immediately loops to serve another workpiece once `DistReady = TRUE`.
-  4. When `Testing` passes (`LastPass = TRUE` and `Stop1Workpiece = TRUE`)—or a tray arrives with `Stop1Workpiece` already `TRUE`—and `AutoRelease` is `ON`, `Coord` sets `Stop1Release := TRUE` until `Stop1Tray` clears plus `500 ms` (`RelClearTimer`), then returns `Stop1Release := FALSE`.
+- **Startup position sync on `Lift` ([`LiftBootSync`](../nmps/IEC61499/LiftBootSync.fbt)):** `LiftSync` connects to `Lift.IRsp` (`SE.App2Base.IDigital`) and listens to `Lift.FbOpen` / `Lift.FbClosed` (`CNF`). On the first physical/simulated limit-switch feedback after boot, it pushes the matching setpoint (`2` = Closed / `1B2`, `1` = Open / `1B1`) to `Lift.IRsp` once so `Lift` no longer starts with a `Sp = 0` vs `Pv = 2` feedback alarm requiring manual **Rearm**—and tracks state bumplessly across `Operator`/`Program Local` ↔ `Program Remote` transitions.
+- **Arm-park collision guard (`ArmSafeAnd`):** `ArmClear` (`NOT ArmAtTesting`) is ANDed with `DistReady` (`ArmSafeAnd`), where `Testing.DistReady` defaults to `TRUE` standalone. Thus `TC3_WaitPart` never raises the lift until `Distribution` is both clear of `3B2` **and** completely finished mid-parking (`AC10`–`AC12`).
+- **Station 1 ↔ Conveyor Coordinator ([`Station1Coord`](../nmps/IEC61499/Station1Coord.fbt)):** [`Testing.fbt`](../nmps/IEC61499/Testing/Testing.fbt) hosts `Coord` (`Station1Coord`), two `SetBool` toggles (`AutoMode` default `OFF`, `AutoRelease` offline default `TRUE` in [`Testing_CAT.offline.xml`](../nmps/IEC61499/Testing/Testing_CAT.offline.xml)), and one `T#500ms` `E_DELAY` timer (`TraySettleTimer`; stopper release ownership and `RelClearTimer` reside on `PLC_CV` inside [`Stop1Coord`](../nmps/IEC61499/Stop1Coord.fbt) with `Stop1ArrTimer = T#1000ms` so `Station1Coord` settles `500 ms` earlier). `Coord` publishes `Stop1AutoRelease := AutoMode AND AutoRelease` via `STOP1_AUTO_REL_UPD` (and responds to `Conveyor`'s `REQ_STOP1_CFG`). When `Auto S1` is `ON` and `CycleSeq` on both `Distribution` and `Testing` are in `Program / Auto` mode:
+  1. An arriving tray (`Stop1Tray = TRUE` with `Stop1Pass = FALSE`) waits `500 ms` (`TraySettleTimer`) so `M1.DI05` (`Stop1Workpiece`) has settled before deciding. Pre-filled trays (`Stop1Workpiece = TRUE`) immediately latch `WaitTrayLeave` (`CoordState = 4`) until `Stop1Tray = FALSE`, so `M1.DI05` dropping `FALSE` while the tray leaves Stopper 1 can never trigger Station 1; `Stop1Pass = TRUE` (Stopper 1 down/releasing or in `Pass` mode) also cancels settle and blocks new cycles.
+  2. When the Station 1 pocket is empty (`NOT Stop1Workpiece`), if a leftover workpiece is already waiting on `Testing` (`PartAvailable = TRUE`), `Coord` fires `START_TEST` (`TestingCycle.PROG_START`). Otherwise `Coord` fires **`START_DIST` (`Distribution.START_CYCLE`) alone** (`CoordState = 2`), waits for `Distribution` to deliver, return home, and complete its 3-step mid-park (`DistReady`: `TRUE → FALSE → TRUE`), and **only then** fires **`START_TEST`** (`CoordState = 3`) once `PartAvailable = TRUE`.
+  3. If `Testing` takes a reject branch (`LastPass = FALSE`), `STOP1_TEST_DONE` is **not** sent—Conveyor Stopper 1 stays UP (`Blocking`) and `Coord` immediately loops to request another workpiece from `Distribution`.
+  4. When `Testing` passes (`LastPass = TRUE`), `Coord` emits **`TEST_DONE`** (`Testing.STOP1_TEST_DONE` → `Conveyor.STOP1_TEST_DONE`) and waits in `WaitTrayLeave` (`CoordState = 4`) until `Stop1Tray` clears. `Conveyor`'s `Stop1Coord` performs the secondary `M1.DI02 AND M1.DI05` check and temporarily releases Stopper 1.
 - **HMI canvas (`Testing`):** [`Testing.cnv.Designer.cs`](../nmps/HMI/Testing.cnv.Designer.cs) (`1808 x 704`) hosts faceplates/symbols for all seven devices (`Lift`, `Ejector`, `AirSlide`, `PartAvailable`, `NotBlack`, `HeightOk`, `LightBarrier`), both sequence heads (`ResetSeq` and `CycleSeq` via `SE.AppSequence.Symbols.SeqHead.sHead`), an `AlarmGrid` control, and the `Station 1 <-> Conveyor Auto Mode` panel (`Auto S1: OFF/ON`, `Auto-Rel: ON/OFF`).
 
 ---
@@ -191,7 +203,7 @@ flowchart TD
 | --- | --- | --- | --- |
 | `TC1_TakeOver` | `Ejector`, `AirSlide`, `Lift` → `sc.progLocalSel := TRUE` | `AllLocal` (`Ejector AND AirSlide AND TRUE`) | `2` (`TC2_EnsureBottom`) |
 | `TC2_EnsureBottom` | `Lift.sc.lsp := 2`, `Ejector.sc.lsp := 2` | `AtBottomReady` (`LiftClosed AND EjectorClosed`) | `3` (`TC3_WaitPart`) |
-| `TC3_WaitPart` | None (wait step) | `PartAndArmClear` (`PartAvailable AND ArmClear`, where `ArmClear = NOT ArmAtTesting` from `Distribution`; defaults `TRUE` standalone) | `4` (`TC4_CheckColor`) |
+| `TC3_WaitPart` | None (wait step) | `PartAndArmClear` (`PartAvailable AND ArmClear`, where `ArmClear = (NOT ArmAtTesting) AND DistReady` via `ArmSafeAnd`; defaults `TRUE` standalone) | `4` (`TC4_CheckColor`) |
 | `TC4_CheckColor` | None (decision step) | Pass: `NotBlack` (`B2`) / Reject (`TC4_RejectBranch`): `IsBlack` (`NOT NotBlack`) | Pass: `5` (`TC5_RaiseLift`) / Reject: `11` (`TC11_RejectLower`) |
 | `TC5_RaiseLift` | `Lift.sc.lsp := 1` (`Open` / Raise) | `LiftOpen` (`1B1`) | `6` (`TC6_CheckHeight`) |
 | `TC6_CheckHeight` | None (decision step) | Pass: `HeightOk` (`COMP`) / Reject (`TC6_RejectBranch`): `BadHeight` (`NOT HeightOk`) | Pass: `7` (`TC7_PassEject`) / Reject: `11` (`TC11_RejectLower`) |
@@ -288,24 +300,27 @@ flowchart TD
 2. **`Valve2Op` (`Lift`) `sc.progLocal` library bug (`SE.App2CommonProcess` 25.0.1.5).**
    As discovered on `Distribution.Swivel` ([DISTRIBUTION.md](DISTRIBUTION.md#6-problems--solutions)), `Valve2Op`'s internal `sc.progLocal` reader leaves `$QI` unset and never publishes `progLocal = TRUE` back to sequences.
    *Resolved:* Replaced `OwnerFb.VALUE3` with `<Parameter Name="$IN3" Value="TRUE" />` on `AllLocal` in both [`TestingReset.fbt`](../nmps/IEC61499/TestingReset/TestingReset.fbt) and [`TestingCycle.fbt`](../nmps/IEC61499/TestingCycle/TestingCycle.fbt), while continuing to write `Lift.sc.progLocalSel := TRUE`. Ensure `Lift`'s HMI owner switch is set to `Program` before running sequences (`sc.progLocalSel` cannot override `Operator` mode).
-3. **Startup `Detected Feedback Failure` on `Lift` and `Ejector` in Local Simulation.**
-   Observed in the HMI Alarm Grid on initial simulation start because `DI04`–`DI06` start `FALSE` while actuators are not yet in faceplate Simulation mode.
-   *Solution:* Enable **Simulation** on the `Lift` and `Ejector` faceplates, click **Rearm**, and run `ResetSeq`.
+3. **Startup `Detected Feedback Failure` on `Lift` (resolved) and Simulation start:**
+   `SE.App2CommonProcess.Valve2Op` boots in `Program Remote` (`16#8`) with initial setpoint `Sp = 0` (*Stop*, expecting `FbStop = NOT (1B1 OR 1B2)`), whereas `Testing.Lift` physically rests on `1B2` (`DI05`, `Pv = 2`). Because `Pv <> Sp` exceeded `MonTime = 5 s` and `ConfResetReq` defaults to `TRUE`, `devControlBasic` previously latched `FbOffAlarm` / `NeedReset = TRUE` on every boot—forcing a manual **Rearm** click. *(Note: `Distribution.Swivel` avoided this because its sequences mid-park the arm between switches so `Pv = 0`.)*
+   *Resolved:* [`LiftBootSync`](../nmps/IEC61499/LiftBootSync.fbt) (`LiftSync` wired to `Lift.IRsp`) initializes `Lift`'s `Program Remote` setpoint to match the resting limit switch (`2` for `1B2`, `1` for `1B1`) on the first `Lift.CNF` feedback without causing physical motion or weakening runtime `ConfResetReq` fault protection. In Local Simulation, enable **Simulation** on `Lift` and `Ejector` (pressing **Rearm** only if more than `5 s` elapsed before Simulation was turned on).
 4. **HMI navigation between `Distribution` and `Testing` (`Start Local HMI`).**
    In [`CanvasesResolutionList.xml`](../nmps/HMI/CanvasesResolutionList.xml), the `800x480` resolution had `NavigationBar="false"`, causing `StartCanvas_2` to omit the top navigation header and show only the first canvas (`Distribution`).
    *Solution:* Enable **Navigation Bar** in `800x480` properties in EAE (and rebuild HMI) so operators can switch between `Distribution` and `Testing` from the navigation bar.
 5. **Height checker (`COMP`) hardware uncertainty.**
    If the physical analog height sensor/comparator on the EISLAB Testing rig is out of calibration or faulty, `TC6_CheckHeight` will route every lifted workpiece to `TC6_RejectBranch` (`HeightOk = FALSE`).
    *Workaround:* Use the `HeightOk` HMI faceplate **Override** to force `True`/`False` during commissioning until the physical comparator threshold is verified.
-6. **Handover collision guard (`ArmAtTesting` / `ArmClear`) & EAE `.syslay` reload caveat.**
-   At `AC9_DropOff`, the falling workpiece can assert `PartAvailable` while `Distribution`'s swivel arm is still over `Testing`'s lift at `3B2`. `TestingCycle` now gates `TC3_WaitPart` on `PartAvailable AND ArmClear` (with `ArmAtTesting` defaulting to `FALSE` standalone, and without wiring `ArmClear.CNF` back to `REQ_ARM_POS` to avoid an infinite cross-PLC loop). Note that an Operator manually switching `Lift` to `Operator` and pressing `Open` is not yet blocked by a `permCondItem` for `ArmClear`. Also, after editing cross-device wires externally in [`6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/9bf3b433-92e3-4d31-8cff-c20036297fe9/6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay), close and reopen `nmps.sln` and run **Rebuild** in EAE so the cross-PLC communication descriptors (`commdesc.xml`) are regenerated.
+6. **Handover collision guard (`ArmAtTesting` + `DistReady` / `ArmClear`) & EAE `.syslay` reload caveat.**
+   At `AC9_DropOff`, the falling workpiece can assert `PartAvailable` while `Distribution`'s swivel arm is still over `Testing`'s lift at `3B2`, and previously `NOT ArmAtTesting` (`NOT 3B2`) cleared as soon as the arm left `3B2` mid-swing—causing a collision if `Testing` raised `Lift` before `Distribution` finished returning home and mid-parking (`AC10`–`AC12`). Now `ArmSafeAnd` gates `TestingCycle` at `TC3_WaitPart` on `PartAvailable AND (NOT ArmAtTesting) AND DistReady` (with `DistReady` defaulting `TRUE` standalone), **and** [`Station1Coord`](../nmps/IEC61499/Station1Coord.fbt) sequences `START_DIST` first and only emits `START_TEST` once `DistReady` returns `TRUE` after `AC12_ParkStop`. After editing cross-device wires externally in [`6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/9bf3b433-92e3-4d31-8cff-c20036297fe9/6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay), close and reopen `nmps.sln` and run **Rebuild** in EAE so cross-PLC communication descriptors (`commdesc.xml`) are regenerated.
 7. **Dual-station local simulation OPC UA port (`4840` collision).**
    When simulating both `Distribution` and `Testing` on `127.0.0.1`, whichever device starts first binds OPC UA port `4840`. Setting `Testing` device property `endpoints/0/bind_port = 4841` separates the two servers so [`nmps_opcua_listener.py`](../nmps_opcua_listener.py) can stream both concurrently (`127.0.0.1:4840` and `127.0.0.1:4841`).
+8. **Pre-filled tray departure race on `Stop1` (fixed).**
+   During lab testing on `PLC_CV`/`PLC_TS`/`PLC_DS`, a pre-filled tray arriving at Stop 1 caused `Stop1Coord` (`T#500ms`) to lower Stopper 1, pulling the workpiece off `M1.DI05` (`Stop1Workpiece := FALSE`) while the trailing edge of the tray was still over `M1.DI02` (`Stop1Tray = TRUE`). Because `Station1Coord` previously stayed in `Idle` (`state = 0`) for pre-filled trays and also ran a `T#500ms` settle timer, it saw `(TrayAtStop1 = TRUE, PartAtStop1 = FALSE)` on departure and fired `Distribution` + `Testing` onto an already-departed tray.
+   *Resolved (3 layers):* (a) `Station1Coord` now latches pre-filled trays into `WaitTrayLeave` (`state := 4`) until `TrayAtStop1` clears; (b) `Conveyor` exports `Stop1Pass` (`Stop1.PassState`) via `STOP1_TRAY_CNF` → `Testing.STOP1_TRAY_UPD` → `Station1Coord`, cancelling settle and blocking starts whenever Stopper 1 is down/releasing; and (c) `Conveyor.Stop1ArrTimer` was increased from `T#500ms` to `T#1000ms` so `Testing.TraySettleTimer` (`T#500ms`) always settles while the tray is stationary against Stopper 1.
 
 ---
 
 ## 7. Remaining Work
 
 - **Permissive & physical hardware verification:** Verify `LiftPerm` and `EjectorPerm` in simulation/lab, optionally add a `permCondItem` on `Lift.IPerm` blocking manual `Operator` raises while `ArmAtTesting = TRUE`, and run physical `PLC_TS` + `PLC_DS` commissioning (including verifying `COMP` height comparator settle timing).
-- **Conveyor (`PLC_CV`) / tray integration (`Station1Coord`):** Handover wiring between `Conveyor` (`PLC_CV`, `10.10.215.19`) Stop 1 (`Stop1Tray`, `Stop1Workpiece`, `Stop1Release`), `Distribution` (`START_CYCLE`, `DIST_READY_CNF`), and `Testing` ([`Station1Coord`](../nmps/IEC61499/Station1Coord.fbt) + HMI `AutoMode` / `AutoRelease`) is implemented in [`6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/9bf3b433-92e3-4d31-8cff-c20036297fe9/6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay); run **Rebuild** + **Deploy** across all three PLCs and test with `CycleSeq` in `Program / Auto` mode.
+- **Conveyor (`PLC_CV`) / tray integration (`Station1Coord` + `Stop1Coord`):** Verified end-to-end on physical `PLC_DS`, `PLC_TS`, and `PLC_CV` (including `LiftBootSync`, sequential `DistReady` Dist→Test handshake, reject retry with Stopper 1 held UP, pass `STOP1_TEST_DONE` + `M1.DI05` release, pre-filled tray departure bypass, `STOP1_REQ_CFG` boot sync, and 3-PLC OPC UA logging via [`nmps_opcua_listener.py`](../nmps_opcua_listener.py)).
 - **Console I/O & OPC UA:** Bind `DI08`–`DI11` / `DO08`–`DO11` console channels when the supervisory state layer is added, and verify OPC UA variable exposure within the M251 dPAC node budget.

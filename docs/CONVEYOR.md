@@ -3,13 +3,13 @@
 | Property | Value |
 | --- | --- |
 | **Subsystem** | Main conveyor loop (`Conveyor A–D` belts and 6 station stop points `Stop1`–`Stop6` across Stations 1–6) |
-| **CATs & Basic FBs** | [`Conveyor`](../nmps/IEC61499/Conveyor/Conveyor.fbt) CAT, [`StopPoint`](../nmps/IEC61499/StopPoint/StopPoint.fbt) CAT, [`BeltMaster`](../nmps/IEC61499/BeltMaster.fbt) Basic FB, [`StopPointLogic`](../nmps/IEC61499/StopPointLogic.fbt) Basic FB |
+| **CATs & Basic FBs** | [`Conveyor`](../nmps/IEC61499/Conveyor/Conveyor.fbt) CAT, [`StopPoint`](../nmps/IEC61499/StopPoint/StopPoint.fbt) CAT, [`BeltMaster`](../nmps/IEC61499/BeltMaster.fbt) Basic FB, [`StopPointLogic`](../nmps/IEC61499/StopPointLogic.fbt) Basic FB, [`Stop1Coord`](../nmps/IEC61499/Stop1Coord.fbt) Basic FB |
 | **Solution / Device** | `nmps/nmps.sln` → `Conveyor` (`3787d19b-21b6-4484-a451-1bc349975489`, `SE.DPAC.M251_dPAC`, resource `RES0` `3C66F41FCD63075`) |
 | **Controller & IP** | `PLC_CV` (`TM251MDESE`, `ETH1` `10.10.215.19`, `CV_AB` `TM3DI16_G` + `TM3DQ16R_G`, `CV_CD` `TM3DI16_G_1` + `TM3DQ16R_G_1`) — see [HARDWARE.md](HARDWARE.md) |
 | **Libraries** | `SE.App2CommonProcess`, `SE.App2Base` (`25.0.1.5`); `Runtime.Base` (`25.0.1.2`); `SE.IoTMx` (`25.0.1.4`); `SE.DPAC` (`25.0.1.10`) |
 | **HMI Canvas** | `Conveyor` (`1480 x 632` with `AlarmGrid`, [`Conveyor.cnv.cs`](../nmps/HMI/Conveyor.cnv.cs)) |
 | **OPC UA / Sim Ports** | OPC UA `bind_port = 4842`; Local Simulation Deploy `51501`, Archive `51498`, `ReliableCrossComm` `udp://0.0.0.0:41502` |
-| **Status** | All 4 belts + 6 stop points implemented and verified on physical `PLC_CV` (including stopper polarity); 10 physical `DO` channels + Stop 1 `DI02`/`DI05` bound in `.hcf`; Station 1 (`Testing` + `Distribution`) handover wired in `.syslay` (physical integrated loop test pending) |
+| **Status** | All 4 belts + 6 stop points, Station 1 (`Testing` + `Distribution`) handover (`Stop1Coord`, `Stop1Pass`, pre-filled tray bypass), and 3-PLC OPC UA logging (`350` Conveyor vars / `82 KB`) verified on physical `PLC_CV`, `PLC_TS`, and `PLC_DS` |
 
 ---
 
@@ -49,10 +49,13 @@ flowchart TB
                 BeltMaster -->|"IBeltA..D -> IRsp"| BeltOut
             end
 
-            subgraph StopPoints["6 Reusable StopPoint CATs (Stop1..Stop6)"]
-                direction LR
+            subgraph StopPoints["6 Reusable StopPoint CATs (Stop1..Stop6) & Stop 1 Release Coordinator"]
+                direction TB
                 SP["Per StopPoint instance:<br/>PassThrough (SetBool) -> StopPointLogic (Logic) -> Stopper (DigitalOutput via IRsp)<br/>TrayPresent (DigitalInput) + WorkpiecePresent (DigitalInput) -> StopPointLogic"]
+                S1C["Stop1Coord + Stop1ArrTimer (500 ms) + Stop1RelTimer (500 ms)<br/>Primary: STOP1_TEST_DONE | Secondary: Tray AND Workpiece<br/>Bypass: pre-filled tray on arrival"]
                 SPDefaults["Startup Defaults:<br/>Stop1: DefaultPassThrough = FALSE (Blocking)<br/>Stop2..Stop6: DefaultPassThrough = TRUE (Pass-Through)"]
+                SP --> S1C
+                S1C -->|"Release (REQ_REL)"| SP
             end
         end
 
@@ -60,13 +63,13 @@ flowchart TB
     end
 
     PLC["PLC_CV Hardware (TM251MDESE 10.10.215.19)<br/>Pair 1 (CV_AB): TM3DI16_G (DI02, DI05) + TM3DQ16R_G<br/>Pair 2 (CV_CD): TM3DI16_G_1 + TM3DQ16R_G_1"]
-    Testing["Testing (PLC_TS, Station 1)<br/>Station 1 handover: STOP1_RELEASE, STOP1_REQ_TRAY, STOP1_TRAY_CNF"]
+    Testing["Testing (PLC_TS, Station 1)<br/>Station 1 handover: STOP1_TEST_DONE, STOP1_AUTO_REL_UPD, STOP1_REQ_CFG, STOP1_REQ_TRAY, STOP1_TRAY_CNF"]
     HMI["HMI Canvas: Conveyor (1480 x 632)<br/>Belt controls, 6 StopPoint cards, AlarmGrid"]
     OPCUA["OPC UA Server<br/>bind_port = 4842 (local sim)"]
 
     BeltOut -->|"4 belt DO symlinks"| PLC
     StopPoints <-->|"6 stopper DOs + Stop1 DI02/DI05 bound"| PLC
-    Testing <-->|"Station 1 tray & release handover"| ConveyorCAT
+    Testing <-->|"Station 1 tray & completion handover"| ConveyorCAT
     ConveyorCAT <--> HMI
     ConveyorCAT --> OPCUA
 ```
@@ -107,6 +110,7 @@ Because each short/long conveyor segment only wires 1–2 stoppers and 1 belt dr
 | `StopX.Stopper` | `SE.App2CommonProcess.DigitalOutput` | Physical stopper coil output per station with faceplate & `Operator` override support. |
 | `StopX.TrayPresent` | `SE.App2CommonProcess.DigitalInput` | Tray-at-stopper sensor wrapper (`Stop1.TrayPresent` bound to `M1.DI02`). |
 | `StopX.WorkpiecePresent` | `SE.App2CommonProcess.DigitalInput` | Workpiece-on-tray sensor wrapper (`Stop1.WorkpiecePresent` bound to `M1.DI05`). |
+| `Stop1Coord`, `Stop1ArrTimer`, `Stop1RelTimer` | `Main.Stop1Coord` + `E_DELAY` (`T#1000ms` arrival, `T#500ms` release clear) | Owns Stop 1 automatic release inside `Conveyor`: primary `STOP1_TEST_DONE` check + secondary `Tray AND Workpiece` check (plus pre-filled tray bypass on arrival after `1000 ms` so `Testing` settles first at `500 ms`). |
 
 ### Physical TM3 Digital I/O Binding (`PLC_CV`)
 
@@ -157,6 +161,17 @@ Each [`StopPoint`](../nmps/IEC61499/StopPoint/StopPoint.fbt) encapsulates `PassT
   Wait-or-pass output `targetInt` is `1` when `PassState = TRUE` and `0` when `PassState = FALSE`, written to `IStopper.Value.value` (`quality := 16#0`, triggering `IStopper.REQ`). This allows `Stop1` to remain configured as `Blocking` (`cmdPass = FALSE`) while a temporary `Release = TRUE` pulse from Station 1 lets a single tray move downstream.
 - **Feedback resync (`algFb`) & sensor forwarding (`algSns`):** `IStopper.REQ_FB` triggers `FB_STOPPER` / `algFb` with the same `firstFbDone` / `prevTrack` falling-edge resync used by `BeltMaster`. `TrayPv` and `WorkpiecePv` (`VTQBOOL`) are unwrapped into clean `BOOL` outputs (`Tray`, `Workpiece`) on `INIT` and whenever `REQ_SNS` arrives (from `TrayPresent.CNF`, `WorkpiecePresent.CNF`, or external `StopPoint.REQ_SNS`).
 
+### `Stop1Coord` (`Stop1Coord.fbt`) — Primary & Secondary Release Check
+
+[`Stop1Coord.fbt`](../nmps/IEC61499/Stop1Coord.fbt) inside [`Conveyor.fbt`](../nmps/IEC61499/Conveyor/Conveyor.fbt) (paired with `Stop1ArrTimer` `T#1000ms` and `Stop1RelTimer` `T#500ms`) owns the automatic temporary release of `Stop1` (`Release := TRUE`) whenever `Stop1AutoRelease` (`Auto S1 AND Auto-Rel` from `Testing`) is `TRUE`:
+
+1. **Arrival debounce & pre-filled tray bypass (`state = 1`, `ArriveSettle`):** When a tray arrives (`M1.DI02 = TRUE`), `Stop1ArrTimer` waits `1000 ms` (`500 ms` longer than `Testing.TraySettleTimer`) so `M1.DI05` stabilizes and `Testing` (`Station1Coord`) latches pre-filled trays in `WaitTrayLeave` before Stopper 1 opens.
+   - If the tray **already** has a workpiece in pocket 1 on arrival (`Tray AND Workpiece`), Station 1 will not run and `Stop1Coord` asserts `Release := TRUE` immediately (`state = 4`, `Releasing`).
+   - If the tray arrived **empty** (`NOT Workpiece`), `Stop1Coord` enters `WaitTestDone` (`state = 2`). While in `WaitTestDone`, `M1.DI05` alone **never** opens Stopper 1.
+2. **Primary check (`STOP1_TEST_DONE`):** Sent by `Testing` (`Station1Coord`) only after a passing `TestingCycle` completes (`LastPass = TRUE`). Rejected workpieces never emit `STOP1_TEST_DONE`, keeping Stopper 1 UP while Station 1 serves a replacement.
+3. **Secondary check (`Tray AND Workpiece`):** Upon `STOP1_TEST_DONE`, `Stop1Coord` checks `M1.DI02 AND M1.DI05`—waiting in `WaitPartCheck` (`state = 3`) if the workpiece is still sliding down Testing's chute—and asserts `Release := TRUE` once both sensors confirm the tray carries the workpiece (`state = 4`).
+4. **Clear & re-block (`state = 5`, `RelClearWait`):** Once `M1.DI02` clears, `Stop1RelTimer` holds `Release := TRUE` for `500 ms` before returning `Release := FALSE` (raising Stopper 1 back to blocking).
+
 ### Startup Defaults & Offline Parameters (`Conveyor_CAT.offline.xml`)
 
 | Element | Startup Setting | Source Configuration |
@@ -173,11 +188,13 @@ Each [`StopPoint`](../nmps/IEC61499/StopPoint/StopPoint.fbt) encapsulates `PassT
 
 [`Conveyor.fbt`](../nmps/IEC61499/Conveyor/Conveyor.fbt) connects `Stop1` to [`Testing`](TESTING.md) in [`6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/9bf3b433-92e3-4d31-8cff-c20036297fe9/6176bcc6-dc42-44e0-920e-ad204ed015ce.syslay):
 
-| Conveyor Pin | Direction / Type | Connected Internal Pin (`Stop1`) | Connected System Target (`Testing`, `248448E89426980E`) | Role |
+| Conveyor Pin | Direction / Type | Connected Internal Pin | Connected System Target (`Testing`, `248448E89426980E`) | Role |
 | --- | --- | --- | --- | --- |
-| `STOP1_RELEASE` (`Stop1Release`) | Event In + `BOOL` Data In | `Stop1.REQ_REL` (`Release`) | `Testing.STOP1_REL_CNF` (`Stop1Release`) | Asserted `TRUE` by `Station1Coord` once a workpiece passes (or an already-filled tray arrives) until `DI02` clears + `500 ms` delay, then returned `FALSE`. |
+| `STOP1_TEST_DONE` | Event In | `Stop1Coord.TEST_DONE` | `Testing.STOP1_TEST_DONE` | Primary completion trigger sent by `Testing` when a passing workpiece leaves the station (triggers secondary `Tray AND Workpiece` check inside `Stop1Coord`). |
+| `STOP1_AUTO_REL_UPD` (`Stop1AutoRelease`) | Event In + `BOOL` Data In | `Stop1Coord.REQ_CFG` (`AutoRelease`) | `Testing.STOP1_AUTO_REL_UPD` (`Stop1AutoRelease`) | Enables/disables `Stop1Coord` automatic release (`AutoMode AND AutoRelease` on `Testing`). |
+| `STOP1_REQ_CFG` | Event Out | `Stop1Coord.INITO` | `Testing.REQ_STOP1_CFG` | Sent on `Conveyor.INIT` so `Testing` pushes current `Stop1AutoRelease` even if `Testing` booted first. |
 | `STOP1_REQ_TRAY` | Event In | `Stop1.REQ_SNS` | `Testing.REQ_STOP1_TRAY` | Sent on `Testing.INIT` so `Testing` receives initial `Stop1` sensor state even if `PLC_CV` booted first. |
-| `STOP1_TRAY_CNF` (`Stop1Tray`, `Stop1Workpiece`) | Event Out + 2 × `BOOL` Data Out | `Stop1.SNS_CNF` (`Tray`, `Workpiece`) | `Testing.STOP1_TRAY_UPD` (`Stop1Tray`, `Stop1Workpiece`) | Pushed automatically on `Conveyor.INIT` and whenever `DI02` or `DI05` changes, or on `STOP1_REQ_TRAY`. |
+| `STOP1_TRAY_CNF` (`Stop1Tray`, `Stop1Workpiece`, `Stop1Pass`) | Event Out + 3 × `BOOL` Data Out | `Stop1.SNS_CNF` (`Tray`, `Workpiece`, `PassState`) & `Stop1.CNF` | `Testing.STOP1_TRAY_UPD` (`Stop1Tray`, `Stop1Workpiece`, `Stop1Pass`) | Pushed automatically on `Conveyor.INIT`, whenever `DI02`/`DI05` or `Stop1.PassState` changes, or on `STOP1_REQ_TRAY`. `Stop1Pass` prevents `Station1Coord` from triggering while Stopper 1 is down/releasing. |
 
 ---
 
@@ -207,7 +224,7 @@ For multi-device EAE Local Simulation alongside `Distribution` (OPC UA `4840`) a
 | 1 | **Startup defaults (`Delete persistent data` checked) & manual belts/stoppers.** Deploy and verify all 4 belts and 6 stoppers on `PLC_CV`. | `RunBelts` is `Belts: OFF`, `BeltA`–`BeltD` toggle all 4 belt drives, `Stop1` boots `Block` (`DO = 0`, UP), `Stop2`–`Stop6` boot `Pass` (`DO = 1`, DOWN), and all 6 stoppers respond to HMI toggles. | Passed (`PLC_CV`) |
 | 2 | **Stop 1 sensor verification (`M1.DI02`, `M1.DI05`).** Place empty tray and filled tray in Station 1 pocket at Stop 1. | `M1.DI02` detects tray present at Stop 1; `M1.DI05` detects workpiece specifically in the Station 1 pocket. | Verified on rig (needs HMI re-deploy check) |
 | 3 | **Individual belt/stopper `Operator` override & `REQ_FB` resync.** Set Owner to `Operator` on a belt or stopper faceplate, toggle manually, return to `Program`. | Follows manual commands independently while `Operator`, then re-syncs to `BeltMaster` / `StopPointLogic` on returning to `Program`. | Pending |
-| 4 | **Integrated Station 1 ↔ Conveyor loop (`Auto S1: ON`).** Enable `Auto S1: ON` on `Testing` HMI with `BeltA`–`BeltD` running and `CycleSeq` in `Program / Auto`. | Empty tray triggers `Distribution` + `Testing`, rejected parts retry while tray stays blocked, passing/filled trays release cleanly via `Stop1Release` until `DI02` clears + `500 ms`. | Pending |
+| 4 | **Integrated Station 1 ↔ Conveyor loop (`Auto S1: ON`).** Enable `Auto S1: ON` on `Testing` HMI with `BeltA`–`BeltD` running and `CycleSeq` in `Program / Auto`. | Empty tray triggers `Distribution` first, waits until arm mid-parks (`DistReady`) before starting `Testing`, holds Stopper 1 UP across rejected parts even if `M1.DI05` toggles, releases passing/pre-filled trays via `Stop1Coord` (`STOP1_TEST_DONE` + `DI02 AND DI05`) until `DI02` clears + `500 ms`, and `WaitTrayLeave` + `Stop1Pass` prevent pre-filled departing trays from re-triggering Station 1. | Passed (`PLC_CV` / `PLC_TS` / `PLC_DS`) |
 
 ### Physical PLC Deployment Checklist (`PLC_CV`, `10.10.215.19`)
 
@@ -229,10 +246,10 @@ For multi-device EAE Local Simulation alongside `Distribution` (OPC UA `4840`) a
    Modifying `.hcf`, `.sysres`, `.syslay`, or `.dfbproj` externally while EAE has the solution loaded can desynchronize its internal configuration cache and crash the IDE (`HwConfigurationControl.RefreshConfiguration` `NullReferenceException` in `Dictionary.Insert`). Always close EAE windows before external file or Git operations.
 3. **`Conveyor` HMI canvas size (`1480 × 632`):**
    Adding `alarmGrid1` at `(1120, 56)` (`Size = 374 x 254`) widened [`Conveyor.cnv.Designer.cs`](../nmps/HMI/Conveyor.cnv.Designer.cs) from its `1120`-pixel main card region to `1480 x 632`. Verify how `ResizeBehaviour="Standard"` displays it on the `800x480` runtime navigation viewport and relocate `alarmGrid1` below the cards if compact horizontal framing is preferred.
-4. **`PLC_CV` OPC UA node count (`System.Conveyor.opcua.xml`):**
-   [`nmps_opcua_listener.py`](../nmps_opcua_listener.py) now monitors `Distribution`, `Testing`, and `Conveyor` by default (`--station all`, or `--station conveyor`), reading `System.Conveyor.opcua.xml`. Note that the default SubCAT OPC UA tick set in `System.Conveyor.opcua.xml` compiles **606** variables across `BeltA`–`BeltD` and `Stop1`–`Stop6`. Because M251 dPAC firmware enforces `MaxVariableNodes = 500` (~100 KB `ecort_opcua_ns2.bin`; see [HARDWARE.md](HARDWARE.md#m251-dpac-opc-ua-resource-limits)), untick unused diagnostic sub-nodes (`interlock`, `permissive`, `serviceManager`) in the EAE OPC UA editor if `PLC_CV` truncates nodes or fails OPC UA startup.
+4. **`PLC_CV` OPC UA node count (`System.Conveyor.opcua.xml`, resolved):**
+   [`nmps_opcua_listener.py`](../nmps_opcua_listener.py) monitors `Distribution`, `Testing`, and `Conveyor` by default (`--station all`, or `--station conveyor`). With default library ticks, `System.Conveyor.ecort_opcua_ns2.bin` compiled to **606** variables (`134.7 KB`), exceeding M251 dPAC's `MaxVariableNodes = 500` (~100 KB) limit and causing `PLC_CV` to skip loading namespace 2 (`http://se.com/EcostruxureSystemExpert`).
+   *Resolved:* Unticking unused `interlock` and `permissive` sub-nodes on `StopPoint.Stopper` ([`StopPoint_CAT.opcua.xml`](../nmps/IEC61499/StopPoint/StopPoint_CAT.opcua.xml)) and `BeltA`–`BeltD`, plus unused `Stop3`–`Stop5` tray/workpiece inputs ([`Conveyor_CAT.opcua.xml`](../nmps/IEC61499/Conveyor/Conveyor_CAT.opcua.xml)), reduced `Conveyor` to **350** variables (`81,970` bytes), enabling all 19 watched Conveyor signals to stream live alongside `Distribution` (`295` vars / `67.0 KB`) and `Testing` (`268` vars / `59.6 KB`).
 
 ### Remaining Work
 
-- **Integrated Station 1 + Conveyor commissioning (`PLC_CV` + `PLC_TS` + `PLC_DS`):** Rebuild and deploy all three controllers, verify live `M1.DI02`/`M1.DI05` readings on the `Conveyor` HMI, and test `Auto S1: ON` across empty trays, color/height rejects, passing drops, and returning pre-filled trays.
-- **Remaining stop-point `DI` sensor mapping (`Stop2`–`Stop6`):** Identify and bind tray/workpiece inputs for Stations 2–6 on `TM3DI16_G` (`CV_AB`) and `TM3DI16_G_1` (`CV_CD`) in [`3787d19b-21b6-4484-a451-1bc349975489.hcf`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/3787d19b-21b6-4484-a451-1bc349975489/3787d19b-21b6-4484-a451-1bc349975489.hcf) when downstream stations are integrated.
+- **Remaining stop-point `DI` sensor mapping (`Stop2`–`Stop6`):** Identify and bind tray/workpiece inputs for Stations 2–6 on `TM3DI16_G` (`CV_AB`) and `TM3DI16_G_1` (`CV_CD`) in [`3787d19b-21b6-4484-a451-1bc349975489.hcf`](../nmps/IEC61499/System/0c9a2a54-81d8-4cd3-8b56-539d6ba31ede/3787d19b-21b6-4484-a451-1bc349975489/3787d19b-21b6-4484-a451-1bc349975489.hcf) as downstream stations (starting with Station 2 `Handling` + `Processing`) are integrated.
