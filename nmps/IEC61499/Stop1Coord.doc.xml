@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+  <info>
+    <author>
+      <personname>
+        <firstname>Firstname</firstname>
+        <surname>Surname</surname>
+      </personname>
+      <email>name@company.com</email>
+    </author>
+    <abstract>
+      <para>Coordinates Conveyor Stop 1 temporary release using primary Station 1 TEST_DONE confirmation and secondary Tray + Workpiece sensor verification.</para>
+    </abstract>
+  </info>
+  <para></para>
+</section>

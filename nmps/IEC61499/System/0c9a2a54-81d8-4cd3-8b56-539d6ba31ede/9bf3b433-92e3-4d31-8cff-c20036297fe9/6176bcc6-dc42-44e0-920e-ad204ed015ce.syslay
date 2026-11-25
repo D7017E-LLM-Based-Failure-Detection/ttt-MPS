@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Layer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="6176bcc6-dc42-44e0-920e-ad204ed015ce" Name="Default" Comment="" IsDefault="true" Format="2.0" xmlns="https://www.se.com/LibraryElements">
   <SubAppNetwork>
-    <FB ID="33A16FB4708913B3" Name="Distribution" Type="Distribution" Namespace="Main" x="580" y="640" />
+    <FB ID="33A16FB4708913B3" Name="Distribution" Type="Distribution" Namespace="Main" x="580" y="639.9999" />
     <FB ID="248448E89426980E" Name="Testing" Type="Testing" Namespace="Main" x="1800" y="520" />
-    <FB ID="41B2000000000001" Name="Conveyor" Type="Conveyor" Namespace="Main" x="3340" y="640" />
+    <FB ID="41B2000000000001" Name="Conveyor" Type="Conveyor" Namespace="Main" x="3340" y="639.9999" />
     <EventConnections>
       <Connection Source="$248448E89426980E.C2A2000000000001" Destination="$33A16FB4708913B3.D2A1000000000001" dx1="75.91675" dx2="50" dy="-360">
         <AvoidsNodes>false</AvoidsNodes>
@@ -13,11 +13,11 @@
       <Connection Source="$248448E89426980E.C2A5000000000001" Destination="$33A16FB4708913B3.D2A4000000000001" dx1="165.9167" dx2="180" dy="-660">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$41B2000000000001.D120000000000003" Destination="$248448E89426980E.C2A7000000000001" dx1="30" dx2="140" dy="-640">
+      <Connection Source="$41B2000000000001.D120000000000003" Destination="$248448E89426980E.C2A7000000000001" dx1="30" dx2="140" dy="-639.9999">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
-      <Connection Source="$248448E89426980E.C2AA000000000001" Destination="$41B2000000000001.D110000000000004" />
-      <Connection Source="$248448E89426980E.C2A9000000000001" Destination="$41B2000000000001.D110000000000003" />
+      <Connection Source="$248448E89426980E.C2AA000000000001" Destination="$41B2000000000001.D110000000000004" dx1="110" />
+      <Connection Source="$248448E89426980E.C2A9000000000001" Destination="$41B2000000000001.D110000000000003" dx1="90" />
       <Connection Source="$248448E89426980E.C2AB000000000001" Destination="$33A16FB4708913B3.D2A7000000000001" dx1="95.91675" dx2="120" dy="-680">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
@@ -25,6 +25,8 @@
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
       <Connection Source="$33A16FB4708913B3.D2A9000000000001" Destination="$248448E89426980E.C2A8000000000001" dx1="90" />
+      <Connection Source="$248448E89426980E.C2B1000000000001" Destination="$41B2000000000001.D110000000000005" dx1="90" />
+      <Connection Source="$41B2000000000001.D120000000000004" Destination="$248448E89426980E.C2B2000000000001" dx1="50" />
     </EventConnections>
     <DataConnections>
       <Connection Source="$248448E89426980E.C2A3000000000001" Destination="$33A16FB4708913B3.D2A3000000000001" dx1="45.91675" dx2="340" dy="500">
@@ -37,6 +39,7 @@
       <Connection Source="$41B2000000000001.D140000000000003" Destination="$248448E89426980E.C2AE000000000001" dx1="28.3125" dx2="100" dy="420">
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
+      <Connection Source="$41B2000000000001.D140000000000004" Destination="$248448E89426980E.C2B3000000000001" dx1="40" />
       <Connection Source="$248448E89426980E.C2B0000000000001" Destination="$41B2000000000001.D130000000000002" dx1="190" />
       <Connection Source="$33A16FB4708913B3.D2AA000000000001" Destination="$248448E89426980E.C2AF000000000001" dx1="47.31262" />
     </DataConnections>

@@ -33,10 +33,13 @@
       </Event>
       <Event Name="CNF" Comment="Pass-through state confirmation">
         <With Var="PassState" />
+        <With Var="Tray" />
+        <With Var="Workpiece" />
       </Event>
       <Event Name="SNS_CNF" Comment="Sensor confirmation">
         <With Var="Tray" />
         <With Var="Workpiece" />
+        <With Var="PassState" />
       </Event>
     </EventOutputs>
     <InputVars>

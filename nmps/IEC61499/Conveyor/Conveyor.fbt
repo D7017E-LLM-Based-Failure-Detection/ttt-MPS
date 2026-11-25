@@ -12,10 +12,11 @@
       <Event ID="D110000000000002" Name="REQ" Comment="Normal Execution Request">
         <With Var="QI" />
       </Event>
-      <Event ID="D110000000000003" Name="STOP1_RELEASE" Comment="Update Station 1 stop point release input">
-        <With Var="Stop1Release" />
-      </Event>
+      <Event ID="D110000000000003" Name="STOP1_TEST_DONE" Comment="Primary Station 1 Testing pass-complete notification for Stop 1" />
       <Event ID="D110000000000004" Name="STOP1_REQ_TRAY" Comment="Request current Station 1 tray and workpiece sensor states" />
+      <Event ID="D110000000000005" Name="STOP1_AUTO_REL_UPD" Comment="Update Stop 1 automatic release enable from Station 1">
+        <With Var="Stop1AutoRelease" />
+      </Event>
     </EventInputs>
     <EventOutputs>
       <Event ID="D120000000000001" Name="INITO" Comment="Initialization Confirm">
@@ -27,16 +28,19 @@
       <Event ID="D120000000000003" Name="STOP1_TRAY_CNF" Comment="Station 1 tray and workpiece sensor update">
         <With Var="Stop1Tray" />
         <With Var="Stop1Workpiece" />
+        <With Var="Stop1Pass" />
       </Event>
+      <Event ID="D120000000000004" Name="STOP1_REQ_CFG" Comment="Request initial Stop 1 auto-release configuration from Testing on startup" />
     </EventOutputs>
     <InputVars>
       <VarDeclaration ID="D130000000000001" Name="QI" Type="BOOL" InitialValue="TRUE" Comment="Input event qualifier" />
-      <VarDeclaration ID="D130000000000002" Name="Stop1Release" Type="BOOL" InitialValue="FALSE" Comment="External Station 1 temporary release command" />
+      <VarDeclaration ID="D130000000000002" Name="Stop1AutoRelease" Type="BOOL" InitialValue="FALSE" Comment="Stop 1 automatic release enable (Auto S1 AND Auto-Rel)" />
     </InputVars>
     <OutputVars>
       <VarDeclaration ID="D140000000000001" Name="QO" Type="BOOL" Comment="Output event qualifier" />
       <VarDeclaration ID="D140000000000002" Name="Stop1Tray" Type="BOOL" Comment="Tray present at Stop 1 (Station 1)" />
       <VarDeclaration ID="D140000000000003" Name="Stop1Workpiece" Type="BOOL" Comment="Workpiece present on tray at Stop 1 (Station 1)" />
+      <VarDeclaration ID="D140000000000004" Name="Stop1Pass" Type="BOOL" Comment="Stopper 1 pass-through or releasing state (TRUE=Down, FALSE=Up/Blocking)" />
     </OutputVars>
   </InterfaceList>
   <FBNetwork>
@@ -44,8 +48,8 @@
     <FB ID="C200000000000002" Name="BeltB" Type="DigitalOutput" x="2000" y="760" Namespace="SE.App2CommonProcess" />
     <FB ID="C200000000000003" Name="BeltC" Type="DigitalOutput" x="2000" y="1320" Namespace="SE.App2CommonProcess" />
     <FB ID="C200000000000004" Name="BeltD" Type="DigitalOutput" x="2000" y="1880" Namespace="SE.App2CommonProcess" />
-    <FB ID="C200000000000005" Name="RunBelts" Type="SetBool" x="260" y="640" Namespace="SE.App2Base" />
-    <FB ID="C200000000000006" Name="BeltMaster" Type="BeltMaster" x="1080" y="640" Namespace="Main" />
+    <FB ID="C200000000000005" Name="RunBelts" Type="SetBool" x="260" y="639.9999" Namespace="SE.App2Base" />
+    <FB ID="C200000000000006" Name="BeltMaster" Type="BeltMaster" x="1080" y="639.9999" Namespace="Main" />
     <FB ID="C200000000000007" Name="Stop1" Type="StopPoint" x="3400" y="200" Namespace="Main">
       <Parameter Name="$A130000000000001" Value="TRUE" />
       <Parameter Name="$A130000000000002" Value="FALSE" />
@@ -70,47 +74,265 @@
       <Parameter Name="$A130000000000001" Value="TRUE" />
       <Parameter Name="$A130000000000002" Value="TRUE" />
     </FB>
+    <FB ID="C20000000000000D" Name="Stop1Coord" Type="Stop1Coord" x="3400" y="2320" Namespace="Main" />
+    <FB ID="C20000000000000E" Name="Stop1ArrTimer" Type="E_DELAY" x="5420" y="2380" Namespace="IEC61499.Standard">
+      <Parameter Name="$DT" Value="T#1000ms" />
+    </FB>
+    <FB ID="C20000000000000F" Name="Stop1RelTimer" Type="E_DELAY" x="5400" y="2820" Namespace="IEC61499.Standard">
+      <Parameter Name="$DT" Value="T#500ms" />
+    </FB>
     <Input ID="D110000000000001" Name="INIT" x="12" y="12" Type="Event" />
     <Input ID="D110000000000002" Name="REQ" x="12" y="72" Type="Event" />
-    <Input ID="D110000000000003" Name="STOP1_RELEASE" x="12" y="132" Type="Event" />
+    <Input ID="D110000000000003" Name="STOP1_TEST_DONE" x="12" y="132" Type="Event" />
     <Input ID="D110000000000004" Name="STOP1_REQ_TRAY" x="12" y="192" Type="Event" />
+    <Input ID="D110000000000005" Name="STOP1_AUTO_REL_UPD" x="12" y="372" Type="Event" />
     <Input ID="D130000000000001" Name="QI" x="12" y="252" Type="Data" />
-    <Input ID="D130000000000002" Name="Stop1Release" x="12" y="312" Type="Data" />
+    <Input ID="D130000000000002" Name="Stop1AutoRelease" x="12" y="312" Type="Data" />
     <Output ID="D120000000000001" Name="INITO" x="5560" y="12" Type="Event" />
     <Output ID="D120000000000002" Name="CNF" x="5560" y="72" Type="Event" />
     <Output ID="D120000000000003" Name="STOP1_TRAY_CNF" x="5560" y="132" Type="Event" />
+    <Output ID="D120000000000004" Name="STOP1_REQ_CFG" x="5560" y="372" Type="Event" />
     <Output ID="D140000000000001" Name="QO" x="5560" y="192" Type="Data" />
     <Output ID="D140000000000002" Name="Stop1Tray" x="5560" y="252" Type="Data" />
     <Output ID="D140000000000003" Name="Stop1Workpiece" x="5560" y="312" Type="Data" />
+    <Output ID="D140000000000004" Name="Stop1Pass" x="5560" y="432" Type="Data" />
     <EventConnections>
-      <Connection Source="$D110000000000001" Destination="$C200000000000006.INIT" />
-      <Connection Source="$C200000000000006.INITO" Destination="$C200000000000007.A110000000000001" />
-      <Connection Source="$C200000000000007.A120000000000001" Destination="$C200000000000008.A110000000000001" />
-      <Connection Source="$C200000000000008.A120000000000001" Destination="$C200000000000009.A110000000000001" />
-      <Connection Source="$C200000000000009.A120000000000001" Destination="$C20000000000000A.A110000000000001" />
-      <Connection Source="$C20000000000000A.A120000000000001" Destination="$C20000000000000B.A110000000000001" />
-      <Connection Source="$C20000000000000B.A120000000000001" Destination="$C20000000000000C.A110000000000001" />
-      <Connection Source="$C20000000000000C.A120000000000001" Destination="$D120000000000001" />
-      <Connection Source="$C200000000000005.IND" Destination="$C200000000000006.REQ" />
-      <Connection Source="$D110000000000002" Destination="$C200000000000006.REQ" />
-      <Connection Source="$C200000000000006.CNF" Destination="$D120000000000002" />
-      <Connection Source="$D110000000000003" Destination="$C200000000000007.A110000000000002" />
-      <Connection Source="$D110000000000004" Destination="$C200000000000007.A110000000000003" />
-      <Connection Source="$C200000000000007.A120000000000003" Destination="$D120000000000003" />
+      <Connection Source="$D110000000000001" Destination="$C200000000000006.INIT" dx1="409.4167" />
+      <Connection Source="$C200000000000006.INITO" Destination="$C200000000000007.A110000000000001">
+        <Points>
+          <Points>
+            <X>403.5833</X>
+            <Y>169.999969</Y>
+          </Points>
+          <Points>
+            <X>417.5</X>
+            <Y>169.999969</Y>
+          </Points>
+          <Points>
+            <X>417.5</X>
+            <Y>32.5</Y>
+          </Points>
+          <Points>
+            <X>682.5</X>
+            <Y>32.5</Y>
+          </Points>
+          <Points>
+            <X>682.5</X>
+            <Y>60</Y>
+          </Points>
+          <Points>
+            <X>845</X>
+            <Y>60</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$C200000000000007.A120000000000001" Destination="$C200000000000008.A110000000000001" dx1="140" dx2="30" dy="-110" />
+      <Connection Source="$C200000000000008.A120000000000001" Destination="$C200000000000009.A110000000000001" dx1="40" dx2="30" dy="1270" />
+      <Connection Source="$C200000000000009.A120000000000001" Destination="$C20000000000000A.A110000000000001" dx1="40" />
+      <Connection Source="$C20000000000000A.A120000000000001" Destination="$C20000000000000B.A110000000000001" dx1="40" dx2="30" dy="-110" />
+      <Connection Source="$C20000000000000B.A120000000000001" Destination="$C20000000000000C.A110000000000001" dx1="40" dx2="30" dy="1270" />
+      <Connection Source="$C20000000000000C.A120000000000001" Destination="$C20000000000000D.INIT" dx1="40" dx2="50" dy="590" />
+      <Connection Source="$C20000000000000D.INITO" Destination="$D120000000000001" dx1="50" />
+      <Connection Source="$C200000000000005.IND" Destination="$C200000000000006.REQ" dx1="67.66669" />
+      <Connection Source="$D110000000000002" Destination="$C200000000000006.REQ" dx1="397.5417" />
+      <Connection Source="$C200000000000006.CNF" Destination="$D120000000000002" dx1="75.66675" />
+      <Connection Source="$D110000000000003" Destination="$C20000000000000D.TEST_DONE" dx1="70.70837" />
+      <Connection Source="$D110000000000005" Destination="$C20000000000000D.REQ_CFG">
+        <Points>
+          <Points>
+            <X>170.53125</X>
+            <Y>100</Y>
+          </Points>
+          <Points>
+            <X>182.5</X>
+            <Y>100</Y>
+          </Points>
+          <Points>
+            <X>182.5</X>
+            <Y>612.5</Y>
+          </Points>
+          <Points>
+            <X>682.5</X>
+            <Y>612.5</Y>
+          </Points>
+          <Points>
+            <X>682.5</X>
+            <Y>605</Y>
+          </Points>
+          <Points>
+            <X>845</X>
+            <Y>605</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$D110000000000004" Destination="$C200000000000007.A110000000000003">
+        <Points>
+          <Points>
+            <X>143.307281</X>
+            <Y>55</Y>
+          </Points>
+          <Points>
+            <X>153.307281</X>
+            <Y>55</Y>
+          </Points>
+          <Points>
+            <X>153.307281</X>
+            <Y>32.5</Y>
+          </Points>
+          <Points>
+            <X>682.5</X>
+            <Y>32.5</Y>
+          </Points>
+          <Points>
+            <X>682.5</X>
+            <Y>90</Y>
+          </Points>
+          <Points>
+            <X>845</X>
+            <Y>90</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$C200000000000007.A120000000000003" Destination="$D120000000000003">
+        <Points>
+          <Points>
+            <X>1032.75</X>
+            <Y>90</Y>
+          </Points>
+          <Points>
+            <X>1057.5</X>
+            <Y>90</Y>
+          </Points>
+          <Points>
+            <X>1057.5</X>
+            <Y>32.5</Y>
+          </Points>
+          <Points>
+            <X>1322.5</X>
+            <Y>32.5</Y>
+          </Points>
+          <Points>
+            <X>1322.5</X>
+            <Y>40</Y>
+          </Points>
+          <Points>
+            <X>1390</X>
+            <Y>40</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$C200000000000007.A120000000000003" Destination="$C20000000000000D.REQ_SNS" dx1="40" dx2="90" dy="1830" />
+      <Connection Source="$C200000000000007.A120000000000002" Destination="$D120000000000003">
+        <Points>
+          <Points>
+            <X>1032.75</X>
+            <Y>75</Y>
+          </Points>
+          <Points>
+            <X>1052.5</X>
+            <Y>75</Y>
+          </Points>
+          <Points>
+            <X>1052.5</X>
+            <Y>32.5</Y>
+          </Points>
+          <Points>
+            <X>1322.5</X>
+            <Y>32.5</Y>
+          </Points>
+          <Points>
+            <X>1322.5</X>
+            <Y>40</Y>
+          </Points>
+          <Points>
+            <X>1390</X>
+            <Y>40</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$C20000000000000D.REL_CNF" Destination="$C200000000000007.A110000000000002" dx1="70" dx2="30" dy="-170" />
+      <Connection Source="$C20000000000000D.ARR_TMR_START" Destination="$C20000000000000E.START" dx1="90" />
+      <Connection Source="$C20000000000000D.ARR_TMR_STOP" Destination="$C20000000000000E.STOP" dx1="110" />
+      <Connection Source="$C20000000000000E.EO" Destination="$C20000000000000D.ARR_TMR_DONE" dx1="48.50049" dx2="130" dy="-170" />
+      <Connection Source="$C20000000000000D.REL_TMR_START" Destination="$C20000000000000F.START" dx1="87.7085" />
+      <Connection Source="$C20000000000000D.REL_TMR_STOP" Destination="$C20000000000000F.STOP" dx1="67.7085" />
+      <Connection Source="$C20000000000000F.EO" Destination="$C20000000000000D.REL_TMR_DONE" dx1="48.5" dx2="110" dy="350" />
+      <Connection Source="$C20000000000000D.INITO" Destination="$C20000000000000D.REQ_CFG" dx1="167.7085" dx2="400" dy="940">
+        <AvoidsNodes>false</AvoidsNodes>
+      </Connection>
     </EventConnections>
     <DataConnections>
-      <Connection Source="$D130000000000001" Destination="$C200000000000006.QI" />
+      <Connection Source="$D130000000000001" Destination="$C200000000000006.QI" dx1="303.2084" />
+      <Connection Source="$D130000000000001" Destination="$C20000000000000D.QI" dx1="303.2084" />
       <Connection Source="$C200000000000005.Out" Destination="$C200000000000006.RunCmd" />
-      <Connection Source="$C20000000000000C.A140000000000001" Destination="$D140000000000001" />
-      <Connection Source="$D130000000000002" Destination="$C200000000000007.A130000000000003" />
-      <Connection Source="$C200000000000007.A140000000000003" Destination="$D140000000000002" />
-      <Connection Source="$C200000000000007.A140000000000004" Destination="$D140000000000003" />
+      <Connection Source="$C20000000000000C.A140000000000001" Destination="$D140000000000001" dx1="79" />
+      <Connection Source="$D130000000000002" Destination="$C20000000000000D.AutoRelease" dx1="40" />
+      <Connection Source="$C200000000000007.A140000000000003" Destination="$C20000000000000D.Tray" dx1="40" dx2="210" dy="1510" />
+      <Connection Source="$C200000000000007.A140000000000004" Destination="$C20000000000000D.Workpiece" dx1="40" dx2="230" dy="1450" />
+      <Connection Source="$C20000000000000D.Release" Destination="$C200000000000007.A130000000000003" dx1="170" dx2="30" dy="-730" />
+      <Connection Source="$C200000000000007.A140000000000003" Destination="$D140000000000002">
+        <Points>
+          <Points>
+            <X>1032.75</X>
+            <Y>170</Y>
+          </Points>
+          <Points>
+            <X>1067.5</X>
+            <Y>170</Y>
+          </Points>
+          <Points>
+            <X>1067.5</X>
+            <Y>32.5</Y>
+          </Points>
+          <Points>
+            <X>1322.5</X>
+            <Y>32.5</Y>
+          </Points>
+          <Points>
+            <X>1322.5</X>
+            <Y>70</Y>
+          </Points>
+          <Points>
+            <X>1390</X>
+            <Y>70</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$C200000000000007.A140000000000004" Destination="$D140000000000003">
+        <Points>
+          <Points>
+            <X>1032.75</X>
+            <Y>185</Y>
+          </Points>
+          <Points>
+            <X>1072.5</X>
+            <Y>185</Y>
+          </Points>
+          <Points>
+            <X>1072.5</X>
+            <Y>32.5</Y>
+          </Points>
+          <Points>
+            <X>1322.5</X>
+            <Y>32.5</Y>
+          </Points>
+          <Points>
+            <X>1322.5</X>
+            <Y>85</Y>
+          </Points>
+          <Points>
+            <X>1390</X>
+            <Y>85</Y>
+          </Points>
+        </Points>
+      </Connection>
+      <Connection Source="$C200000000000007.A140000000000002" Destination="$D140000000000004" dx1="1159" />
     </DataConnections>
     <AdapterConnections>
-      <Connection Source="$C200000000000006.IBeltA" Destination="$C200000000000001.IRsp" />
-      <Connection Source="$C200000000000006.IBeltB" Destination="$C200000000000002.IRsp" />
-      <Connection Source="$C200000000000006.IBeltC" Destination="$C200000000000003.IRsp" />
-      <Connection Source="$C200000000000006.IBeltD" Destination="$C200000000000004.IRsp" />
+      <Connection Source="$C200000000000006.IBeltA" Destination="$C200000000000001.IRsp" dx1="95.66675" />
+      <Connection Source="$C200000000000006.IBeltB" Destination="$C200000000000002.IRsp" dx1="115.6667" />
+      <Connection Source="$C200000000000006.IBeltC" Destination="$C200000000000003.IRsp" dx1="60" />
+      <Connection Source="$C200000000000006.IBeltD" Destination="$C200000000000004.IRsp" dx1="40" />
     </AdapterConnections>
   </FBNetwork>
 </FBType>

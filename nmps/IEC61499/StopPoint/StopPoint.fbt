@@ -25,10 +25,13 @@
       </Event>
       <Event ID="A120000000000002" Name="CNF" Comment="Pass-through state confirmation">
         <With Var="PassState" />
+        <With Var="Tray" />
+        <With Var="Workpiece" />
       </Event>
       <Event ID="A120000000000003" Name="SNS_CNF" Comment="Tray or workpiece sensor update">
         <With Var="Tray" />
         <With Var="Workpiece" />
+        <With Var="PassState" />
       </Event>
     </EventOutputs>
     <InputVars>
@@ -74,7 +77,34 @@
       <Connection Source="$B100000000000005.SNS_CNF" Destination="$A120000000000003" dx1="90" />
     </EventConnections>
     <DataConnections>
-      <Connection Source="$A130000000000001" Destination="$B100000000000005.QI" dx1="315.2084" />
+      <Connection Source="$A130000000000001" Destination="$B100000000000005.QI">
+        <Points>
+          <Points>
+            <X>93.69791</X>
+            <Y>59.9999962</Y>
+          </Points>
+          <Points>
+            <X>102.5</X>
+            <Y>59.9999962</Y>
+          </Points>
+          <Points>
+            <X>102.5</X>
+            <Y>62.5</Y>
+          </Points>
+          <Points>
+            <X>172.5</X>
+            <Y>62.5</Y>
+          </Points>
+          <Points>
+            <X>172.5</X>
+            <Y>275</Y>
+          </Points>
+          <Points>
+            <X>350</X>
+            <Y>275</Y>
+          </Points>
+        </Points>
+      </Connection>
       <Connection Source="$A130000000000002" Destination="$B100000000000005.DefaultPass" dx1="40" />
       <Connection Source="$A130000000000003" Destination="$B100000000000005.Release" dx1="63.45837" />
       <Connection Source="$B100000000000004.Out" Destination="$B100000000000005.HmiPass" dx1="47.66669" />
