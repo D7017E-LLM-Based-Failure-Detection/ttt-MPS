@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE FBType SYSTEM "../LibraryElement.dtd">
+<FBType GUID="e1a20007-4c10-4b80-9a10-000000000007" Name="LiftBootSync" Comment="Basic Function Block Type" Namespace="Main">
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Schneider Electric" Version="0.0" Author=" " Date="11/25/2026" Remarks="Sync Testing.Lift IRsp setpoint to resting sensor on boot" />
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request">
+        <With Var="QI" />
+        <With Var="FbOpen" />
+        <With Var="FbClosed" />
+      </Event>
+      <Event Name="REQ_FB_POS" Comment="Update Lift end-position feedback">
+        <With Var="FbOpen" />
+        <With Var="FbClosed" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm">
+        <With Var="QO" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="QI" Type="BOOL" InitialValue="TRUE" Comment="Input event qualifier" />
+      <VarDeclaration Name="FbOpen" Type="BOOL" InitialValue="FALSE" Comment="Lift raised end switch (1B1)" />
+      <VarDeclaration Name="FbClosed" Type="BOOL" InitialValue="FALSE" Comment="Lift lowered end switch (1B2)" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier" />
+    </OutputVars>
+    <Plugs>
+      <AdapterDeclaration Name="ILift" Type="IDigital" Namespace="SE.App2Base" Comment="Remote setpoint adapter for Lift Valve2Op" />
+    </Plugs>
+  </InterfaceList>
+  <BasicFB>
+    <Attribute Name="FBType.Basic.Algorithm.Order" Value="algInit,algFbPos,algTrack,algClrSend" />
+    <InternalVars>
+      <VarDeclaration Name="synced" Type="BOOL" InitialValue="FALSE" Comment="Initial boot position synchronized to Lift IRsp" />
+      <VarDeclaration Name="prevTrack" Type="BOOL" InitialValue="FALSE" Comment="Previous Track state from Lift IRsp" />
+      <VarDeclaration Name="targetSp" Type="INT" InitialValue="0" Comment="Tracked remote setpoint for Lift IRsp" />
+      <VarDeclaration Name="wantSend" Type="BOOL" InitialValue="FALSE" Comment="Pending ILift.REQ event flag" />
+    </InternalVars>
+    <ECC>
+      <ECState Name="START" Comment="Initial State" x="1000" y="800" />
+      <ECState Name="DO_INIT" x="1000" y="200">
+        <ECAction Algorithm="algInit" Output="INITO" />
+      </ECState>
+      <ECState Name="DO_FB_POS" x="2000" y="500">
+        <ECAction Algorithm="algFbPos" />
+      </ECState>
+      <ECState Name="DO_TRACK" x="2000" y="1100">
+        <ECAction Algorithm="algTrack" />
+      </ECState>
+      <ECState Name="DISPATCH" x="3000" y="800" />
+      <ECState Name="EMIT_REQ" x="4000" y="800">
+        <ECAction Algorithm="algClrSend" Output="ILift.REQ" />
+      </ECState>
+      <ECTransition Source="START" Destination="DO_INIT" Condition="INIT" x="1000" y="500" />
+      <ECTransition Source="DO_INIT" Destination="DISPATCH" Condition="1" x="2000" y="350" />
+      <ECTransition Source="START" Destination="DO_FB_POS" Condition="REQ_FB_POS" x="1500" y="650" />
+      <ECTransition Source="DO_FB_POS" Destination="DISPATCH" Condition="1" x="2500" y="650" />
+      <ECTransition Source="START" Destination="DO_TRACK" Condition="ILift.REQ_FB" x="1500" y="950" />
+      <ECTransition Source="DO_TRACK" Destination="DISPATCH" Condition="1" x="2500" y="950" />
+      <ECTransition Source="DISPATCH" Destination="EMIT_REQ" Condition="wantSend" x="3500" y="740" />
+      <ECTransition Source="EMIT_REQ" Destination="START" Condition="1" x="2500" y="1350" />
+      <ECTransition Source="DISPATCH" Destination="START" Condition="1" x="2000" y="800" />
+    </ECC>
+    <Algorithm Name="algInit" Comment="Initialize Lift boot sync state and match resting feedback if available">
+      <ST><![CDATA[QO := QI;
+synced := FALSE;
+prevTrack := ILift.Track;
+targetSp := 0;
+wantSend := FALSE;
+IF (NOT ILift.Track) AND (FbClosed OR FbOpen) THEN
+	IF FbClosed AND NOT FbOpen THEN
+		targetSp := 2;
+		synced := TRUE;
+		ILift.Value.value := targetSp;
+		ILift.Value.quality := 16#0;
+		wantSend := TRUE;
+	ELSIF FbOpen AND NOT FbClosed THEN
+		targetSp := 1;
+		synced := TRUE;
+		ILift.Value.value := targetSp;
+		ILift.Value.quality := 16#0;
+		wantSend := TRUE;
+	END_IF;
+END_IF;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algFbPos" Comment="Sync initial IRsp setpoint to resting limit switch once on startup">
+      <ST><![CDATA[IF (NOT synced) AND (NOT ILift.Track) AND (FbClosed OR FbOpen) THEN
+	IF FbClosed AND NOT FbOpen THEN
+		targetSp := 2;
+		synced := TRUE;
+		ILift.Value.value := targetSp;
+		ILift.Value.quality := 16#0;
+		wantSend := TRUE;
+	ELSIF FbOpen AND NOT FbClosed THEN
+		targetSp := 1;
+		synced := TRUE;
+		ILift.Value.value := targetSp;
+		ILift.Value.quality := 16#0;
+		wantSend := TRUE;
+	END_IF;
+END_IF;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algTrack" Comment="Bumplessly track Operator/Program Local state and resync on return to Program Remote">
+      <ST><![CDATA[IF ILift.Track THEN
+	synced := TRUE;
+	targetSp := ILift.State;
+ELSIF prevTrack THEN
+	synced := TRUE;
+	ILift.Value.value := targetSp;
+	ILift.Value.quality := 16#0;
+	wantSend := TRUE;
+ELSIF (NOT synced) AND (FbClosed OR FbOpen) THEN
+	IF FbClosed AND NOT FbOpen THEN
+		targetSp := 2;
+		synced := TRUE;
+		ILift.Value.value := targetSp;
+		ILift.Value.quality := 16#0;
+		wantSend := TRUE;
+	ELSIF FbOpen AND NOT FbClosed THEN
+		targetSp := 1;
+		synced := TRUE;
+		ILift.Value.value := targetSp;
+		ILift.Value.quality := 16#0;
+		wantSend := TRUE;
+	END_IF;
+END_IF;
+prevTrack := ILift.Track;
+]]></ST>
+    </Algorithm>
+    <Algorithm Name="algClrSend" Comment="Clear pending ILift.REQ emit flag">
+      <ST><![CDATA[wantSend := FALSE;
+]]></ST>
+    </Algorithm>
+  </BasicFB>
+</FBType>

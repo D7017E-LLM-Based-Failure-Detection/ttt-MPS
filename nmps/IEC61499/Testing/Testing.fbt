@@ -19,10 +19,12 @@
       <Event ID="C2A7000000000001" Name="STOP1_TRAY_UPD" Comment="Update Stop 1 tray and workpiece sensor states">
         <With Var="Stop1Tray" />
         <With Var="Stop1Workpiece" />
+        <With Var="Stop1Pass" />
       </Event>
       <Event ID="C2A8000000000001" Name="DIST_READY_UPD" Comment="Update Distribution cycle ready state">
         <With Var="DistReady" />
       </Event>
+      <Event ID="C2B2000000000001" Name="REQ_STOP1_CFG" Comment="Request current Stop 1 auto-release configuration from Conveyor on startup" />
     </EventInputs>
     <EventOutputs>
       <Event ID="CE2C8D3CAF7F4E27" Name="INITO" Comment="Initialization Confirm">
@@ -35,24 +37,26 @@
         <With Var="FreeForPart" />
       </Event>
       <Event ID="C2A5000000000001" Name="REQ_ARM_POS" Comment="Request initial swivel arm position from Distribution on startup" />
-      <Event ID="C2A9000000000001" Name="STOP1_REL_CNF" Comment="Stop 1 release command update">
-        <With Var="Stop1Release" />
-      </Event>
+      <Event ID="C2A9000000000001" Name="STOP1_TEST_DONE" Comment="Primary Station 1 Testing pass-complete notification to Conveyor Stop 1" />
       <Event ID="C2AA000000000001" Name="REQ_STOP1_TRAY" Comment="Request initial Stop 1 tray/workpiece state from Conveyor" />
       <Event ID="C2AB000000000001" Name="START_DIST" Comment="Start Distribution AutoCycle programmatically" />
       <Event ID="C2AC000000000001" Name="REQ_DIST_READY" Comment="Request initial Distribution ready state" />
+      <Event ID="C2B1000000000001" Name="STOP1_AUTO_REL_UPD" Comment="Stop 1 auto-release enable update to Conveyor">
+        <With Var="Stop1AutoRelease" />
+      </Event>
     </EventOutputs>
     <InputVars>
       <VarDeclaration ID="38966DBCE8921E8F" Name="QI" Type="BOOL" Comment="Input event qualifier" />
       <VarDeclaration ID="C2A6000000000001" Name="ArmAtTesting" Type="BOOL" Comment="TRUE when Distribution swivel arm is at Testing (3B2)" />
       <VarDeclaration ID="C2AD000000000001" Name="Stop1Tray" Type="BOOL" Comment="Tray present at Conveyor Stop 1" />
       <VarDeclaration ID="C2AE000000000001" Name="Stop1Workpiece" Type="BOOL" Comment="Workpiece in Station 1 pocket at Stop 1" />
-      <VarDeclaration ID="C2AF000000000001" Name="DistReady" Type="BOOL" Comment="TRUE when Distribution CycleSeq is Stopped or Completed" />
+      <VarDeclaration ID="C2B3000000000001" Name="Stop1Pass" Type="BOOL" InitialValue="FALSE" Comment="Stopper 1 pass-through or releasing state (TRUE=Down, FALSE=Up/Blocking)" />
+      <VarDeclaration ID="C2AF000000000001" Name="DistReady" Type="BOOL" InitialValue="TRUE" Comment="TRUE when Distribution CycleSeq is Stopped or Completed (defaults TRUE standalone)" />
     </InputVars>
     <OutputVars>
       <VarDeclaration ID="E4C4E3EF868A560C" Name="QO" Type="BOOL" Comment="Output event qualifier" />
       <VarDeclaration ID="C2A3000000000001" Name="FreeForPart" Type="BOOL" Comment="TRUE when lift is lowered, ejector retracted, and no workpiece is present" />
-      <VarDeclaration ID="C2B0000000000001" Name="Stop1Release" Type="BOOL" Comment="Release command to Conveyor Stop 1" />
+      <VarDeclaration ID="C2B0000000000001" Name="Stop1AutoRelease" Type="BOOL" Comment="Effective Stop 1 auto-release enable (Auto S1 AND Auto-Rel)" />
     </OutputVars>
   </InterfaceList>
   <FBNetwork>
@@ -90,9 +94,11 @@
     <FB ID="C100000000000012" Name="TraySettleTimer" Type="E_DELAY" x="7200" y="1820" Namespace="IEC61499.Standard">
       <Parameter Name="$DT" Value="T#500ms" />
     </FB>
-    <FB ID="C100000000000013" Name="RelClearTimer" Type="E_DELAY" x="7200" y="2180" Namespace="IEC61499.Standard">
-      <Parameter Name="$DT" Value="T#500ms" />
+    <FB ID="C100000000000014" Name="ArmSafeAnd" Type="AND_550FE6D62F509EB3" x="4620" y="1020" Namespace="Main">
+      <Attribute Name="Configuration.GenericFBType.InterfaceParams" Value="Runtime.Standard#CNT:=3;OUT:BOOL" />
+      <Parameter Name="$IN3" Value="TRUE" />
     </FB>
+    <FB ID="C100000000000015" Name="LiftSync" Type="LiftBootSync" x="1500" y="1380" Namespace="Main" />
     <Input ID="65381F6BB52528F5" Name="INIT" x="12" y="12" Type="Event" />
     <Input ID="B325BA8515AD40F2" Name="REQ" x="12" y="72" Type="Event" />
     <Input ID="38966DBCE8921E8F" Name="QI" x="12" y="132" Type="Data" />
@@ -101,20 +107,23 @@
     <Input ID="C2A6000000000001" Name="ArmAtTesting" x="12" y="372" Type="Data" />
     <Input ID="C2A7000000000001" Name="STOP1_TRAY_UPD" x="12" y="432" Type="Event" />
     <Input ID="C2A8000000000001" Name="DIST_READY_UPD" x="12" y="492" Type="Event" />
+    <Input ID="C2B2000000000001" Name="REQ_STOP1_CFG" x="12" y="732" Type="Event" />
     <Input ID="C2AD000000000001" Name="Stop1Tray" x="12" y="552" Type="Data" />
     <Input ID="C2AE000000000001" Name="Stop1Workpiece" x="12" y="612" Type="Data" />
     <Input ID="C2AF000000000001" Name="DistReady" x="12" y="672" Type="Data" />
+    <Input ID="C2B3000000000001" Name="Stop1Pass" x="12" y="792" Type="Data" />
     <Output ID="CE2C8D3CAF7F4E27" Name="INITO" x="5280" y="92" Type="Event" />
     <Output ID="82CC77AFD74F3D0F" Name="CNF" x="5300" y="152" Type="Event" />
     <Output ID="E4C4E3EF868A560C" Name="QO" x="5180" y="212" Type="Data" />
     <Output ID="C2A2000000000001" Name="FREE_CNF" x="5300" y="272" Type="Event" />
     <Output ID="C2A3000000000001" Name="FreeForPart" x="5180" y="332" Type="Data" />
     <Output ID="C2A5000000000001" Name="REQ_ARM_POS" x="5300" y="392" Type="Event" />
-    <Output ID="C2A9000000000001" Name="STOP1_REL_CNF" x="7560" y="1600" Type="Event" />
+    <Output ID="C2A9000000000001" Name="STOP1_TEST_DONE" x="7560" y="1600" Type="Event" />
     <Output ID="C2AA000000000001" Name="REQ_STOP1_TRAY" x="5300" y="452" Type="Event" />
     <Output ID="C2AB000000000001" Name="START_DIST" x="7560" y="1500" Type="Event" />
     <Output ID="C2AC000000000001" Name="REQ_DIST_READY" x="5300" y="512" Type="Event" />
-    <Output ID="C2B0000000000001" Name="Stop1Release" x="7560" y="1660" Type="Data" />
+    <Output ID="C2B1000000000001" Name="STOP1_AUTO_REL_UPD" x="7560" y="1720" Type="Event" />
+    <Output ID="C2B0000000000001" Name="Stop1AutoRelease" x="7560" y="1660" Type="Data" />
     <EventConnections>
       <Connection Source="$65381F6BB52528F5" Destination="$C10000000000000A.11A71DE3BB9549E0" dx1="4679.417">
         <AvoidsNodes>false</AvoidsNodes>
@@ -206,7 +215,11 @@
       <Connection Source="$65381F6BB52528F5" Destination="$C10000000000000E.REQ" dx1="40" />
       <Connection Source="$65381F6BB52528F5" Destination="$C2A5000000000001" dx1="40" />
       <Connection Source="$C2A4000000000001" Destination="$C10000000000000E.REQ" dx1="40" />
-      <Connection Source="$C10000000000000E.CNF" Destination="$C10000000000000B.58A1000000000001" dx1="40" />
+      <Connection Source="$C10000000000000E.CNF" Destination="$C100000000000014.REQ" dx1="40" />
+      <Connection Source="$C2A8000000000001" Destination="$C100000000000014.REQ" dx1="40" />
+      <Connection Source="$C100000000000014.CNF" Destination="$C10000000000000B.58A1000000000001" dx1="40" />
+      <Connection Source="$65381F6BB52528F5" Destination="$C100000000000015.INIT" dx1="40" />
+      <Connection Source="$C100000000000001.CNF" Destination="$C100000000000015.REQ_FB_POS" dx1="40" />
       <Connection Source="$65381F6BB52528F5" Destination="$C100000000000011.INIT" dx1="40" />
       <Connection Source="$65381F6BB52528F5" Destination="$C2AA000000000001" dx1="40" />
       <Connection Source="$65381F6BB52528F5" Destination="$C2AC000000000001" dx1="40" />
@@ -215,15 +228,15 @@
       <Connection Source="$C2A7000000000001" Destination="$C100000000000011.REQ_TRAY" dx1="40" />
       <Connection Source="$C2A8000000000001" Destination="$C100000000000011.REQ_DIST" dx1="40" />
       <Connection Source="$C10000000000000B.63A1000000000001" Destination="$C100000000000011.REQ_TEST" dx1="40" />
-      <Connection Source="$C100000000000011.START_BOTH" Destination="$C10000000000000B.58A2000000000001" dx1="40" />
-      <Connection Source="$C100000000000011.START_BOTH" Destination="$C2AB000000000001" dx1="40" />
-      <Connection Source="$C100000000000011.REL_CNF" Destination="$C2A9000000000001" dx1="40" />
+      <Connection Source="$C100000000000004.CNF" Destination="$C100000000000011.REQ_TEST_PART" dx1="40" />
+      <Connection Source="$C2B2000000000001" Destination="$C100000000000011.REQ_STOP1_CFG" dx1="40" />
+      <Connection Source="$C100000000000011.START_DIST" Destination="$C2AB000000000001" dx1="40" />
+      <Connection Source="$C100000000000011.START_TEST" Destination="$C10000000000000B.58A2000000000001" dx1="40" />
+      <Connection Source="$C100000000000011.TEST_DONE" Destination="$C2A9000000000001" dx1="40" />
+      <Connection Source="$C100000000000011.CFG_CNF" Destination="$C2B1000000000001" dx1="40" />
       <Connection Source="$C100000000000011.ARR_TMR_START" Destination="$C100000000000012.START" dx1="40" />
       <Connection Source="$C100000000000011.ARR_TMR_STOP" Destination="$C100000000000012.STOP" dx1="40" />
       <Connection Source="$C100000000000012.EO" Destination="$C100000000000011.ARR_TMR_DONE" dx1="40" />
-      <Connection Source="$C100000000000011.REL_TMR_START" Destination="$C100000000000013.START" dx1="40" />
-      <Connection Source="$C100000000000011.REL_TMR_STOP" Destination="$C100000000000013.STOP" dx1="40" />
-      <Connection Source="$C100000000000013.EO" Destination="$C100000000000011.REL_TMR_DONE" dx1="40" />
     </EventConnections>
     <DataConnections>
       <Connection Source="$C100000000000001.FbClosed" Destination="$C10000000000000A.32DAB227DF90F2E9" dx1="92.12549" />
@@ -303,17 +316,24 @@
       </Connection>
       <Connection Source="$C10000000000000D.OUT" Destination="$C2A3000000000001" dx1="70" />
       <Connection Source="$C2A6000000000001" Destination="$C10000000000000E.IN1" dx1="40" />
-      <Connection Source="$C10000000000000E.OUT1" Destination="$C10000000000000B.78A1000000000001" dx1="40" />
+      <Connection Source="$C10000000000000E.OUT1" Destination="$C100000000000014.IN1" dx1="40" />
+      <Connection Source="$C2AF000000000001" Destination="$C100000000000014.IN2" dx1="40" />
+      <Connection Source="$C100000000000014.OUT" Destination="$C10000000000000B.78A1000000000001" dx1="40" />
+      <Connection Source="$38966DBCE8921E8F" Destination="$C100000000000015.QI" dx1="40" />
+      <Connection Source="$C100000000000001.FbOpen" Destination="$C100000000000015.FbOpen" dx1="40" />
+      <Connection Source="$C100000000000001.FbClosed" Destination="$C100000000000015.FbClosed" dx1="40" />
       <Connection Source="$38966DBCE8921E8F" Destination="$C100000000000011.QI" dx1="40" />
       <Connection Source="$C10000000000000F.Out" Destination="$C100000000000011.AutoEnable" dx1="40" />
       <Connection Source="$C100000000000010.Out" Destination="$C100000000000011.AutoRelease" dx1="40" />
       <Connection Source="$C2AD000000000001" Destination="$C100000000000011.TrayAtStop1" dx1="40" />
       <Connection Source="$C2AE000000000001" Destination="$C100000000000011.PartAtStop1" dx1="40" />
+      <Connection Source="$C2B3000000000001" Destination="$C100000000000011.Stop1Pass" dx1="40" />
       <Connection Source="$C2AF000000000001" Destination="$C100000000000011.DistReady" dx1="40" />
       <Connection Source="$C10000000000000B.82A1000000000001" Destination="$C100000000000011.TestStopped" dx1="40" />
       <Connection Source="$C10000000000000B.82A2000000000001" Destination="$C100000000000011.TestComplete" dx1="40" />
       <Connection Source="$C10000000000000B.82A3000000000001" Destination="$C100000000000011.LastPass" dx1="40" />
-      <Connection Source="$C100000000000011.Stop1Release" Destination="$C2B0000000000001" dx1="40" />
+      <Connection Source="$C100000000000004.Pv" Destination="$C100000000000011.TestPartPv" dx1="40" />
+      <Connection Source="$C100000000000011.Stop1AutoRelease" Destination="$C2B0000000000001" dx1="40" />
     </DataConnections>
     <AdapterConnections>
       <Connection Source="$C100000000000002.IFbState" Destination="$C100000000000008.ICondSignal" dx1="182.125" dx2="260" dy="280">
@@ -324,6 +344,7 @@
         <AvoidsNodes>false</AvoidsNodes>
       </Connection>
       <Connection Source="$C100000000000009.ICondChainOut" Destination="$C100000000000002.IPerm" dx1="40" />
+      <Connection Source="$C100000000000015.ILift" Destination="$C100000000000001.IRsp" dx1="40" />
     </AdapterConnections>
   </FBNetwork>
 </FBType>
